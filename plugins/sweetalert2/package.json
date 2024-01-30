@@ -1,0 +1,136 @@
+{
+  "_from": "sweetalert2@^11.6.13",
+  "_id": "sweetalert2@11.6.13",
+  "_inBundle": false,
+  "_integrity": "sha512-n5yVF0FNx1lm4XzpPyb1HIaiptzODfVyeCzmB809tpK+1bPdoKoevKOxYjrtId75DV7xuIp4r6cjn8xUAB8dPQ==",
+  "_location": "/sweetalert2",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "sweetalert2@^11.6.13",
+    "name": "sweetalert2",
+    "escapedName": "sweetalert2",
+    "rawSpec": "^11.6.13",
+    "saveSpec": null,
+    "fetchSpec": "^11.6.13"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/sweetalert2/-/sweetalert2-11.6.13.tgz",
+  "_shasum": "81c9c571117a05833f832df61ffd5c7750dcbe37",
+  "_spec": "sweetalert2@^11.6.13",
+  "_where": "C:\\Apache24\\htdocs\\tester\\inventory",
+  "author": {
+    "name": "Limon Monte",
+    "url": "https://limonte.github.io"
+  },
+  "browser": "dist/sweetalert2.all.js",
+  "bugs": {
+    "url": "https://github.com/sweetalert2/sweetalert2/issues"
+  },
+  "bundleDependencies": false,
+  "contributors": [
+    {
+      "name": "Matthew Francis Brunetti",
+      "email": "zenflow87@gmail.com",
+      "url": "https://github.com/zenflow"
+    },
+    {
+      "name": "Morgan Touverey-Quilling",
+      "email": "mtouverey@alembic-dev.com",
+      "url": "https://github.com/toverux"
+    },
+    {
+      "name": "Giuseppe Verni",
+      "url": "https://github.com/gverni"
+    },
+    {
+      "name": "Sam Turrell",
+      "email": "sam@samturrell.co.uk",
+      "url": "https://github.com/samturrell"
+    },
+    {
+      "name": "Joseph Schultz",
+      "url": "https://github.com/acupofjose"
+    },
+    {
+      "name": "Johan Fagerberg",
+      "url": "https://github.com/birjolaxew"
+    }
+  ],
+  "deprecated": false,
+  "description": "A beautiful, responsive, customizable and accessible (WAI-ARIA) replacement for JavaScript's popup boxes, supported fork of sweetalert",
+  "devDependencies": {
+    "@babel/core": "^7.19.6",
+    "@babel/preset-env": "^7.19.4",
+    "@rollup/plugin-babel": "^6.0.2",
+    "@rollup/plugin-terser": "^0.1.0",
+    "@sweetalert2/eslint-config": "^1.0.11",
+    "@sweetalert2/stylelint-config": "^2.0.6",
+    "cypress": "^11.0.0",
+    "eslint": "^8.24.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-jsdoc": "^39.3.6",
+    "eslint-plugin-no-unsanitized": "^4.0.1",
+    "jquery": "^3.6.1",
+    "prettier": "^2.7.1",
+    "rollup": "^3.2.2",
+    "sass": "^1.55.0",
+    "stylelint": "^14.14.0",
+    "typescript": "4.0.2",
+    "vite": "^3.1.8",
+    "zx": "^7.1.1"
+  },
+  "devDependenciesComments": {
+    "typescript": "Do not upgrade TS, tests will verify that types work with the very first version of TS >= 4.0"
+  },
+  "files": [
+    "dist",
+    "src",
+    "sweetalert2.d.ts"
+  ],
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/limonte"
+  },
+  "homepage": "https://sweetalert2.github.io/",
+  "keywords": [
+    "sweetalert",
+    "sweetalert2",
+    "alert",
+    "modal",
+    "popup",
+    "prompt",
+    "confirm",
+    "toast",
+    "accessible"
+  ],
+  "license": "MIT",
+  "main": "dist/sweetalert2.all.js",
+  "module": "dist/sweetalert2.all.js",
+  "name": "sweetalert2",
+  "prettier": {
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": true,
+    "quoteProps": "consistent",
+    "trailingComma": "es5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sweetalert2/sweetalert2.git"
+  },
+  "scripts": {
+    "build": "zx tools/build.mjs",
+    "check-types": "npx -p typescript@latest tsc --noEmit -p jsconfig.json",
+    "cypress:open": "cypress open",
+    "lint": "stylelint src/**/*.scss && eslint src cypress *.js *.ts && prettier --check src/**/*.js cypress/**/*.js *.js",
+    "start": "vite sandbox --open",
+    "test": "cypress run --headless"
+  },
+  "types": "sweetalert2.d.ts",
+  "version": "11.6.13"
+}

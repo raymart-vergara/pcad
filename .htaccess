@@ -1,0 +1,8 @@
+php_value display_errors On
+php_value mbstring.http_input auto
+php_value date.timezone Asia/Manila
+Options -Indexes
+RewriteEngine On
+ErrorDocument 403 /pages/error/403.html
+ErrorDocument 404 /pages/error/404.html
+ErrorDocument 500 /pages/error/500.html
