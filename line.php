@@ -242,6 +242,10 @@ $shift = get_shift($server_time);
 	</table>
 
 	<button id="btnEndProcess">End Process</button>
+	<a href="mainmenu.php">
+	<button type="button"  id="btnMainMenu">MainMenu</button>
+	</a>
+	
 
 	<!-- jQuery -->
 	<script src="plugins/jquery/dist/jquery.min.js"></script>
