@@ -11,8 +11,7 @@ function compute_yield($qa_output, $input_ng) {
 	}
 }
 
-function compute_accounting_efficiency($st, $output, $working_time, $mp) {
-	$wt_x_mp = $working_time * $mp;
+function compute_accounting_efficiency($st, $output, $wt_x_mp) {
 	if ($wt_x_mp != 0) {
 		return ($st * $output) / $wt_x_mp;
 	} else {
