@@ -265,7 +265,7 @@ $shift = get_shift($server_time);
 			let section = document.getElementById('section').value;
 			let line_no = document.getElementById('line_no').value;
 			$.ajax({
-		        url:'process/emp_mgt_p.php',
+		        url:'process/emp_mgt/emp_mgt_p.php',
 		        type:'GET',
 		        cache:false,
 		        data:{

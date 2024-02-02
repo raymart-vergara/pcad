@@ -76,7 +76,7 @@
                 </div>
                 <div class="col-sm-2">
                   <label>&nbsp;</label>
-                  <button type="button" class="btn bg-gray-dark btn-block" onclick="print_st_selected()" id="btnPrintSelected" disabled><i class="fas fa-print"></i> Print Selected</button>
+                  <button type="button" class="btn bg-danger btn-block" data-toggle="modal" data-target="#confirm_delete_st_selected" id="btnDeleteSelected" disabled><i class="fas fa-trash"></i> Delete Selected</button>
                 </div>
               </div>
               <div id="list_of_st_res" class="table-responsive" style="max-height: 500px; overflow: auto; display:inline-block;">
