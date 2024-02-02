@@ -1,8 +1,8 @@
 <?php
-include 'server_date_time.php';
-require 'conn/emp_mgt.php';
-include 'lib/main.php';
-include 'lib/emp_mgt.php';
+include '../server_date_time.php';
+require '../conn/emp_mgt.php';
+include '../lib/main.php';
+include '../lib/emp_mgt.php';
 
 $method = $_GET['method'];
 
