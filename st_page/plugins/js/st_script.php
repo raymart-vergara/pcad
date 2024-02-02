@@ -299,21 +299,21 @@ const delete_st =()=>{
         },success:function(response){
             if (response == 'success') {
                 Swal.fire({
-                  icon: 'info',
-                  title: 'Succesfully Deleted !!!',
-                  text: 'Information',
-                  showConfirmButton: false,
-                  timer : 1000
+                    icon: 'info',
+                    title: 'Succesfully Deleted !!!',
+                    text: 'Information',
+                    showConfirmButton: false,
+                    timer : 1000
                 });
                 load_st(1);
                 $('#update_st').modal('hide');
             }else{
                 Swal.fire({
-                  icon: 'error',
-                  title: 'Error !!!',
-                  text: 'Error',
-                  showConfirmButton: false,
-                  timer : 1000
+                    icon: 'error',
+                    title: 'Error !!!',
+                    text: 'Error',
+                    showConfirmButton: false,
+                    timer : 1000
                 }); 
             }
         }
@@ -361,9 +361,10 @@ const get_checked_length = () => {
     var numberOfChecked = arr.length;
     console.log(numberOfChecked);
     if (numberOfChecked > 0) {
-        document.getElementById("btnPrintSelected").removeAttribute('disabled');
+        document.getElementById("count_delete_st_selected").innerHTML = `${numberOfChecked} ST Row/s Selected`;
+        document.getElementById("btnDeleteSelected").removeAttribute('disabled');
     } else {
-        document.getElementById("btnPrintSelected").setAttribute('disabled', true);
+        document.getElementById("btnDeleteSelected").setAttribute('disabled', true);
     }
 }
 
@@ -373,7 +374,7 @@ const export_st = () => {
     window.open('../process/export/exp_st.php?parts_name='+parts_name+"&st="+st,'_blank');
 }
 
-const print_st_selected = () => {
+const delete_st_selected = () => {
     var arr = [];
     document.querySelectorAll("input.singleCheck[type='checkbox']:checked").forEach((el, i) => {
         arr.push(el.value);
@@ -382,7 +383,36 @@ const print_st_selected = () => {
     var numberOfChecked = arr.length;
     if (numberOfChecked > 0) {
         id_arr = Object.values(arr);
-        window.open('../process/print/print_st_selected.php?id_arr='+id_arr,'_blank');
+        $.ajax({
+            url:'../process/st/st_p.php',
+            type:'POST',
+            cache:false,
+            data:{
+                method:'delete_st_selected',
+                id_arr:id_arr
+            },success:function(response){
+                if (response == 'success') {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Succesfully Deleted !!!',
+                        text: 'Information',
+                        showConfirmButton: false,
+                        timer : 1000
+                    });
+                    load_st(1);
+                    document.getElementById("btnDeleteSelected").setAttribute('disabled', true);
+                    $('#confirm_delete_st_selected').modal('hide');
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error !!!',
+                        text: 'Error',
+                        showConfirmButton: false,
+                        timer : 1000
+                    }); 
+                }
+            }
+        });
     } else {
         Swal.fire({
             icon: 'info',

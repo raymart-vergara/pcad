@@ -201,5 +201,25 @@ if ($method == 'delete_st') {
 	}
 }
 
+if ($method == 'delete_st_selected') {
+	$id_arr = [];
+	$id_arr = $_POST['id_arr'];
+	$count = 0;
+
+	foreach ($id_arr as $id) {
+		$query = "DELETE FROM m_st WHERE id='$id'";
+		$stmt = $conn_pcad->prepare($query);
+		if (!$stmt->execute()) {
+			$count++;
+		}
+	}
+
+	if ($count == 0) {
+		echo 'success';
+	} else {
+		echo "error";
+	}
+}
+
 $conn_pcad = NULL;
 ?>

@@ -10,6 +10,7 @@
 include '../modals/logout_modal.php';
 include '../modals/new_st.php';
 include '../modals/update_st.php';
+include '../modals/confirm_delete_st_selected.php';
 ?>
 <!-- jQuery -->
 <script src="../plugins/jquery/dist/jquery.min.js"></script>
