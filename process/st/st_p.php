@@ -2,7 +2,8 @@
 session_name("pcad");
 session_start();
 
-include '../conn/pcad.php';
+require '../conn/pcad.php';
+include '../lib/st.php';
 
 $method = $_POST['method'];
 
@@ -109,29 +110,9 @@ if ($method == 'st_list') {
 	}
 }
 
-if ($method == 'get_employee_data') {
-	$parts_name = addslashes($_POST['parts_name']);
-	$response_arr = array();
-	$st = '';
-
-	$query = "SELECT parts_name, st FROM m_st WHERE parts_name = '$parts_name'";
-	$stmt = $conn_pcad->prepare($query);
-	$stmt->execute();
-	if ($stmt->rowCount() > 0) {
-		foreach($stmt->fetchALL() as $j){
-			$parts_name = $j['parts_name'];
-			$st = $j['st'];
-		}
-		$message = 'success';
-	} else {
-		$message = 'Not Found';
-	}
-
-	$response_arr = array(
-		'parts_name' => $parts_name,
-		'st' => $st,
-		'message' => $message
-	);
+if ($method == 'get_st_data') {
+	$parts_name = $_POST['parts_name'];
+	$response_arr = get_st_data($parts_name, $conn_pcad);
 
 	//header('Content-Type: application/json; charset=utf-8');
     echo json_encode($response_arr, JSON_FORCE_OBJECT);
@@ -198,6 +179,26 @@ if ($method == 'delete_st') {
 		echo 'success';
 	}else{
 		echo 'error';
+	}
+}
+
+if ($method == 'delete_st_selected') {
+	$id_arr = [];
+	$id_arr = $_POST['id_arr'];
+	$count = 0;
+
+	foreach ($id_arr as $id) {
+		$query = "DELETE FROM m_st WHERE id='$id'";
+		$stmt = $conn_pcad->prepare($query);
+		if (!$stmt->execute()) {
+			$count++;
+		}
+	}
+
+	if ($count == 0) {
+		echo 'success';
+	} else {
+		echo "error";
 	}
 }
 
