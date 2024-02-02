@@ -29,28 +29,53 @@ function get_st_data($parts_name, $conn_pcad) {
 
 // Total ST Per Line Computation
 function get_total_st_per_line($search_arr, $conn_ircs, $conn_pcad) {
-    // $registlinename = addslashes($search_arr['registlinename']);
-    // $final_process = addslashes($search_arr['final_process']);
-    // $ip = addslashes($search_arr['ip']);
+    $shift = $search_arr['shift'];
+    // $group = $search_arr['group'];
+    $registlinename = addslashes($search_arr['registlinename']);
+    $final_process = $search_arr['final_process'];
+    $ip = addslashes($search_arr['ip']);
+    $server_date_only = $search_arr['server_date_only'];
+    $server_date_only_yesterday = $search_arr['server_date_only_yesterday'];
+    $server_date_only_tomorrow = $search_arr['server_date_only_tomorrow'];
+    $server_time = $search_arr['server_time'];
     $st_per_product = 0;
     $st_per_product_arr = array();
     
-    $query = "SELECT PARTSNAME, COUNT(REGISTLINENAME) AS OUTPUT 
-            FROM T_PRODUCTWK WHERE REGISTLINENAME = 'SUBARU_08' 
-            AND REGISTDATETIME BETWEEN TO_DATE('2024-01-31 05:59:00', 'yyyy-MM-dd HH24:MI:SS') 
-            AND TO_DATE('2024-02-01 05:59:59', 'yyyy-MM-dd HH24:MI:SS') 
-            AND INSPECTION3IPADDRESS = '172.25.167.226'
-            GROUP BY PARTSNAME, REGISTLINENAME";
     // $query = "SELECT PARTSNAME, COUNT(REGISTLINENAME) AS OUTPUT 
-    //         FROM T_PRODUCTWK WHERE REGISTLINENAME = '$registlinename' 
-    //         AND REGISTDATETIME BETWEEN TO_DATE('2024-01-31 05:59:00', 'yyyy-MM-dd HH24:MI:SS') 
-    //         AND TO_DATE('2024-02-01 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
-    // if ($final_process == 'QA') {
-    //     $query = $query . "AND INSPECTION4IPADDRESS = '$ip'";
-    // } else {
-    //     $query = $query . "AND INSPECTION3IPADDRESS = '$ip'";
+    //         FROM T_PRODUCTWK WHERE REGISTLINENAME = 'SUBARU_08' 
+    //         AND REGISTDATETIME BETWEEN TO_DATE('2024-02-02 05:59:00', 'yyyy-MM-dd HH24:MI:SS') 
+    //         AND TO_DATE('2024-02-03 05:59:59', 'yyyy-MM-dd HH24:MI:SS') 
+    //         AND INSPECTION3IPADDRESS = '172.25.167.226'
+    //         GROUP BY PARTSNAME, REGISTLINENAME";
+    $query = "SELECT PARTSNAME, COUNT(REGISTLINENAME) AS OUTPUT 
+            FROM T_PRODUCTWK WHERE REGISTLINENAME = '$registlinename'";
+
+    if ($shift == 'DS') {
+        $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+    } else if ($shift == 'NS') {
+        if ($server_time >= '06:00:00' && $server_time <= '23:59:59') {
+            $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+        } else if ($server_time >= '00:00:00' && $server_time < '06:00:00') {
+            $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+        }
+    }
+
+    // if ($group == 'A') {
+    //     $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+    // } else if ($group == 'B') {
+    //     if ($server_time >= '06:00:00' && $server_time <= '23:59:59') {
+    //         $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+    //     } else if ($server_time >= '00:00:00' && $server_time < '06:00:00') {
+    //         $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+    //     }
     // }
-    // $query = $query . "GROUP BY PARTSNAME, REGISTLINENAME";
+
+    if ($final_process == 'QA') {
+        $query = $query . "AND INSPECTION4IPADDRESS = '$ip'";
+    } else {
+        $query = $query . "AND INSPECTION3IPADDRESS = '$ip'";
+    }
+    $query = $query . "GROUP BY PARTSNAME, REGISTLINENAME";
 
     $stmt = oci_parse($conn_ircs, $query);
 	oci_execute($stmt);
