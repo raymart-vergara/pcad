@@ -1,6 +1,6 @@
 <?php
 
-// Conveyor Progress Counter System Functions (conveyor_pcs)
+// PCAD Functions
 
 function compute_yield($qa_output, $input_ng) {
 	$input_ng_plus_qa_output = $input_ng + $qa_output;
@@ -11,9 +11,9 @@ function compute_yield($qa_output, $input_ng) {
 	}
 }
 
-function compute_accounting_efficiency($st, $output, $wt_x_mp) {
+function compute_accounting_efficiency($total_st_per_line, $wt_x_mp) {
 	if ($wt_x_mp != 0) {
-		return ($st * $output) / $wt_x_mp;
+		return $total_st_per_line / $wt_x_mp;
 	} else {
 		return 0;
 	}
