@@ -71,7 +71,6 @@
                 };
                 // Set department labels as sub-labels for each machine
                 configuration.data.labels = machinename.map((machine, index) => [machine, department[index]]);
-
                 // Destroy previous chart instance before creating a new one
                 if (chart) {
                     chart.destroy();
