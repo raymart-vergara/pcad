@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	$(document).ready(function(){
 		$(document).on('click', '.btn-clear', function(){
 			localStorage.setItem("line_no", null);
@@ -39,4 +39,4 @@
 	})
 </script>
 </body>
-</html>
+</html> -->
