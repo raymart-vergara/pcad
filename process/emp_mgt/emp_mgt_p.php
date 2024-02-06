@@ -14,14 +14,19 @@ if ($method == 'count_emp') {
 
 	$dept_pd = $_GET['dept_pd'];
 	$dept_qa = $_GET['dept_qa'];
-	$section = $_GET['section'];
+	$section_pd = $_GET['section_pd'];
+	$section_qa = $_GET['section_qa'];
 	$line_no = $_GET['line_no'];
+
+	//$shift_group = $_GET['shift_group'];
+	$shift_group = 'A';
 
 	$search_arr = array(
 		'day' => $day,
 		'shift' => $shift,
+		'shift_group' => $shift_group,
 		'dept' => $dept_pd,
-		'section' => $section,
+		'section' => $section_pd,
 		'line_no' => $line_no
 	);
 
@@ -36,8 +41,9 @@ if ($method == 'count_emp') {
 	$search_arr = array(
 		'day' => $day,
 		'shift' => $shift,
+		'shift_group' => $shift_group,
 		'dept' => $dept_qa,
-		'section' => $section,
+		'section' => $section_qa,
 		'line_no' => $line_no
 	);
 
