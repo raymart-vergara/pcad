@@ -5,19 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" http-equiv="refresh">
   <title>PCAD</title>
 
-  <!-- <link rel="icon" href="../../dist/img/user.png" type="image/x-icon" /> -->
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="../../dist/css/font.min.css">
+   <!-- Google Font: Source Sans Pro -->
+   <link rel="stylesheet" href="../dist/css/font.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="../../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-    <!-- Sweet Alert -->
-  <link rel="stylesheet" href="../../plugins/sweetalert2/dist/sweetalert2.min.css">
-    <!-- Bootstrap -->
-  <link rel="stylesheet" href="../../plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
   <style>
     .loader {
       border: 16px solid #f3f3f3;
