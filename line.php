@@ -8,7 +8,8 @@ $registlinename = '';
 // $registlinename = $_GET['registlinename']; // IRCS LINE (PCS)
 $dept_pd = 'PD2';
 $dept_qa = 'QA';
-$section = get_section($line_no, $conn_emp_mgt);
+$section_pd = get_section($line_no, $conn_emp_mgt);
+$section_qa = 'QA';
 $shift = get_shift($server_time);
 ?>
 <!DOCTYPE html>
@@ -37,7 +38,8 @@ $shift = get_shift($server_time);
 	<input type="hidden" id="shift" value="<?=$shift?>">
 	<input type="hidden" id="dept_pd" value="<?=$dept_pd?>">
 	<input type="hidden" id="dept_qa" value="<?=$dept_qa?>">
-	<input type="hidden" id="section" value="<?=$section?>">
+	<input type="hidden" id="section_pd" value="<?=$section_pd?>">
+	<input type="hidden" id="section_qa" value="<?=$section_qa?>">
 	<input type="hidden" id="line_no" value="<?=$line_no?>">
 	<!-- <input type="hidden" id="registlinename" value="<?=$registlinename?>"> -->
 	<table>
@@ -262,7 +264,8 @@ $shift = get_shift($server_time);
 		const count_emp = () => {
 			let dept_pd = document.getElementById('dept_pd').value;
 			let dept_qa = document.getElementById('dept_qa').value;
-			let section = document.getElementById('section').value;
+			let section_pd = document.getElementById('section_pd').value;
+			let section_qa = document.getElementById('section_qa').value;
 			let line_no = document.getElementById('line_no').value;
 			$.ajax({
 		        url:'process/emp_mgt/emp_mgt_p.php',
@@ -272,7 +275,8 @@ $shift = get_shift($server_time);
 		            method:'count_emp',
 		            dept_pd:dept_pd,
 		            dept_qa:dept_qa,
-		            section:section,
+		            section_pd:section_pd,
+					section_qa:section_qa,
 		            line_no:line_no
 		        },
 		        success:function(response){
