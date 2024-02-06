@@ -9,6 +9,7 @@
     <link rel="icon" href="dist/img/logo.ico" type="image/x-icon" />
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="dist/css/font.min.css">
+    <script src="plugins/chart.js/dist/chart.umd.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
@@ -325,10 +326,14 @@
                         <div class="card-body">
                             <h3>DT / DELAY / ANDON</h3>
 
-                            <p class="card-text">
-                                Some quick example text to build on the card title and make up the bulk of the card's
-                                content.
-                            </p>
+                            <!-- /.navbar -->
+                            <div class="container-lg my-4 mb-5">
+                                    <div class="card rounded shadow">
+                                        <div id="chart-container">
+                                            <canvas id="hourly_chart"></canvas>
+                                        </div>
+                                    </div>
+                            </div>
                             <a href="#" class="card-link">Card link</a>
                             <a href="#" class="card-link">Another link</a>
                         </div>
@@ -336,32 +341,20 @@
                 </div>
             </div>
         </div>
-        <footer class="main-footer">
-            <strong>Copyright &copy; 2024. Developed by: Vince Dale Alcantara</strong>
-            All rights reserved.
-            <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 1.0.0
-            </div>
-        </footer>
+    </div>
+    <footer class="main-footer">
+        <strong>Copyright &copy; 2024. Developed by: Vince Dale Alcantara</strong>
+        All rights reserved.
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Version</b> 1.0.0
+        </div>
+    </footer>
 
-        <!-- jQuery -->
-        <script src="plugins/jquery/dist/jquery.min.js"></script>
-        <!-- jQuery UI 1.11.4 -->
-        <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
-        <!-- SweetAlert2 -->
-        <script type="text/javascript" src="plugins/sweetalert2/dist/sweetalert2.min.js"></script>
-        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-        <script>
-            $.widget.bridge('uibutton', $.ui.button)
-        </script>
-        <!-- Bootstrap 4 -->
-        <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <!-- overlayScrollbars -->
-        <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-        <!-- AdminLTE App -->
-        <script src="dist/js/adminlte.js"></script>
 
 </body>
 
 </html>
+<?php
+include 'andon_graph/plugins/js/a_graph_script.php'; 
+?>
 <!-- /.navbar -->
