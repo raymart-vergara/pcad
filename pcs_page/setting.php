@@ -15,22 +15,23 @@ include 'plugins/head.php';
 								<tr>
 									<td class="text-right font-weight-bold fz-25">SELECT LINE NO. </td>
 									<td>
-										<select name="" id="a" class="form-control ml-4 fz-25" style="width: 250px">
+										<select name="" id="ircsDropdown" class="form-control ml-4 fz-25" style="width: 250px">
 											<option value="">- - -</option>
+									
 										</select>
 									</td>
 								</tr>
 								<tr>
 									<td class="text-right font-weight-bold fz-25">SELECTED LINE NO. </td>
 									<td>
-										<input type="text" class="ml-4 fz-25 form-control-plaintext" id="b">
+										<input type="text" class="ml-4 fz-25 form-control-plaintext" id="line_no">
 									</td>
 								</tr>
 							</tbody>
 						</table>
 						<hr>
 						<h4>SET YOUR TARGET PLAN </h4>
-						<form class="pt" >
+						<form class="pt">
 							<input type="hidden" name="request" value="addTarget">
 							<input type="hidden" name="registlinename" value="">
 							<div class="container-fluid">
@@ -76,21 +77,22 @@ include 'plugins/head.php';
 											<input type="text" name="plan" class="form-control form-control-lg" id="d" placeholder="" value="0">
 										</div>
 									</div>
-									
-									
+
+
 									<div class="col-lg-6">
 										<div class="form-group">
 											<label for="d">TIME RANGE</label>
-											<input type="text" name="time_range" class="form-control form-control-lg" id="e" >
+											<input type="text" name="time_range" class="form-control form-control-lg" id="e">
 										</div>
-										<input type="hidden" name="time_start" >
-										<input type="hidden" name="time_end" >
+										<input type="hidden" name="time_start">
+										<input type="hidden" name="time_end">
 									</div>
 								</div>
 							</div>
 						</form>
-					
-
+						<a href="index.php">
+							<button type="button" id="btnMainMenu">MainMenu</button>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -99,5 +101,5 @@ include 'plugins/head.php';
 </div>
 <?php
 include 'plugins/footer.php';
-// include  'plugins/js/setting_script.php';
+include  'plugins/js/setting_script.php';
 ?>

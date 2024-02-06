@@ -1,42 +1,51 @@
-<!-- <script>
-	$(document).ready(function(){
-		$(document).on('click', '.btn-clear', function(){
-			localStorage.setItem("line_no", null);
-			window.open("setting.php","_self");
-		});
-		if (localStorage.getItem("line_no") === null) {
-		  localStorage.setItem("line_no", null);
-		}else{
-		  $("#b").val(localStorage.getItem("line_no"));
-		}
-		if($("#b").val() != "null"){
-			$.post('process/setting_p.php',{
-				line_no : 'getLineName',
-				line_no: $("#b").val()
-			}, function(response){
-				// console.log(response);
-				$("#b").val(response.trim());
-			});
-		}
-		$(document).on('change', '#a', function(){
-			localStorage.setItem("line_no", $("#a").val());
-		  	$("#b").val(localStorage.getItem("line_no"));
-		  	location.reload();
-		});
+<script>
 
-		// ADVANCE LISTENER -----------------------------------------------------
-		document.addEventListener("keypress",function(e){
-			if(e.keyCode == 49 || e.keyCode == 97){
-				localStorage.setItem("line_no", null);
-				window.open("setting.php","_self");
-			}
-			if(e.keyCode == 48 || e.keyCode == 96){
-				var url	= $('#mainMenu').prop('href');
-				window.open(url,"_self");
-			}
-		});
+function fetchIRCSDropdown() {
+    $.ajax({
+        url: 'process/setting_p.php', 
+        method: 'POST',
+        data:{ 
+            method: 'fetch_ircs_line'
+        },
+        dataType: 'html',
+        success: function(response) {
+            $('#ircsDropdown').html(response);
+        },
+        error: function() {
+            console.error('Error fetching data');
+        }
+    });
+}
 
-	})
+// Add change event handler for the dropdown
+$('#ircsDropdown').on('change', function() {
+    var selectedLineNo = $(this).val();
+
+    if (selectedLineNo) {
+        $.ajax({
+            url: 'process/setting_p.php', 
+            method: 'POST',
+            data: { 
+                method: 'getLineNo',
+                registlinename: selectedLineNo
+            },
+            dataType: 'html',
+            success: function(response) {
+                $('#line_no').val(response);
+            },
+            error: function() {
+                console.error('Error fetching line number');
+            }
+        });
+    } else {
+     
+        $('#line_no').val('');
+    }
+});
+
+fetchIRCSDropdown();
+
+
 </script>
 </body>
-</html> -->
+</html> -
