@@ -48,6 +48,7 @@ function compute_absent_ratio($actual_absent, $total_active_mp) {
 }
 
 // PCAD Main Functions
+// Must Require Database Config "../conn/pcad.php" before using this functions
 
 // IRCS Line Data
 function get_ircs_line_data($registlinename, $conn_pcad) {

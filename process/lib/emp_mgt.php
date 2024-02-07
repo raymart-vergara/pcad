@@ -40,6 +40,7 @@ function count_emp($search_arr, $conn_emp_mgt) {
 	$dept = addslashes($search_arr['dept']);
 	$section = addslashes($search_arr['section']);
 	$line_no = addslashes($search_arr['line_no']);
+	$shift_group = addslashes($search_arr['shift_group']);
 	$query = "SELECT count(id) AS total FROM m_employees WHERE resigned = 0";
 
 	if (!empty($search_arr['dept'])) {
@@ -53,6 +54,7 @@ function count_emp($search_arr, $conn_emp_mgt) {
 	if (!empty($search_arr['line_no'])) {
 		$query = $query . " AND line_no LIKE '$line_no%'";
 	}
+	$query = $query . " AND shift_group = '$shift_group'";
 
 	$stmt = $conn_emp_mgt->prepare($query);
 	$stmt->execute();
@@ -69,13 +71,13 @@ function count_emp($search_arr, $conn_emp_mgt) {
 // Total Present Employee Count (Resigned Not Included, Unregistered Employee Included)
 function count_emp_tio($search_arr, $conn_emp_mgt) {
 	$day = addslashes($search_arr['day']);
-	$shift = addslashes($search_arr['shift']);
+	$shift_group = addslashes($search_arr['shift_group']);
 	$dept = addslashes($search_arr['dept']);
 	$section = addslashes($search_arr['section']);
 	$line_no = addslashes($search_arr['line_no']);
 	$sql = "SELECT count(emp.emp_no) AS total FROM m_employees emp
 			LEFT JOIN t_time_in_out tio ON tio.emp_no = emp.emp_no
-			WHERE emp.resigned = 0 AND tio.day = '$day' AND tio.shift = '$shift'";
+			WHERE emp.resigned = 0 AND tio.day = '$day' AND emp.shift_group = '$shift_group'";
 
 	if (!empty($search_arr['dept'])) {
 		$sql = $sql . " AND emp.dept = '$dept'";

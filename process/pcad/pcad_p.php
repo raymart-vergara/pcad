@@ -28,9 +28,9 @@ if ($method == 'get_accounting_efficiency') {
     // Total ST Per Line Declaration
     // $registlinename = 'DAIHATSU_30';
     $registlinename = 'SUBARU_08';
-    $group = 'A';
+    $shift_group = 'A';
     // $registlinename = $_GET['registlinename'];
-    // $group = $_GET['group'];
+    // $shift_group = $_GET['shift_group'];
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
     $final_process = $ircs_line_data_arr['final_process'];
     $ip = $ircs_line_data_arr['ip'];
@@ -38,7 +38,7 @@ if ($method == 'get_accounting_efficiency') {
     $search_arr = array(
         'day' => $day,
 		'shift' => $shift,
-        'group' => $group,
+        'shift_group' => $shift_group,
         'dept' => "",
         'section' => "",
 		'line_no' => $line_no,
@@ -78,16 +78,16 @@ if ($method == 'get_yield') {
     // $input_ng = $_GET['input_ng'];
     // $shift = $_GET['shift'];
     $registlinename = 'SUBARU_08';
-    $group = 'A';
+    $shift_group = 'A';
     // $registlinename = $_GET['registlinename'];
-    // $group = $_GET['group'];
+    // $shift_group = $_GET['shift_group'];
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
     $final_process = $ircs_line_data_arr['final_process'];
     $ip = $ircs_line_data_arr['ip'];
 
     $search_arr = array(
 		'shift' => $shift,
-        'group' => $group,
+        'shift_group' => $shift_group,
         'registlinename' => $registlinename,
 		'final_process' => $final_process,
     	'ip' => $ip,
@@ -112,16 +112,16 @@ if ($method == 'get_ppm') {
     // $input_ng = $_GET['input_ng'];
     // $shift = $_GET['shift'];
     $registlinename = 'SUBARU_08';
-    $group = 'A';
+    $shift_group = 'A';
     // $registlinename = $_GET['registlinename'];
-    // $group = $_GET['group'];
+    // $shift_group = $_GET['shift_group'];
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
     $final_process = $ircs_line_data_arr['final_process'];
     $ip = $ircs_line_data_arr['ip'];
 
     $search_arr = array(
 		'shift' => $shift,
-        'group' => $group,
+        'shift_group' => $shift_group,
         'registlinename' => $registlinename,
 		'final_process' => $final_process,
     	'ip' => $ip,
