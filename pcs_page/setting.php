@@ -15,9 +15,9 @@ include 'plugins/head.php';
 								<tr>
 									<td class="text-right font-weight-bold fz-25">SELECT LINE NO. </td>
 									<td>
-										<select name="" id="ircsDropdown" class="form-control ml-4 fz-25" style="width: 250px">
-											<option value="">- - -</option>
-									
+										<select name="ircsdropdown" required id="ircsDropdown" class="form-control ml-4 fz-25" style="width: 250px">
+											<option >- - -</option>
+											<option></option>
 										</select>
 									</td>
 								</tr>
