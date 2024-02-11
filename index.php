@@ -1,3 +1,4 @@
+<?php include 'process/server_date_time.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,7 +32,7 @@
     <div class="container-fluid">
         <h1 class='text-center'>Production Conveyor Analysis Dashboard</h1>
         <div class="col-12">
-            <div class="card card-primary card-outline">
+            <div class="card card-primary card-outline shadow">
                 <div class="card-body">
                     <div class="row">
                         <p class="card-text col-6">
@@ -40,7 +41,9 @@
                             <label for="">Shift <span> DS</span></label>
                         </p>
                         <p class="card-text col-6">
-                            <label for="">Date: <span>2024-02-02</span></label>
+                            <label for="">Date: <span>
+                                    <?= $server_date_only ?>
+                                </span></label>
                             <br>
                             <label for="">Group <span>6</span></label>
                         </p>
@@ -52,7 +55,7 @@
             <!-- ================== LEFT SIDE========================= -->
             <div class="col-6">
                 <div class="col-12">
-                    <div class="card card-primary card-outline">
+                    <div class="card card-primary card-outline shadow">
                         <div class="card-body">
                             <table class="table">
                                 <thead>
@@ -89,7 +92,7 @@
                 </div>
                 <!-- ========================================================= -->
                 <div class="col-12">
-                    <div class="card card-primary card-outline">
+                    <div class="card card-primary card-outline shadow">
                         <div class="card-body">
                             <h5>Starting Balance Delay <span class="mx-5">1234</span></h5>
                             <div class="row">
@@ -213,7 +216,7 @@
                 </div>
                 <!-- ========================================================= -->
                 <div class="col-12">
-                    <div class="card card-primary card-outline">
+                    <div class="card card-primary card-outline shadow">
                         <div class="card-body">
                             <table class="table">
                                 <thead>
@@ -249,7 +252,7 @@
             <!-- ==================START OF RIGHT SIDE========================= -->
             <div class="col-6">
                 <div class="col-12">
-                    <div class="card card-primary card-outline">
+                    <div class="card card-primary card-outline shadow">
                         <div class="card-body">
                             <table class="table">
                                 <thead>
@@ -277,7 +280,7 @@
                 </div>
                 <!-- ========================================================= -->
                 <div class="col-12">
-                    <div class="card card-primary card-outline">
+                    <div class="card card-primary card-outline shadow">
                         <div class="card-body">
                             <h2 class="text-center">Inspection Output</h2>
                             <table class="table">
@@ -321,20 +324,21 @@
                 </div>
                 <!-- =========================================== -->
                 <div class="col-12">
-                    <div class="card card-primary card-outline">
+                    <div class="card card-primary card-outline shadow">
                         <div class="card-body">
                             <h3>DT / DELAY / ANDON</h3>
 
                             <!-- /.navbar -->
-                            <div class="container-lg my-4 mb-5">
-                                    <div class="card rounded shadow">
-                                        <div id="chart-container">
-                                            <canvas id="hourly_chart"></canvas>
-                                        </div>
+                            <div class="container-lg my-4">
+                                <div class="card rounded shadow">
+                                    <div id="chart-container">
+                                        <canvas id="hourly_chart"></canvas>
                                     </div>
+                                </div>
+                                <a target="_blank" href="http://172.25.114.167:3000/andon_system/admin/page/andonProdLogs.php"
+                                    class="card-link">Andon Details</a>
                             </div>
-                            <a href="#" class="card-link">Card link</a>
-                            <a href="#" class="card-link">Another link</a>
+
                         </div>
                     </div>
                 </div>
@@ -424,7 +428,7 @@
                                 backgroundColor: 'rgba(23, 162, 184, 0.5)',
                                 borderColor: 'rgba(23, 162, 184, 1)',
                                 borderWidth: 1,
-                                data:Fixing_Time,
+                                data: Fixing_Time,
                                 yAxisID: 'y',
                             }
                         ],
