@@ -1,49 +1,43 @@
 <script>
+$(document).ready(function(){
+	    // Line
+		if (localStorage.getItem("registlinename") === null) {
+		  localStorage.setItem("registlinename", null);
+		}else{
+		  $("#line_no").val(localStorage.getItem("registlinename"));
+		}
+		if($("#line_no").val() != "null"){
+			$.post('../process/pcs/setting_p.php',{
+				request: 'getLineNo',
+				registlinename: $("#line_no").val()
+			}, function(response){
+				console.log(response);
+				$("#line_no").val(response.trim());
+			});
+		}
 
-function fetchIRCSDropdown() {
-    $.ajax({
-        url: 'process/setting_p.php', 
-        method: 'POST',
-        data:{ 
-            method: 'fetch_ircs_line'
-        },
-        dataType: 'html',
-        success: function(response) {
-            $('#ircsDropdown').html(response);
-        },
-        error: function() {
-            console.error('Error fetching data');
-        }
-    });
-}
+		$(document).on('change', '#ircs_line', function(){
+			localStorage.setItem("registlinename", $("#ircs_line").val());
+		  	$("#line_no").val(localStorage.getItem("registlinename"));
+		  	location.reload();
+		});
 
-// Add change event handler for the dropdown
-$('#ircsDropdown').on('change', function() {
-    var selectedLineNo = $(this).val();
+		//Plan
+		$(document).on('keyup', '#plan', function(){
+			getTakt();
+		});
 
-    if (selectedLineNo) {
-        $.ajax({
-            url: 'process/setting_p.php', 
-            method: 'POST',
-            data: { 
-                method: 'getLineNo',
-                registlinename: selectedLineNo
-            },
-            dataType: 'html',
-            success: function(response) {
-                $('#line_no').val(response);
-            },
-            error: function() {
-                console.error('Error fetching line number');
-            }
-        });
-    } else {
-     
-        $('#line_no').val('');
-    }
-});
+		$(document).on('keyup', '#secs', function(){
+			getTakt();
+		});
+	});
+		function getTakt(){
+			var plan = $("#plan").val();
+			var secs = $("#secs").val();
+			var takt = secs / plan;
+			$("#takt_time").val(takt.toFixed());
 
-fetchIRCSDropdown();
+	}
 
 
 </script>
