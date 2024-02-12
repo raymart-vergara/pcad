@@ -56,18 +56,18 @@ if ($method == 'get_accounting_efficiency') {
     $total_st_per_line = get_total_st_per_line($search_arr, $conn_ircs, $conn_pcad);
     $accounting_efficiency = compute_accounting_efficiency($total_st_per_line, $wt_x_mp);
 
-    echo var_dump($search_arr);
-    echo var_dump($wt_x_mp_arr);
+    // echo var_dump($search_arr);
+    // echo var_dump($wt_x_mp_arr);
 
-    $response_arr = array(
-        'total_st_per_line' => $total_st_per_line,
-		'wt_x_mp' => $wt_x_mp,
-        'accounting_efficiency' => $accounting_efficiency
-    );
+    // $response_arr = array(
+    //     'total_st_per_line' => $total_st_per_line,
+	// 	'wt_x_mp' => $wt_x_mp,
+    //     'accounting_efficiency' => $accounting_efficiency
+    // );
 
-    echo var_dump($response_arr);
+    // echo var_dump($response_arr);
 
-    // echo $accounting_efficiency;
+    echo $accounting_efficiency;
 }
 
 // Yield
