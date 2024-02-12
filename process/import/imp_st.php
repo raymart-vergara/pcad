@@ -50,7 +50,7 @@ function check_csv ($file, $conn_pcad) {
 
         $check_csv_row++;
         
-        $parts_name = custom_trim($line[4]);
+        $parts_name = $line[4];
         $st = custom_trim($line[14]);
 
         if ($parts_name == '' || $st == '') {
@@ -124,7 +124,7 @@ if (!empty($_FILES['file']['name']) && in_array($_FILES['file']['type'],$csvMime
                     continue; // Skip blank lines
                 }
 
-                $parts_name = addslashes(custom_trim($line[4]));
+                $parts_name = addslashes($line[4]);
                 $st = addslashes(custom_trim($line[14]));
 
                 $conn_pcad->beginTransaction();

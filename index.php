@@ -1,3 +1,18 @@
+<?php
+include 'process/server_date_time.php';
+require 'process/conn/emp_mgt.php';
+include 'process/lib/emp_mgt.php';
+
+$line_no = '2132';
+// $line_no = $_GET['line_no'];
+$registlinename = '';
+// $registlinename = $_GET['registlinename']; // IRCS LINE (PCS)
+$dept_pd = 'PD2';
+$dept_qa = 'QA';
+$section_pd = get_section($line_no, $conn_emp_mgt);
+$section_qa = 'QA';
+$shift = get_shift($server_time);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,6 +37,13 @@
 </head>
 
 <body>
+    <input type="hidden" id="shift" value="<?=$shift?>">
+	<input type="hidden" id="dept_pd" value="<?=$dept_pd?>">
+	<input type="hidden" id="dept_qa" value="<?=$dept_qa?>">
+	<input type="hidden" id="section_pd" value="<?=$section_pd?>">
+	<input type="hidden" id="section_qa" value="<?=$section_qa?>">
+	<input type="hidden" id="line_no" value="<?=$line_no?>">
+	<!-- <input type="hidden" id="registlinename" value="<?=$registlinename?>"> -->
     <div class="container-fluid">
         <div class="flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="60" width="60"><span
@@ -35,14 +57,14 @@
                 <div class="card-body">
                     <div class="row">
                         <p class="card-text col-6">
-                            <label for="">Line No. <span> 0143</span></label>
+                            <label for="" id="line_no_label">Line No. <span> <?=$line_no?></span></label>
                             <br>
-                            <label for="">Shift <span> DS</span></label>
+                            <label for="" id="shift_label">Shift <span> <?=$shift?></span></label>
                         </p>
                         <p class="card-text col-6">
-                            <label for="">Date: <span>2024-02-02</span></label>
+                            <label for="" id="server_date_only_label">Date: <span><?=$server_date_only?></span></label>
                             <br>
-                            <label for="">Group <span>6</span></label>
+                            <label for="" id="shift_group_label">Group <span>A/B</span></label>
                         </p>
                     </div>
                 </div>
@@ -73,13 +95,13 @@
                                     <tr>
                                         <th scope="row">Accounting Efficiency</th>
                                         <td>200</td>
-                                        <td>20</td>
+                                        <td id="actual_accounting_efficiency">20</td>
                                         <td>180</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Hourly Output</th>
                                         <td>300</td>
-                                        <td>30</td>
+                                        <td id="actual_hourly_output">30</td>
                                         <td>270</td>
                                     </tr>
                                 </tbody>
@@ -102,11 +124,11 @@
                                         <tbody>
                                             <tr>
                                                 <th scope="row">PD MP</th>
-                                                <td>100</td>
+                                                <td id="total_pd_mp">100</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Actual</th>
-                                                <td>200</td>
+                                                <td id="total_present_pd_mp">200</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -125,7 +147,7 @@
                                             </tr>
                                             <tr>
                                                 <th scope="row">Absent</th>
-                                                <td>200</td>
+                                                <td id="total_absent_pd_mp">200</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -140,11 +162,11 @@
                                         <tbody>
                                             <tr>
                                                 <th scope="row">Ratio</th>
-                                                <td>100</td>
+                                                <td id="absent_ratio_pd_mp">100</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Suppport</th>
-                                                <td>200</td>
+                                                <td id="total_pd_mp_line_support_to">200</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -160,11 +182,11 @@
                                         <tbody>
                                             <tr>
                                                 <th scope="row">QA MP</th>
-                                                <td>100</td>
+                                                <td id="total_qa_mp">100</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Actual</th>
-                                                <td>200</td>
+                                                <td id="total_present_qa_mp">200</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -183,7 +205,7 @@
                                             </tr>
                                             <tr>
                                                 <th scope="row">Absent</th>
-                                                <td>200</td>
+                                                <td id="total_absent_qa_mp">200</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -198,11 +220,11 @@
                                         <tbody>
                                             <tr>
                                                 <th scope="row">Ratio</th>
-                                                <td>100</td>
+                                                <td id="absent_ratio_qa_mp">100</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Suppport</th>
-                                                <td>200</td>
+                                                <td id="total_qa_mp_line_support_to">200</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -263,12 +285,12 @@
                                     <tr>
                                         <th scope="row">Yield</th>
                                         <td>100</td>
-                                        <td>10</td>
+                                        <td id="actual_yield">10</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">PPM</th>
                                         <td>200</td>
-                                        <td>20</td>
+                                        <td id="actual_ppm">20</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -340,9 +362,18 @@
                 </div>
             </div>
         </div>
+        <!-- Buttons (Progress Counter TV) -->
+        <div class="row">
+            <div class="col-6">
+                <button type="button" class="btn btn-danger btn-block"> End Process</button>
+            </div>
+            <div class="col-6">
+                <a type="button" class="btn btn-secondary btn-block" href="pcs_page/index.php"> Main Menu</a>
+            </div>
+        </div>
     </div>
     <footer class="main-footer">
-        <strong>Copyright &copy; 2024. Developed by: Vince Dale Alcantara</strong>
+        <strong>Copyright &copy; 2024. Developed by FALP IT System Group</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
             <b>Version</b> 1.0.0
@@ -366,6 +397,23 @@
         andon_d_sum();
         // Set interval to refresh data every 10 seconds
         setInterval(andon_d_sum, 10000); // 10000 milliseconds = 10 seconds
+
+        // Call count_emp initially to load the data from employee management system
+        count_emp();
+        // Set interval to refresh data every 15 seconds
+		setInterval(count_emp, 15000); // 15000 milliseconds = 15 seconds
+
+        // Call these functions initially to load the data from PCAD and other Systems
+        // Set interval to refresh data every 30 seconds
+        // 30000 milliseconds = 30 seconds
+        get_accounting_efficiency();
+        setInterval(get_accounting_efficiency, 30000);
+        get_hourly_output();
+        setInterval(get_hourly_output, 30000);
+        get_yield();
+        setInterval(get_yield, 30000);
+        get_ppm();
+        setInterval(get_ppm, 30000);
     });
 
     const andon_d_sum = () => {
@@ -438,6 +486,105 @@
                 }
                 chart = new Chart(ctx, configuration);
             },
+        });
+    }
+
+    const count_emp = () => {
+        let dept_pd = document.getElementById('dept_pd').value;
+        let dept_qa = document.getElementById('dept_qa').value;
+        let section_pd = document.getElementById('section_pd').value;
+        let section_qa = document.getElementById('section_qa').value;
+        let line_no = document.getElementById('line_no').value;
+        $.ajax({
+            url:'process/emp_mgt/emp_mgt_p.php',
+            type:'GET',
+            cache:false,
+            data:{
+                method:'count_emp',
+                dept_pd:dept_pd,
+                dept_qa:dept_qa,
+                section_pd:section_pd,
+                section_qa:section_qa,
+                line_no:line_no
+            },
+            success:function(response){
+                try {
+                    let response_array = JSON.parse(response);
+                    if (response_array.message == 'success') {
+                        document.getElementById('total_pd_mp').innerHTML = response_array.total_pd_mp;
+                        document.getElementById('total_present_pd_mp').innerHTML = response_array.total_present_pd_mp;
+                        document.getElementById('total_absent_pd_mp').innerHTML = response_array.total_absent_pd_mp;
+                        document.getElementById('total_pd_mp_line_support_to').innerHTML = response_array.total_pd_mp_line_support_to;
+                        document.getElementById('absent_ratio_pd_mp').innerHTML = `${response_array.absent_ratio_pd_mp}%`;
+
+                        document.getElementById('total_qa_mp').innerHTML = response_array.total_qa_mp;
+                        document.getElementById('total_present_qa_mp').innerHTML = response_array.total_present_qa_mp;
+                        document.getElementById('total_absent_qa_mp').innerHTML = response_array.total_absent_qa_mp;
+                        document.getElementById('total_qa_mp_line_support_to').innerHTML = response_array.total_qa_mp_line_support_to;
+                        document.getElementById('absent_ratio_qa_mp').innerHTML = `${response_array.absent_ratio_qa_mp}%`;
+                    } else {
+                        console.log(response);
+                    }
+                } catch(e) {
+                    console.log(response);
+                }
+            }
+        });
+    }
+
+    const get_accounting_efficiency = () => {
+        $.ajax({
+            url:'process/pcad/pcad_p.php',
+            type:'GET',
+            cache:false,
+            data:{
+                method:'get_accounting_efficiency'
+            },
+            success:function(response){
+                document.getElementById('actual_accounting_efficiency').innerHTML = `${response}%`;
+            }
+        });
+    }
+
+    const get_hourly_output = () => {
+        $.ajax({
+            url:'process/pcad/pcad_p.php',
+            type:'GET',
+            cache:false,
+            data:{
+                method:'get_hourly_output'
+            },
+            success:function(response){
+                document.getElementById('actual_hourly_output').innerHTML = response;
+            }
+        });
+    }
+
+    const get_yield = () => {
+        $.ajax({
+            url:'process/pcad/pcad_p.php',
+            type:'GET',
+            cache:false,
+            data:{
+                method:'get_yield'
+            },
+            success:function(response){
+                document.getElementById('actual_yield').innerHTML = response;
+            }
+        });
+    }
+
+    const get_ppm = () => {
+        $.ajax({
+            url:'process/pcad/pcad_p.php',
+            type:'GET',
+            cache:false,
+            data:{
+                method:'get_ppm'
+            },
+            success:function(response){
+                document.getElementById('actual_ppm').innerHTML = response;
+            }
         });
     }
 </script>
