@@ -83,13 +83,13 @@ $shift = get_shift($server_time);
 							<tr>
 								<td>Accounting Efficiency</td>
 								<td>0</td>
-								<td>0</td>
+								<td id="actual_accounting_efficiency">0</td>
 								<td>0</td>
 							</tr>
 							<tr>
 								<td>Hourly Output</td>
 								<td>0</td>
-								<td>0</td>
+								<td id="actual_hourly_output">0</td>
 								<td>0</td>
 							</tr>
 						</tbody>
@@ -108,12 +108,12 @@ $shift = get_shift($server_time);
 							<tr>
 								<td>Yield</td>
 								<td>0</td>
-								<td>0</td>
+								<td id="actual_yield">0</td>
 							</tr>
 							<tr>
 								<td>PPM</td>
 								<td>0</td>
-								<td>0</td>
+								<td id="actual_ppm">0</td>
 							</tr>
 						</tbody>
 					</table>
@@ -259,6 +259,14 @@ $shift = get_shift($server_time);
 		document.addEventListener("DOMContentLoaded", () => {
 			count_emp();
 			setInterval(count_emp, 15000);
+			get_accounting_efficiency();
+			setInterval(get_accounting_efficiency, 30000);
+			get_hourly_output();
+			setInterval(get_hourly_output, 30000);
+			get_yield();
+			setInterval(get_yield, 30000);
+			get_ppm();
+			setInterval(get_ppm, 30000);
 		});
 
 		const count_emp = () => {
@@ -300,6 +308,62 @@ $shift = get_shift($server_time);
 	                } catch(e) {
 	                    console.log(response);
 	                }
+		        }
+		    });
+		}
+
+		const get_accounting_efficiency = () => {
+			$.ajax({
+		        url:'process/pcad/pcad_p.php',
+		        type:'GET',
+		        cache:false,
+		        data:{
+		            method:'get_accounting_efficiency'
+		        },
+		        success:function(response){
+					document.getElementById('actual_accounting_efficiency').innerHTML = `${response}%`;
+		        }
+		    });
+		}
+
+		const get_hourly_output = () => {
+			$.ajax({
+		        url:'process/pcad/pcad_p.php',
+		        type:'GET',
+		        cache:false,
+		        data:{
+		            method:'get_hourly_output'
+		        },
+		        success:function(response){
+					document.getElementById('actual_hourly_output').innerHTML = response;
+		        }
+		    });
+		}
+
+		const get_yield = () => {
+			$.ajax({
+		        url:'process/pcad/pcad_p.php',
+		        type:'GET',
+		        cache:false,
+		        data:{
+		            method:'get_yield'
+		        },
+		        success:function(response){
+					document.getElementById('actual_yield').innerHTML = response;
+		        }
+		    });
+		}
+
+		const get_ppm = () => {
+			$.ajax({
+		        url:'process/pcad/pcad_p.php',
+		        type:'GET',
+		        cache:false,
+		        data:{
+		            method:'get_ppm'
+		        },
+		        success:function(response){
+					document.getElementById('actual_ppm').innerHTML = response;
 		        }
 		    });
 		}
