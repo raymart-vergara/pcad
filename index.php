@@ -3,8 +3,8 @@ include 'process/server_date_time.php';
 require 'process/conn/emp_mgt.php';
 include 'process/lib/emp_mgt.php';
 
-$line_no = '2132';
-// $line_no = $_GET['line_no'];
+// $line_no = '2132';
+$line_no = $_GET['line_no'];
 $registlinename = '';
 // $registlinename = $_GET['registlinename']; // IRCS LINE (PCS)
 $dept_pd = 'PD2';
@@ -43,7 +43,7 @@ $shift = get_shift($server_time);
 	<input type="hidden" id="section_pd" value="<?=$section_pd?>">
 	<input type="hidden" id="section_qa" value="<?=$section_qa?>">
 	<input type="hidden" id="line_no" value="<?=$line_no?>">
-	<!-- <input type="hidden" id="registlinename" value="<?=$registlinename?>"> -->
+	<input type="hidden" id="registlinename" value="<?=$registlinename?>">
     <div class="container-fluid">
         <div class="flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="60" width="60"><span
