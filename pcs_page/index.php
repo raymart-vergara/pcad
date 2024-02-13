@@ -33,7 +33,7 @@ include 'plugins/head.php';
 								<div class="icon">
 								<i class="fa fa-play fa-4x"></i>
 								</div>
-								<a href="../line.php?line_no=" class="small-box-footer">Proceed<i class="fas fa-arrow-circle-right"></i></a>
+								<a href="../index.php?line_no=$line_no" class="small-box-footer">Proceed<i class="fas fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 
