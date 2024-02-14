@@ -18,9 +18,9 @@ include 'plugins/head.php';
 									<p>Settings</p>
 								</div>
 								<div class="icon">
-								<i class="fa fa-cogs fa-4x"></i>
+									<i class="fa fa-cogs fa-4x"></i>
 								</div>
-								<a href="setting.php" class="small-box-footer">Proceed<i class="fas fa-arrow-circle-right"></i></a>
+								<a href="setting.php" id="settingsbtn" class="small-box-footer">Proceed<i class="fas fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 						<!-- RUN COUNTER -->
@@ -31,9 +31,9 @@ include 'plugins/head.php';
 									<p>Run Counter</p>
 								</div>
 								<div class="icon">
-								<i class="fa fa-play fa-4x"></i>
+									<i class="fa fa-play fa-4x"></i>
 								</div>
-								<a href="../index.php?line_no=$line_no" class="small-box-footer">Proceed<i class="fas fa-arrow-circle-right"></i></a>
+								<a href="../index.php?registlinename=registlinename" id="runcounterbtn" class="small-box-footer">Proceed<i class="fas fa-arrow-circle-right"></i></a>
 							</div>
 						</div>
 
@@ -47,3 +47,19 @@ include 'plugins/head.php';
 <?php
 include 'plugins/footer.php';
 ?>
+<script>
+	document.addEventListener("keyup", function(ji) {
+		// SETTINGS USING KEY NUMBER 1
+		if(ji.keyCode == 49 || ji.keyCode == 97) {
+			window.open('setting.php', '_self');
+		}
+
+		// RUN COUNTER USING KEY NUMBER 2
+		if(ji.keyCode == 50 || ji.keyCode == 98) {
+			window.open('../index.php?registlinename='.$registlinename, '_self');
+		}
+	});
+</script>
+</body>
+
+</html>
