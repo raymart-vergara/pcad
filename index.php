@@ -808,12 +808,14 @@ $shift = get_shift($server_time);
     });
 
     const andon_d_sum = () => {
+        let andon_line = document.getElementById('andon_line').value;
         $.ajax({
             url: 'process/andon_graph/a_graph_p.php',
             type: 'POST',
             dataType: 'json',
             cache: false, // Disable browser caching for this request
             data: {
+                andon_line: 'andon_line',
                 method: 'a_down_time'
             },
             success: function(data) {

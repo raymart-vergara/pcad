@@ -15,14 +15,15 @@ function get_shift($server_time)
 }
 
 if ($method == 'a_down_time') {
-    $line_no = 'SUZUKI-5111';
+    $andon_line = $_POST['andon_line'];
+
     $shift = get_shift($server_time);
     $query = "SELECT department, machinename,
    SUM(Minute(TIMEDIFF(requestDateTime,startDateTime))) as Waiting_Time,
    SUM(Minute(TIMEDIFF(startDateTime,endDateTime))) as Fixing_Time,
    SUM(Minute(TIMEDIFF(requestDateTime,startDateTime))) + SUM(Minute(TIMEDIFF(startDateTime,endDateTime))) as Total_DT
    FROM `tblhistory` 
-   where line = '$line_no' ";
+   where line = '$andon_line' ";
     if ($shift == 'DS') {
         $query = $query . "AND requestDateTime BETWEEN ('$server_date_only 06:00:00') AND ('$server_date_only_tomorrow 17:59:59') GROUP By department,machinename";
     } else if ($shift == 'NS') {
