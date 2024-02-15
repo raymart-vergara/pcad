@@ -36,15 +36,15 @@ if (isset($_GET['registlinename'])) {
         $line_data = $stmt->fetch(PDO::FETCH_ASSOC);
         $line_no = $line_data['line_no'];
         $andon_line = $line_data['andon_line'];
-        
 
-        if($res){
+
+        if ($res) {
             $processing = true;
         }
         $secs_diff = strtotime(date('Y-m-d H:i:s')) - strtotime($last_update_DB);
-        if($takt > 0){
+        if ($takt > 0) {
             $added_takt_plan = floor($secs_diff / $takt);
-        }else{
+        } else {
             $added_takt_plan = 0;
         }
     }
@@ -95,10 +95,11 @@ $shift = get_shift($server_time);
     <input type="hidden" id="last_takt" value="<?= $last_takt; ?>">
     <input type="hidden" id="added_takt_plan" value="<?= $added_takt_plan; ?>">
     <input type="hidden" id="is_paused" value="<?= $is_paused; ?>">
-    <input type="hidden" id="andon_line" value="<?= $andon_line; ?>">
+    <input type="hidden" id="andon_line" name="andon_line" value="<?= $andon_line; ?>">
     <div class="container-fluid">
         <div class="flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="60" width="60"><span class="h5">PCAD<span>
+            <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="60" width="60"><span
+                class="h5">PCAD<span>
         </div>
     </div>
     <div class="container-fluid">
@@ -108,13 +109,19 @@ $shift = get_shift($server_time);
                 <div class="card-body">
                     <div class="row">
                         <p class="card-text col-6">
-                            <label for="" id="line_no_label">Line No. <span> <?= $line_no ?></span></label>
+                            <label for="" id="line_no_label">Line No. <span>
+                                    <?= $line_no ?>
+                                </span></label>
                             <br>
-                            <label for="" id="shift_label">Shift <span> <?= $shift ?></span></label>
+                            <label for="" id="shift_label">Shift <span>
+                                    <?= $shift ?>
+                                </span></label>
                         </p>
                         <p class="card-text col-6">
 
-                            <label for="" id="server_date_only_label">Date: <span><?= $server_date_only ?></span></label>
+                            <label for="" id="server_date_only_label">Date: <span>
+                                    <?= $server_date_only ?>
+                                </span></label>
 
                             <br>
                             <label for="" id="shift_group_label">Group <span>A/B</span></label>
@@ -408,7 +415,9 @@ $shift = get_shift($server_time);
                                         <canvas id="hourly_chart"></canvas>
                                     </div>
                                 </div>
-                                <a target="_blank" href="http://172.25.114.167:3000/andon_system/admin/page/andonProdLogs.php" class="card-link">Andon Details</a>
+                                <a target="_blank"
+                                    href="http://172.25.114.167:3000/andon_system/admin/page/andonProdLogs.php"
+                                    class="card-link">Andon Details</a>
                             </div>
 
                         </div>
@@ -427,7 +436,8 @@ $shift = get_shift($server_time);
                 <button type="button" class="btn btn-success btn-block btn-target ">END PROCESS <b>[ 2 ]</b></button>
             </div>
             <div class="col-4">
-                <a type="button" class="btn btn-secondary btn-block" href="pcs_page/index.php"> MAIN MENU <b>[ 0 ]</b></a>
+                <a type="button" class="btn btn-secondary btn-block" href="pcs_page/index.php"> MAIN MENU <b>[ 0
+                        ]</b></a>
             </div>
         </div>
     </div>
@@ -454,12 +464,11 @@ $shift = get_shift($server_time);
 
 <script type="text/javascript">
     let chart; // Declare chart variable globally
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Call andon_d_sum initially to load the chart
         andon_d_sum();
         // Set interval to refresh data every 10 seconds
         setInterval(andon_d_sum, 10000); // 10000 milliseconds = 10 seconds
-
         // Call count_emp initially to load the data from employee management system
         count_emp();
         // Set interval to refresh data every 15 seconds
@@ -797,18 +806,22 @@ $shift = get_shift($server_time);
 			}
 		}
 
+
     });
+   
 
     const andon_d_sum = () => {
+        let andon_line =document.getElementById('andon_line').value
         $.ajax({
             url: 'process/andon_graph/a_graph_p.php',
             type: 'POST',
             dataType: 'json',
             cache: false, // Disable browser caching for this request
             data: {
-                method: 'a_down_time'
+                method: 'a_down_time',
+                andon_line : andon_line
             },
-            success: function(data) {
+            success: function (data) {
                 let department = [];
                 let machinename = [];
                 let Waiting_Time = [];
@@ -888,7 +901,7 @@ $shift = get_shift($server_time);
                 section_qa: section_qa,
                 line_no: line_no
             },
-            success: function(response) {
+            success: function (response) {
                 try {
                     let response_array = JSON.parse(response);
                     if (response_array.message == 'success') {
@@ -921,7 +934,7 @@ $shift = get_shift($server_time);
             data: {
                 method: 'get_accounting_efficiency'
             },
-            success: function(response) {
+            success: function (response) {
                 document.getElementById('actual_accounting_efficiency').innerHTML = `${response}%`;
             }
         });
@@ -935,7 +948,7 @@ $shift = get_shift($server_time);
             data: {
                 method: 'get_hourly_output'
             },
-            success: function(response) {
+            success: function (response) {
                 document.getElementById('actual_hourly_output').innerHTML = response;
             }
         });
@@ -949,7 +962,7 @@ $shift = get_shift($server_time);
             data: {
                 method: 'get_yield'
             },
-            success: function(response) {
+            success: function (response) {
                 document.getElementById('actual_yield').innerHTML = response;
             }
         });
@@ -963,7 +976,7 @@ $shift = get_shift($server_time);
             data: {
                 method: 'get_ppm'
             },
-            success: function(response) {
+            success: function (response) {
                 document.getElementById('actual_ppm').innerHTML = response;
             }
         });
