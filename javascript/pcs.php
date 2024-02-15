@@ -35,7 +35,7 @@
         $(".takt-value").text(moment.utc(timerTakt * 1000).format('HH:mm:ss'));
         var takt = $('#takt').val();
         var taktset = moment.utc(takt * 1000).format('HH:mm:ss');
-        $('#taktset').text(  taktset  );
+        $('#taktset').text( taktset  );
     }
 
     if (processing == 1) {
@@ -108,7 +108,7 @@
 
                     if (takt != 0) {
                         $('.takt-value').text(takttimer);
-                        $('#taktset').text('(' + taktset + ')');
+                        $('#taktset').text( taktset );
                     } else {
                         $('.takt-value').text('N/A');
                         $('#taktset').text('(N/A)');
