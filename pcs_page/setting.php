@@ -34,7 +34,7 @@ if ($result) {
 											<?php
 											if ($ircs_lines) {
 												foreach ($ircs_lines as $i => $ircs) {
-													echo '<option value="' . $ircs['ircs_line'] . '">' . $ircs['ircs_line'] . ' (' . $ircs['line_no'] . ').0</option>';
+													echo '<option value="' . $ircs['ircs_line'] . '">' . $ircs['ircs_line'] . ' (' . $ircs['line_no'] . ')</option>';
 												}
 											}
 											?>
@@ -48,7 +48,6 @@ if ($result) {
 										<input type="text" readonly class="ml-4 fz-25 form-control-plainstext" id="line_no" value="">
 									</td>
 								</tr>
-								<input type="hidden" name="andon_line" id="andon_line" value="">
 							</tbody>
 						</table>
 						<hr>

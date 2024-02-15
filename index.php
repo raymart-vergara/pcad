@@ -29,11 +29,14 @@ if (isset($_GET['registlinename'])) {
         $is_paused = $res['is_paused'];
         $line_no = $res['Line'];
 
-        $sql = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename";
+        $sql = "SELECT line_no, andon_line FROM m_ircs_line WHERE ircs_line = :registlinename";
         $stmt = $conn_pcad->prepare($sql);
         $stmt->bindParam(':registlinename', $registlinename);
         $stmt->execute();
-        $line = $stmt->fetch(PDO::FETCH_ASSOC)['line_no'];
+        $line_data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $line_no = $line_data['line_no'];
+        $andon_line = $line_data['andon_line'];
+        
 
         $processing = true;
         $secs_diff = strtotime(date('Y-m-d H:i:s')) - strtotime($last_update_DB);
@@ -46,7 +49,7 @@ $dept_qa = 'QA';
 $section_pd = get_section($line_no, $conn_emp_mgt);
 $section_qa = 'QA';
 $shift = get_shift($server_time);
-$andon_line = $line_no;
+
 
 ?>
 <!DOCTYPE html>
@@ -86,7 +89,7 @@ $andon_line = $line_no;
     <input type="hidden" id="last_takt" value="<?php echo $last_takt; ?>">
     <input type="hidden" id="added_takt_plan" value="<?php echo $added_takt_plan; ?>">
     <input type="hidden" id="is_paused" value="<?php echo $is_paused; ?>">
-    <input type="hidden" id="andon_line" value="<?php echo $andon_line; ?>">
+    <input type="hidden" id="andon_line" value="<?= $andon_line; ?>">
     <div class="container-fluid">
         <div class="flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="60" width="60"><span class="h5">PCAD<span>
@@ -438,6 +441,9 @@ $andon_line = $line_no;
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Chart JS -->
 <script src="node_modules/chart.js/dist/chart.umd.js"></script>
+<!--Moment JS -->
+<script src="plugins/moment-js/moment.min.js"></script>
+<script src="plugins/moment-js/moment-duration-format.min.js"></script>
 
 <script type="text/javascript">
     let chart; // Declare chart variable globally
