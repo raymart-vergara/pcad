@@ -1,6 +1,6 @@
 <script type="text/javascript">
     var timer = 4000;
-    var interval = 20;
+    var interval = 2000;
     var barWidth = $('.bar').innerWidth() - 12;
     var processing = $('#processing').val();
     var timerTakt = $("#last_takt").val();
@@ -35,7 +35,7 @@
         $(".takt-value").text(moment.utc(timerTakt * 1000).format('HH:mm:ss'));
         var takt = $('#takt').val();
         var taktset = moment.utc(takt * 1000).format('HH:mm:ss');
-        $('#taktset').text('(' + taktset + ')');
+        $('#taktset').text(  taktset  );
     }
 
     if (processing == 1) {
@@ -275,7 +275,7 @@
         }
         // MAIN MENU
         if (x.keyCode == 48 || x.keyCode == 96) {
-            window.open('index.php', '_self');
+            window.open('pcs_page/index.php', '_self');
         }
         // SET PLAN ------------------------------------------------------------------------------------------------------------
         if (x.keyCode == 52 || x.keyCode == 100) {
