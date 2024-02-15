@@ -36,15 +36,15 @@ if (isset($_GET['registlinename'])) {
         $line_data = $stmt->fetch(PDO::FETCH_ASSOC);
         $line_no = $line_data['line_no'];
         $andon_line = $line_data['andon_line'];
-        
 
-        if($res){
+
+        if ($res) {
             $processing = true;
         }
         $secs_diff = strtotime(date('Y-m-d H:i:s')) - strtotime($last_update_DB);
-        if($takt > 0){
+        if ($takt > 0) {
             $added_takt_plan = floor($secs_diff / $takt);
-        }else{
+        } else {
             $added_takt_plan = 0;
         }
     }
@@ -95,10 +95,11 @@ $shift = get_shift($server_time);
     <input type="hidden" id="last_takt" value="<?= $last_takt; ?>">
     <input type="hidden" id="added_takt_plan" value="<?= $added_takt_plan; ?>">
     <input type="hidden" id="is_paused" value="<?= $is_paused; ?>">
-    <input type="hidden" id="andon_line" value="<?= $andon_line; ?>">
+    <input type="hidden" id="andon_line" name="andon_line" value="<?= $andon_line; ?>">
     <div class="container-fluid">
         <div class="flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="60" width="60"><span class="h5">PCAD<span>
+            <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="60" width="60"><span
+                class="h5">PCAD<span>
         </div>
     </div>
     <div class="container-fluid">
@@ -108,13 +109,19 @@ $shift = get_shift($server_time);
                 <div class="card-body">
                     <div class="row">
                         <p class="card-text col-6">
-                            <label for="" id="line_no_label">Line No. <span> <?= $line_no ?></span></label>
+                            <label for="" id="line_no_label">Line No. <span>
+                                    <?= $line_no ?>
+                                </span></label>
                             <br>
-                            <label for="" id="shift_label">Shift <span> <?= $shift ?></span></label>
+                            <label for="" id="shift_label">Shift <span>
+                                    <?= $shift ?>
+                                </span></label>
                         </p>
                         <p class="card-text col-6">
 
-                            <label for="" id="server_date_only_label">Date: <span><?= $server_date_only ?></span></label>
+                            <label for="" id="server_date_only_label">Date: <span>
+                                    <?= $server_date_only ?>
+                                </span></label>
 
                             <br>
                             <label for="" id="shift_group_label">Group <span>A/B</span></label>
@@ -407,7 +414,9 @@ $shift = get_shift($server_time);
                                         <canvas id="hourly_chart"></canvas>
                                     </div>
                                 </div>
-                                <a target="_blank" href="http://172.25.114.167:3000/andon_system/admin/page/andonProdLogs.php" class="card-link">Andon Details</a>
+                                <a target="_blank"
+                                    href="http://172.25.114.167:3000/andon_system/admin/page/andonProdLogs.php"
+                                    class="card-link">Andon Details</a>
                             </div>
 
                         </div>
@@ -426,7 +435,8 @@ $shift = get_shift($server_time);
                 <button type="button" class="btn btn-success btn-block">END PROCESS <b>[ 2 ]</b></button>
             </div>
             <div class="col-4">
-                <a type="button" class="btn btn-secondary btn-block" href="pcs_page/index.php"> MAIN MENU <b>[ 0 ]</b></a>
+                <a type="button" class="btn btn-secondary btn-block" href="pcs_page/index.php"> MAIN MENU <b>[ 0
+                        ]</b></a>
             </div>
         </div>
     </div>
@@ -453,12 +463,11 @@ $shift = get_shift($server_time);
 
 <script type="text/javascript">
     let chart; // Declare chart variable globally
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Call andon_d_sum initially to load the chart
         andon_d_sum();
         // Set interval to refresh data every 10 seconds
         setInterval(andon_d_sum, 10000); // 10000 milliseconds = 10 seconds
-
         // Call count_emp initially to load the data from employee management system
         count_emp();
         // Set interval to refresh data every 15 seconds
@@ -478,350 +487,351 @@ $shift = get_shift($server_time);
 
         var timer = 4000;
         var interval = 20;
-		var barWidth = $('.bar').innerWidth() - 12;
-		var processing = $('#processing').val();
-		var timerTakt = $("#last_takt").val();
-		var timerOn = true;
-		var isPause = false;
+        var barWidth = $('.bar').innerWidth() - 12;
+        var processing = $('#processing').val();
+        var timerTakt = $("#last_takt").val();
+        var timerOn = true;
+        var isPause = false;
 
-		getDT();
+        getDT();
 
-		// $('.done').addClass('d-none');
-		// $('.running').removeClass('d-none');
-		if($('#takt').val() == 0){
-			$('.btn-resume').addClass('d-none');
-			$('.btn-pause').addClass('d-none');
-		}
+        // $('.done').addClass('d-none');
+        // $('.running').removeClass('d-none');
+        if ($('#takt').val() == 0) {
+            $('.btn-resume').addClass('d-none');
+            $('.btn-pause').addClass('d-none');
+        }
 
-		checkPausedStatus();
+        checkPausedStatus();
 
-		function checkPausedStatus(){
-			if($("#is_paused").val() == "YES"){
-				isPause = true;
-				$('.btn-resume').removeClass('d-none');
-				$('.btn-pause').addClass('d-none');
-				$('.loading').css('background-color','#dc3545');
+        function checkPausedStatus() {
+            if ($("#is_paused").val() == "YES") {
+                isPause = true;
+                $('.btn-resume').removeClass('d-none');
+                $('.btn-pause').addClass('d-none');
+                $('.loading').css('background-color', '#dc3545');
 
-			}else{
-				isPause = false;
-				$('.btn-pause').removeClass('d-none');
-				$('.btn-resume').addClass('d-none');
-				$('.loading').css('background-color','#04e000');
-			}
+            } else {
+                isPause = false;
+                $('.btn-pause').removeClass('d-none');
+                $('.btn-resume').addClass('d-none');
+                $('.loading').css('background-color', '#04e000');
+            }
 
-			$(".takt-value").text(moment.utc(timerTakt*1000).format('HH:mm:ss'));
-			var takt = $('#takt').val();
-			var taktset = moment.utc(takt*1000).format('HH:mm:ss');
-			$('#taktset').text('('+taktset+')');
-		}
+            $(".takt-value").text(moment.utc(timerTakt * 1000).format('HH:mm:ss'));
+            var takt = $('#takt').val();
+            var taktset = moment.utc(takt * 1000).format('HH:mm:ss');
+            $('#taktset').text('(' + taktset + ')');
+        }
 
-		if(processing == 1){
-			getValues();
-			setInterval(function(){
-				if (timerOn == true && isPause == false){
-					var loadingWidth = $('.loading').width();
-					if (loadingWidth >= (barWidth - 200)){
-						$('.plan_target_value').removeClass('reloadedLine');
-						$('.plan_actual_value').removeClass('reloadedLine');
-						$('.plan_gap_value').removeClass('reloadedLine');
-						$('.plan_gap_value').css('padding-top','0');
-					}
+        if (processing == 1) {
+            getValues();
+            setInterval(function () {
+                if (timerOn == true && isPause == false) {
+                    var loadingWidth = $('.loading').width();
+                    if (loadingWidth >= (barWidth - 200)) {
+                        $('.plan_target_value').removeClass('reloadedLine');
+                        $('.plan_actual_value').removeClass('reloadedLine');
+                        $('.plan_gap_value').removeClass('reloadedLine');
+                        $('.plan_gap_value').css('padding-top', '0');
+                    }
 
-					if (loadingWidth <= barWidth){
-						$('.loading').css('width',(loadingWidth+7) + 'px');
-					}else{
-						$('.loading').css('width','0px');
-						getValues();
-					}
-				}
-			}, interval);
-			
-			
-			function getValues() {
-				var registlinename = $("#registlinename").val();
-				var last_takt = $("#last_takt").val();
-				var added_takt_plan = $("#added_takt_plan").val();
-					// console.log(registlinename);
-				$.post('process/pcs/setting_p.php',{
-					request: 'getPlanLine',
-					registlinename: registlinename,
-					last_takt: last_takt
-				}, function(response){
-					fetch_digit();
-					console.log(response);
+                    if (loadingWidth <= barWidth) {
+                        $('.loading').css('width', (loadingWidth + 7) + 'px');
+                    } else {
+                        $('.loading').css('width', '0px');
+                        getValues();
+                    }
+                }
+            }, interval);
 
-					if ($('.plan_target_value').text() != response.plan){
-						$('.plan_target_value').addClass('reloadedLine');
-						$('.plan_target_value').css('margin-top','-100px');
-							
-					}
 
-					if ($('.plan_actual_value').text() != response.actual){
-						$('.plan_actual_value').addClass('reloadedLine');
-						$('.plan_actual_value').css('margin-top','-100px');
-					}
+            function getValues() {
+                var registlinename = $("#registlinename").val();
+                var last_takt = $("#last_takt").val();
+                var added_takt_plan = $("#added_takt_plan").val();
+                // console.log(registlinename);
+                $.post('process/pcs/setting_p.php', {
+                    request: 'getPlanLine',
+                    registlinename: registlinename,
+                    last_takt: last_takt
+                }, function (response) {
+                    fetch_digit();
+                    console.log(response);
 
-					if ($('.plan_gap_value').text() != response.remaining){
-						$('.plan_gap_value').addClass('reloadedLine');
-						$('.plan_gap_value').css('margin-top','-100px');
-					}
+                    if ($('.plan_target_value').text() != response.plan) {
+                        $('.plan_target_value').addClass('reloadedLine');
+                        $('.plan_target_value').css('margin-top', '-100px');
 
-					$('.plan_target_value').text(parseInt(response.plan));
-					$('.plan_actual_value').text( parseInt(response.actual));
-					$('.plan_gap_value').text(response.remaining);
-		
-			
-					if($('.plan_gap_value').text() < 0){
-						$('.plan_gap_value').css('color','#dc3545');
-					}else if($('.plan_gap_value').text() > 0){
-						$('.plan_gap_value').css('color','#6cfc71');
-					}else{
-						$('.plan_gap_value').css('color','#ffffff');
-					}
+                    }
 
-				});
-				
-			}
+                    if ($('.plan_actual_value').text() != response.actual) {
+                        $('.plan_actual_value').addClass('reloadedLine');
+                        $('.plan_actual_value').css('margin-top', '-100px');
+                    }
 
-			setInterval(function(){
-				if (timerOn == true){
-					if(isPause == false){
+                    if ($('.plan_gap_value').text() != response.remaining) {
+                        $('.plan_gap_value').addClass('reloadedLine');
+                        $('.plan_gap_value').css('margin-top', '-100px');
+                    }
 
-						var takttimer = moment.utc(timerTakt*1000).format('HH:mm:ss');
-						var takt = $('#takt').val();
-						var taktset = moment.utc(takt*1000).format('HH:mm:ss');
-						$("#last_takt").val(timerTakt);
+                    $('.plan_target_value').text(parseInt(response.plan));
+                    $('.plan_actual_value').text(parseInt(response.actual));
+                    $('.plan_gap_value').text(response.remaining);
 
-						if(takt != 0){
-							$('.takt-value').text(takttimer);
-							$('#taktset').text('('+taktset+')');
-						} else{
-							$('.takt-value').text('N/A');
-							$('#taktset').text('(N/A)');
-						}
-						timerTakt++;
 
-						if(takt != 0){
-							if(timerTakt > takt){
-								//update takt time
-								timerTakt = 0;
-								updateTakt();
-							}
-						}
-						
-					}
-				}
+                    if ($('.plan_gap_value').text() < 0) {
+                        $('.plan_gap_value').css('color', '#dc3545');
+                    } else if ($('.plan_gap_value').text() > 0) {
+                        $('.plan_gap_value').css('color', '#6cfc71');
+                    } else {
+                        $('.plan_gap_value').css('color', '#ffffff');
+                    }
 
-			}, 1000);
+                });
 
-		}else{
-			$('.loading').css({
-				'width':'100%',
-			});
-		}
+            }
 
-		setInterval(function(){
-			getDT();
-		}, 1000);
+            setInterval(function () {
+                if (timerOn == true) {
+                    if (isPause == false) {
 
-		function getDT(){
-			var datenow = moment().format('YYYY/MM/DD hh:mm:ss A');
-			$('.datenow').text(datenow);
-		}
+                        var takttimer = moment.utc(timerTakt * 1000).format('HH:mm:ss');
+                        var takt = $('#takt').val();
+                        var taktset = moment.utc(takt * 1000).format('HH:mm:ss');
+                        $("#last_takt").val(timerTakt);
 
-		function updateTakt(){
-			var added_takt_plan = $("#added_takt_plan").val();
-			$.post('process/pcs/setting_p.php',{
-				request: 'updateTakt',
-				registlinename: $('#registlinename').val(),
-				added_takt_plan: added_takt_plan
-			}, function(response){
-				if(response.trim() == "true"){
-					getValues();
-				}
-			});
-		}
+                        if (takt != 0) {
+                            $('.takt-value').text(takttimer);
+                            $('#taktset').text('(' + taktset + ')');
+                        } else {
+                            $('.takt-value').text('N/A');
+                            $('#taktset').text('(N/A)');
+                        }
+                        timerTakt++;
 
-		$(document).on('click', '.btn-target', function(e){
-			e.preventDefault();
+                        if (takt != 0) {
+                            if (timerTakt > takt) {
+                                //update takt time
+                                timerTakt = 0;
+                                updateTakt();
+                            }
+                        }
 
-			$('.btn-resume').addClass('d-none');
-			$('.btn-pause').addClass('d-none');
+                    }
+                }
 
-			var registlinename = $("#registlinename").val();
-			$.post('process/pcs/setting_p.php',{
-				request: 'endTarget',
-				registlinename: registlinename
-			}, function(response){
-				console.log(response);
+            }, 1000);
 
-				if(response.trim() == 'true'){
-					timerOn = false;
-					$('.btn-set').removeClass('d-none');
-					$('.btn-target').addClass('d-none');
-					$('.btn-menu').addClass('d-none');
-					$('.loading').css('width',(barWidth+12) + 'px');
-					$('.running').addClass('d-none');
-					$('.done').removeClass('d-none');
-				}
-			});
-		});
+        } else {
+            $('.loading').css({
+                'width': '100%',
+            });
+        }
 
-		$(document).on('click', '.btn-pause', function(e){
-			e.preventDefault();
-			var el = $(this);
-			$.post('process/pcs/setting_p.php',{
-				request: 'setPaused',
-				registlinename: $("#registlinename").val(),
-				is_paused: 'YES'
-			}, function(response){
-				console.log(response);
-				el.addClass('d-none');
-				$('.btn-resume').removeClass('d-none');
-				$('.loading').css('background-color','#dc3545');
-				isPause = true;
-			});
-		});
-		$(document).on('click', '.btn-resume', function(e){
-			e.preventDefault();
-			var el = $(this);
+        setInterval(function () {
+            getDT();
+        }, 1000);
 
-			$.post('process/pcs/setting_p.php',{
-				request: 'setPaused',
-				registlinename: $("#registlinename").val(),
-				is_paused: 'NO'
-			}, function(response){
-				console.log(response);
-				el.addClass('d-none');
-				$('.btn-pause').removeClass('d-none');
-				$('.loading').css('background-color','#04e000');
-				isPause = false;
-			});
-		});
-// ---EVENT LISTENER -----------------------------------------------------------------//
-		document.addEventListener("keypress",function(x){
-			// PAUSE USING KEY NUMBER 1
-			if(x.keyCode == 49 || x.keyCode == 97){
-				var el = $(this);
-			$.post('process/pcs/setting_p.php',{
-				request: 'setPaused',
-				registlinename: $("#registlinename").val(),
-				is_paused: 'YES'
-			}, function(response){
-				console.log(response);
-				el.addClass('d-none');
-				$('.btn-pause').addClass('d-none');
-				$('.btn-resume').removeClass('d-none');
-				$('.loading').css('background-color','#dc3545');
-				isPause = true;
-			});
-			}
-			// END TARGET USING KEY NUMBER 2 -----------------------------------------------------------------------------
-			if(x.keyCode == 50 || x.keyCode == 98){
-				var x = confirm('Confirm to end the target?');
-				if(x == true){
-					$('.btn-resume').addClass('d-none');
-					$('.btn-pause').addClass('d-none');
+        function getDT() {
+            var datenow = moment().format('YYYY/MM/DD hh:mm:ss A');
+            $('.datenow').text(datenow);
+        }
 
-					var registlinename = $("#registlinename").val();
-					$.post('process/pcs/setting_p.php',{
-						request: 'endTarget',
-						registlinename: registlinename
-					}, function(response){
-						console.log(response);
-						if(response.trim() == 'true'){
-							timerOn = false;
-							$('.btn-set').removeClass('d-none');
-							$('.btn-target').addClass('d-none');
-							$('.btn-menu').addClass('d-none');
-							$('.loading').css('width',(barWidth+12) + 'px');
-							$('.running').addClass('d-none');
-							$('.done').removeClass('d-none');
-							// Revisions (Vince)
-							//$('#ng_count_end_label').removeClass('d-none');
-							//$('#ng_count_label').addClass('d-none');
-						}
-					});
-				}else{
-					// DO NOTHING
-				}
-			}
-			// RESUME BUTTON
-			if(x.keyCode == 51 || x.keyCode == 99){
-				var el = $(this);
-				$.post('process/pcs/setting_p.php',{
-					request: 'setPaused',
-					registlinename: $("#registlinename").val(),
-					is_paused: 'NO'
-				}, function(response){
-					console.log(response);
-					el.addClass('d-none');
-					$('.btn-resume').addClass('d-none');
-					$('.btn-pause').removeClass('d-none');
-					$('.loading').css('background-color','#04e000');
-					isPause = false;
-				});
-				}
-			// MAIN MENU
-			if(x.keyCode == 48 || x.keyCode == 96){
-				window.open('index.php','_self');
-			}
-			// SET PLAN ------------------------------------------------------------------------------------------------------------
-			if(x.keyCode == 52 || x.keyCode == 100){
-				var url = $('#setplanBtn').prop('href');
-				window.open(url,"_self");
-			}
-			// SET NEW TARGET
-			if(x.keyCode == 53 || x.keyCode == 101){
-				var url = $('#setnewTargetBtn').prop('href');
-				window.open(url,"_self");
-			}
-		});
+        function updateTakt() {
+            var added_takt_plan = $("#added_takt_plan").val();
+            $.post('process/pcs/setting_p.php', {
+                request: 'updateTakt',
+                registlinename: $('#registlinename').val(),
+                added_takt_plan: added_takt_plan
+            }, function (response) {
+                if (response.trim() == "true") {
+                    getValues();
+                }
+            });
+        }
 
-	
-			// TIMER FOR DIGIT LENGTH CHECK
-	
+        $(document).on('click', '.btn-target', function (e) {
+            e.preventDefault();
 
-		function fetch_digit(){
-			var plan_length = $('#plan_target').text().length;
-			var actual_length = $('#plan_actual').text().length;
-			var diff_length = $('#plan_gap').text().length;
-			console.log(plan_length);
-			console.log(actual_length);
-			console.log(diff_length);
+            $('.btn-resume').addClass('d-none');
+            $('.btn-pause').addClass('d-none');
 
-			if(plan_length >= 3 && actual_length  >= 3 && diff_length >= 3){
-				$('#fit_style').html('.bar{zoom:50%;}');
-			}else if(plan_length >= 3 && actual_length  >= 1 && diff_length >= 3){
-				$('#fit_style').html('.bar{zoom:55%;}');
-			}else if(plan_length >= 3 && actual_length  >= 3 && diff_length >= 1){
-				$('#fit_style').html('.bar{zoom:55%;}');
-			}else if(plan_length >=3 && actual_length >=2 && diff_length >= 2){
-				$('#fit_style').html('.bar{zoom:55%;}');
-			}else if(plan_length >= 3 && actual_length  >= 2 && diff_length >= 3){
-				$('#fit_style').html('.bar{zoom:55%;}');
-			}else if(plan_length >= 2 && actual_length  >= 2 && diff_length >= 3){
-				$('#fit_style').html('.bar{zoom:65%;}');
-			}
-			else{
-				$('#fit_style').html('.bar{zoom:65%;}');
-			}
-		}
+            var registlinename = $("#registlinename").val();
+            $.post('process/pcs/setting_p.php', {
+                request: 'endTarget',
+                registlinename: registlinename
+            }, function (response) {
+                console.log(response);
+
+                if (response.trim() == 'true') {
+                    timerOn = false;
+                    $('.btn-set').removeClass('d-none');
+                    $('.btn-target').addClass('d-none');
+                    $('.btn-menu').addClass('d-none');
+                    $('.loading').css('width', (barWidth + 12) + 'px');
+                    $('.running').addClass('d-none');
+                    $('.done').removeClass('d-none');
+                }
+            });
+        });
+
+        $(document).on('click', '.btn-pause', function (e) {
+            e.preventDefault();
+            var el = $(this);
+            $.post('process/pcs/setting_p.php', {
+                request: 'setPaused',
+                registlinename: $("#registlinename").val(),
+                is_paused: 'YES'
+            }, function (response) {
+                console.log(response);
+                el.addClass('d-none');
+                $('.btn-resume').removeClass('d-none');
+                $('.loading').css('background-color', '#dc3545');
+                isPause = true;
+            });
+        });
+        $(document).on('click', '.btn-resume', function (e) {
+            e.preventDefault();
+            var el = $(this);
+
+            $.post('process/pcs/setting_p.php', {
+                request: 'setPaused',
+                registlinename: $("#registlinename").val(),
+                is_paused: 'NO'
+            }, function (response) {
+                console.log(response);
+                el.addClass('d-none');
+                $('.btn-pause').removeClass('d-none');
+                $('.loading').css('background-color', '#04e000');
+                isPause = false;
+            });
+        });
+        // ---EVENT LISTENER -----------------------------------------------------------------//
+        document.addEventListener("keypress", function (x) {
+            // PAUSE USING KEY NUMBER 1
+            if (x.keyCode == 49 || x.keyCode == 97) {
+                var el = $(this);
+                $.post('process/pcs/setting_p.php', {
+                    request: 'setPaused',
+                    registlinename: $("#registlinename").val(),
+                    is_paused: 'YES'
+                }, function (response) {
+                    console.log(response);
+                    el.addClass('d-none');
+                    $('.btn-pause').addClass('d-none');
+                    $('.btn-resume').removeClass('d-none');
+                    $('.loading').css('background-color', '#dc3545');
+                    isPause = true;
+                });
+            }
+            // END TARGET USING KEY NUMBER 2 -----------------------------------------------------------------------------
+            if (x.keyCode == 50 || x.keyCode == 98) {
+                var x = confirm('Confirm to end the target?');
+                if (x == true) {
+                    $('.btn-resume').addClass('d-none');
+                    $('.btn-pause').addClass('d-none');
+
+                    var registlinename = $("#registlinename").val();
+                    $.post('process/pcs/setting_p.php', {
+                        request: 'endTarget',
+                        registlinename: registlinename
+                    }, function (response) {
+                        console.log(response);
+                        if (response.trim() == 'true') {
+                            timerOn = false;
+                            $('.btn-set').removeClass('d-none');
+                            $('.btn-target').addClass('d-none');
+                            $('.btn-menu').addClass('d-none');
+                            $('.loading').css('width', (barWidth + 12) + 'px');
+                            $('.running').addClass('d-none');
+                            $('.done').removeClass('d-none');
+                            // Revisions (Vince)
+                            //$('#ng_count_end_label').removeClass('d-none');
+                            //$('#ng_count_label').addClass('d-none');
+                        }
+                    });
+                } else {
+                    // DO NOTHING
+                }
+            }
+            // RESUME BUTTON
+            if (x.keyCode == 51 || x.keyCode == 99) {
+                var el = $(this);
+                $.post('process/pcs/setting_p.php', {
+                    request: 'setPaused',
+                    registlinename: $("#registlinename").val(),
+                    is_paused: 'NO'
+                }, function (response) {
+                    console.log(response);
+                    el.addClass('d-none');
+                    $('.btn-resume').addClass('d-none');
+                    $('.btn-pause').removeClass('d-none');
+                    $('.loading').css('background-color', '#04e000');
+                    isPause = false;
+                });
+            }
+            // MAIN MENU
+            if (x.keyCode == 48 || x.keyCode == 96) {
+                window.open('index.php', '_self');
+            }
+            // SET PLAN ------------------------------------------------------------------------------------------------------------
+            if (x.keyCode == 52 || x.keyCode == 100) {
+                var url = $('#setplanBtn').prop('href');
+                window.open(url, "_self");
+            }
+            // SET NEW TARGET
+            if (x.keyCode == 53 || x.keyCode == 101) {
+                var url = $('#setnewTargetBtn').prop('href');
+                window.open(url, "_self");
+            }
+        });
+
+
+        // TIMER FOR DIGIT LENGTH CHECK
+
+
+        function fetch_digit() {
+            var plan_length = $('#plan_target').text().length;
+            var actual_length = $('#plan_actual').text().length;
+            var diff_length = $('#plan_gap').text().length;
+            console.log(plan_length);
+            console.log(actual_length);
+            console.log(diff_length);
+
+            if (plan_length >= 3 && actual_length >= 3 && diff_length >= 3) {
+                $('#fit_style').html('.bar{zoom:50%;}');
+            } else if (plan_length >= 3 && actual_length >= 1 && diff_length >= 3) {
+                $('#fit_style').html('.bar{zoom:55%;}');
+            } else if (plan_length >= 3 && actual_length >= 3 && diff_length >= 1) {
+                $('#fit_style').html('.bar{zoom:55%;}');
+            } else if (plan_length >= 3 && actual_length >= 2 && diff_length >= 2) {
+                $('#fit_style').html('.bar{zoom:55%;}');
+            } else if (plan_length >= 3 && actual_length >= 2 && diff_length >= 3) {
+                $('#fit_style').html('.bar{zoom:55%;}');
+            } else if (plan_length >= 2 && actual_length >= 2 && diff_length >= 3) {
+                $('#fit_style').html('.bar{zoom:65%;}');
+            }
+            else {
+                $('#fit_style').html('.bar{zoom:65%;}');
+            }
+        }
 
     });
+   
 
     const andon_d_sum = () => {
-        let andon_line = document.getElementById('andon_line').value;
+        let andon_line =document.getElementById('andon_line').value
         $.ajax({
             url: 'process/andon_graph/a_graph_p.php',
             type: 'POST',
             dataType: 'json',
             cache: false, // Disable browser caching for this request
             data: {
-                andon_line: 'andon_line',
-                method: 'a_down_time'
+                method: 'a_down_time',
+                andon_line : andon_line
             },
-            success: function(data) {
+            success: function (data) {
                 let department = [];
                 let machinename = [];
                 let Waiting_Time = [];
@@ -901,7 +911,7 @@ $shift = get_shift($server_time);
                 section_qa: section_qa,
                 line_no: line_no
             },
-            success: function(response) {
+            success: function (response) {
                 try {
                     let response_array = JSON.parse(response);
                     if (response_array.message == 'success') {
@@ -934,7 +944,7 @@ $shift = get_shift($server_time);
             data: {
                 method: 'get_accounting_efficiency'
             },
-            success: function(response) {
+            success: function (response) {
                 document.getElementById('actual_accounting_efficiency').innerHTML = `${response}%`;
             }
         });
@@ -948,7 +958,7 @@ $shift = get_shift($server_time);
             data: {
                 method: 'get_hourly_output'
             },
-            success: function(response) {
+            success: function (response) {
                 document.getElementById('actual_hourly_output').innerHTML = response;
             }
         });
@@ -962,7 +972,7 @@ $shift = get_shift($server_time);
             data: {
                 method: 'get_yield'
             },
-            success: function(response) {
+            success: function (response) {
                 document.getElementById('actual_yield').innerHTML = response;
             }
         });
@@ -976,7 +986,7 @@ $shift = get_shift($server_time);
             data: {
                 method: 'get_ppm'
             },
-            success: function(response) {
+            success: function (response) {
                 document.getElementById('actual_ppm').innerHTML = response;
             }
         });

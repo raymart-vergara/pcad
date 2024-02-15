@@ -16,7 +16,6 @@ function get_shift($server_time)
 
 if ($method == 'a_down_time') {
     $andon_line = $_POST['andon_line'];
-
     $shift = get_shift($server_time);
     $query = "SELECT department, machinename,
    SUM(Minute(TIMEDIFF(requestDateTime,startDateTime))) as Waiting_Time,
