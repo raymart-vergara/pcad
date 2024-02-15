@@ -15,17 +15,6 @@
 			});
 		}
 	
-		var andon_line = document.getElementById("andon_line").value;
-			$.post('../process/pcs/setting_p.php', {
-				request: 'getAndonLine',
-				andon_line: andon_line
-			}, function(response) {
-				console.log(response);
-				$("#andon_line").val(response.trim());
-			
-			});
-		
-	
 
 	function validateAndCheckRunningPlans() {
     var ircsLine = document.getElementById("ircs_line").value;
