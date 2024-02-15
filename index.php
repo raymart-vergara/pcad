@@ -38,9 +38,15 @@ if (isset($_GET['registlinename'])) {
         $andon_line = $line_data['andon_line'];
         
 
-        $processing = true;
+        if($res){
+            $processing = true;
+        }
         $secs_diff = strtotime(date('Y-m-d H:i:s')) - strtotime($last_update_DB);
-        $added_takt_plan = ($takt > 0) ? floor($secs_diff / $takt) : 0;
+        if($takt > 0){
+            $added_takt_plan = floor($secs_diff / $takt);
+        }else{
+            $added_takt_plan = 0;
+        }
     }
 }
 
@@ -84,11 +90,11 @@ $shift = get_shift($server_time);
     <input type="hidden" id="section_qa" value="<?= $section_qa ?>">
     <input type="hidden" id="line_no" value="<?= $line_no ?>">
     <input type="hidden" id="registlinename" value="<?= $registlinename ?>">
-    <input type="hidden" id="started" value="<?php echo $started; ?>">
-    <input type="hidden" id="takt" value="<?php echo $takt; ?>">
-    <input type="hidden" id="last_takt" value="<?php echo $last_takt; ?>">
-    <input type="hidden" id="added_takt_plan" value="<?php echo $added_takt_plan; ?>">
-    <input type="hidden" id="is_paused" value="<?php echo $is_paused; ?>">
+    <input type="hidden" id="started" value="<?= $started; ?>">
+    <input type="hidden" id="takt" value="<?= $takt; ?>">
+    <input type="hidden" id="last_takt" value="<?= $last_takt; ?>">
+    <input type="hidden" id="added_takt_plan" value="<?= $added_takt_plan; ?>">
+    <input type="hidden" id="is_paused" value="<?= $is_paused; ?>">
     <input type="hidden" id="andon_line" value="<?= $andon_line; ?>">
     <div class="container-fluid">
         <div class="flex-column justify-content-center align-items-center">
@@ -294,7 +300,7 @@ $shift = get_shift($server_time);
                                 <tbody>
                                     <tr>
                                         <th scope="row">Conveyor Speed</th>
-                                        <td>100</td>
+                                        <td id="taktset">100</td>
                                     </tr>
                                     <tr>
                                         <th class="takt-label" scope="row">Takt Time</th>
@@ -657,9 +663,6 @@ $shift = get_shift($server_time);
 					$('.loading').css('width',(barWidth+12) + 'px');
 					$('.running').addClass('d-none');
 					$('.done').removeClass('d-none');
-					// Revisions (Vince)
-					//$('#ng_count_end_label').removeClass('d-none');
-					//$('#ng_count_label').addClass('d-none');
 				}
 			});
 		});
