@@ -9,7 +9,7 @@
 
     const andon_d_sum = () => {
         $.ajax({
-            url: 'process/andon_graph/a_graph_p.php',
+            url: '../process/andon_graph/a_graph_p.php',
             type: 'POST',
             dataType: 'json',
             cache: false, // Disable browser caching for this request

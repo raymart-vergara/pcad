@@ -8,7 +8,8 @@ $registlinename = '';
 // $registlinename = $_GET['registlinename']; // IRCS LINE (PCS)
 $dept_pd = 'PD2';
 $dept_qa = 'QA';
-$section = get_section($line_no, $conn_emp_mgt);
+$section_pd = get_section($line_no, $conn_emp_mgt);
+$section_qa = 'QA';
 $shift = get_shift($server_time);
 ?>
 <!DOCTYPE html>
@@ -37,7 +38,8 @@ $shift = get_shift($server_time);
 	<input type="hidden" id="shift" value="<?=$shift?>">
 	<input type="hidden" id="dept_pd" value="<?=$dept_pd?>">
 	<input type="hidden" id="dept_qa" value="<?=$dept_qa?>">
-	<input type="hidden" id="section" value="<?=$section?>">
+	<input type="hidden" id="section_pd" value="<?=$section_pd?>">
+	<input type="hidden" id="section_qa" value="<?=$section_qa?>">
 	<input type="hidden" id="line_no" value="<?=$line_no?>">
 	<!-- <input type="hidden" id="registlinename" value="<?=$registlinename?>"> -->
 	<table>
@@ -81,13 +83,13 @@ $shift = get_shift($server_time);
 							<tr>
 								<td>Accounting Efficiency</td>
 								<td>0</td>
-								<td>0</td>
+								<td id="actual_accounting_efficiency">0</td>
 								<td>0</td>
 							</tr>
 							<tr>
 								<td>Hourly Output</td>
 								<td>0</td>
-								<td>0</td>
+								<td id="actual_hourly_output">0</td>
 								<td>0</td>
 							</tr>
 						</tbody>
@@ -106,12 +108,12 @@ $shift = get_shift($server_time);
 							<tr>
 								<td>Yield</td>
 								<td>0</td>
-								<td>0</td>
+								<td id="actual_yield">0</td>
 							</tr>
 							<tr>
 								<td>PPM</td>
 								<td>0</td>
-								<td>0</td>
+								<td id="actual_ppm">0</td>
 							</tr>
 						</tbody>
 					</table>
@@ -257,12 +259,21 @@ $shift = get_shift($server_time);
 		document.addEventListener("DOMContentLoaded", () => {
 			count_emp();
 			setInterval(count_emp, 15000);
+			get_accounting_efficiency();
+			setInterval(get_accounting_efficiency, 30000);
+			get_hourly_output();
+			setInterval(get_hourly_output, 30000);
+			get_yield();
+			setInterval(get_yield, 30000);
+			get_ppm();
+			setInterval(get_ppm, 30000);
 		});
 
 		const count_emp = () => {
 			let dept_pd = document.getElementById('dept_pd').value;
 			let dept_qa = document.getElementById('dept_qa').value;
-			let section = document.getElementById('section').value;
+			let section_pd = document.getElementById('section_pd').value;
+			let section_qa = document.getElementById('section_qa').value;
 			let line_no = document.getElementById('line_no').value;
 			$.ajax({
 		        url:'process/emp_mgt/emp_mgt_p.php',
@@ -272,7 +283,8 @@ $shift = get_shift($server_time);
 		            method:'count_emp',
 		            dept_pd:dept_pd,
 		            dept_qa:dept_qa,
-		            section:section,
+		            section_pd:section_pd,
+					section_qa:section_qa,
 		            line_no:line_no
 		        },
 		        success:function(response){
@@ -296,6 +308,62 @@ $shift = get_shift($server_time);
 	                } catch(e) {
 	                    console.log(response);
 	                }
+		        }
+		    });
+		}
+
+		const get_accounting_efficiency = () => {
+			$.ajax({
+		        url:'process/pcad/pcad_p.php',
+		        type:'GET',
+		        cache:false,
+		        data:{
+		            method:'get_accounting_efficiency'
+		        },
+		        success:function(response){
+					document.getElementById('actual_accounting_efficiency').innerHTML = `${response}%`;
+		        }
+		    });
+		}
+
+		const get_hourly_output = () => {
+			$.ajax({
+		        url:'process/pcad/pcad_p.php',
+		        type:'GET',
+		        cache:false,
+		        data:{
+		            method:'get_hourly_output'
+		        },
+		        success:function(response){
+					document.getElementById('actual_hourly_output').innerHTML = response;
+		        }
+		    });
+		}
+
+		const get_yield = () => {
+			$.ajax({
+		        url:'process/pcad/pcad_p.php',
+		        type:'GET',
+		        cache:false,
+		        data:{
+		            method:'get_yield'
+		        },
+		        success:function(response){
+					document.getElementById('actual_yield').innerHTML = response;
+		        }
+		    });
+		}
+
+		const get_ppm = () => {
+			$.ajax({
+		        url:'process/pcad/pcad_p.php',
+		        type:'GET',
+		        cache:false,
+		        data:{
+		            method:'get_ppm'
+		        },
+		        success:function(response){
+					document.getElementById('actual_ppm').innerHTML = response;
 		        }
 		    });
 		}

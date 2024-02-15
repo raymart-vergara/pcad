@@ -28,9 +28,9 @@ if ($method == 'get_accounting_efficiency') {
     // Total ST Per Line Declaration
     // $registlinename = 'DAIHATSU_30';
     $registlinename = 'SUBARU_08';
-    $group = 'A';
+    $shift_group = 'A';
     // $registlinename = $_GET['registlinename'];
-    // $group = $_GET['group'];
+    // $shift_group = $_GET['shift_group'];
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
     $final_process = $ircs_line_data_arr['final_process'];
     $ip = $ircs_line_data_arr['ip'];
@@ -38,7 +38,7 @@ if ($method == 'get_accounting_efficiency') {
     $search_arr = array(
         'day' => $day,
 		'shift' => $shift,
-        'group' => $group,
+        'shift_group' => $shift_group,
         'dept' => "",
         'section' => "",
 		'line_no' => $line_no,
@@ -56,18 +56,18 @@ if ($method == 'get_accounting_efficiency') {
     $total_st_per_line = get_total_st_per_line($search_arr, $conn_ircs, $conn_pcad);
     $accounting_efficiency = compute_accounting_efficiency($total_st_per_line, $wt_x_mp);
 
-    echo var_dump($search_arr);
-    echo var_dump($wt_x_mp_arr);
+    // echo var_dump($search_arr);
+    // echo var_dump($wt_x_mp_arr);
 
-    $response_arr = array(
-        'total_st_per_line' => $total_st_per_line,
-		'wt_x_mp' => $wt_x_mp,
-        'accounting_efficiency' => $accounting_efficiency
-    );
+    // $response_arr = array(
+    //     'total_st_per_line' => $total_st_per_line,
+	// 	'wt_x_mp' => $wt_x_mp,
+    //     'accounting_efficiency' => $accounting_efficiency
+    // );
 
-    echo var_dump($response_arr);
+    // echo var_dump($response_arr);
 
-    // echo $accounting_efficiency;
+    echo $accounting_efficiency;
 }
 
 // Yield
@@ -78,16 +78,16 @@ if ($method == 'get_yield') {
     // $input_ng = $_GET['input_ng'];
     // $shift = $_GET['shift'];
     $registlinename = 'SUBARU_08';
-    $group = 'A';
+    $shift_group = 'A';
     // $registlinename = $_GET['registlinename'];
-    // $group = $_GET['group'];
+    // $shift_group = $_GET['shift_group'];
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
     $final_process = $ircs_line_data_arr['final_process'];
     $ip = $ircs_line_data_arr['ip'];
 
     $search_arr = array(
 		'shift' => $shift,
-        'group' => $group,
+        'shift_group' => $shift_group,
         'registlinename' => $registlinename,
 		'final_process' => $final_process,
     	'ip' => $ip,
@@ -112,16 +112,16 @@ if ($method == 'get_ppm') {
     // $input_ng = $_GET['input_ng'];
     // $shift = $_GET['shift'];
     $registlinename = 'SUBARU_08';
-    $group = 'A';
+    $shift_group = 'A';
     // $registlinename = $_GET['registlinename'];
-    // $group = $_GET['group'];
+    // $shift_group = $_GET['shift_group'];
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
     $final_process = $ircs_line_data_arr['final_process'];
     $ip = $ircs_line_data_arr['ip'];
 
     $search_arr = array(
 		'shift' => $shift,
-        'group' => $group,
+        'shift_group' => $shift_group,
         'registlinename' => $registlinename,
 		'final_process' => $final_process,
     	'ip' => $ip,
