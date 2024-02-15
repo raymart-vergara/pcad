@@ -68,20 +68,19 @@
 		});
 	}
 
-	document.addEventListener("keyup",function(e){
+	document.addEventListener("keyup",function(ji){
 			// WHEN PLAY BTN PRESS SET TARGET
-			if(e.keyCode == 415 || e.keyCode == 503 || e.keyCode == 179){
+			if(ji.keyCode == 415 || ji.keyCode == 503 || ji.keyCode == 179){
 				$('#setplanBtn').click();
 			}
 			// IF STOP BTN CLICK mAIN MENU
-			if(e.keyCode == 413 || e.keyCode == 461 || e.keyCode == 178){
+			if(ji.keyCode == 413 || ji.keyCode == 461 || ji.keyCode == 178){
 				var url = $('#menu').prop('href');
 				window.open(url,"_self");
 			}
 			// BACKBUTTON FOR ONGOING PROCSS
-			if(e.keyCode == 461){
-				var url = $('#ongoingBtn').prop('href');
-				window.open(url,"_self");
+			if(ji.keyCode == 461){
+				$('#ongoingBtn').click();
 			}
 		});
 </script>

@@ -136,13 +136,12 @@ if ($result) {
 								</div>
 								<div class="row justify-content-center text-center mt-4 pt-4 pb-2">
 									<div class="col-lg-4">
-										<button href="index.php" class="btn btn-lg btn-danger btn-target d-none" id="ongoingBtn">ONGOING PROCESS <br><b>[BACK]</b></button>
-										<button type="button" class="btn btn-lg btn-success btn-target d-none" id="setplanBtn">SET PLAN <b>[PLAY]</b></button>
+										<button type="button" class="btn btn-lg btn-danger btn-target d-none" id="ongoingBtn">ONGOING PROCESS <br><b>[BACK]</b></button>
+										<button type="submit" class="btn btn-lg btn-success btn-target d-none" id="setplanBtn">SET PLAN <b>[PLAY]</b></button>
 									</div>
 									<div class="col-lg-4">
-										<a href="index.php" class="btn btn-secondary btn-block" id="menuBtn">MAIN MENU <b>[BACK]</b></a>
+										<a href="index.php" id="menu" class="btn btn-default btn-lg btn-target" style="background-color: #5f6366;color:white;">MAIN MENU <b>[BACK]</b></a>
 									</div>
-
 								</div>
 							</div>
 						</form>

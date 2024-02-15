@@ -41,8 +41,7 @@ include 'process/pcs/index.php';
     <input type="hidden" id="andon_line" name="andon_line" value="<?= $andon_line; ?>">
     <div class="container-fluid">
         <div class="flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="60" width="60"><span
-                class="h5">PCAD<span>
+            <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="60" width="60"><span class="h5">PCAD<span>
         </div>
     </div>
     <div class="container-fluid">
@@ -90,11 +89,21 @@ include 'process/pcs/index.php';
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <input type="hidden" id="processing" value="1">
-                                        <th scope="row">Plan</th>
-                                        <td class="plan_target_value" id="plan_target">10</td>
-                                        <td class="plan_actual_value" id="plan_actual">10</td>
-                                        <td class="plan_gap_value" id="plan_gap">90</td>
+                                        <?php
+                                        if ($processing) {
+                                        ?>
+                                            <input type="hidden" id="processing" value="1">
+                                            <th scope="row">Plan</th>
+                                            <td class="plan_target_value" id="plan_target">10</td>
+                                            <td class="plan_actual_value" id="plan_actual">10</td>
+                                            <td class="plan_gap_value" id="plan_gap">90</td>
+                                        <?php
+                                        }else{
+                                            ?>
+                                            <input type="hidden" id="processing" value="0">
+                                        <?php
+                                        }
+                                        ?>
                                     </tr>
                                     <tr>
                                         <th scope="row">Accounting Efficiency</th>
@@ -358,9 +367,7 @@ include 'process/pcs/index.php';
                                         <canvas id="hourly_chart"></canvas>
                                     </div>
                                 </div>
-                                <a target="_blank"
-                                    href="http://172.25.114.167:3000/andon_system/admin/page/andonProdLogs.php"
-                                    class="card-link">Andon Details</a>
+                                <a target="_blank" href="http://172.25.114.167:3000/andon_system/admin/page/andonProdLogs.php" class="card-link">Andon Details</a>
                             </div>
 
                         </div>
@@ -370,18 +377,19 @@ include 'process/pcs/index.php';
         </div>
         <!-- Buttons (Progress Counter TV) -->
         <div class="row">
-            <div class="col-4">
+            <div class="col-3">
                 <button type="button" class="btn btn-danger btn-block btn-pause">PAUSE <b>[ 1 ]</b></button>
-                <button type="button" class="btn btn-danger btn-block btn-resume d-none ">RESUME <b>[ 3 ]</b></button>
-
+                <button type="button" class="btn btn-info btn-block btn-resume d-none">RESUME <b>[ 3 ]</b></button>
             </div>
-            <div class="col-4">
+            <div class="col-3">
                 <button type="button" class="btn btn-success btn-block btn-target ">END PROCESS <b>[ 2 ]</b></button>
             </div>
-            <div class="col-4">
-                <a type="button" class="btn btn-secondary btn-block" href="pcs_page/index.php"> MAIN MENU <b>[ 0
-                        ]</b></a>
+            <div class="col-3">
+                <a type="button" class="btn btn-secondary btn-block btn-menu" href="pcs_page/index.php"> MAIN MENU <b>[ 0 ]</b></a>
             </div>
+        </div>
+        <div class="col-3">
+            <a href="pcs_page/setting.php" class="btn  btn-primary btn-set d-none" id="setnewTargetBtn">SET NEW TARGET <b>[ 5 ]</b></a>
         </div>
     </div>
     <footer class="main-footer">
@@ -392,7 +400,11 @@ include 'process/pcs/index.php';
         </div>
     </footer>
 </body>
+<?php
+//MODALS
+include 'modals/plannotset.php';
 
+?>
 <!-- jQuery -->
 <script src="plugins/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -405,8 +417,8 @@ include 'process/pcs/index.php';
 
 <script type="text/javascript">
     let chart; // Declare chart variable globally
-    
-    $(document).ready(function () {
+
+    $(document).ready(function() {
         // Call these functions initially to load the data from PCAD and other Systems
         // Set interval to refresh data every 30 seconds
         // 30000 milliseconds = 30 seconds
