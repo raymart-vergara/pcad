@@ -140,6 +140,7 @@ $shift = get_shift($server_time);
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <input type="hidden" id="processing" value="1">
                                         <th scope="row">Plan</th>
                                         <td class="plan_target_value" id="plan_target">10</td>
                                         <td class="plan_actual_value" id="plan_actual">10</td>
@@ -418,12 +419,12 @@ $shift = get_shift($server_time);
         <!-- Buttons (Progress Counter TV) -->
         <div class="row">
             <div class="col-4">
-                <button type="button" class="btn btn-danger btn-block">PAUSE <b>[ 1 ]</b></button>
-                <button type="button" class="btn btn-danger btn-block d-none ">RESUME <b>[ 3 ]</b></button>
+                <button type="button" class="btn btn-danger btn-block btn-pause">PAUSE <b>[ 1 ]</b></button>
+                <button type="button" class="btn btn-danger btn-block btn-resume d-none ">RESUME <b>[ 3 ]</b></button>
 
             </div>
             <div class="col-4">
-                <button type="button" class="btn btn-success btn-block">END PROCESS <b>[ 2 ]</b></button>
+                <button type="button" class="btn btn-success btn-block btn-target ">END PROCESS <b>[ 2 ]</b></button>
             </div>
             <div class="col-4">
                 <a type="button" class="btn btn-secondary btn-block" href="pcs_page/index.php"> MAIN MENU <b>[ 0 ]</b></a>
@@ -569,15 +570,6 @@ $shift = get_shift($server_time);
 					$('.plan_target_value').text(parseInt(response.plan));
 					$('.plan_actual_value').text( parseInt(response.actual));
 					$('.plan_gap_value').text(response.remaining);
-		
-			
-					if($('.plan_gap_value').text() < 0){
-						$('.plan_gap_value').css('color','#dc3545');
-					}else if($('.plan_gap_value').text() > 0){
-						$('.plan_gap_value').css('color','#6cfc71');
-					}else{
-						$('.plan_gap_value').css('color','#ffffff');
-					}
 
 				});
 				
@@ -737,9 +729,6 @@ $shift = get_shift($server_time);
 							$('.loading').css('width',(barWidth+12) + 'px');
 							$('.running').addClass('d-none');
 							$('.done').removeClass('d-none');
-							// Revisions (Vince)
-							//$('#ng_count_end_label').removeClass('d-none');
-							//$('#ng_count_label').addClass('d-none');
 						}
 					});
 				}else{
