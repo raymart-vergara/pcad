@@ -29,7 +29,7 @@ if (isset($_GET['registlinename'])) {
         $is_paused = $res['is_paused'];
         $line_no = $res['Line'];
 
-        $sql = "SELECT line_no, andon_line FROM m_ircs_line WHERE ircs_line = :registlinename";
+        $sql = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename";
         $stmt = $conn_pcad->prepare($sql);
         $stmt->bindParam(':registlinename', $registlinename);
         $stmt->execute();
