@@ -13,8 +13,6 @@ if ($result) {
 	echo "Error: " . $errorInfo[2];
 }
 
-// $running = false; 
-
 ?>
 
 <div class="pt-4 container-fluid">
@@ -47,14 +45,14 @@ if ($result) {
 								<tr>
 									<td class="text-right font-weight-bold fz-25">SELECTED LINE NO. </td>
 									<td>
-										<input type="text" readonly class="ml-4 fz-25 form-control-plainstext" id="line_no">
+										<input type="text" readonly class="ml-4 fz-25 form-control-plainstext" id="line_no" value="">
 									</td>
 								</tr>
 							</tbody>
 						</table>
 						<hr>
 						<h4>SET YOUR TARGET PLAN</h4>
-						<form class="pt" method="post" action="../process/pcs/setting_p.php">
+						<form  class="pt" method="post" action="../process/pcs/setting_p.php">
 							<input type="hidden" name="request" value="addTarget">
 							<input type="hidden" id="registlinenameplan"  name="registlinenameplan" value="">
 							<div class="container-fluid">
@@ -138,15 +136,8 @@ if ($result) {
 								</div>
 								<div class="row justify-content-center text-center mt-4 pt-4 pb-2">
 									<div class="col-lg-4">
-										<?php
-										// if ($running) {
-										// 	echo '<button type="button" class="btn btn-lg btn-danger btn-target" id="ongoingBtn">ONGOING PROCESS <br><b>[BACK]</b></button>';
-										// } else {
-										// 	echo '<button type="submit" class="btn btn-lg btn-success btn-target" id="setplanBtn">SET PLAN <b>[PLAY]</b></button>';
-										// }
-										?>
-										<button type="button" class="btn btn-lg btn-danger btn-target" id="ongoingBtn">ONGOING PROCESS <br><b>[BACK]</b></button>
-										<button type="submit" class="btn btn-lg btn-success btn-target" id="setplanBtn">SET PLAN <b>[PLAY]</b></button>
+										<button type="button" class="btn btn-lg btn-danger btn-target d-none" id="ongoingBtn">ONGOING PROCESS <br><b>[BACK]</b></button>
+										<button type="submit" class="btn btn-lg btn-success btn-target d-none" id="setplanBtn">SET PLAN <b>[1]</b></button>
 									</div>
 									<div class="col-lg-4">
 										<a href="index.php" id="menu" class="btn btn-default btn-lg btn-target" style="background-color: #5f6366;color:white;">MAIN MENU <b>[BACK]</b></a>

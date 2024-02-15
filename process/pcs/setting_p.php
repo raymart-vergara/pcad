@@ -154,73 +154,82 @@ if($request == "getPlan"){
         echo 'false';
     }
     
-}else if($request == "addTarget"){
+}else if ($request == "addTarget") {
     $takt_time = $_POST['takt_time'];
     $registlinename = $_POST['registlinenameplan'];
-    $time_start = date('Y-m-d').' '.$_POST['time_start'];
-    // IF PCS SET TO EARLY MORNING BEFFORE 8 DATE WILL SET THE YESTERDAY
-    if(strtotime($_POST['time_start']) < strtotime('07:50:00')){
-        $date_now = date('Y-m-d');
-        $new_date_to = new DateTime($date_now);
-        $new_date_to->modify("-1 day");
-        $to = $new_date_to->format("Y-m-d");
-        $date_actual_start = $to.' '.$_POST['time_start'];
-    }else{
-        $date_actual_start = date('Y-m-d').' '.$_POST['time_start'];
+    $time_start = date('Y-m-d') . ' ' . $_POST['time_start'];
+
+    $sql_check_pending = "SELECT COUNT(*) AS count_pending FROM t_plan WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
+    $stmt_check_pending = $conn_pcad->prepare($sql_check_pending);
+    $stmt_check_pending->bindParam(':registlinename', $registlinename);
+    $stmt_check_pending->execute();
+    $count_pending = $stmt_check_pending->fetchColumn();
+
+    if ($count_pending > 0) {
+        echo "Cannot add target plan. There is already a pending record for this IRCS Line.";
+    } else {
+        if (strtotime($_POST['time_start']) < strtotime('07:50:00')) {
+            $date_now = date('Y-m-d');
+            $new_date_to = new DateTime($date_now);
+            $new_date_to->modify("-1 day");
+            $to = $new_date_to->format("Y-m-d");
+            $date_actual_start = $to . ' ' . $_POST['time_start'];
+        } else {
+            $date_actual_start = date('Y-m-d') . ' ' . $_POST['time_start'];
+        }
+        $plan = $_POST['plan'];
+        $hrs = str_pad($_POST['hrs'], 2, '0', STR_PAD_LEFT);
+        $mins = str_pad($_POST['mins'], 2, '0', STR_PAD_LEFT);
+        $secs = str_pad($_POST['secs'], 2, '0', STR_PAD_LEFT);
+        if ($hrs == "") {
+            $hrs = "00";
+        }
+        if ($mins == "") {
+            $mins = "00";
+        }
+        if ($secs == "") {
+            $secs = "00";
+        }
+        $sql_get_line = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename";
+        $stmt_get_line = $conn_pcad->prepare($sql_get_line);
+        $stmt_get_line->bindParam(':registlinename', $registlinename);
+        $stmt_get_line->execute();
+        $line = $stmt_get_line->fetch(PDO::FETCH_ASSOC);
+        $line_no = $line['line_no'];
+        $IP_address = $line['ip'];
+        $car_maker_name = explode('_', $registlinename);
+        $car_maker = $car_maker_name[0];
+        $takt_secs = TimeToSec($takt_time);
+        $status = "Pending";
+        $sql_insert_plan = "INSERT INTO t_plan 
+        (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address) VALUES 
+        (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address)";
+        $stmt_insert_plan = $conn_pcad->prepare($sql_insert_plan);
+        $stmt_insert_plan->bindParam(':car_maker', $car_maker);
+        $stmt_insert_plan->bindParam(':line_no', $line_no);
+        $stmt_insert_plan->bindParam(':plan', $plan);
+        $stmt_insert_plan->bindParam(':status', $status);
+        $stmt_insert_plan->bindParam(':registlinename', $registlinename);
+        $stmt_insert_plan->bindParam(':takt_secs', $takt_secs);
+        $stmt_insert_plan->bindParam(':date_actual_start', $date_actual_start);
+        $stmt_insert_plan->bindParam(':IP_address', $IP_address);
+
+        if ($stmt_insert_plan->execute()) {
+            header("location: ../../index.php?registlinename=".$registlinename);
+        } else {
+            echo "Failed to insert data into t_plan.";
+        }
     }
-    $plan = $_POST['plan'];
-    $hrs = str_pad($_POST['hrs'], 2, '0', STR_PAD_LEFT);
-    $mins = str_pad($_POST['mins'], 2, '0', STR_PAD_LEFT);
-    $secs = str_pad($_POST['secs'], 2, '0', STR_PAD_LEFT);
-    if($hrs == ""){
-        $hrs = "00";
-    }
-    if($mins == ""){
-        $mins = "00";
-    }
-    if($secs == ""){
-        $secs = "00";
-    }
-    $sql = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename";
-    $stmt = $conn_pcad->prepare($sql);
-    $stmt->bindParam(':registlinename', $registlinename);
-    $stmt->execute();
-    $line = $stmt->fetch(PDO::FETCH_ASSOC);
-    $line_no = $line['line_no'];
-    $IP_address = $line['ip'];
-    $car_maker_name = explode('_',$registlinename);
-    $car_maker = $car_maker_name[0];
-    $takt_secs = TimeToSec($takt_time);
-    $status = "Pending";
-    $sql = "INSERT INTO t_plan 
-    (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address) VALUES 
-    ('".$car_maker."','".$line_no."','".$plan."','".$status."', '".$registlinename."', NOW(), ".$takt_secs.", '".$date_actual_start."', NOW(), '$IP_address')";
-   $stmt = $conn_pcad->prepare($sql);
-   $stmt->bindParam(':car_maker', $car_maker);
-   $stmt->bindParam(':line_no', $line_no);
-   $stmt->bindParam(':plan', $plan);
-   $stmt->bindParam(':status', $status);
-   $stmt->bindParam(':registlinename', $registlinename);
-   $stmt->bindParam(':takt_secs', $takt_secs);
-   $stmt->bindParam(':date_actual_start', $date_actual_start);
-   $stmt->bindParam(':IP_address', $IP_address);
-   
-   if ($stmt->execute()) {
-       header("location: ../../index.php?line_no=".$line_no);
-   } else {
-    
-       echo "Failed to insert data into t_plan.";
-   }
 }else if ($request == "getLineNo") {
     $registlinename = $_POST['registlinename'];
-    $q = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename";
+    $q = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename ";
     $stmt = $conn_pcad->prepare($q);
     $stmt->bindParam(':registlinename', $registlinename);
     $stmt->execute();
     $line = $stmt->fetch(PDO::FETCH_ASSOC);
-    
     if ($line) {
         echo $line['line_no'];
+
     } else {
         echo "Line not found";
     }
