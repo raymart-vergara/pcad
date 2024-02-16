@@ -1,5 +1,6 @@
 <?php
 include 'process/pcs/index.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,8 +41,10 @@ include 'process/pcs/index.php';
     <input type="hidden" id="last_takt" value="<?= $last_takt; ?>">
     <input type="hidden" id="added_takt_plan" value="<?= $added_takt_plan; ?>">
     <input type="hidden" id="is_paused" value="<?= $is_paused; ?>">
+
     <input type="hidden" id="andon_line" name="andon_line" value="<?= $andon_line; ?>">
     <input type="hidden" id="final_process" name="final_process" value="<?= $final_process; ?>">
+
     <div class="container-fluid">
         <div class="flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="60" width="60"><span class="h5">PCAD<span>
@@ -270,7 +273,7 @@ include 'process/pcs/index.php';
                     </div>
                 </div>
             </div>
-                <!-- ========================================================= -->
+
         <div class="col-12">
             <div class="card card-primary card-outline shadow">
                 <div class="card-body">
@@ -300,6 +303,8 @@ include 'process/pcs/index.php';
                             </tr>
                         </tbody>
                     </table>
+
+
                 </div>
             </div>
         </div>
@@ -450,11 +455,13 @@ include 'process/pcs/index.php';
         get_ppm();
         setInterval(get_ppm, 30000);
 
+
         // Call count_emp initially to load the data from employee management system
         count_emp();
         // Set interval to refresh data every 15 seconds
         setInterval(count_emp, 15000); // 15000 milliseconds = 15 seconds
 
+ 
         // Call andon_d_sum initially to load the chart
         andon_d_sum();
         // Set interval to refresh data every 10 seconds

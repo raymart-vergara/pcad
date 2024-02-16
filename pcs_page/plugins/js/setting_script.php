@@ -15,6 +15,7 @@
 			});
 		}
 
+
 		$(document).on('change', '#ircs_line', function() {
 			localStorage.setItem("registlinename", $("#ircs_line").val());
 			var registlinename = localStorage.getItem("registlinename");
@@ -38,6 +39,7 @@
 			$(document).on('keyup', '#secs', function() {
 				getTakt();
 			});
+
 
 
 		});
