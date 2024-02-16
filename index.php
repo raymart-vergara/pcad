@@ -41,6 +41,7 @@ include 'process/pcs/index.php';
     <input type="hidden" id="added_takt_plan" value="<?= $added_takt_plan; ?>">
     <input type="hidden" id="is_paused" value="<?= $is_paused; ?>">
     <input type="hidden" id="andon_line" name="andon_line" value="<?= $andon_line; ?>">
+    <input type="hidden" id="final_process" name="final_process" value="<?= $final_process; ?>">
     <div class="container-fluid">
         <div class="flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="60" width="60"><span class="h5">PCAD<span>
@@ -109,6 +110,7 @@ include 'process/pcs/index.php';
                                                     <div class="modal-body">
                                                         <h5 class="modal-title display-4 text-center" id="plannotsetLabel">Plan not set</h5>
                                                         <br>
+                                                        <br>
                                                         <div class="row justify-content-center text-center">
                                                             <div class="col-3">
                                                                 <a href="pcs_page/setting.php" class="btn btn-lg btn-success text-white btn-close" id="setplanBtn">SET PLAN <b>[ 4 ]</b></a>
@@ -117,6 +119,7 @@ include 'process/pcs/index.php';
                                                                 <a href="pcs_page/index.php" class="btn btn-lg btn-secondary text-white btn-close">MAIN MENU <b>[ 0 ]</b></a>
                                                             </div>
                                                         </div>
+                                                        <br>
                                                     </div>
 
                                                 </div>
@@ -177,7 +180,7 @@ include 'process/pcs/index.php';
                                     <tbody>
                                         <tr>
                                             <th scope="row">Plan</th>
-                                            <td>100</td>
+                                            <tds>100</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">Absent</th>
