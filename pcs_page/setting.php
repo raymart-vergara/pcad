@@ -52,9 +52,9 @@ if ($result) {
 						</table>
 						<hr>
 						<h4>SET YOUR TARGET PLAN</h4>
-						<form  class="pt" method="post" action="../process/pcs/setting_p.php">
+						<form class="pt" method="post" action="../process/pcs/setting_p.php">
 							<input type="hidden" name="request" value="addTarget">
-							<input type="hidden" id="registlinenameplan"  name="registlinenameplan" value="">
+							<input type="hidden" id="registlinenameplan" name="registlinenameplan" value="">
 							<div class="container-fluid">
 								<h4>TAKT TIME: </h4>
 								<div class="row justify-content-center">
@@ -95,7 +95,7 @@ if ($result) {
 									<div class="col-lg-6">
 										<div class="form-group">
 											<label for="d">TARGET PLAN</label>
-											<input type="text" name="plan" class="form-control form-control-lg" id="target_plan" placeholder="" value="0">
+											<input type="text" name="plan" class="form-control form-control-lg" id="target_plan" placeholder="" required value="0">
 										</div>
 									</div>
 									<?php
@@ -137,7 +137,7 @@ if ($result) {
 								<div class="row justify-content-center text-center mt-4 pt-4 pb-2">
 									<div class="col-lg-4">
 										<button type="button" class="btn btn-lg btn-danger btn-target d-none" id="ongoingBtn">ONGOING PROCESS <br><b>[BACK]</b></button>
-										<button type="submit" class="btn btn-lg btn-success btn-target d-none" id="setplanBtn">SET PLAN <b>[1]</b></button>
+										<button type="submit" class="btn btn-lg btn-success btn-target d-none" id="setplanBtn">SET PLAN <b>[PLAY]</b></button>
 									</div>
 									<div class="col-lg-4">
 										<a href="index.php" id="menu" class="btn btn-default btn-lg btn-target" style="background-color: #5f6366;color:white;">MAIN MENU <b>[BACK]</b></a>
