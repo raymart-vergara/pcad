@@ -23,6 +23,8 @@ include 'process/pcs/index.php';
     <!-- Sweet Alert -->
     <link rel="stylesheet" href="plugins/sweetalert2/dist/sweetalert2.min.css">
 
+
+
 </head>
 
 <body>
@@ -74,324 +76,343 @@ include 'process/pcs/index.php';
         </div>
         <div class="row">
             <!-- ================== LEFT SIDE========================= -->
-            <div class="col-6">
-                <div class="col-12">
-                    <div class="card card-primary card-outline shadow">
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col">Target</th>
-                                        <th scope="col">Actual</th>
-                                        <th scope="col">Gap</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <?php
-                                        if ($processing) {
-                                        ?>
-                                            <input type="hidden" id="processing" value="1">
+        <div class="col-6">
+            <div class="col-12">
+                <div class="card card-primary card-outline shadow">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">Target</th>
+                                    <th scope="col">Actual</th>
+                                    <th scope="col">Gap</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <?php
+                                    if ($processing) {
+                                    ?>
+                                        <input type="hidden" id="processing" value="1">
+                                        <th scope="row">Plan</th>
+                                        <td class="plan_target_value" id="plan_target">10</td>
+                                        <td class="plan_actual_value" id="plan_actual">10</td>
+                                        <td class="plan_gap_value" id="plan_gap">90</td>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <input type="hidden" id="processing" value="0">
+                                        <div class="modal fade show" id="plannotset" tabindex="-1" aria-labelledby="plannotsetLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content" style="background-color: white;">
+                                                    <div class="modal-body">
+                                                        <h5 class="modal-title display-4 text-center" id="plannotsetLabel">Plan not set</h5>
+                                                        <br>
+                                                        <div class="row justify-content-center text-center">
+                                                            <div class="col-3">
+                                                                <a href="pcs_page/setting.php" class="btn btn-lg btn-success text-white btn-close" id="setplanBtn">SET PLAN <b>[ 4 ]</b></a>
+                                                            </div>
+                                                            <div class="col-3">
+                                                                <a href="pcs_page/index.php" class="btn btn-lg btn-secondary text-white btn-close">MAIN MENU <b>[ 0 ]</b></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Accounting Efficiency</th>
+                                    <td>200</td>
+                                    <td id="actual_accounting_efficiency">20</td>
+                                    <td>180</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Hourly Output</th>
+                                    <td>300</td>
+                                    <td id="actual_hourly_output">30</td>
+                                    <td>270</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+                <!-- ========================================================= -->
+            <div class="col-12">
+                <div class="card card-primary card-outline shadow">
+                    <div class="card-body">
+                        <h5>Starting Balance Delay <span class="mx-5">1234</span></h5>
+                        <div class="row">
+                            <div class="col-4 table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">PD MP</th>
+                                            <td id="total_pd_mp">100</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Actual</th>
+                                            <td id="total_present_pd_mp">200</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-4">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
                                             <th scope="row">Plan</th>
-                                            <td class="plan_target_value" id="plan_target">10</td>
-                                            <td class="plan_actual_value" id="plan_actual">10</td>
-                                            <td class="plan_gap_value" id="plan_gap">90</td>
-                                        <?php
-                                        }else{
-                                            ?>
-                                            <input type="hidden" id="processing" value="0">
-                                        <?php
-                                        }
-                                        ?>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Accounting Efficiency</th>
-                                        <td>200</td>
-                                        <td id="actual_accounting_efficiency">20</td>
-                                        <td>180</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Hourly Output</th>
-                                        <td>300</td>
-                                        <td id="actual_hourly_output">30</td>
-                                        <td>270</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!-- ========================================================= -->
-                <div class="col-12">
-                    <div class="card card-primary card-outline shadow">
-                        <div class="card-body">
-                            <h5>Starting Balance Delay <span class="mx-5">1234</span></h5>
-                            <div class="row">
-                                <div class="col-4 table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">PD MP</th>
-                                                <td id="total_pd_mp">100</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Actual</th>
-                                                <td id="total_present_pd_mp">200</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="col-4">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">Plan</th>
-                                                <td>100</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Absent</th>
-                                                <td id="total_absent_pd_mp">200</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="col-4">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">Ratio</th>
-                                                <td id="absent_ratio_pd_mp">100</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Suppport</th>
-                                                <td id="total_pd_mp_line_support_to">200</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                            <td>100</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Absent</th>
+                                            <td id="total_absent_pd_mp">200</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">QA MP</th>
-                                                <td id="total_qa_mp">100</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Actual</th>
-                                                <td id="total_present_qa_mp">200</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="col-4">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
+                            <div class="col-4">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">Plan</th>
-                                                <td>100</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Absent</th>
-                                                <td id="total_absent_qa_mp">200</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="col-4">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Ratio</th>
+                                            <td id="absent_ratio_pd_mp">100</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Suppport</th>
+                                            <td id="total_pd_mp_line_support_to">200</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">QA MP</th>
+                                            <td id="total_qa_mp">100</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Actual</th>
+                                            <td id="total_present_qa_mp">200</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-4">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">Ratio</th>
-                                                <td id="absent_ratio_qa_mp">100</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">Suppport</th>
-                                                <td id="total_qa_mp_line_support_to">200</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Plan</th>
+                                            <td>100</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Absent</th>
+                                            <td id="total_absent_qa_mp">200</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-4">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Ratio</th>
+                                            <td id="absent_ratio_qa_mp">100</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Suppport</th>
+                                            <td id="total_qa_mp_line_support_to">200</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
                 <!-- ========================================================= -->
-                <div class="col-12">
-                    <div class="card card-primary card-outline shadow">
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Conveyor Speed</th>
-                                        <td id="taktset">100</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="takt-label" scope="row">Takt Time</th>
-                                        <td class="takt-value">200</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Working Time Plan</th>
-                                        <td>300</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Working Time Actual</th>
-                                        <td>300</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+        <div class="col-12">
+            <div class="card card-primary card-outline shadow">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Conveyor Speed</th>
+                                <td id="taktset">100</td>
+                            </tr>
+                            <tr>
+                                <th class="takt-label" scope="row">Takt Time</th>
+                                <td class="takt-value">200</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Working Time Plan</th>
+                                <td>300</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Working Time Actual</th>
+                                <td>300</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <!-- ==================END OF LEFT SIDE========================= -->
-            <!-- ==================START OF RIGHT SIDE========================= -->
-            <div class="col-6">
-                <div class="col-12">
-                    <div class="card card-primary card-outline shadow">
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col">Target</th>
-                                        <th scope="col">Actual</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Yield</th>
-                                        <td>100</td>
-                                        <td id="actual_yield">10</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">PPM</th>
-                                        <td>200</td>
-                                        <td id="actual_ppm">20</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!-- ========================================================= -->
-                <div class="col-12">
-                    <div class="card card-primary card-outline shadow">
-                        <div class="card-body">
-                            <h2 class="text-center">Inspection Output</h2>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Inspection Process</th>
-                                        <th scope="col">GOOD</th>
-                                        <th scope="col">NO GOOD</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">Dimension</th>
-                                        <td>100</td>
-                                        <td>10</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">ECT</th>
-                                        <td>200</td>
-                                        <td>20</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Clamp Checking</th>
-                                        <td>200</td>
-                                        <td>20</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Appearance</th>
-                                        <td>200</td>
-                                        <td>20</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">QA</th>
-                                        <td>200</td>
-                                        <td>20</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!-- =========================================== -->
-                <div class="col-12">
-                    <div class="card card-primary card-outline shadow">
-                        <div class="card-body">
-                            <h3>DT / DELAY / ANDON</h3>
-
-                            <!-- /.navbar -->
-                            <div class="container-lg my-4">
-                                <div class="card rounded shadow">
-                                    <div id="chart-container">
-                                        <canvas id="hourly_chart"></canvas>
-                                    </div>
-                                </div>
-                                <a target="_blank" href="http://172.25.114.167:3000/andon_system/admin/page/andonProdLogs.php" class="card-link">Andon Details</a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Buttons (Progress Counter TV) -->
-        <div class="row">
-            <div class="col-3">
-                <button type="button" class="btn btn-danger btn-block btn-pause">PAUSE <b>[ 1 ]</b></button>
-                <button type="button" class="btn btn-info btn-block btn-resume d-none">RESUME <b>[ 3 ]</b></button>
-            </div>
-            <div class="col-3">
-                <button type="button" class="btn btn-success btn-block btn-target ">END PROCESS <b>[ 2 ]</b></button>
-            </div>
-            <div class="col-3">
-                <a type="button" class="btn btn-secondary btn-block btn-menu" href="pcs_page/index.php"> MAIN MENU <b>[ 0 ]</b></a>
-            </div>
-        </div>
-        <div class="col-3">
-            <a href="pcs_page/setting.php" class="btn  btn-primary btn-set d-none" id="setnewTargetBtn">SET NEW TARGET <b>[ 5 ]</b></a>
         </div>
     </div>
+    <!-- ==================END OF LEFT SIDE========================= -->
+    <!-- ==================START OF RIGHT SIDE========================= -->
+    <div class="col-6">
+        <div class="col-12">
+            <div class="card card-primary card-outline shadow">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Target</th>
+                                <th scope="col">Actual</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Yield</th>
+                                <td>100</td>
+                                <td id="actual_yield">10</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">PPM</th>
+                                <td>200</td>
+                                <td id="actual_ppm">20</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- ========================================================= -->
+        <div class="col-12">
+            <div class="card card-primary card-outline shadow">
+                <div class="card-body">
+                    <h2 class="text-center">Inspection Output</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Inspection Process</th>
+                                <th scope="col">GOOD</th>
+                                <th scope="col">NO GOOD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Dimension</th>
+                                <td>100</td>
+                                <td>10</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">ECT</th>
+                                <td>200</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Clamp Checking</th>
+                                <td>200</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Appearance</th>
+                                <td>200</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">QA</th>
+                                <td>200</td>
+                                <td>20</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- =========================================== -->
+        <div class="col-12">
+            <div class="card card-primary card-outline shadow">
+                <div class="card-body">
+                    <h3>DT / DELAY / ANDON</h3>
+
+                    <!-- /.navbar -->
+                    <div class="container-lg my-4">
+                        <div class="card rounded shadow">
+                            <div id="chart-container">
+                                <canvas id="hourly_chart"></canvas>
+                            </div>
+                        </div>
+                        <a target="_blank" href="http://172.25.114.167:3000/andon_system/admin/page/andonProdLogs.php" class="card-link">Andon Details</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Buttons (Progress Counter TV) -->
+    <div class="row">
+        <div class="col-3">
+            <button type="button" class="btn btn-danger btn-block btn-pause">PAUSE <b>[ 1 ]</b></button>
+            <button type="button" class="btn btn-info btn-block btn-resume d-none">RESUME <b>[ 3 ]</b></button>
+        </div>
+        <div class="col-3">
+            <button type="button" class="btn btn-success btn-block btn-target ">END PROCESS <b>[ 2 ]</b></button>
+        </div>
+        <div class="col-3">
+            <a type="button" class="btn btn-secondary btn-block btn-menu" href="pcs_page/index.php"> MAIN MENU <b>[ 0 ]</b></a>
+        </div>
+    </div>
+    <div class="col-3">
+        <a href="pcs_page/setting.php" class="btn  btn-primary btn-set d-none" id="setnewTargetBtn">SET NEW TARGET <b>[ 5 ]</b></a>
+    </div>
+</div>
     <footer class="main-footer">
         <strong>Copyright &copy; 2024. Developed by FALP IT System Group</strong>
         All rights reserved.
@@ -400,11 +421,6 @@ include 'process/pcs/index.php';
         </div>
     </footer>
 </body>
-<?php
-//MODALS
-include 'modals/plannotset.php';
-
-?>
 <!-- jQuery -->
 <script src="plugins/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
