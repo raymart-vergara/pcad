@@ -127,29 +127,9 @@
         }, 1000);
 
     } else {
-
-        var modal = document.getElementById("plannotset");
-
-    
-        setTimeout(function() {
-            modal.style.display = "block";
-        }, 60000);
-
-        // Get the close button
-        var span = document.getElementsByClassName("close")[0];
-
-        span.onclick = function() {
-            modal.style.display = "none";
-            window.location.href = "pcs_page/setting.php";
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-                window.location.href = "pcs_page/setting.php";
-            }
-        }
-
+        $(document).ready(function() {
+            $('#plannotset').modal('show');
+        });
     }
 
     setInterval(function() {
