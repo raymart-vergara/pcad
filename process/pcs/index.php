@@ -34,6 +34,7 @@ if (isset($_GET['registlinename'])) {
         $line_data = $stmt->fetch(PDO::FETCH_ASSOC);
         $line_no = $line_data['line_no'];
         $andon_line = $line_data['andon_line'];
+        $final_process = $line_data['final_process'];
 
 
         if ($res) {
