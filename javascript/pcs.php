@@ -23,24 +23,22 @@
             isPause = true;
             $('.btn-resume').removeClass('d-none');
             $('.btn-pause').addClass('d-none');
-            $('.loading').css('background-color', '#dc3545');
 
         } else {
             isPause = false;
             $('.btn-pause').removeClass('d-none');
             $('.btn-resume').addClass('d-none');
-            $('.loading').css('background-color', '#04e000');
         }
 
         $(".takt-value").text(moment.utc(timerTakt * 1000).format('HH:mm:ss'));
         var takt = $('#takt').val();
         var taktset = moment.utc(takt * 1000).format('HH:mm:ss');
-        $('#taktset').text(  taktset  );
+        $('#taktset').text(taktset);
     }
 
     if (processing == 1) {
         getValues();
-        setInterval(function () {
+        setInterval(function() {
             if (timerOn == true && isPause == false) {
                 var loadingWidth = $('.loading').width();
                 if (loadingWidth >= (barWidth - 200)) {
@@ -69,7 +67,7 @@
                 request: 'getPlanLine',
                 registlinename: registlinename,
                 last_takt: last_takt
-            }, function (response) {
+            }, function(response) {
                 fetch_digit();
                 console.log(response);
 
@@ -97,7 +95,7 @@
 
         }
 
-        setInterval(function () {
+        setInterval(function() {
             if (timerOn == true) {
                 if (isPause == false) {
 
@@ -108,7 +106,7 @@
 
                     if (takt != 0) {
                         $('.takt-value').text(takttimer);
-                        $('#taktset').text('(' + taktset + ')');
+                        $('#taktset').text(taktset);
                     } else {
                         $('.takt-value').text('N/A');
                         $('#taktset').text('(N/A)');
@@ -129,12 +127,12 @@
         }, 1000);
 
     } else {
-        $('.loading').css({
-            'width': '100%',
+        $(document).ready(function() {
+            $('#plannotset').modal('show');
         });
     }
 
-    setInterval(function () {
+    setInterval(function() {
         getDT();
     }, 1000);
 
@@ -149,14 +147,14 @@
             request: 'updateTakt',
             registlinename: $('#registlinename').val(),
             added_takt_plan: added_takt_plan
-        }, function (response) {
+        }, function(response) {
             if (response.trim() == "true") {
                 getValues();
             }
         });
     }
 
-    $(document).on('click', '.btn-target', function (e) {
+    $(document).on('click', '.btn-target', function(e) {
         e.preventDefault();
 
         $('.btn-resume').addClass('d-none');
@@ -166,7 +164,7 @@
         $.post('process/pcs/setting_p.php', {
             request: 'endTarget',
             registlinename: registlinename
-        }, function (response) {
+        }, function(response) {
             console.log(response);
 
             if (response.trim() == 'true') {
@@ -174,29 +172,25 @@
                 $('.btn-set').removeClass('d-none');
                 $('.btn-target').addClass('d-none');
                 $('.btn-menu').addClass('d-none');
-                $('.loading').css('width', (barWidth + 12) + 'px');
-                $('.running').addClass('d-none');
-                $('.done').removeClass('d-none');
             }
         });
     });
 
-    $(document).on('click', '.btn-pause', function (e) {
+    $(document).on('click', '.btn-pause', function(e) {
         e.preventDefault();
         var el = $(this);
         $.post('process/pcs/setting_p.php', {
             request: 'setPaused',
             registlinename: $("#registlinename").val(),
             is_paused: 'YES'
-        }, function (response) {
+        }, function(response) {
             console.log(response);
             el.addClass('d-none');
             $('.btn-resume').removeClass('d-none');
-            $('.loading').css('background-color', '#dc3545');
             isPause = true;
         });
     });
-    $(document).on('click', '.btn-resume', function (e) {
+    $(document).on('click', '.btn-resume', function(e) {
         e.preventDefault();
         var el = $(this);
 
@@ -204,16 +198,15 @@
             request: 'setPaused',
             registlinename: $("#registlinename").val(),
             is_paused: 'NO'
-        }, function (response) {
+        }, function(response) {
             console.log(response);
             el.addClass('d-none');
             $('.btn-pause').removeClass('d-none');
-            $('.loading').css('background-color', '#04e000');
             isPause = false;
         });
     });
     // ---EVENT LISTENER -----------------------------------------------------------------//
-    document.addEventListener("keypress", function (x) {
+    document.addEventListener("keypress", function(x) {
         // PAUSE USING KEY NUMBER 1
         if (x.keyCode == 49 || x.keyCode == 97) {
             var el = $(this);
@@ -221,12 +214,11 @@
                 request: 'setPaused',
                 registlinename: $("#registlinename").val(),
                 is_paused: 'YES'
-            }, function (response) {
+            }, function(response) {
                 console.log(response);
                 el.addClass('d-none');
                 $('.btn-pause').addClass('d-none');
                 $('.btn-resume').removeClass('d-none');
-                $('.loading').css('background-color', '#dc3545');
                 isPause = true;
             });
         }
@@ -241,16 +233,13 @@
                 $.post('process/pcs/setting_p.php', {
                     request: 'endTarget',
                     registlinename: registlinename
-                }, function (response) {
+                }, function(response) {
                     console.log(response);
                     if (response.trim() == 'true') {
                         timerOn = false;
                         $('.btn-set').removeClass('d-none');
                         $('.btn-target').addClass('d-none');
                         $('.btn-menu').addClass('d-none');
-                        $('.loading').css('width', (barWidth + 12) + 'px');
-                        $('.running').addClass('d-none');
-                        $('.done').removeClass('d-none');
                     }
                 });
             } else {
@@ -264,12 +253,11 @@
                 request: 'setPaused',
                 registlinename: $("#registlinename").val(),
                 is_paused: 'NO'
-            }, function (response) {
+            }, function(response) {
                 console.log(response);
                 el.addClass('d-none');
                 $('.btn-resume').addClass('d-none');
                 $('.btn-pause').removeClass('d-none');
-                $('.loading').css('background-color', '#04e000');
                 isPause = false;
             });
         }
@@ -313,8 +301,7 @@
             $('#fit_style').html('.bar{zoom:55%;}');
         } else if (plan_length >= 2 && actual_length >= 2 && diff_length >= 3) {
             $('#fit_style').html('.bar{zoom:65%;}');
-        }
-        else {
+        } else {
             $('#fit_style').html('.bar{zoom:65%;}');
         }
     }
