@@ -40,14 +40,12 @@ include 'process/pcs/index.php';
     <input type="hidden" id="last_takt" value="<?= $last_takt; ?>">
     <input type="hidden" id="added_takt_plan" value="<?= $added_takt_plan; ?>">
     <input type="hidden" id="is_paused" value="<?= $is_paused; ?>">
-
     <input type="hidden" id="andon_line" name="andon_line" value="<?= $andon_line; ?>">
     <input type="hidden" id="final_process" name="final_process" value="<?= $final_process; ?>">
 
     <div class="container-fluid">
         <div class="flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="60" width="60"><span
-                class="h5">PCAD<span>
+            <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="60" width="60"><span class="h5">PCAD<span>
         </div>
     </div>
     <div class="container-fluid">
@@ -57,11 +55,11 @@ include 'process/pcs/index.php';
                 <div class="card-body">
                     <div class="row">
                         <p class="card-text col-6">
-                            <label for="" id="line_no_label">Line No. <span>
+                            <label for="" id="line_no_label">Line No.: <span>
                                     <?= $line_no ?>
                                 </span></label>
                             <br>
-                            <label for="" id="shift_label">Shift <span>
+                            <label for="" id="shift_label">Shift: <span>
                                     <?= $shift ?>
                                 </span></label>
                         </p>
@@ -72,7 +70,7 @@ include 'process/pcs/index.php';
                                 </span></label>
 
                             <br>
-                            <label for="" id="shift_group_label">Group <span>A/B</span></label>
+                            <label for="" id="shift_group_label">Group: <span><?= $group ?></span></label>
                         </p>
                     </div>
                 </div>
@@ -97,34 +95,29 @@ include 'process/pcs/index.php';
                                     <tr>
                                         <?php
                                         if ($processing) {
-                                            ?>
+                                        ?>
                                             <input type="hidden" id="processing" value="1">
                                             <th scope="row">Plan</th>
                                             <td class="plan_target_value" id="plan_target">10</td>
                                             <td class="plan_actual_value" id="plan_actual">10</td>
                                             <td class="plan_gap_value" id="plan_gap">90</td>
-                                            <?php
+                                        <?php
                                         } else {
-                                            ?>
+                                        ?>
                                             <input type="hidden" id="processing" value="0">
-                                            <div class="modal fade show" id="plannotset" tabindex="-1"
-                                                aria-labelledby="plannotsetLabel" aria-hidden="true">
+                                            <div class="modal fade show" id="plannotset" tabindex="-1" aria-labelledby="plannotsetLabel" aria-hidden="true">
                                                 <div class="modal-dialog modal-xl">
                                                     <div class="modal-content" style="background-color: white;">
                                                         <div class="modal-body">
-                                                            <h5 class="modal-title display-4 text-center"
-                                                                id="plannotsetLabel">Plan not set</h5>
+                                                            <h5 class="modal-title display-4 text-center" id="plannotsetLabel">Plan not set</h5>
                                                             <br>
                                                             <br>
                                                             <div class="row justify-content-center text-center">
                                                                 <div class="col-3">
-                                                                    <a href="pcs_page/setting.php"
-                                                                        class="btn btn-lg btn-success text-white btn-close"
-                                                                        id="setplanBtn">SET PLAN <b>[ 4 ]</b></a>
+                                                                    <a href="pcs_page/setting.php" class="btn btn-lg btn-success text-white btn-close" id="setplanBtn">SET PLAN <b>[ 4 ]</b></a>
                                                                 </div>
                                                                 <div class="col-3">
-                                                                    <a href="pcs_page/index.php"
-                                                                        class="btn btn-lg btn-secondary text-white btn-close">MAIN
+                                                                    <a href="pcs_page/index.php" class="btn btn-lg btn-secondary text-white btn-close">MAIN
                                                                         MENU <b>[ 0 ]</b></a>
                                                                 </div>
                                                             </div>
@@ -134,7 +127,7 @@ include 'process/pcs/index.php';
                                                     </div>
                                                 </div>
                                             </div>
-                                            <?php
+                                        <?php
                                         }
                                         ?>
                                     </tr>
@@ -410,9 +403,7 @@ include 'process/pcs/index.php';
                                     <canvas id="hourly_chart"></canvas>
                                 </div>
                             </div>
-                            <a target="_blank"
-                                href="http://172.25.114.167:3000/andon_system/admin/page/andonProdLogs.php"
-                                class="card-link">Andon Details</a>
+                            <a target="_blank" href="http://172.25.114.167:3000/andon_system/admin/page/andonProdLogs.php" class="card-link">Andon Details</a>
                         </div>
                     </div>
                 </div>
@@ -470,7 +461,7 @@ include 'process/pcs/index.php';
 <script type="text/javascript">
     let chart; // Declare chart variable globally
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         // Call these functions initially to load the data from PCAD and other Systems
         // Set interval to refresh data every 30 seconds
         // 30000 milliseconds = 30 seconds
