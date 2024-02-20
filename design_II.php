@@ -41,14 +41,14 @@ $shift = get_shift($server_time);
                         border-collapse: separate;
                         border-spacing: 0;
                         border: 2px solid #4E4E4E;
-                        border-radius: 4px;
+                        border-radius: 2px;
                         width: 100%;
                 }
 
                 th,
                 td {
                         border: 1px solid #ddd;
-                        padding: 3px;
+                        /* padding: 2px; */
                         text-align: left;
                 }
 
@@ -71,8 +71,12 @@ $shift = get_shift($server_time);
                 .numeric-cell-hourly {
                         position: relative;
                 }
-        </style>
 
+                .value-size {
+                        font-size: 40px;
+                        /* font-weight: lighter; */
+                }
+        </style>
 </head>
 
 <body>
@@ -89,10 +93,10 @@ $shift = get_shift($server_time);
                         <!-- <span class="h6">PCAD<span> -->
                 </div>
         </div>
-        <div class="container-fluid">
-                <h2 class="text-center m-4">Production Conveyor Analysis Dashboard</h2>
+        <div class="container-fluid mt-5">
+                <!-- <h2 class="text-center m-4">Production Conveyor Analysis Dashboard</h2> -->
                 <div class="col-12">
-                        <div class="card" style="border: 3px solid #4E4E4E; border-radius: 8px;">
+                        <div class="card" style="border: 2px solid #4E4E4E; border-radius: 5px;">
                                 <div class="card-body">
                                         <!-- first row -->
                                         <div class="row mb-4">
@@ -117,32 +121,32 @@ $shift = get_shift($server_time);
                                         <div class="row mb-4">
                                                 <div class="col-4">
                                                         <!-- yield and ppm -->
-                                                        <table>
+                                                        <table style="border-bottom: none">
                                                                 <tr>
-                                                                        <th colspan="3" class="col-md-6 text-center"
-                                                                                style="height: 47px;">YIELD</th>
+                                                                        <th colspan="3" class="col-md-6 text-center">
+                                                                                YIELD</th>
                                                                         <th colspan="3" class="col-md-6 text-center">PPM
                                                                         </th>
                                                                 </tr>
 
                                                         </table>
-                                                        <table>
+                                                        <table style="border-top: none; height: 135px">
                                                                 <tr>
-                                                                        <td class="col-md-2 text-center"
-                                                                                style="height: 72px;">95%</td>
+                                                                        <td class="col-md-2 text-center value-size">95%
+                                                                        </td>
                                                                         <th class="th-normal col-md-2 text-center">
                                                                                 TARGET</th>
-                                                                        <td class="col-md-2 text-center">7000
+                                                                        <td class="col-md-2 text-center value-size"">7000
                                                                         </td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td class="col-md-2 text-center"
-                                                                                style="height: 72px; background: #fae588;">
+                                                                        <td class=" col-md-2 text-center value-size""
+                                                                                style="background: #fae588;">
                                                                                 89%</td>
                                                                         <th class="th-normal col-md-2 text-center">
                                                                                 ACTUAL</th>
-                                                                        <td class="col-md-2 text-center"
-                                                                                style="background: #f38375;">
+                                                                        <td class="col-md-2 text-center value-size""
+                                                                                style=" background: #f38375;">
                                                                                 25000</td>
                                                                 </tr>
                                                         </table>
@@ -181,28 +185,28 @@ $shift = get_shift($server_time);
                                                                 </tr>
                                                                 <tr>
                                                                         <!-- plan value -->
-                                                                        <td class="numeric-cell col-md-1 text-center"
-                                                                                style="height: 128px" data-value="100">
+                                                                        <td class="numeric-cell col-md-1 text-center value-size"
+                                                                                data-value="100" style="height: 107px">
                                                                                 100</td>
-                                                                        <td class="numeric-cell col-md-1 text-center"
+                                                                        <td class="numeric-cell col-md-1 text-center value-size"
                                                                                 data-value="90">90</td>
-                                                                        <td class="numeric-cell col-md-1 text-center"
+                                                                        <td class="numeric-cell col-md-1 text-center value-size"
                                                                                 data-value="10">10</td>
 
                                                                         <!-- accounting efficiecny value -->
-                                                                        <td class="numeric-cell-acct col-md-1 text-center"
+                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size"
                                                                                 data-value="100">90%</td>
-                                                                        <td class="numeric-cell-acct col-md-1 text-center"
+                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size"
                                                                                 data-value="75">75%</td>
-                                                                        <td class="numeric-cell-acct col-md-1 text-center"
+                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size"
                                                                                 data-value="25">15%</td>
 
                                                                         <!-- hourly output value -->
-                                                                        <td class="numeric-cell-hourly col-md-1 text-center"
+                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size"
                                                                                 data-value="100">10</td>
-                                                                        <td class="numeric-cell-hourly col-md-1 text-center"
+                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size"
                                                                                 data-value="75">7.5</td>
-                                                                        <td class="numeric-cell-hourly col-md-1 text-center"
+                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size"
                                                                                 data-value="25">2.5</td>
                                                                 </tr>
                                                         </table>
@@ -213,17 +217,18 @@ $shift = get_shift($server_time);
                                         <div class="row mb-2">
                                                 <div class="col-4">
                                                         <!-- overall inspection -->
-                                                        <table>
+                                                        <table style="height:225px">
                                                                 <tr>
-                                                                        <th colspan="4" class="text-center"
-                                                                                style="height: 80px">OVERALL INSPECTION
+                                                                        <th colspan="4" class="text-center">OVERALL
+                                                                                INSPECTION
                                                                         </th>
                                                                 </tr>
                                                                 <tr>
-                                                                        <th class="col-md-2 text-center"
-                                                                                style="height: 140px">GOOD</th>
-                                                                        <td class="col-md-4 text-center">25</td>
-                                                                        <td class="col-md-4 text-center">4</td>
+                                                                        <th class="col-md-2 text-center">GOOD</th>
+                                                                        <td class="col-md-4 text-center value-size"
+                                                                                style="height: 190px">25</td>
+                                                                        <td class="col-md-4 text-center value-size">4
+                                                                        </td>
                                                                         <th class="col-md-2 text-center">NG</th>
                                                                 </tr>
                                                         </table>
@@ -241,7 +246,9 @@ $shift = get_shift($server_time);
 
                                                                 <a target="_blank"
                                                                         href="http://172.25.114.167:3000/andon_system/admin/page/andonProdLogs.php"
-                                                                        class="card-link" style="padding: 7px; text-align: right">Andon Details</a>
+                                                                        class="card-link"
+                                                                        style="padding: 7px; text-align: right">Andon
+                                                                        Details</a>
                                                         </div>
                                                 </div>
                                         </div>
@@ -371,15 +378,27 @@ $shift = get_shift($server_time);
                 </div>
 
                 <!-- Buttons (Progress Counter TV) -->
-                <!-- <div class="row">
-                        <div class="col-6">
-                                <button type="button" class="btn btn-danger btn-block"> End Process</button>
+                <div class="row">
+                        <div class="col-4">
+                                <div>
+                                        <button type="button" class="btn btn-danger btn-block btn-pause">PAUSE <b>[ 1
+                                                        ]</b></button>
+                                </div>
+                                <div>
+                                        <button type="button" class="btn btn-info btn-block btn-resume d-none">RESUME
+                                                <b>[ 3 ]</b></button>
+                                </div>
                         </div>
-                        <div class="col-6">
-                                <a type="button" class="btn btn-secondary btn-block" href="pcs_page/index.php"> Main
-                                        Menu</a>
+                        <div class="col-4">
+                                <button type="button" class="btn btn-success btn-block btn-target ">END PROCESS <b>[ 2
+                                                ]</b></button>
                         </div>
-                </div> -->
+                        <div class="col-4">
+                                <a type="button" class="btn btn-secondary btn-block btn-menu" href="pcs_page/index.php">
+                                        MAIN MENU <b>[ 0
+                                                ]</b></a>
+                        </div>
+                </div>
 
 
         </div>
