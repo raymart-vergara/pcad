@@ -155,6 +155,7 @@ if (isset($_POST['request'])) {
         $takt_time = $_POST['takt_time'];
         $registlinename = $_POST['registlinenameplan'];
         $time_start = date('Y-m-d') . ' ' . $_POST['time_start'];
+        $group = $_POST['group'];
 
         $sql_check_pending = "SELECT COUNT(*) AS count_pending FROM t_plan WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
         $stmt_check_pending = $conn_pcad->prepare($sql_check_pending);
@@ -165,7 +166,7 @@ if (isset($_POST['request'])) {
         if ($count_pending > 0) {
             echo "Cannot add target plan. There is already a pending record for this IRCS Line.";
         } else {
-            if (strtotime($_POST['time_start']) < strtotime('07:50:00')) {
+            if (strtotime($_POST['time_start']) < strtotime('05:50:00')) {
                 $date_now = date('Y-m-d');
                 $new_date_to = new DateTime($date_now);
                 $new_date_to->modify("-1 day");
@@ -198,9 +199,8 @@ if (isset($_POST['request'])) {
             $car_maker = $car_maker_name[0];
             $takt_secs = TimeToSec($takt_time);
             $status = "Pending";
-            $sql_insert_plan = "INSERT INTO t_plan 
-        (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address) VALUES 
-        (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address)";
+            $sql_insert_plan = "INSERT INTO t_plan (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address, `group`) 
+            VALUES (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address, :group)";
             $stmt_insert_plan = $conn_pcad->prepare($sql_insert_plan);
             $stmt_insert_plan->bindParam(':car_maker', $car_maker);
             $stmt_insert_plan->bindParam(':line_no', $line_no);
@@ -210,6 +210,7 @@ if (isset($_POST['request'])) {
             $stmt_insert_plan->bindParam(':takt_secs', $takt_secs);
             $stmt_insert_plan->bindParam(':date_actual_start', $date_actual_start);
             $stmt_insert_plan->bindParam(':IP_address', $IP_address);
+            $stmt_insert_plan->bindParam(':group', $group);
 
             if ($stmt_insert_plan->execute()) {
                 header("location: ../../index.php?registlinename=" . $registlinename);
@@ -256,8 +257,3 @@ if (isset($_POST['request'])) {
         }
     }
 }
-
-
-
-
-

@@ -26,6 +26,8 @@ if (isset($_GET['registlinename'])) {
         $last_update_DB = $res['last_update_DB'];
         $is_paused = $res['is_paused'];
         $line_no = $res['Line'];
+        $group = $res['group'];
+        $Carmodel = $res['Carmodel'];
 
         $sql = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename";
         $stmt = $conn_pcad->prepare($sql);
