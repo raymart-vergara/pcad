@@ -17,7 +17,7 @@ if ($result) {
 <div class="pt-4 container-fluid">
 	<div class="row justify-content-center">
 		<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-			<div class="card" style="background-color: #FDFEFF; border: 2px solid #334C69; box-shadow: 5px 10px #eaeaea;">
+			<div class="card" style="background-color: #FDFEFF; border: 2px solid #334C69; box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.25)">
 				<h2 class="card-header" style="color: #334C69;"><b>Production Conveyor Analysis Settings</b></h2>
 				<form method="post" action="../process/pcs/setting_p.php">
 					<input type="hidden" name="request" value="addTarget">
@@ -89,7 +89,7 @@ if ($result) {
 										<div class="col-lg-3">
 											<div class="form-group">
 												<label for="c">TAKT TIME</label>
-												<input type="text" name="takt_time" class="form-control form-control-lg" id="takt_time" placeholder="00">
+												<input type="text" name="takt_time" class="form-control form-control-lg" id="takt_time" readonly placeholder="00">
 											</div>
 										</div>
 									</div>

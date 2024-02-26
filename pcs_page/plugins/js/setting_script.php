@@ -30,19 +30,18 @@
 				checkRunningPlans();
 			});
 
-			//Plan
-			$(document).on('keyup', '#plan', function() {
+		});
+	});
+
+	//Plan
+	$(document).on('keyup', '#plan', function() {
 				getTakt();
 			});
 
 			$(document).on('keyup', '#secs', function() {
 				getTakt();
 			});
-
-
-		});
-	});
-
+			
 	function getTakt() {
 		var plan = $("#plan").val();
 		var secs = $("#secs").val();
