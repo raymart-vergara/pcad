@@ -303,7 +303,7 @@ include 'dist/js/adminlte.miin.php';
                                                                 <!-- <h6 class="text-center text-bold">DT / Delay / Andon</h6> -->
 
                                                                 <a target="_blank"
-                                                                        href="http://172.25.114.229/pcad/andon_graph/andon_details.php"
+                                                                        href="../pcad/andon_graph/andon_details.php"
                                                                         class="card-link">
                                                                         <div id="chart-container">
                                                                                 <canvas id="hourly_chart"
