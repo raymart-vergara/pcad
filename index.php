@@ -287,8 +287,10 @@ include 'dist/js/adminlte.miin.php';
                                                                 <tr>
                                                                         <th class="col-md-2 text-center">GOOD</th>
                                                                         <td class="col-md-4 text-center value-size"
-                                                                                style="height: 190px; background: #78c6a3;">25</td>
-                                                                        <td class="col-md-4 text-center value-size" style="background: #f38375;">4
+                                                                                style="height: 190px; background: #78c6a3;">
+                                                                                25</td>
+                                                                        <td class="col-md-4 text-center value-size"
+                                                                                style="background: #f38375;">4
                                                                         </td>
                                                                         <th class="col-md-2 text-center">NG</th>
                                                                 </tr>
@@ -301,10 +303,11 @@ include 'dist/js/adminlte.miin.php';
                                                                 <!-- <h6 class="text-center text-bold">DT / Delay / Andon</h6> -->
 
                                                                 <a target="_blank"
-                                                                        href="http://172.25.114.167:3000/andon_system/admin/page/andonProdLogs.php"
+                                                                        href="../pcad/andon_graph/andon_details.php"
                                                                         class="card-link">
                                                                         <div id="chart-container">
-                                                                                <canvas id="hourly_chart" height="54"></canvas>
+                                                                                <canvas id="hourly_chart"
+                                                                                        height="54"></canvas>
                                                                         </div>
                                                                 </a>
                                                         </div>
