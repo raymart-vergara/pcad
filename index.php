@@ -311,17 +311,9 @@ include 'dist/js/adminlte.miin.php';
                                                                 </tr>
                                                                 <tr>
                                                                         <th class="col-md-2 text-center">GOOD</th>
-<<<<<<< HEAD
-                                                                        <td id="insp_overall_g"
-                                                                                class="col-md-4 text-center value-size"
-                                                                                style="height: 190px; background: #78c6a3;">
-=======
                                                                         <td class="col-md-4 text-center value-size"
-                                                                                style="height: 190px; background: #78c6a3;">
-                                                                                25</td>
-                                                                        <td class="col-md-4 text-center value-size"
-                                                                                style="background: #f38375;">4
->>>>>>> 5d76f190fe43d619a0e6c7a98f64986cf8b13208
+                                                                                style="height: 190px; background: #78c6a3;">25</td>
+                                                                        <td class="col-md-4 text-center value-size" style="background: #f38375;">4
                                                                         </td>
                                                                         <td id="insp_overall_ng"
                                                                                 class="col-md-4 text-center value-size"
