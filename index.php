@@ -36,8 +36,7 @@ include 'dist/js/adminlte.miin.php';
 
                 th,
                 td {
-                        border: 1px solid #ddd;
-                        /* padding: 2px; */
+                        border: 1px solid #DDD;
                         text-align: left;
                 }
 
@@ -64,6 +63,32 @@ include 'dist/js/adminlte.miin.php';
                 .value-size {
                         font-size: 40px;
                         /* font-weight: lighter; */
+                }
+
+                /* for inspection output scroll */
+                table.scrolldown {
+                        width: 100%;
+
+                        /* border-collapse: collapse; */
+                        border-spacing: 0;
+                        border: 2px solid black;
+                }
+
+                /* To display the block as level element */
+                table.scrolldown tbody,
+                table.scrolldown thead {
+                        display: block;
+                }
+
+                thead tr th {
+                        height: 40px;
+                        line-height: 40px;
+                }
+
+                table.scrolldown tbody {
+                        height: 168px;
+                        overflow-y: auto;
+                        overflow-x: hidden;
                 }
         </style>
 </head>
@@ -286,10 +311,13 @@ include 'dist/js/adminlte.miin.php';
                                                                 </tr>
                                                                 <tr>
                                                                         <th class="col-md-2 text-center">GOOD</th>
-                                                                        <td class="col-md-4 text-center value-size"
-                                                                                style="height: 190px; background: #78c6a3;">25</td>
-                                                                        <td class="col-md-4 text-center value-size" style="background: #f38375;">4
+                                                                        <td id="insp_overall_g"
+                                                                                class="col-md-4 text-center value-size"
+                                                                                style="height: 190px; background: #78c6a3;">
                                                                         </td>
+                                                                        <td id="insp_overall_ng"
+                                                                                class="col-md-4 text-center value-size"
+                                                                                style="background: #f38375;"></td>
                                                                         <th class="col-md-2 text-center">NG</th>
                                                                 </tr>
                                                         </table>
@@ -304,7 +332,8 @@ include 'dist/js/adminlte.miin.php';
                                                                         href="http://172.25.114.167:3000/andon_system/admin/page/andonProdLogs.php"
                                                                         class="card-link">
                                                                         <div id="chart-container">
-                                                                                <canvas id="hourly_chart" height="54"></canvas>
+                                                                                <canvas id="hourly_chart"
+                                                                                        height="54"></canvas>
                                                                         </div>
                                                                 </a>
                                                         </div>
@@ -312,43 +341,38 @@ include 'dist/js/adminlte.miin.php';
                                         </div>
                                         <!-- fourth row -->
                                         <div class="row">
-                                                <div class="col-4">
+                                                <div class="col-4 table-responsive">
                                                         <!-- inspection details -->
-                                                        <table class="m-0 p-0">
+                                                        <table class="m-0 p-0 table-head-fixed text-nowrap table-hover">
                                                                 <tr>
                                                                         <th class="col-md-4 text-center">GOOD</th>
                                                                         <th class="col-md-4 text-center">INSPECTION</th>
                                                                         <th class="col-md-4 text-center">NG</th>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td class="col-md-4 text-center">6</td>
-                                                                        <th class="th-normal col-md-4 text-center">
-                                                                                Dimension</th>
-                                                                        <td class="col-md-4 text-center">1</td>
+                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <th class="th-normal col-md-4 text-center">Dimension</th>
+                                                                        <td class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td class="col-md-4 text-center">3</td>
-                                                                        <th class="th-normal col-md-4 text-center">
-                                                                                ECT</th>
-                                                                        <td class="col-md-4 text-center">0</td>
+                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <th class="th-normal col-md-4 text-center">ECT</th>
+                                                                        <td class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td class="col-md-4 text-center">7</td>
-                                                                        <th class="th-normal col-md-4 text-center">
-                                                                                Clamp Checking</th>
-                                                                        <td class="col-md-4 text-center">2</td>
+                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <th class="th-normal col-md-4 text-center">Clamp Checking</th>
+                                                                        <td class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td class="col-md-4 text-center">3</td>
-                                                                        <th class="th-normal col-md-4 text-center">
-                                                                                Appearance</th>
-                                                                        <td class="col-md-4 text-center">0</td>
+                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <th class="th-normal col-md-4 text-center">Appearance</th>
+                                                                        <td class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td class="col-md-4 text-center">7</td>
-                                                                        <th class="th-normal col-md-4 text-center">
-                                                                                QA</th>
-                                                                        <td class="col-md-4 text-center">1</td>
+                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <th class="th-normal col-md-4 text-center">QA</th>
+                                                                        <td class="col-md-4 text-center"></td>
                                                                 </tr>
                                                         </table>
 
@@ -511,6 +535,8 @@ include 'dist/js/adminlte.miin.php';
                 setInterval(get_yield, 30000);
                 get_ppm();
                 setInterval(get_ppm, 30000);
+                get_overall_inspection();
+                setInterval(get_overall_inspection, 10000);
 
                 // Call count_emp initially to load the data from employee management system
                 count_emp();
@@ -547,6 +573,8 @@ include 'javascript/pcs.php';
 include 'javascript/pcad.php';
 include 'javascript/emp_mgt.php';
 include 'javascript/andon.php';
+include 'javascript/inspection_output.php';
+
 ?>
 
 </html>
