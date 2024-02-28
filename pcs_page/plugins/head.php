@@ -28,5 +28,5 @@
     }
   </style>
 </head>
-<body class="">
+<body>
   
