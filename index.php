@@ -10,7 +10,7 @@ include 'dist/js/adminlte.miin.php';
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>PCAD</title>
 
-        <link rel="icon" href="dist/img/logo.ico" type="image/x-icon" />
+        <link rel="icon" href="dist/img/pcad_logo.ico" type="image/x-icon" />
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="dist/css/font.min.css">
         <!-- Font Awesome -->
@@ -90,6 +90,10 @@ include 'dist/js/adminlte.miin.php';
                         overflow-y: auto;
                         overflow-x: hidden;
                 }
+
+                .darkest-modal .modal-backdrop {
+                        background-color: rgba(0, 0, 0, 1); 
+                }
         </style>
 </head>
 
@@ -165,12 +169,11 @@ include 'dist/js/adminlte.miin.php';
                                                         </table>
                                                         <table style="border-top: none; height: 135px">
                                                                 <tr>
-                                                                        <td class="col-md-2 text-center value-size">95%
+                                                                        <td class="col-md-2 text-center value-size">0
                                                                         </td>
                                                                         <th class="th-normal col-md-2 text-center">
                                                                                 TARGET</th>
-                                                                        <td class="col-md-2 text-center value-size"">7000
-                                                                        </td>
+                                                                        <td class="col-md-2 text-center value-size"">0</td>
                                                                 </tr>
                                                                 <tr>
                                                                         <td class=" col-md-2 text-center value-size""
@@ -234,22 +237,22 @@ include 'dist/js/adminlte.miin.php';
                                                                         } else {
                                                                                 ?>
                                                                                 <input type="hidden" id="processing" value="0">
-                                                                                <div class="modal fade show" id="plannotset"
+                                                                                <div class="modal fade darkest-modal" id="plannotset"
                                                                                         tabindex="-1"
                                                                                         aria-labelledby="plannotsetLabel"
-                                                                                        aria-hidden="true">
-                                                                                        <div class="modal-dialog modal-xl">
+                                                                                        aria-hidden="true" role="dialog"
+                                                                                        aria-labelledby="exampleModalLabel"
+                                                                                        aria-hidden="true"
+                                                                                        data-backdrop="static"
+                                                                                        data-keyboard="false">
+                                                                                        <div class="modal-dialog modal-xl" style="border-radius: 7px; border: 2px solid #CA3F3F; box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.25)">
                                                                                                 <div class="modal-content"
                                                                                                         style="background-color: white;">
                                                                                                         <div class="modal-body">
-                                                                                                                <h5 class="modal-title display-4 text-center"
-                                                                                                                        id="plannotsetLabel">
-                                                                                                                        Plan not
-                                                                                                                        set</h5>
-                                                                                                                <br>
-                                                                                                                <br>
+                                                                                                                <h2 class="modal-title display-4 text-center pb-3"
+                                                                                                                        id="plannotsetLabel"><b>Plan not set</b></h2>
                                                                                                                 <div
-                                                                                                                        class="row justify-content-center text-center">
+                                                                                                                        class="row justify-content-center text-center mb-3">
                                                                                                                         <div
                                                                                                                                 class="col-3">
                                                                                                                                 <a href="pcs_page/setting.php"
@@ -267,7 +270,6 @@ include 'dist/js/adminlte.miin.php';
                                                                                                                                                 ]</b></a>
                                                                                                                         </div>
                                                                                                                 </div>
-                                                                                                                <br>
                                                                                                         </div>
 
                                                                                                 </div>
@@ -279,21 +281,21 @@ include 'dist/js/adminlte.miin.php';
 
                                                                         <!-- accounting efficiecny value -->
                                                                         <td class="numeric-cell-acct col-md-1 text-center value-size"
-                                                                                data-value="100"></td>
+                                                                                data-value="100">0</td>
                                                                         <td class="numeric-cell-acct col-md-1 text-center value-size"
                                                                                 data-value="75"
                                                                                 id="actual_accounting_efficiency"></td>
                                                                         <td class="numeric-cell-acct col-md-1 text-center value-size"
-                                                                                data-value="25"></td>
+                                                                                data-value="25">0</td>
 
                                                                         <!-- hourly output value -->
                                                                         <td class="numeric-cell-hourly col-md-1 text-center value-size"
-                                                                                data-value="100"></td>
+                                                                                data-value="100">0</td>
                                                                         <td class="numeric-cell-hourly col-md-1 text-center value-size"
                                                                                 data-value="75"
                                                                                 id="actual_hourly_output"></td>
                                                                         <td class="numeric-cell-hourly col-md-1 text-center value-size"
-                                                                                data-value="25"></td>
+                                                                                data-value="25">0</td>
                                                                 </tr>
                                                         </table>
                                                 </div>
@@ -311,13 +313,13 @@ include 'dist/js/adminlte.miin.php';
                                                                 </tr>
                                                                 <tr>
                                                                         <th class="col-md-2 text-center">GOOD</th>
-                                                                        <td class="col-md-4 text-center value-size"
-                                                                                style="height: 190px; background: #78c6a3;">25</td>
-                                                                        <td class="col-md-4 text-center value-size" style="background: #f38375;">4
+                                                                        <td id="insp_overall_g"
+                                                                                class="col-md-4 text-center value-size"
+                                                                                style="height: 190px; background: #78c6a3;">
                                                                         </td>
                                                                         <td id="insp_overall_ng"
                                                                                 class="col-md-4 text-center value-size"
-                                                                                style="background: #f38375;"></td>
+                                                                                style="background: #f38375;"> </td>
                                                                         <th class="col-md-2 text-center">NG</th>
                                                                 </tr>
                                                         </table>
@@ -351,27 +353,33 @@ include 'dist/js/adminlte.miin.php';
                                                                 </tr>
                                                                 <tr>
                                                                         <td class="col-md-4 text-center"></td>
-                                                                        <th class="th-normal col-md-4 text-center">Dimension</th>
+                                                                        <th class="th-normal col-md-4 text-center">
+                                                                                Dimension</th>
                                                                         <td class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
                                                                         <td class="col-md-4 text-center"></td>
-                                                                        <th class="th-normal col-md-4 text-center">ECT</th>
+                                                                        <th class="th-normal col-md-4 text-center">ECT
+                                                                        </th>
                                                                         <td class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
                                                                         <td class="col-md-4 text-center"></td>
-                                                                        <th class="th-normal col-md-4 text-center">Clamp Checking</th>
+                                                                        <th class="th-normal col-md-4 text-center">Clamp
+                                                                                Checking</th>
                                                                         <td class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
                                                                         <td class="col-md-4 text-center"></td>
-                                                                        <th class="th-normal col-md-4 text-center">Appearance</th>
+                                                                        <th class="th-normal col-md-4 text-center">
+                                                                                Appearance</th>
                                                                         <td class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
                                                                         <td class="col-md-4 text-center"></td>
-                                                                        <th class="th-normal col-md-4 text-center">QA</th>
+                                                                        <th class="th-normal col-md-4 text-center">
+                                                                                Assurance
+                                                                        </th>
                                                                         <td class="col-md-4 text-center"></td>
                                                                 </tr>
                                                         </table>
