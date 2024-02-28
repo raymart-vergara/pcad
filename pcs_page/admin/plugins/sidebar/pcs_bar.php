@@ -2,7 +2,7 @@
   <!-- Brand Logo -->
   <a href="pcs.php" class="brand-link">
     <img src="../../dist/img/logo.ico" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-light">PCAD PCS</span>
+    <span class="brand-text font-weight-light">PCAD - PCS | Admin</span>
   </a>
 
   <!-- Sidebar -->
