@@ -165,12 +165,9 @@ include 'dist/js/adminlte.miin.php';
                                                         </table>
                                                         <table style="border-top: none; height: 135px">
                                                                 <tr>
-                                                                        <td class="col-md-2 text-center value-size">95%
-                                                                        </td>
-                                                                        <th class="th-normal col-md-2 text-center">
-                                                                                TARGET</th>
-                                                                        <td class="col-md-2 text-center value-size"">7000
-                                                                        </td>
+                                                                        <td class="col-md-2 text-center value-size">0</td>
+                                                                        <th class="th-normal col-md-2 text-center">TARGET</th>
+                                                                        <td class="col-md-2 text-center value-size"">0</td>
                                                                 </tr>
                                                                 <tr>
                                                                         <td class=" col-md-2 text-center value-size""
@@ -279,21 +276,21 @@ include 'dist/js/adminlte.miin.php';
 
                                                                         <!-- accounting efficiecny value -->
                                                                         <td class="numeric-cell-acct col-md-1 text-center value-size"
-                                                                                data-value="100"></td>
+                                                                                data-value="100">0</td>
                                                                         <td class="numeric-cell-acct col-md-1 text-center value-size"
                                                                                 data-value="75"
                                                                                 id="actual_accounting_efficiency"></td>
                                                                         <td class="numeric-cell-acct col-md-1 text-center value-size"
-                                                                                data-value="25"></td>
+                                                                                data-value="25">0</td>
 
                                                                         <!-- hourly output value -->
                                                                         <td class="numeric-cell-hourly col-md-1 text-center value-size"
-                                                                                data-value="100"></td>
+                                                                                data-value="100">0</td>
                                                                         <td class="numeric-cell-hourly col-md-1 text-center value-size"
                                                                                 data-value="75"
                                                                                 id="actual_hourly_output"></td>
                                                                         <td class="numeric-cell-hourly col-md-1 text-center value-size"
-                                                                                data-value="25"></td>
+                                                                                data-value="25">0</td>
                                                                 </tr>
                                                         </table>
                                                 </div>
@@ -311,13 +308,13 @@ include 'dist/js/adminlte.miin.php';
                                                                 </tr>
                                                                 <tr>
                                                                         <th class="col-md-2 text-center">GOOD</th>
-                                                                        <td class="col-md-4 text-center value-size"
-                                                                                style="height: 190px; background: #78c6a3;">25</td>
-                                                                        <td class="col-md-4 text-center value-size" style="background: #f38375;">4
+                                                                        <td id="insp_overall_g"
+                                                                                class="col-md-4 text-center value-size"
+                                                                                style="height: 190px; background: #78c6a3;">
                                                                         </td>
                                                                         <td id="insp_overall_ng"
                                                                                 class="col-md-4 text-center value-size"
-                                                                                style="background: #f38375;"></td>
+                                                                                style="background: #f38375;"> </td>
                                                                         <th class="col-md-2 text-center">NG</th>
                                                                 </tr>
                                                         </table>
@@ -351,27 +348,32 @@ include 'dist/js/adminlte.miin.php';
                                                                 </tr>
                                                                 <tr>
                                                                         <td class="col-md-4 text-center"></td>
-                                                                        <th class="th-normal col-md-4 text-center">Dimension</th>
+                                                                        <th class="th-normal col-md-4 text-center">
+                                                                                Dimension</th>
                                                                         <td class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
                                                                         <td class="col-md-4 text-center"></td>
-                                                                        <th class="th-normal col-md-4 text-center">ECT</th>
+                                                                        <th class="th-normal col-md-4 text-center">ECT
+                                                                        </th>
                                                                         <td class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
                                                                         <td class="col-md-4 text-center"></td>
-                                                                        <th class="th-normal col-md-4 text-center">Clamp Checking</th>
+                                                                        <th class="th-normal col-md-4 text-center">Clamp
+                                                                                Checking</th>
                                                                         <td class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
                                                                         <td class="col-md-4 text-center"></td>
-                                                                        <th class="th-normal col-md-4 text-center">Appearance</th>
+                                                                        <th class="th-normal col-md-4 text-center">
+                                                                                Appearance</th>
                                                                         <td class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
                                                                         <td class="col-md-4 text-center"></td>
-                                                                        <th class="th-normal col-md-4 text-center">QA</th>
+                                                                        <th class="th-normal col-md-4 text-center">Assurance
+                                                                        </th>
                                                                         <td class="col-md-4 text-center"></td>
                                                                 </tr>
                                                         </table>
