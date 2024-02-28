@@ -72,6 +72,8 @@
 			if(ji.keyCode == 415 || ji.keyCode == 503 || ji.keyCode == 179){
 				$('#setplanBtn').click();
 			}
+
+			
 			// IF STOP BTN CLICK mAIN MENU
 			if(ji.keyCode == 413 || ji.keyCode == 461 || ji.keyCode == 178){
 				var url = $('#menu').prop('href');

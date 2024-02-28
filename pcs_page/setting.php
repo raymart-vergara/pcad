@@ -146,8 +146,8 @@ if ($result) {
 									<tr>
 										<td class="text-right font-weight-bold" style="font-size: 17px;">GROUP</td>
 										<td>
-											<select name="group" id="group" class="form-control ml-4" style="width: 250px;">
-											<option>Select Group </option>	
+										<select name="group" id="group" class="form-control ml-4" style="width: 250px;">
+											<option value=""  disabled selected >Select Group </option>	
 											<option value="A">A</option>
 												<option value="B">B</option>
 											</select>
@@ -164,13 +164,12 @@ if ($result) {
 										<b>[BACK]</b></button>
 								</div>
 								<div style="text-align: right;">
-									<button type="submit" style="width: 100%;" class="btn btn-success btn-target d-none" id="setplanBtn">SET PLAN
+									<button type="submit" style="width: 100%;" class="btn btn-success btn-target d-none" id="setplanBtn" required>SET PLAN
 										<b>[PLAY]</b></button>
 								</div>
 							</div>
 							<div class="col-md-6">
-								<button href="index.php" class="btn btn-secondary" style="width: 100%;" id="menuBtn">MAIN MENU
-									<b>[BACK]</b></button>
+							<button  href="index.php" class="btn btn-secondary" style="width: 100%;" id="menuBtn">MAIN MENU <b>[BACK]</b></button>
 							</div>
 						</div>
 					</div>
