@@ -23,13 +23,13 @@
                     if (response_array.message == 'success') {
                         document.getElementById('total_pd_mp').innerHTML = response_array.total_pd_mp;
                         document.getElementById('total_present_pd_mp').innerHTML = response_array.total_present_pd_mp;
-                        // document.getElementById('total_absent_pd_mp').innerHTML = response_array.total_absent_pd_mp;
+                        document.getElementById('total_absent_pd_mp').innerHTML = response_array.total_absent_pd_mp;
                         document.getElementById('total_pd_mp_line_support_to').innerHTML = response_array.total_pd_mp_line_support_to;
                         document.getElementById('absent_ratio_pd_mp').innerHTML = `${response_array.absent_ratio_pd_mp}%`;
 
                         document.getElementById('total_qa_mp').innerHTML = response_array.total_qa_mp;
                         document.getElementById('total_present_qa_mp').innerHTML = response_array.total_present_qa_mp;
-                        // document.getElementById('total_absent_qa_mp').innerHTML = response_array.total_absent_qa_mp;
+                        document.getElementById('total_absent_qa_mp').innerHTML = response_array.total_absent_qa_mp;
                         document.getElementById('total_qa_mp_line_support_to').innerHTML = response_array.total_qa_mp_line_support_to;
                         document.getElementById('absent_ratio_qa_mp').innerHTML = `${response_array.absent_ratio_qa_mp}%`;
                     } else {
