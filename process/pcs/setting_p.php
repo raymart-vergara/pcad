@@ -164,7 +164,7 @@ if (isset($_POST['request'])) {
         $count_pending = $stmt_check_pending->fetchColumn();
 
         if ($count_pending > 0) {
-            echo "Cannot add target plan. There is already a pending record for this IRCS Line.";
+            header("location: ../../pcs_page/index.php");
         } else {
             if (strtotime($_POST['time_start']) < strtotime('05:50:00')) {
                 $date_now = date('Y-m-d');
