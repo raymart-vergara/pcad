@@ -228,8 +228,8 @@ include 'dist/js/adminlte.miin.php';
                                                                         if ($processing) {
                                                                         ?>
                                                                                 <input type="hidden" id="processing" value="1">
-                                                                                <td class="plan_target_value numeric-cell col-md-1 text-center value-size" data-value="24" style="height: 107px" id="plan_target"></td>
-                                                                                <td class="plan_actual_value numeric-cell col-md-1 text-center value-size" data-value="<?= $plan_actual ?>" id="plan_actual"></td>
+                                                                                <td class="plan_target_value numeric-cell col-md-1 text-center value-size" data-value="100" style="height: 107px" id="plan_target"></td>
+                                                                                <td class="plan_actual_value numeric-cell col-md-1 text-center value-size" data-value="100" id="plan_actual"></td>
                                                                                 <td class="plan_gap_value numeric-cell col-md-1 text-center value-size" data-value="100" id="plan_gap"></td>
                                                                         <?php
                                                                         } else {
@@ -264,13 +264,13 @@ include 'dist/js/adminlte.miin.php';
 
                                                                         <!-- accounting efficiecny value -->
                                                                         <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100"><?= $acc_eff; ?></td>
-                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="75" id="actual_accounting_efficiency"></td>
-                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="25">0</td>
+                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100" id="actual_accounting_efficiency"></td>
+                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100">0</td>
 
                                                                         <!-- hourly output value -->
                                                                         <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="target_hourly_output"></td>
-                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="75" id="actual_hourly_output">0</td>
-                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="25">0</td>
+                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="actual_hourly_output">0</td>
+                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100">0</td>
                                                                 </tr>
                                                         </table>
                                                 </div>
