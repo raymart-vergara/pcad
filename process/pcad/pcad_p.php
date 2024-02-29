@@ -5,6 +5,7 @@ require '../conn/pcad.php';
 require '../conn/ircs.php';
 require '../conn/emp_mgt.php';
 require '../lib/ircs.php';
+include '../lib/inspection_output.php';
 include '../lib/st.php';
 include '../lib/emp_mgt.php';
 include '../lib/main.php';
@@ -17,20 +18,19 @@ $method = $_GET['method'];
 // http://172.25.112.131/pcad/process/pcad/pcad_p.php?method=get_accounting_efficiency
 if ($method == 'get_accounting_efficiency') {
     // Working Time X Manpower Declaration
-    $day = '2024-02-02';
-	$shift = 'DS';
+    // $day = '2024-02-02';
+	$shift = get_shift($server_time);
+    $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
 	// $line_no = '2132';
-    $line_no = '7119';
     // $day = $_GET['day'];
 	// $shift = $_GET['shift'];
-	// $line_no = $_GET['line_no'];
+	$line_no = $_GET['line_no'];
     
     // Total ST Per Line Declaration
     // $registlinename = 'DAIHATSU_30';
-    $registlinename = 'SUBARU_08';
-    $shift_group = 'A';
-    // $registlinename = $_GET['registlinename'];
-    // $shift_group = $_GET['shift_group'];
+    // $shift_group = 'A';
+    $registlinename = $_GET['registlinename'];
+    $shift_group = $_GET['shift_group'];
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
     $final_process = $ircs_line_data_arr['final_process'];
     $ip = $ircs_line_data_arr['ip'];
@@ -73,14 +73,13 @@ if ($method == 'get_accounting_efficiency') {
 // Yield
 // http://172.25.112.131/pcad/process/pcad/pcad_p.php?method=get_yield
 if ($method == 'get_yield') {
-    $input_ng = 0;
-    $shift = 'DS';
+    $shift = get_shift($server_time);
     // $input_ng = $_GET['input_ng'];
     // $shift = $_GET['shift'];
-    $registlinename = 'SUBARU_08';
-    $shift_group = 'A';
-    // $registlinename = $_GET['registlinename'];
-    // $shift_group = $_GET['shift_group'];
+    // $registlinename = 'SUBARU_08';
+    // $shift_group = 'A';
+    $registlinename = $_GET['registlinename'];
+    $shift_group = $_GET['shift_group'];
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
     $final_process = $ircs_line_data_arr['final_process'];
     $ip = $ircs_line_data_arr['ip'];
@@ -98,6 +97,7 @@ if ($method == 'get_yield') {
     );
 
     $qa_output = count_output($search_arr, $conn_ircs);
+    $input_ng = count_overall_ng($search_arr, $conn_ircs);
     $yield = compute_yield($qa_output, $input_ng);
 
     // echo $qa_output;
@@ -107,14 +107,13 @@ if ($method == 'get_yield') {
 // PPM
 // http://172.25.112.131/pcad/process/pcad/pcad_p.php?method=get_ppm
 if ($method == 'get_ppm') {
-    $ng = 0;
     $shift = 'DS';
     // $input_ng = $_GET['input_ng'];
     // $shift = $_GET['shift'];
-    $registlinename = 'SUBARU_08';
-    $shift_group = 'A';
-    // $registlinename = $_GET['registlinename'];
-    // $shift_group = $_GET['shift_group'];
+    // $registlinename = 'SUBARU_08';
+    // $shift_group = 'A';
+    $registlinename = $_GET['registlinename'];
+    $shift_group = $_GET['shift_group'];
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
     $final_process = $ircs_line_data_arr['final_process'];
     $ip = $ircs_line_data_arr['ip'];
@@ -132,6 +131,7 @@ if ($method == 'get_ppm') {
     );
 
     $output = count_output($search_arr, $conn_ircs);
+    $ng = count_overall_ng($search_arr, $conn_ircs);
     $ppm = compute_ppm($ng, $output);
 
     // echo $output;
@@ -141,12 +141,13 @@ if ($method == 'get_ppm') {
 // Hourly Output
 // http://172.25.112.131/pcad/process/pcad/pcad_p.php?method=get_hourly_output
 if ($method == 'get_hourly_output') {
-    $plan = 0;
-    $working_time = 450;
-    // $plan = $_GET['plan'];
-    // $working_time = $_GET['working_time'];
+    $plan = 100;
 
-    $hourly_output = compute_hourly_output($plan, $working_time);
+    // $plan = $_GET['plan'];
+    $working_time = intval($_GET['working_time']);
+    $working_time_hr = $working_time / 60;
+
+    $hourly_output = compute_hourly_output($plan, $working_time_hr);
     echo $hourly_output;
 }
 
