@@ -13,7 +13,7 @@ function compute_accounting_efficiency($total_st_per_line, $wt_x_mp) {
 function compute_yield($qa_output, $input_ng) {
 	$input_ng_plus_qa_output = $input_ng + $qa_output;
 	if ($input_ng_plus_qa_output != 0) {
-		return $qa_output / $input_ng_plus_qa_output;
+		return round(($qa_output / $input_ng_plus_qa_output) * 100, 2);;
 	} else {
 		return 0;
 	}
@@ -21,7 +21,7 @@ function compute_yield($qa_output, $input_ng) {
 
 function compute_ppm($ng, $output) {
 	if ($output != 0) {
-		return ($ng / $output) * 1000000;
+		return round((($ng / $output) * 1000000), 0);
 	} else {
 		return 0;
 	}
@@ -29,7 +29,7 @@ function compute_ppm($ng, $output) {
 
 function compute_hourly_output($plan, $working_time) {
 	if ($working_time != 0) {
-		return $plan / $working_time;
+		return round($plan / $working_time, 0);
 	} else {
 		return 0;
 	}
