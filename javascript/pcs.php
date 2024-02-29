@@ -289,20 +289,22 @@
         console.log(actual_length);
         console.log(diff_length);
 
-        if (plan_length >= 3 && actual_length >= 3 && diff_length >= 3) {
-            $('#fit_style').html('.bar{zoom:50%;}');
-        } else if (plan_length >= 3 && actual_length >= 1 && diff_length >= 3) {
-            $('#fit_style').html('.bar{zoom:55%;}');
-        } else if (plan_length >= 3 && actual_length >= 3 && diff_length >= 1) {
-            $('#fit_style').html('.bar{zoom:55%;}');
-        } else if (plan_length >= 3 && actual_length >= 2 && diff_length >= 2) {
-            $('#fit_style').html('.bar{zoom:55%;}');
-        } else if (plan_length >= 3 && actual_length >= 2 && diff_length >= 3) {
-            $('#fit_style').html('.bar{zoom:55%;}');
-        } else if (plan_length >= 2 && actual_length >= 2 && diff_length >= 3) {
-            $('#fit_style').html('.bar{zoom:65%;}');
-        } else {
-            $('#fit_style').html('.bar{zoom:65%;}');
-        }
+        // if (plan_length >= 3 && actual_length >= 3 && diff_length >= 3) {
+        //     $('#fit_style').html('.bar{zoom:50%;}');
+        // } else if (plan_length >= 3 && actual_length >= 1 && diff_length >= 3) {
+        //     $('#fit_style').html('.bar{zoom:55%;}');
+        // } else if (plan_length >= 3 && actual_length >= 3 && diff_length >= 1) {
+        //     $('#fit_style').html('.bar{zoom:55%;}');
+        // } else if (plan_length >= 3 && actual_length >= 2 && diff_length >= 2) {
+        //     $('#fit_style').html('.bar{zoom:55%;}');
+        // } else if (plan_length >= 3 && actual_length >= 2 && diff_length >= 3) {
+        //     $('#fit_style').html('.bar{zoom:55%;}');
+        // } else if (plan_length >= 2 && actual_length >= 2 && diff_length >= 3) {
+        //     $('#fit_style').html('.bar{zoom:65%;}');
+        // } else {
+        //     $('#fit_style').html('.bar{zoom:65%;}');
+        // }
     }
+    
+
 </script>

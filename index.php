@@ -113,6 +113,12 @@ include 'dist/js/adminlte.miin.php';
         <input type="hidden" id="is_paused" value="<?= $is_paused; ?>">
         <input type="hidden" id="andon_line" name="andon_line" value="<?= $andon_line; ?>">
         <input type="hidden" id="final_process" name="final_process" value="<?= $final_process; ?>">
+
+        <input type="hidden" id="yeild_target" name="yeild_target" value="<?= $yeild_target; ?>">
+        <input type="hidden" id="ppm_target" name="ppm_target" value="<?= $ppm_target; ?>">
+        <input type="hidden" id="acc_eff" name="acc_eff" value="<?= $acc_eff; ?>">
+        <input type="hidden" id="start_bal_delay" name="start_bal_delay" value="<?= $start_bal_delay; ?>">
+        <input type="hidden" id="work_time_plan" name="work_time_plan" value="<?= $work_time_plan; ?>">
         <div class="container-fluid">
                 <div class="flex-column justify-content-center align-items-center">
                         <!-- <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="40" width="40"> -->
@@ -169,11 +175,11 @@ include 'dist/js/adminlte.miin.php';
                                                         </table>
                                                         <table style="border-top: none; height: 135px">
                                                                 <tr>
-                                                                        <td class="col-md-2 text-center value-size">0
+                                                                        <td class="col-md-2 text-center value-size" ><?= $yeild_target; ?>
                                                                         </td>
                                                                         <th class="th-normal col-md-2 text-center">
                                                                                 TARGET</th>
-                                                                        <td class="col-md-2 text-center value-size"">0</td>
+                                                                        <td class="col-md-2 text-center value-size" ><?= $ppm_target; ?></td>
                                                                 </tr>
                                                                 <tr>
                                                                         <td class=" col-md-2 text-center value-size"" style="background: #fae588;" id="actual_yield"></td>
@@ -257,7 +263,7 @@ include 'dist/js/adminlte.miin.php';
                                                                         ?>
 
                                                                         <!-- accounting efficiecny value -->
-                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100">0</td>
+                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100"><?= $acc_eff; ?></td>
                                                                         <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="75" id="actual_accounting_efficiency"></td>
                                                                         <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="25">0</td>
 
@@ -271,10 +277,10 @@ include 'dist/js/adminlte.miin.php';
 
                                         </div>
                                         <!-- third row -->
-                                        <div class="row mb-2">
+                                        <div class="row mb-3">
                                                 <div class="col-4">
                                                         <!-- overall inspection -->
-                                                        <table style="height:225px">
+                                                        <table style="min-height:225px;">
                                                                 <tr>
                                                                         <th colspan="4" class="text-center">OVERALL
                                                                                 INSPECTION
@@ -307,42 +313,43 @@ include 'dist/js/adminlte.miin.php';
                                         <div class="row">
                                                 <div class="col-4 table-responsive">
                                                         <!-- inspection details -->
-                                                        <table class="m-0 p-0 table-head-fixed text-nowrap table-hover">
+                                                        <table class="m-0 p-0 table-head-fixed text-nowrap table-hover" style="min-height:172px; max-height:172px; width: 100%; overflow-y: auto;">
                                                                 <tr>
                                                                         <th class="col-md-4 text-center">GOOD</th>
                                                                         <th class="col-md-4 text-center">INSPECTION</th>
                                                                         <th class="col-md-4 text-center">NG</th>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <td id="dimension_p"
+                                                                                class="col-md-4 text-center"></td>
                                                                         <th class="th-normal col-md-4 text-center">
                                                                                 Dimension</th>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <td id="dimension_p_ng"
+                                                                                class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <td id="ect_p" class="col-md-4 text-center">
+                                                                        </td>
                                                                         <th class="th-normal col-md-4 text-center">ECT
                                                                         </th>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <td id="ect_p_ng" class="col-md-4 text-center">
+                                                                        </td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td class="col-md-4 text-center"></td>
-                                                                        <th class="th-normal col-md-4 text-center">Clamp
-                                                                                Checking</th>
-                                                                        <td class="col-md-4 text-center"></td>
-                                                                </tr>
-                                                                <tr>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <td id="visual_p" class="col-md-4 text-center">
+                                                                        </td>
                                                                         <th class="th-normal col-md-4 text-center">
-                                                                                Appearance</th>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                                Visual</th>
+                                                                        <td id="visual_p_ng"
+                                                                                class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <td id="assurance_p"
+                                                                                class="col-md-4 text-center"></td>
                                                                         <th class="th-normal col-md-4 text-center">
-                                                                                Assurance
-                                                                        </th>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                                Assurance</th>
+                                                                        <td id="assurance_p_ng"
+                                                                                class="col-md-4 text-center"></td>
                                                                 </tr>
                                                         </table>
 
@@ -367,7 +374,7 @@ include 'dist/js/adminlte.miin.php';
 
                                                                         <th class="th-normal col-md-1" style="font-size: 13px">Starting Balance
                                                                                 Delay:</th>
-                                                                        <td class="col-md-1 text-center"></td>
+                                                                        <td class="col-md-1 text-center"><?= $start_bal_delay; ?></td>
                                                                 </tr>
                                                                 <tr>
                                                                         <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Actual:</th>
@@ -402,7 +409,7 @@ include 'dist/js/adminlte.miin.php';
 
                                                                         <th class="th-normal col-md-1" style="font-size: 13px">Working Time
                                                                                 Plan:</th>
-                                                                        <td class="col-md-1 text-center"></td>
+                                                                        <td class="col-md-1 text-center"><?= $work_time_plan; ?></td>
                                                                 </tr>
                                                                 <tr>
 
@@ -488,8 +495,14 @@ include 'dist/js/adminlte.miin.php';
                 setInterval(get_yield, 30000);
                 get_ppm();
                 setInterval(get_ppm, 30000);
+
+                // INSPECTION
                 get_overall_inspection();
                 setInterval(get_overall_inspection, 10000);
+                get_specific_inspection_good();
+                setInterval(get_specific_inspection_good, 10000);
+                get_specific_inspection_no_good();
+                setInterval(get_specific_inspection_no_good, 10000);
 
                 // Call count_emp initially to load the data from employee management system
                 count_emp();
