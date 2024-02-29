@@ -4,7 +4,7 @@ require 'process/conn/emp_mgt.php';
 include 'process/lib/emp_mgt.php';
 
 $line_no = $_GET['line_no'];
-$registlinename = '';
+// $registlinename = '';
 // $registlinename = $_GET['registlinename']; // IRCS LINE (PCS)
 $dept_pd = 'PD2';
 $dept_qa = 'QA';
@@ -14,6 +14,7 @@ $shift = get_shift($server_time);
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,7 +26,10 @@ $shift = get_shift($server_time);
 	<link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
 
 	<style>
-		table, tr, td, th {
+		table,
+		tr,
+		td,
+		th {
 			color: black;
 			border: 1px solid black;
 			border-width: small;
@@ -34,25 +38,32 @@ $shift = get_shift($server_time);
 		}
 	</style>
 </head>
+
 <body>
-	<input type="hidden" id="shift" value="<?=$shift?>">
-	<input type="hidden" id="dept_pd" value="<?=$dept_pd?>">
-	<input type="hidden" id="dept_qa" value="<?=$dept_qa?>">
-	<input type="hidden" id="section_pd" value="<?=$section_pd?>">
-	<input type="hidden" id="section_qa" value="<?=$section_qa?>">
-	<input type="hidden" id="line_no" value="<?=$line_no?>">
-	<!-- <input type="hidden" id="registlinename" value="<?=$registlinename?>"> -->
+	<input type="hidden" id="shift" value="<?= $shift ?>">
+	<input type="hidden" id="dept_pd" value="<?= $dept_pd ?>">
+	<input type="hidden" id="dept_qa" value="<?= $dept_qa ?>">
+	<input type="hidden" id="section_pd" value="<?= $section_pd ?>">
+	<input type="hidden" id="section_qa" value="<?= $section_qa ?>">
+	<input type="hidden" id="line_no" value="<?= $line_no ?>">
+	<input type="hidden" id="registlinename" value="<?= $registlinename ?>">
 	<table>
 		<thead>
 			<tr>
 				<th>Line No :</th>
-				<th id="line_no_label"><?=$line_no?></th>
+				<th id="line_no_label">
+					<?= $line_no ?>
+				</th>
 				<th>Date :</th>
-				<th id="server_date_only_label"><?=$server_date_only?></th>
+				<th id="server_date_only_label">
+					<?= $server_date_only ?>
+				</th>
 			</tr>
 			<tr>
 				<th>Shift :</th>
-				<th id="shift_label"><?=$shift?></th>
+				<th id="shift_label">
+					<?= $shift ?>
+				</th>
 				<th>Group :</th>
 				<th id="shift_group_label">A/B</th>
 			</tr>
@@ -202,7 +213,10 @@ $shift = get_shift($server_time);
 						<tfoot>
 							<tr>
 								<td>Overall</td>
+								<!-- good -->
 								<td>0</td>
+
+								<!-- no good -->
 								<td>0</td>
 							</tr>
 						</tfoot>
@@ -245,9 +259,9 @@ $shift = get_shift($server_time);
 
 	<button id="btnEndProcess">End Process</button>
 	<a href="pcs_page/index.php">
-	<button type="button"  id="btnMainMenu">MainMenu</button>
+		<button type="button" id="btnMainMenu">MainMenu</button>
 	</a>
-	
+
 
 	<!-- jQuery -->
 	<script src="plugins/jquery/dist/jquery.min.js"></script>
@@ -276,97 +290,98 @@ $shift = get_shift($server_time);
 			let section_qa = document.getElementById('section_qa').value;
 			let line_no = document.getElementById('line_no').value;
 			$.ajax({
-		        url:'process/emp_mgt/emp_mgt_p.php',
-		        type:'GET',
-		        cache:false,
-		        data:{
-		            method:'count_emp',
-		            dept_pd:dept_pd,
-		            dept_qa:dept_qa,
-		            section_pd:section_pd,
-					section_qa:section_qa,
-		            line_no:line_no
-		        },
-		        success:function(response){
-		            try {
-	                    let response_array = JSON.parse(response);
-	                    if (response_array.message == 'success') {
-                            document.getElementById('total_pd_mp').innerHTML = response_array.total_pd_mp;
-                            document.getElementById('total_present_pd_mp').innerHTML = response_array.total_present_pd_mp;
-                            document.getElementById('total_absent_pd_mp').innerHTML = response_array.total_absent_pd_mp;
-                            document.getElementById('total_pd_mp_line_support_to').innerHTML = response_array.total_pd_mp_line_support_to;
-                            document.getElementById('absent_ratio_pd_mp').innerHTML = `${response_array.absent_ratio_pd_mp}%`;
+				url: 'process/emp_mgt/emp_mgt_p.php',
+				type: 'GET',
+				cache: false,
+				data: {
+					method: 'count_emp',
+					dept_pd: dept_pd,
+					dept_qa: dept_qa,
+					section_pd: section_pd,
+					section_qa: section_qa,
+					line_no: line_no
+				},
+				success: function (response) {
+					try {
+						let response_array = JSON.parse(response);
+						if (response_array.message == 'success') {
+							document.getElementById('total_pd_mp').innerHTML = response_array.total_pd_mp;
+							document.getElementById('total_present_pd_mp').innerHTML = response_array.total_present_pd_mp;
+							document.getElementById('total_absent_pd_mp').innerHTML = response_array.total_absent_pd_mp;
+							document.getElementById('total_pd_mp_line_support_to').innerHTML = response_array.total_pd_mp_line_support_to;
+							document.getElementById('absent_ratio_pd_mp').innerHTML = `${response_array.absent_ratio_pd_mp}%`;
 
-                            document.getElementById('total_qa_mp').innerHTML = response_array.total_qa_mp;
-                            document.getElementById('total_present_qa_mp').innerHTML = response_array.total_present_qa_mp;
-                            document.getElementById('total_absent_qa_mp').innerHTML = response_array.total_absent_qa_mp;
-                            document.getElementById('total_qa_mp_line_support_to').innerHTML = response_array.total_qa_mp_line_support_to;
-                            document.getElementById('absent_ratio_qa_mp').innerHTML = `${response_array.absent_ratio_qa_mp}%`;
-	                    } else {
-	                        console.log(response);
-	                    }
-	                } catch(e) {
-	                    console.log(response);
-	                }
-		        }
-		    });
+							document.getElementById('total_qa_mp').innerHTML = response_array.total_qa_mp;
+							document.getElementById('total_present_qa_mp').innerHTML = response_array.total_present_qa_mp;
+							document.getElementById('total_absent_qa_mp').innerHTML = response_array.total_absent_qa_mp;
+							document.getElementById('total_qa_mp_line_support_to').innerHTML = response_array.total_qa_mp_line_support_to;
+							document.getElementById('absent_ratio_qa_mp').innerHTML = `${response_array.absent_ratio_qa_mp}%`;
+						} else {
+							console.log(response);
+						}
+					} catch (e) {
+						console.log(response);
+					}
+				}
+			});
 		}
 
 		const get_accounting_efficiency = () => {
 			$.ajax({
-		        url:'process/pcad/pcad_p.php',
-		        type:'GET',
-		        cache:false,
-		        data:{
-		            method:'get_accounting_efficiency'
-		        },
-		        success:function(response){
+				url: 'process/pcad/pcad_p.php',
+				type: 'GET',
+				cache: false,
+				data: {
+					method: 'get_accounting_efficiency'
+				},
+				success: function (response) {
 					document.getElementById('actual_accounting_efficiency').innerHTML = `${response}%`;
-		        }
-		    });
+				}
+			});
 		}
 
 		const get_hourly_output = () => {
 			$.ajax({
-		        url:'process/pcad/pcad_p.php',
-		        type:'GET',
-		        cache:false,
-		        data:{
-		            method:'get_hourly_output'
-		        },
-		        success:function(response){
+				url: 'process/pcad/pcad_p.php',
+				type: 'GET',
+				cache: false,
+				data: {
+					method: 'get_hourly_output'
+				},
+				success: function (response) {
 					document.getElementById('actual_hourly_output').innerHTML = response;
-		        }
-		    });
+				}
+			});
 		}
 
 		const get_yield = () => {
 			$.ajax({
-		        url:'process/pcad/pcad_p.php',
-		        type:'GET',
-		        cache:false,
-		        data:{
-		            method:'get_yield'
-		        },
-		        success:function(response){
+				url: 'process/pcad/pcad_p.php',
+				type: 'GET',
+				cache: false,
+				data: {
+					method: 'get_yield'
+				},
+				success: function (response) {
 					document.getElementById('actual_yield').innerHTML = response;
-		        }
-		    });
+				}
+			});
 		}
 
 		const get_ppm = () => {
 			$.ajax({
-		        url:'process/pcad/pcad_p.php',
-		        type:'GET',
-		        cache:false,
-		        data:{
-		            method:'get_ppm'
-		        },
-		        success:function(response){
+				url: 'process/pcad/pcad_p.php',
+				type: 'GET',
+				cache: false,
+				data: {
+					method: 'get_ppm'
+				},
+				success: function (response) {
 					document.getElementById('actual_ppm').innerHTML = response;
-		        }
-		    });
+				}
+			});
 		}
 	</script>
 </body>
+
 </html>

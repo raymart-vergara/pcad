@@ -8,7 +8,6 @@
 			}, function(response) {
 				console.log(response);
 				$("#line_no").val(response.trim());
-				$("#andon_line").val(response.trim());
 				$("#registlinenameplan").val(registlinename);
 				// After receiving the response, check if plans are running
 				checkRunningPlans();
@@ -31,19 +30,18 @@
 				checkRunningPlans();
 			});
 
-			//Plan
-			$(document).on('keyup', '#plan', function() {
+		});
+	});
+
+	//Plan
+	$(document).on('keyup', '#plan', function() {
 				getTakt();
 			});
 
 			$(document).on('keyup', '#secs', function() {
 				getTakt();
 			});
-
-
-		});
-	});
-
+			
 	function getTakt() {
 		var plan = $("#plan").val();
 		var secs = $("#secs").val();
@@ -74,6 +72,8 @@
 			if(ji.keyCode == 415 || ji.keyCode == 503 || ji.keyCode == 179){
 				$('#setplanBtn').click();
 			}
+
+
 			// IF STOP BTN CLICK mAIN MENU
 			if(ji.keyCode == 413 || ji.keyCode == 461 || ji.keyCode == 178){
 				var url = $('#menu').prop('href');
@@ -87,4 +87,4 @@
 </script>
 </body>
 
-</html> -
+</html> 

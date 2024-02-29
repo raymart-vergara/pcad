@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PCAD - ST</title>
+    <title>Andon Details</title>
 
     <link rel="icon" href="../dist/img/pcad_logo.ico" type="image/x-icon" />
     <!-- Google Font: Source Sans Pro -->
@@ -64,23 +64,45 @@
     </style>
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
-
-    <!-- /.navbar -->
-    <div class="container-fluid my-4 mb-5">
-        <div class="col-12 p-0">
-            <div class="card rounded shadow">
-                <h1>Andon Graph</h1>
-                <div id="chart-container">
-                    <canvas id="hourly_chart" style="position: relative; height: 100px; width:10px"></canvas>
-                </div>
-            </div>
-        </div>
+<body class="">
+    <div class="card-body">
+        <h2 class="text-center">Andon Details</h2>
+        <table class="table table-head-fixed text-nowrap table-bordered table-hover">
+            <thead class="text-center">
+                <tr><th>#</th>
+                    <th>Production</th>
+                    <th>Line</th>
+                    <th>Machine</th>
+                    <th>Machine No.</th>
+                    <th>Process</th>
+                    <th>Problem</th>
+                    <th>Production Acct.</th>
+                    <th>Call Date Time</th>
+                    <th>Waiting Time (mins.)</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Fixing Time Duration (mins.)</th>
+                    <th>Technician</th>
+                    <th>Department</th>
+                    <th>Solution</th>
+                    <th>Serial Number</th>
+                    <th>Jig Name</th>
+                    <th>Circuit Location</th>
+                    <th>Lot Number</th>
+                    <th>Product Number</th>
+                    <th>Fixing Status</th>
+                    <th>Backup Request Time</th>
+                    <th>Backup Comment</th>
+                    <th>Backup Technician</th>
+                    <th>Backup Confirmation Date Time</th>
+                </tr>
+            </thead>
+            <tbody id="andon_details" style="text-align:center;"></tbody>
+        </table>
     </div>
-
     <!-- /.row -->
 
     <?php include 'plugins/footer.php'; ?>
     <?php
-include 'plugins/js/a_graph_script.php'; 
-?>
+    include 'plugins/js/a_graph_script.php';
+    ?>
