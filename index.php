@@ -99,6 +99,7 @@ include 'dist/js/adminlte.miin.php';
 
 <body>
         <input type="hidden" id="shift" value="<?= $shift ?>">
+        <input type="hidden" id="shift_group" value="<?= $shift_group ?>">
         <input type="hidden" id="dept_pd" value="<?= $dept_pd ?>">
         <input type="hidden" id="dept_qa" value="<?= $dept_qa ?>">
         <input type="hidden" id="section_pd" value="<?= $section_pd ?>">
