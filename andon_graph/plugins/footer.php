@@ -1,5 +1,5 @@
-<footer class="main-footer">
-  </footer>
+<!-- <footer class="main-footer">
+  </footer> -->
 <?php
 //MODALS
 include '../modals/logout_modal.php';
