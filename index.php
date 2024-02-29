@@ -351,28 +351,28 @@ include 'dist/js/adminlte.miin.php';
                                                         <!-- pd qa other details -->
                                                         <table>
                                                                 <tr>
-                                                                        <th colspan="2" class="col-md-3 text-center">PD
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' colspan="2" class="col-md-3 text-center">PD
                                                                                 MANPOWER</th>
-                                                                        <th colspan="2" class="col-md-3 text-center">QA
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' colspan="2" class="col-md-3 text-center">QA
                                                                                 MANPOWER</th>
                                                                         <th colspan="2" class="col-md-3 text-center">
                                                                                 OTHER DETAILS</th>
                                                                 </tr>
                                                                 <tr>
-                                                                        <th class="th-normal col-md-1">Plan:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center" data-value="100" id="total_pd_mp"></td>
-                                                                        <th class="th-normal col-md-1">Plan:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center" data-value="100" id="total_qa_mp"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Plan:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="100" id="total_pd_mp"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Plan:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="100" id="total_qa_mp"></td>
 
                                                                         <th class="th-normal col-md-1" style="font-size: 13px">Starting Balance
                                                                                 Delay:</th>
                                                                         <td class="col-md-1 text-center"></td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <th class="th-normal col-md-1">Actual:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center" data-value="94" id="total_present_pd_mp"></td>
-                                                                        <th class="th-normal col-md-1">Actual:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center" data-value="97" id="total_present_qa_mp"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Actual:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="94" id="total_present_pd_mp"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Actual:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="97" id="total_present_qa_mp"></td>
 
                                                                         <th class="th-normal col-md-1">Conveyor Speed:
                                                                         </th>
@@ -382,10 +382,10 @@ include 'dist/js/adminlte.miin.php';
                                                                 </tr>
 
                                                                 <tr>
-                                                                        <th class="th-normal col-md-1">Absent:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center" data-value="100" id="total_absent_pd_mp"></td>
-                                                                        <th class="th-normal col-md-1">Absent:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center" data-value="100" id="total_absent_qa_mp"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Absent:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="100" id="total_absent_pd_mp"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Absent:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="100" id="total_absent_qa_mp"></td>
 
                                                                         <th class="th-normal col-md-1 takt-label">Takt
                                                                                 Time:</th>
@@ -394,10 +394,10 @@ include 'dist/js/adminlte.miin.php';
                                                                     
                                                                 </tr>
                                                                 <tr>
-                                                                        <th class="th-normal col-md-1">Support:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center" data-value="6" id="total_pd_mp_line_support_to"></td>
-                                                                        <th class="th-normal col-md-1">Support:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center" data-value="3" id="total_qa_mp_line_support_to"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Support:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="6" id="total_pd_mp_line_support_to"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Support:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="3" id="total_qa_mp_line_support_to"></td>
 
                                                                         <th class="th-normal col-md-1" style="font-size: 13px">Working Time
                                                                                 Plan:</th>
@@ -405,10 +405,10 @@ include 'dist/js/adminlte.miin.php';
                                                                 </tr>
                                                                 <tr>
 
-                                                                        <th class="th-normal col-md-1">Absent Rate:</th>
-                                                                        <td class="col-md-2 text-center" style="background: #fae588" id="absent_ratio_pd_mp"></td>
-                                                                        <th class="th-normal col-md-1">Absent Rate:</th>
-                                                                        <td class="col-md-2 text-center" style="background: #f38375;" id="absent_ratio_qa_mp"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Absent Rate:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="col-md-2 text-center" style="background: #fae588" id="absent_ratio_pd_mp"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Absent Rate:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="col-md-2 text-center" style="background: #f38375;" id="absent_ratio_qa_mp"></td>
 
                                                                         <th class="th-normal col-md-1" style="font-size: 13px">Working Time
                                                                                 Actual:</th>
