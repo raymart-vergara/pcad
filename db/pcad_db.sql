@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 01, 2024 at 06:49 AM
+-- Generation Time: Feb 29, 2024 at 01:41 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -29,7 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `m_final_process` (
   `id` int(10) UNSIGNED NOT NULL,
+  `p_value` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
   `final_process` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ipaddresscolumn` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -37,12 +39,47 @@ CREATE TABLE `m_final_process` (
 -- Dumping data for table `m_final_process`
 --
 
-INSERT INTO `m_final_process` (`id`, `final_process`, `date_updated`) VALUES
-(1, 'QA', '2024-02-01 13:28:58'),
-(2, 'Appearance', '2024-02-01 13:28:58'),
-(3, 'Dimension', '2024-02-01 13:28:58'),
-(4, 'ECT', '2024-02-01 13:28:58'),
-(5, 'Clamp Checking', '2024-02-01 13:29:16');
+INSERT INTO `m_final_process` (`id`, `p_value`, `final_process`, `ipaddresscolumn`, `date_updated`) VALUES
+(1, '01', 'Dimension', 'INSPECTION1IPADDRESS', '2024-02-22 14:58:54'),
+(2, '02', 'Electric', 'INSPECTION2IPADDRESS', '2024-02-22 14:58:54'),
+(3, '03', 'Visual', 'INSPECTION3IPADDRESS', '2024-02-22 14:58:55'),
+(4, '04', 'Assurance', 'INSPECTION4IPADDRESS', '2024-02-22 14:58:55'),
+(5, '05', 'Packing', 'INSPECTION5IPADDRESS', '2024-02-22 14:58:55'),
+(6, '06', 'Function', 'INSPECTION6IPADDRESS', '2024-02-22 14:58:55'),
+(7, '07', 'Torque', 'INSPECTION7IPADDRESS', '2024-02-22 14:58:55'),
+(8, '08', 'Option Checking', 'INSPECTION8IPADDRESS', '2024-02-22 14:58:55'),
+(9, '09', 'Fuse Checking', 'INSPECTION9IPADDRESS', '2024-02-22 14:58:55'),
+(10, '10', 'Semi Connection', 'INSPECTION10IPADDRESS', '2024-02-22 14:58:55'),
+(11, '11', 'Components', 'INSPECTION11IPADDRESS', '2024-02-22 14:58:55'),
+(12, '14', 'Helium', 'INSPECTION11IPADDRESS', '2024-02-22 14:58:55'),
+(13, '15', 'Grease', 'INSPECTION12IPADDRESS', '2024-02-22 14:58:55'),
+(14, '16', 'Rubber Seal', 'INSPECTION13IPADDRESS', '2024-02-22 14:58:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `m_inspection_ip`
+--
+
+CREATE TABLE `m_inspection_ip` (
+  `id` int(11) NOT NULL,
+  `ircs_line` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `process` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip_address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ip_address2` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ipaddresscolumn` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date_updated` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `m_inspection_ip`
+--
+
+INSERT INTO `m_inspection_ip` (`id`, `ircs_line`, `process`, `ip_address`, `ip_address2`, `ipaddresscolumn`, `date_updated`) VALUES
+(1, 'Daihatsu_30', 'Dimension', '172.25.161.242', '', 'INSPECTION1IPADDRESS', '2024-02-22 08:02:45'),
+(2, 'Daihatsu_30', 'Electric', '172.25.161.243', '', 'INSPECTION2IPADDRESS', '2024-02-22 08:02:45'),
+(3, 'Daihatsu_30', 'Visual', '172.25.165.74', '', 'INSPECTION3IPADDRESS', '2024-02-22 08:02:45'),
+(4, 'Daihatsu_30', 'Assurance', '172.25.161.166', '', 'INSPECTION4IPADDRESS', '2024-02-22 08:02:45');
 
 -- --------------------------------------------------------
 
@@ -121,7 +158,7 @@ INSERT INTO `m_ircs_line` (`id`, `line_no`, `ircs_line`, `andon_line`, `final_pr
 (97, '3144', 'HONDA_47_5', '', '', '172.25.166.45', '2024-02-01 13:22:04'),
 (98, '7122', 'SUBARU_10', '', '', '172.25.161.105', '2024-02-01 13:22:04'),
 (99, '3127', 'HONDA_33', '', '', '172.25.165.165', '2024-02-01 13:22:04'),
-(104, '7119', 'SUBARU_08_1', '', '', '172.25.167.226', '2024-02-01 13:22:04'),
+(104, '7119', 'SUBARU_08', '', '', '172.25.167.226', '2024-02-02 14:45:23'),
 (108, '7104', 'SUBARU_04', '', '', '172.25.167.129', '2024-02-01 13:22:04'),
 (110, '7120', 'SUBARU_08_2', '', '', '172.25.167.39', '2024-02-01 13:22:04'),
 (118, '3145', 'HONDA_58', '', '', '172.25.161.106', '2024-02-01 13:22:04'),
@@ -173,7 +210,7 @@ INSERT INTO `m_ircs_line` (`id`, `line_no`, `ircs_line`, `andon_line`, `final_pr
 (178, 'Suzuki 5139', 'SUZUKI_84', '', '', '172.25.115.103', '2024-02-01 13:22:04'),
 (180, '2130', 'DAIHATSU_29', '', '', '172.25.160.180', '2024-02-01 13:22:04'),
 (181, '2131', 'DAIHATSU_30_1', '', '', '172.25.162.38', '2024-02-01 13:22:04'),
-(184, '2132', 'DAIHATSU_30', '', '', '172.25.161.166', '2024-02-01 13:22:04'),
+(184, '2132', 'DAIHATSU_30', 'DAIHATSU D92-2132', 'QA', '172.25.161.166', '2024-02-14 16:11:36'),
 (186, '5031', 'SUZUKI_72', '', '', '172.25.114.189', '2024-02-01 13:22:04'),
 (187, '3169', 'HONDA_91', '', '', '172.25.160.105', '2024-02-01 13:22:04'),
 (188, '3149', 'HONDA_64', '', '', '172.25.165.95', '2024-02-01 13:22:04'),
@@ -214,6 +251,26 @@ INSERT INTO `m_ircs_line` (`id`, `line_no`, `ircs_line`, `andon_line`, `final_pr
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `m_pcs_accounts`
+--
+
+CREATE TABLE `m_pcs_accounts` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `emp_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `full_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `m_pcs_accounts`
+--
+
+INSERT INTO `m_pcs_accounts` (`id`, `emp_id`, `full_name`) VALUES
+(1, '2310748', 'Bautista, Jane Irish M.'),
+(2, 'admin', 'admin');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `m_st`
 --
 
@@ -225,6 +282,18 @@ CREATE TABLE `m_st` (
   `updated_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `m_st`
+--
+
+INSERT INTO `m_st` (`id`, `parts_name`, `st`, `updated_by_no`, `updated_by`, `date_updated`) VALUES
+(1, 'PN-1', 0.343, 'admin', 'Admin', '2024-02-02 07:52:28'),
+(5, 'PN-5', 120.54, 'admin', 'Admin', '2024-02-02 07:53:37'),
+(6, 'YT-0923', 67.67, 'admin', 'Admin', '2024-02-02 07:53:51'),
+(7, '81820AN041(1)-A     ', 21.7655, 'admin', 'Admin', '2024-02-02 10:47:26'),
+(8, '81821AN501(1)-A     ', 18.6853, 'admin', 'Admin', '2024-02-02 10:49:28'),
+(9, '81820AN011(1)-A     ', 18.6393, 'admin', 'Admin', '2024-02-02 10:50:05');
 
 -- --------------------------------------------------------
 
@@ -238,6 +307,13 @@ CREATE TABLE `m_st_accounts` (
   `full_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `m_st_accounts`
+--
+
+INSERT INTO `m_st_accounts` (`id`, `emp_no`, `full_name`, `date_updated`) VALUES
+(1, 'admin', 'Admin', '2024-02-01 14:06:43');
 
 -- --------------------------------------------------------
 
@@ -263,9 +339,19 @@ CREATE TABLE `t_plan` (
   `last_takt_DB` int(11) DEFAULT 0,
   `last_update_DB` datetime DEFAULT NULL,
   `actual_start_DB` datetime DEFAULT NULL,
-  `theme` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `IP_address` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
+  `IP_address` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `group` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `t_plan`
+--
+
+INSERT INTO `t_plan` (`ID`, `Carmodel`, `Line`, `ID_No`, `Target`, `Actual_Target`, `Remaining_Target`, `Status`, `is_paused`, `IRCS_Line`, `lot_no`, `datetime_DB`, `ended_DB`, `takt_secs_DB`, `last_takt_DB`, `last_update_DB`, `actual_start_DB`, `IP_address`, `group`) VALUES
+(1, 'DAIHATSU', '2132', NULL, 10, 47, '37', 'Done', 'NO', 'DAIHATSU_30', '598ZYG,598Z5A,598Z4Q,598Z5F,', '2024-02-28 10:22:08', '2024-02-28 10:23:02', 270, 12, '2024-02-28 10:23:01', '2024-02-28 06:00:00', '172.25.161.166', NULL),
+(2, 'DAIHATSU', '2132', NULL, 11, 47, '37', 'Done', 'NO', 'DAIHATSU_30', '598ZYG,598Z5A,598Z4Q,598Z5F,', '2024-02-28 10:23:19', '2024-02-28 10:32:21', 270, 66, '2024-02-28 10:32:21', '2024-02-28 06:00:00', '172.25.161.166', 'A'),
+(3, 'DAIHATSU', '2132', NULL, 45, 388, '343', 'Pending', 'NO', 'DAIHATSU_30', '598Z4S,598ZYH,598YTR,598ZYG,5990C1,598ZYU,598YDH,598Z5A,598Z4Q,598Z5F,598Z4N,', '2024-02-28 10:32:41', NULL, 270, 211, '2024-02-29 08:41:47', '2024-02-28 06:00:00', '172.25.161.166', NULL),
+(4, 'DAIHATSU', '2102', NULL, 0, 248, '248', 'Pending', 'NO', 'DAIHATSU_02', '598ZMR,598ZMQ,59906P,', '2024-02-28 15:52:28', NULL, 0, 18, '2024-02-28 15:52:49', '2024-02-28 06:00:00', '', NULL);
 
 --
 -- Indexes for dumped tables
@@ -279,6 +365,12 @@ ALTER TABLE `m_final_process`
   ADD UNIQUE KEY `final_process` (`final_process`);
 
 --
+-- Indexes for table `m_inspection_ip`
+--
+ALTER TABLE `m_inspection_ip`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `m_ircs_line`
 --
 ALTER TABLE `m_ircs_line`
@@ -286,6 +378,12 @@ ALTER TABLE `m_ircs_line`
   ADD KEY `line_no` (`line_no`),
   ADD KEY `ircs_line` (`ircs_line`),
   ADD KEY `ip` (`ip`);
+
+--
+-- Indexes for table `m_pcs_accounts`
+--
+ALTER TABLE `m_pcs_accounts`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `m_st`
@@ -314,31 +412,37 @@ ALTER TABLE `t_plan`
 -- AUTO_INCREMENT for table `m_final_process`
 --
 ALTER TABLE `m_final_process`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `m_inspection_ip`
+--
+ALTER TABLE `m_inspection_ip`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `m_ircs_line`
 --
 ALTER TABLE `m_ircs_line`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=232;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=239;
 
 --
 -- AUTO_INCREMENT for table `m_st`
 --
 ALTER TABLE `m_st`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `m_st_accounts`
 --
 ALTER TABLE `m_st_accounts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `t_plan`
 --
 ALTER TABLE `t_plan`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

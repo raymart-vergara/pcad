@@ -43,7 +43,7 @@
       </div>
       <div class="row">
         <div class="col-sm-12">
-          <div class="card card-gray-dark card-outline">
+          <div class="card card-primary card-outline">
             <div class="card-header">
               <h3 class="card-title"><i class="fas fa-file-alt"></i> ST Masterlist Table</h3>
               <div class="card-tools">
@@ -68,11 +68,11 @@
                 </div>
                 <div class="col-sm-2">
                   <label>&nbsp;</label>
-                  <button type="button" class="btn bg-gray-dark btn-block" onclick="load_st(1)"><i class="fas fa-search"></i> Search</button>
+                  <button type="button" class="btn btn-primary btn-block" onclick="load_st(1)"><i class="fas fa-search"></i> Search</button>
                 </div>
                 <div class="col-sm-2">
                   <label>&nbsp;</label>
-                  <button type="button" class="btn bg-gray-dark btn-block" onclick="print_st()"><i class="fas fa-print"></i> Print All</button>
+                  <button type="button" class="btn btn-primary btn-block" onclick="print_st()"><i class="fas fa-print"></i> Print All</button>
                 </div>
                 <div class="col-sm-2">
                   <label>&nbsp;</label>
