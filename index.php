@@ -92,7 +92,7 @@ include 'dist/js/adminlte.miin.php';
                 }
 
                 .darkest-modal .modal-backdrop {
-                        background-color: rgba(0, 0, 0, 1); 
+                        background-color: rgba(0, 0, 0, 1);
                 }
         </style>
 </head>
@@ -237,20 +237,24 @@ include 'dist/js/adminlte.miin.php';
                                                                         } else {
                                                                                 ?>
                                                                                 <input type="hidden" id="processing" value="0">
-                                                                                <div class="modal fade darkest-modal" id="plannotset"
-                                                                                        tabindex="-1"
+                                                                                <div class="modal fade darkest-modal"
+                                                                                        id="plannotset" tabindex="-1"
                                                                                         aria-labelledby="plannotsetLabel"
                                                                                         aria-hidden="true" role="dialog"
                                                                                         aria-labelledby="exampleModalLabel"
                                                                                         aria-hidden="true"
                                                                                         data-backdrop="static"
                                                                                         data-keyboard="false">
-                                                                                        <div class="modal-dialog modal-xl" style="border-radius: 7px; border: 2px solid #CA3F3F; box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.25)">
+                                                                                        <div class="modal-dialog modal-xl"
+                                                                                                style="border-radius: 7px; border: 2px solid #CA3F3F; box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.25)">
                                                                                                 <div class="modal-content"
                                                                                                         style="background-color: white;">
                                                                                                         <div class="modal-body">
                                                                                                                 <h2 class="modal-title display-4 text-center pb-3"
-                                                                                                                        id="plannotsetLabel"><b>Plan not set</b></h2>
+                                                                                                                        id="plannotsetLabel">
+                                                                                                                        <b>Plan not
+                                                                                                                                set</b>
+                                                                                                                </h2>
                                                                                                                 <div
                                                                                                                         class="row justify-content-center text-center mb-3">
                                                                                                                         <div
@@ -258,7 +262,8 @@ include 'dist/js/adminlte.miin.php';
                                                                                                                                 <a href="pcs_page/setting.php"
                                                                                                                                         class="btn btn-lg btn-success text-white btn-close"
                                                                                                                                         id="setplanBtn">SET
-                                                                                                                                        PLAN<b>[ 4
+                                                                                                                                        PLAN
+                                                                                                                                        <b>[ 4
                                                                                                                                                 ]</b></a>
                                                                                                                         </div>
                                                                                                                         <div
@@ -302,10 +307,10 @@ include 'dist/js/adminlte.miin.php';
 
                                         </div>
                                         <!-- third row -->
-                                        <div class="row mb-2">
+                                        <div class="row mb-3">
                                                 <div class="col-4">
                                                         <!-- overall inspection -->
-                                                        <table style="height:225px">
+                                                        <table style="min-height:225px;">
                                                                 <tr>
                                                                         <th colspan="4" class="text-center">OVERALL
                                                                                 INSPECTION
@@ -345,42 +350,43 @@ include 'dist/js/adminlte.miin.php';
                                         <div class="row">
                                                 <div class="col-4 table-responsive">
                                                         <!-- inspection details -->
-                                                        <table class="m-0 p-0 table-head-fixed text-nowrap table-hover">
+                                                        <table class="m-0 p-0 table-head-fixed text-nowrap table-hover" style="min-height:172px; max-height:172px; width: 100%; overflow-y: auto;">
                                                                 <tr>
                                                                         <th class="col-md-4 text-center">GOOD</th>
                                                                         <th class="col-md-4 text-center">INSPECTION</th>
                                                                         <th class="col-md-4 text-center">NG</th>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <td id="dimension_p"
+                                                                                class="col-md-4 text-center"></td>
                                                                         <th class="th-normal col-md-4 text-center">
                                                                                 Dimension</th>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <td id="dimension_p_ng"
+                                                                                class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <td id="ect_p" class="col-md-4 text-center">
+                                                                        </td>
                                                                         <th class="th-normal col-md-4 text-center">ECT
                                                                         </th>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <td id="ect_p_ng" class="col-md-4 text-center">
+                                                                        </td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td class="col-md-4 text-center"></td>
-                                                                        <th class="th-normal col-md-4 text-center">Clamp
-                                                                                Checking</th>
-                                                                        <td class="col-md-4 text-center"></td>
-                                                                </tr>
-                                                                <tr>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <td id="visual_p" class="col-md-4 text-center">
+                                                                        </td>
                                                                         <th class="th-normal col-md-4 text-center">
-                                                                                Appearance</th>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                                Visual</th>
+                                                                        <td id="visual_p_ng"
+                                                                                class="col-md-4 text-center"></td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                        <td id="assurance_p"
+                                                                                class="col-md-4 text-center"></td>
                                                                         <th class="th-normal col-md-4 text-center">
-                                                                                Assurance
-                                                                        </th>
-                                                                        <td class="col-md-4 text-center"></td>
+                                                                                Assurance</th>
+                                                                        <td id="assurance_p_ng"
+                                                                                class="col-md-4 text-center"></td>
                                                                 </tr>
                                                         </table>
 
@@ -543,8 +549,14 @@ include 'dist/js/adminlte.miin.php';
                 setInterval(get_yield, 30000);
                 get_ppm();
                 setInterval(get_ppm, 30000);
+
+                // INSPECTION
                 get_overall_inspection();
                 setInterval(get_overall_inspection, 10000);
+                get_specific_inspection_good();
+                setInterval(get_specific_inspection_good, 10000);
+                get_specific_inspection_no_good();
+                setInterval(get_specific_inspection_no_good, 10000);
 
                 // Call count_emp initially to load the data from employee management system
                 count_emp();
