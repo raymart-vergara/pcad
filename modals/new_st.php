@@ -1,37 +1,32 @@
-<div class="modal fade bd-example-modal-xl" id="new_st" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade bd-example-modal-xl" id="new_st" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-primary">
         <h5 class="modal-title" id="exampleModalLabel">
           <b>New ST</b>
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          <span class="text-white" aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-8">
-            <label>Parts Name</label>
-            <input type="text" id="parts_name_master" class="form-control" maxlength="255" autocomplete="off">
-          </div>
-          <div class="col-4">
-            <label>ST</label>
-            <input type="text" id="st_master" class="form-control" autocomplete="off">
-          </div>
-        </div>
-        <br>
-        <hr>
-        <div class="row">
-          <div class="col-12">
-            <div class="float-right">
-              <a href="#" class="btn btn-success" onclick="add_st()">Add ST</a>
+      <form id="new_st_form">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-8">
+              <label>Parts Name</label><label style="color: red;">*</label>
+              <input type="text" id="parts_name_master" class="form-control" maxlength="255" autocomplete="off" required>
+            </div>
+            <div class="col-4">
+              <label>ST</label><label style="color: red;">*</label>
+              <input type="number" id="st_master" class="form-control" step="0.0001" autocomplete="off" required>
             </div>
           </div>
         </div>
-      <!-- /.card-body -->
-      </div>
-    <!-- /.card -->
+        <div class="modal-footer">
+          <button type="submit" id="btnAddSt" name="btn_add_st" class="btn btn-success">Add ST</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

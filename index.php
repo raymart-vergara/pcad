@@ -99,6 +99,7 @@ include 'dist/js/adminlte.miin.php';
 
 <body>
         <input type="hidden" id="shift" value="<?= $shift ?>">
+        <input type="hidden" id="shift_group" value="<?= $shift_group ?>">
         <input type="hidden" id="dept_pd" value="<?= $dept_pd ?>">
         <input type="hidden" id="dept_qa" value="<?= $dept_qa ?>">
         <input type="hidden" id="section_pd" value="<?= $section_pd ?>">
@@ -133,8 +134,7 @@ include 'dist/js/adminlte.miin.php';
                                                                         <td class="col-md-4">
                                                                                 <?= $Carmodel ?>
                                                                         </td>
-                                                                        <th class="col-md-2"
-                                                                                id="server_date_only_label">Date:</th>
+                                                                        <th class="col-md-2" id="server_date_only_label">Date:</th>
                                                                         <td class="col-md-4">
                                                                                 <?= $server_date_only ?>
                                                                         </td>
@@ -176,14 +176,11 @@ include 'dist/js/adminlte.miin.php';
                                                                         <td class="col-md-2 text-center value-size"">0</td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <td class=" col-md-2 text-center value-size""
-                                                                                style="background: #fae588;"
-                                                                                id="actual_yield"></td>
+                                                                        <td class=" col-md-2 text-center value-size"" style="background: #fae588;" id="actual_yield"></td>
                                                                         <th class="th-normal col-md-2 text-center">
                                                                                 ACTUAL</th>
                                                                         <td class="col-md-2 text-center value-size""
-                                                                                style=" background: #f38375;"
-                                                                                id="actual_ppm"></td>
+                                                                                style=" background: #f38375;" id="actual_ppm"></td>
                                                                 </tr>
                                                         </table>
 
@@ -223,53 +220,28 @@ include 'dist/js/adminlte.miin.php';
                                                                         <!-- plan value -->
                                                                         <?php
                                                                         if ($processing) {
-                                                                                ?>
+                                                                        ?>
                                                                                 <input type="hidden" id="processing" value="1">
-                                                                                <td class="plan_target_value numeric-cell col-md-1 text-center value-size"
-                                                                                        data-value="24" style="height: 107px"
-                                                                                        id="plan_target"></td>
-                                                                                <td class="plan_actual_value numeric-cell col-md-1 text-center value-size"
-                                                                                        data-value="<?= $plan_actual ?>"
-                                                                                        id="plan_actual"></td>
-                                                                                <td class="plan_gap_value numeric-cell col-md-1 text-center value-size"
-                                                                                        data-value="100" id="plan_gap"></td>
-                                                                                <?php
+                                                                                <td class="plan_target_value numeric-cell col-md-1 text-center value-size" data-value="24" style="height: 107px" id="plan_target"></td>
+                                                                                <td class="plan_actual_value numeric-cell col-md-1 text-center value-size" data-value="<?= $plan_actual ?>" id="plan_actual"></td>
+                                                                                <td class="plan_gap_value numeric-cell col-md-1 text-center value-size" data-value="100" id="plan_gap"></td>
+                                                                        <?php
                                                                         } else {
-                                                                                ?>
+                                                                        ?>
                                                                                 <input type="hidden" id="processing" value="0">
-                                                                                <div class="modal fade darkest-modal"
-                                                                                        id="plannotset" tabindex="-1"
-                                                                                        aria-labelledby="plannotsetLabel"
-                                                                                        aria-hidden="true" role="dialog"
-                                                                                        aria-labelledby="exampleModalLabel"
-                                                                                        aria-hidden="true"
-                                                                                        data-backdrop="static"
-                                                                                        data-keyboard="false">
-                                                                                        <div class="modal-dialog modal-xl"
-                                                                                                style="border-radius: 7px; border: 2px solid #CA3F3F; box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.25)">
-                                                                                                <div class="modal-content"
-                                                                                                        style="background-color: white;">
+                                                                                <div class="modal fade darkest-modal" id="plannotset" tabindex="-1" aria-labelledby="plannotsetLabel" aria-hidden="true" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                                                                                        <div class="modal-dialog modal-xl" style="border-radius: 7px; border: 2px solid #CA3F3F; box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.25)">
+                                                                                                <div class="modal-content" style="background-color: white;">
                                                                                                         <div class="modal-body">
-                                                                                                                <h2 class="modal-title display-4 text-center pb-3"
-                                                                                                                        id="plannotsetLabel">
-                                                                                                                        <b>Plan not
-                                                                                                                                set</b>
-                                                                                                                </h2>
-                                                                                                                <div
-                                                                                                                        class="row justify-content-center text-center mb-3">
-                                                                                                                        <div
-                                                                                                                                class="col-3">
-                                                                                                                                <a href="pcs_page/setting.php"
-                                                                                                                                        class="btn btn-lg btn-success text-white btn-close"
-                                                                                                                                        id="setplanBtn">SET
-                                                                                                                                        PLAN
-                                                                                                                                        <b>[ 4
+                                                                                                                <h2 class="modal-title display-4 text-center pb-3" id="plannotsetLabel"><b>Plan not set</b></h2>
+                                                                                                                <div class="row justify-content-center text-center mb-3">
+                                                                                                                        <div class="col-3">
+                                                                                                                                <a href="pcs_page/setting.php" class="btn btn-lg btn-success text-white btn-close" id="setplanBtn">SET
+                                                                                                                                        PLAN<b>[ 4
                                                                                                                                                 ]</b></a>
                                                                                                                         </div>
-                                                                                                                        <div
-                                                                                                                                class="col-3">
-                                                                                                                                <a href="pcs_page/index.php"
-                                                                                                                                        class="btn btn-lg btn-secondary text-white btn-close">MAIN
+                                                                                                                        <div class="col-3">
+                                                                                                                                <a href="pcs_page/index.php" class="btn btn-lg btn-secondary text-white btn-close">MAIN
                                                                                                                                         MENU
                                                                                                                                         <b>[ 0
                                                                                                                                                 ]</b></a>
@@ -280,27 +252,19 @@ include 'dist/js/adminlte.miin.php';
                                                                                                 </div>
                                                                                         </div>
                                                                                 </div>
-                                                                                <?php
+                                                                        <?php
                                                                         }
                                                                         ?>
 
                                                                         <!-- accounting efficiecny value -->
-                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size"
-                                                                                data-value="100">0</td>
-                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size"
-                                                                                data-value="75"
-                                                                                id="actual_accounting_efficiency"></td>
-                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size"
-                                                                                data-value="25">0</td>
+                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100">0</td>
+                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="75" id="actual_accounting_efficiency"></td>
+                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="25">0</td>
 
                                                                         <!-- hourly output value -->
-                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size"
-                                                                                data-value="100">0</td>
-                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size"
-                                                                                data-value="75"
-                                                                                id="actual_hourly_output"></td>
-                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size"
-                                                                                data-value="25">0</td>
+                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100">0</td>
+                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="75" id="actual_hourly_output"></td>
+                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="25">0</td>
                                                                 </tr>
                                                         </table>
                                                 </div>
@@ -318,13 +282,9 @@ include 'dist/js/adminlte.miin.php';
                                                                 </tr>
                                                                 <tr>
                                                                         <th class="col-md-2 text-center">GOOD</th>
-                                                                        <td id="insp_overall_g"
-                                                                                class="col-md-4 text-center value-size"
-                                                                                style="height: 190px; background: #78c6a3;">
+                                                                        <td id="insp_overall_g" class="col-md-4 text-center value-size" style="height: 190px; background: #78c6a3;">
                                                                         </td>
-                                                                        <td id="insp_overall_ng"
-                                                                                class="col-md-4 text-center value-size"
-                                                                                style="background: #f38375;"> </td>
+                                                                        <td id="insp_overall_ng" class="col-md-4 text-center value-size" style="background: #f38375;"> </td>
                                                                         <th class="col-md-2 text-center">NG</th>
                                                                 </tr>
                                                         </table>
@@ -335,12 +295,9 @@ include 'dist/js/adminlte.miin.php';
                                                         <div class="card" style="border: 2px solid #4E4E4E">
                                                                 <!-- <h6 class="text-center text-bold">DT / Delay / Andon</h6> -->
 
-                                                                <a target="_blank"
-                                                                        href="../pcad/andon_graph/andon_details.php"
-                                                                        class="card-link">
+                                                                <a target="_blank" href="../pcad/andon_graph/andon_details.php" class="card-link">
                                                                         <div id="chart-container">
-                                                                                <canvas id="hourly_chart"
-                                                                                        height="54"></canvas>
+                                                                                <canvas id="hourly_chart" height="54"></canvas>
                                                                         </div>
                                                                 </a>
                                                         </div>
@@ -396,35 +353,28 @@ include 'dist/js/adminlte.miin.php';
                                                         <!-- pd qa other details -->
                                                         <table>
                                                                 <tr>
-                                                                        <th colspan="2" class="col-md-3 text-center">PD
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' colspan="2" class="col-md-3 text-center">PD
                                                                                 MANPOWER</th>
-                                                                        <th colspan="2" class="col-md-3 text-center">QA
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' colspan="2" class="col-md-3 text-center">QA
                                                                                 MANPOWER</th>
                                                                         <th colspan="2" class="col-md-3 text-center">
                                                                                 OTHER DETAILS</th>
                                                                 </tr>
                                                                 <tr>
-                                                                        <th class="th-normal col-md-1">Plan:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center"
-                                                                                data-value="100"></td>
-                                                                        <th class="th-normal col-md-1">Plan:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center"
-                                                                                data-value="100"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Plan:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="100" id="total_pd_mp"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Plan:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="100" id="total_qa_mp"></td>
 
-                                                                        <th class="th-normal col-md-1"
-                                                                                style="font-size: 13px">Starting Balance
+                                                                        <th class="th-normal col-md-1" style="font-size: 13px">Starting Balance
                                                                                 Delay:</th>
                                                                         <td class="col-md-1 text-center"></td>
                                                                 </tr>
                                                                 <tr>
-                                                                        <th class="th-normal col-md-1">Actual:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center"
-                                                                                data-value="94"
-                                                                                id="total_present_pd_mp"></td>
-                                                                        <th class="th-normal col-md-1">Actual:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center"
-                                                                                data-value="97"
-                                                                                id="total_present_qa_mp"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Actual:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="94" id="total_present_pd_mp"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Actual:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="97" id="total_present_qa_mp"></td>
 
                                                                         <th class="th-normal col-md-1">Conveyor Speed:
                                                                         </th>
@@ -432,47 +382,37 @@ include 'dist/js/adminlte.miin.php';
                                                                         </td>
                                                                         </td>
                                                                 </tr>
+
                                                                 <tr>
-                                                                        <th class="th-normal col-md-1">Support:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center"
-                                                                                data-value="6"
-                                                                                id="total_pd_mp_line_support_to"></td>
-                                                                        <th class="th-normal col-md-1">Support:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center"
-                                                                                data-value="3"
-                                                                                id="total_qa_mp_line_support_to"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Absent:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="100" id="total_absent_pd_mp"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Absent:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="100" id="total_absent_qa_mp"></td>
 
                                                                         <th class="th-normal col-md-1 takt-label">Takt
                                                                                 Time:</th>
                                                                         <td class="col-md-1 text-center takt-value">
                                                                         </td>
+                                                                    
                                                                 </tr>
                                                                 <tr>
-                                                                        <th class="th-normal col-md-1">Total:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center"
-                                                                                data-value="100" id="total_pd_mp"></td>
-                                                                        <th class="th-normal col-md-1">Total:</th>
-                                                                        <td class="numeric-cell col-md-1 text-center"
-                                                                                data-value="100" id="total_qa_mp"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Support:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="6" id="total_pd_mp_line_support_to"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Support:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="numeric-cell col-md-1 text-center" data-value="3" id="total_qa_mp_line_support_to"></td>
 
-                                                                        <th class="th-normal col-md-1"
-                                                                                style="font-size: 13px">Working Time
+                                                                        <th class="th-normal col-md-1" style="font-size: 13px">Working Time
                                                                                 Plan:</th>
                                                                         <td class="col-md-1 text-center"></td>
                                                                 </tr>
                                                                 <tr>
 
-                                                                        <th class="th-normal col-md-1">Absent Rate:</th>
-                                                                        <td class="col-md-2 text-center"
-                                                                                style="background: #fae588"
-                                                                                id="absent_ratio_pd_mp"></td>
-                                                                        <th class="th-normal col-md-1">Absent Rate:</th>
-                                                                        <td class="col-md-2 text-center"
-                                                                                style="background: #f38375;"
-                                                                                id="absent_ratio_qa_mp"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Absent Rate:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="col-md-2 text-center" style="background: #fae588" id="absent_ratio_pd_mp"></td>
+                                                                        <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Absent Rate:</th>
+                                                                        <td style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="col-md-2 text-center" style="background: #f38375;" id="absent_ratio_qa_mp"></td>
 
-                                                                        <th class="th-normal col-md-1"
-                                                                                style="font-size: 13px">Working Time
+                                                                        <th class="th-normal col-md-1" style="font-size: 13px">Working Time
                                                                                 Actual:</th>
                                                                         <td class="col-md-1 text-center"></td>
                                                                 </tr>
@@ -537,7 +477,7 @@ include 'dist/js/adminlte.miin.php';
 <script>
         let chart; // Declare chart variable globally
 
-        $(document).ready(function () {
+        $(document).ready(function() {
                 // Call these functions initially to load the data from PCAD and other Systems
                 // Set interval to refresh data every 30 seconds
                 // 30000 milliseconds = 30 seconds
@@ -570,19 +510,19 @@ include 'dist/js/adminlte.miin.php';
                 setInterval(andon_d_sum, 10000); // 10000 milliseconds = 10 seconds
         });
         // Apply gradient background dynamically using JavaScript
-        document.querySelectorAll('.numeric-cell').forEach(function (cell) {
+        document.querySelectorAll('.numeric-cell').forEach(function(cell) {
                 var value = parseInt(cell.dataset.value);
                 var gradientValue = value + '%';
                 cell.style.background = 'linear-gradient(to right, #98c3e5 ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
         });
 
-        document.querySelectorAll('.numeric-cell-acct').forEach(function (cell) {
+        document.querySelectorAll('.numeric-cell-acct').forEach(function(cell) {
                 var value = parseInt(cell.dataset.value);
                 var gradientValue = value + '%';
                 cell.style.background = 'linear-gradient(to right, #f38375 ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
         });
 
-        document.querySelectorAll('.numeric-cell-hourly').forEach(function (cell) {
+        document.querySelectorAll('.numeric-cell-hourly').forEach(function(cell) {
                 var value = parseInt(cell.dataset.value);
                 var gradientValue = value + '%';
                 cell.style.background = 'linear-gradient(to right, #78c6a3 ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';

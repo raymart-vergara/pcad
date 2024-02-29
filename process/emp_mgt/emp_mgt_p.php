@@ -18,8 +18,8 @@ if ($method == 'count_emp') {
 	$section_qa = $_GET['section_qa'];
 	$line_no = $_GET['line_no'];
 
-	//$shift_group = $_GET['shift_group'];
-	$shift_group = 'A';
+	$shift_group = $_GET['shift_group'];
+	// $shift_group = 'A';
 
 	$search_arr = array(
 		'day' => $day,

@@ -73,7 +73,7 @@
 				$('#setplanBtn').click();
 			}
 
-			
+
 			// IF STOP BTN CLICK mAIN MENU
 			if(ji.keyCode == 413 || ji.keyCode == 461 || ji.keyCode == 178){
 				var url = $('#menu').prop('href');
@@ -87,4 +87,4 @@
 </script>
 </body>
 
-</html> -
+</html> 
