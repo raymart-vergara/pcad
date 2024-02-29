@@ -25,7 +25,7 @@ if (isset($_SESSION['emp_no'])) {
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <img src="../dist/img/logo.webp" style="height:100px;">
+      <img src="../dist/img/pcad_logo.png" style="height:100px;">
       <h2><b>PCAD - ST</b></h2>
     </div>
     <!-- /.login-logo -->
@@ -44,7 +44,7 @@ if (isset($_SESSION['emp_no'])) {
           </div>   
           <!-- /.col -->
           <div class="input-group mb-3">
-            <button type="submit" class="btn btn-dark btn-block" name="login_btn" value="login">Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block" name="login_btn" value="login">Sign In</button>
           </div>
           <!-- /.col -->
         </form>

@@ -164,12 +164,14 @@ if ($result) {
 										<b>[BACK]</b></button>
 								</div>
 								<div style="text-align: right;">
-									<button type="submit" style="width: 100%;" class="btn btn-success btn-target d-none" id="setplanBtn" required>SET PLAN
-										<b>[PLAY]</b></button>
+								<button type="submit" style="width: 100%;" class="btn btn-success btn-target d-none" id="setplanBtn" name="request" value="addTarget" required>SET PLAN <b>[PLAY]</b></button>
+									<!-- <button type="submit" style="width: 100%;" class="btn btn-success btn-target d-none" id="setplanBtn" required>SET PLAN
+										<b>[PLAY]</b></button> -->
 								</div>
 							</div>
 							<div class="col-md-6">
-							<button  href="index.php" class="btn btn-secondary" style="width: 100%;" id="menuBtn">MAIN MENU <b>[BACK]</b></button>
+							<button type="submit" style="width: 100%;" class="btn btn-secondary" id="menuBtn" name="request" value="mainMenu">MAIN MENU <b>[BACK]</b></button>
+							<!-- <button  href="index.php" class="btn btn-secondary" style="width: 100%;" id="menuBtn">MAIN MENU <b>[BACK]</b></button> -->
 							</div>
 						</div>
 					</div>
