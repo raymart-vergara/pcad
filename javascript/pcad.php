@@ -20,12 +20,14 @@
     }
 
     const get_hourly_output = () => {
+        let working_time = document.getElementById('work_time_plan').value;
         $.ajax({
             url: 'process/pcad/pcad_p.php',
             type: 'GET',
             cache: false,
             data: {
-                method: 'get_hourly_output'
+                method: 'get_hourly_output',
+                working_time: working_time
             },
             success: function (response) {
                 document.getElementById('target_hourly_output').innerHTML = response;

@@ -142,11 +142,12 @@ if ($method == 'get_ppm') {
 // http://172.25.112.131/pcad/process/pcad/pcad_p.php?method=get_hourly_output
 if ($method == 'get_hourly_output') {
     $plan = 100;
-    $working_time = 450 / 60;
-    // $plan = $_GET['plan'];
-    // $working_time = $_GET['working_time'];
 
-    $hourly_output = compute_hourly_output($plan, $working_time);
+    // $plan = $_GET['plan'];
+    $working_time = intval($_GET['working_time']);
+    $working_time_hr = $working_time / 60;
+
+    $hourly_output = compute_hourly_output($plan, $working_time_hr);
     echo $hourly_output;
 }
 
