@@ -83,7 +83,7 @@ if ($result) {
 										<div class="col-lg-3">
 											<div class="form-group">
 												<label>SECONDS</label>
-												<input type="text" class="form-control form-control-lg" id="secs" readonly required value="27000" >
+												<input type="text" class="form-control form-control-lg" id="secs" readonly required value="27000">
 											</div>
 										</div>
 										<div class="col-lg-3">
@@ -146,11 +146,82 @@ if ($result) {
 									<tr>
 										<td class="text-right font-weight-bold" style="font-size: 17px;">GROUP</td>
 										<td>
-										<select name="group" id="group" class="form-control ml-4" style="width: 250px;">
-											<option value=""  disabled selected >Select Group </option>	
-											<option value="A">A</option>
+											<select name="group" id="group" class="form-control ml-4" style="width: 250px;">
+												<option value="" disabled selected>Select Group </option>
+												<option value="A">A</option>
 												<option value="B">B</option>
 											</select>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 10px;"></td>
+									</tr>
+									<tr>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Yield</td>
+
+										<td>
+											<input type="text" class="ml-4 form-control" style="width: 250px;" name="yeild_target" id="yeild_target">
+										</td>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 10px;"></td>
+									</tr>
+									<tr>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">PPM</td>
+
+										<td>
+											<input type="text" class="ml-4 form-control" style="width: 250px;"  name="ppm_target" id="ppm_target">
+										</td>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 10px;"></td>
+									</tr>
+									<tr>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Accounting Efficiency</td>
+
+										<td>
+											<input type="text" class="ml-4 form-control" style="width: 250px;" name="acc_eff" id="acc_eff">
+										</td>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 10px;"></td>
+									</tr>
+									<!-- <tr>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Hourly Output</td>
+
+										<td>
+											<input type="text" class="ml-4 form-control" style="width: 250px;" id="hrs_output">
+										</td>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 10px;"></td>
+									</tr> -->
+									<tr>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Starting Balance Delay</td>
+
+										<td>
+											<input type="text" class="ml-4 form-control" style="width: 250px;" name="start_bal_delay" id="start_bal_delay">
+										</td>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 10px;"></td>
+									</tr>
+									<tr>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Working Time Plan (Mins)</td>
+
+										<td>
+										<select name="work_time_plan" id="work_time_plan" class="form-control ml-4" style="width: 250px;">
+												<option value="450">450</option>
+												<option value="510">510</option>
+												<option value="570">570</option>
+												<option value="630">630</option>
+											</select>
+										</td>
 										</td>
 									</tr>
 								</table>
@@ -164,14 +235,11 @@ if ($result) {
 										<b>[BACK]</b></button>
 								</div>
 								<div style="text-align: right;">
-								<button type="submit" style="width: 100%;" class="btn btn-success btn-target d-none" id="setplanBtn" name="request" value="addTarget" required>SET PLAN <b>[PLAY]</b></button>
-									<!-- <button type="submit" style="width: 100%;" class="btn btn-success btn-target d-none" id="setplanBtn" required>SET PLAN
-										<b>[PLAY]</b></button> -->
+									<button type="submit" style="width: 100%;" class="btn btn-success btn-target d-none" id="setplanBtn" name="request" value="addTarget" required>SET PLAN <b>[PLAY]</b></button>
 								</div>
 							</div>
 							<div class="col-md-6">
-							<button type="submit" style="width: 100%;" class="btn btn-secondary" id="menuBtn" name="request" value="mainMenu">MAIN MENU <b>[BACK]</b></button>
-							<!-- <button  href="index.php" class="btn btn-secondary" style="width: 100%;" id="menuBtn">MAIN MENU <b>[BACK]</b></button> -->
+								<button type="submit" style="width: 100%;" class="btn btn-secondary" id="menuBtn" name="request" value="mainMenu">MAIN MENU <b>[BACK]</b></button>
 							</div>
 						</div>
 					</div>

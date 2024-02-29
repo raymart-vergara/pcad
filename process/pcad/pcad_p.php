@@ -159,4 +159,5 @@ if ($method == 'get_conveyor_speed') {
     $conveyor_speed = compute_converyor_speed($taktime);
     echo $conveyor_speed;
 }
+
 ?>
