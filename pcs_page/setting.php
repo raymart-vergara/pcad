@@ -154,18 +154,73 @@ if ($result) {
 										</td>
 									</tr>
 									<tr>
+										<td style="height: 10px;"></td>
+									</tr>
+									<tr>
 										<td class="text-right font-weight-bold" style="font-size: 17px;">Yield</td>
 
 										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;" id="yeild_target">
+											<input type="text" class="ml-4 form-control" style="width: 250px;" name="yeild_target" id="yeild_target">
 										</td>
 										</td>
+									</tr>
+									<tr>
+										<td style="height: 10px;"></td>
 									</tr>
 									<tr>
 										<td class="text-right font-weight-bold" style="font-size: 17px;">PPM</td>
 
 										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;" id="ppm_target">
+											<input type="text" class="ml-4 form-control" style="width: 250px;"  name="ppm_target" id="ppm_target">
+										</td>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 10px;"></td>
+									</tr>
+									<tr>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Accounting Efficiency</td>
+
+										<td>
+											<input type="text" class="ml-4 form-control" style="width: 250px;" name="acc_eff" id="acc_eff">
+										</td>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 10px;"></td>
+									</tr>
+									<!-- <tr>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Hourly Output</td>
+
+										<td>
+											<input type="text" class="ml-4 form-control" style="width: 250px;" id="hrs_output">
+										</td>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 10px;"></td>
+									</tr> -->
+									<tr>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Starting Balance Delay</td>
+
+										<td>
+											<input type="text" class="ml-4 form-control" style="width: 250px;" name="start_bal_delay" id="start_bal_delay">
+										</td>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 10px;"></td>
+									</tr>
+									<tr>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Working Time Plan (Mins)</td>
+
+										<td>
+										<select name="work_time_plan" id="work_time_plan" class="form-control ml-4" style="width: 250px;">
+												<option value="450">450</option>
+												<option value="510">510</option>
+												<option value="570">570</option>
+												<option value="630">630</option>
+											</select>
 										</td>
 										</td>
 									</tr>

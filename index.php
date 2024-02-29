@@ -113,6 +113,12 @@ include 'dist/js/adminlte.miin.php';
         <input type="hidden" id="is_paused" value="<?= $is_paused; ?>">
         <input type="hidden" id="andon_line" name="andon_line" value="<?= $andon_line; ?>">
         <input type="hidden" id="final_process" name="final_process" value="<?= $final_process; ?>">
+
+        <input type="hidden" id="yeild_target" name="yeild_target" value="<?= $yeild_target; ?>">
+        <input type="hidden" id="ppm_target" name="ppm_target" value="<?= $ppm_target; ?>">
+        <input type="hidden" id="acc_eff" name="acc_eff" value="<?= $acc_eff; ?>">
+        <input type="hidden" id="start_bal_delay" name="start_bal_delay" value="<?= $start_bal_delay; ?>">
+        <input type="hidden" id="work_time_plan" name="work_time_plan" value="<?= $work_time_plan; ?>">
         <div class="container-fluid">
                 <div class="flex-column justify-content-center align-items-center">
                         <!-- <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="40" width="40"> -->
@@ -169,11 +175,11 @@ include 'dist/js/adminlte.miin.php';
                                                         </table>
                                                         <table style="border-top: none; height: 135px">
                                                                 <tr>
-                                                                        <td class="col-md-2 text-center value-size">0
+                                                                        <td class="col-md-2 text-center value-size" ><?= $yeild_target; ?>
                                                                         </td>
                                                                         <th class="th-normal col-md-2 text-center">
                                                                                 TARGET</th>
-                                                                        <td class="col-md-2 text-center value-size"">0</td>
+                                                                        <td class="col-md-2 text-center value-size" ><?= $ppm_target; ?></td>
                                                                 </tr>
                                                                 <tr>
                                                                         <td class=" col-md-2 text-center value-size"" style="background: #fae588;" id="actual_yield"></td>
@@ -257,7 +263,7 @@ include 'dist/js/adminlte.miin.php';
                                                                         ?>
 
                                                                         <!-- accounting efficiecny value -->
-                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100">0</td>
+                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100"><?= $acc_eff; ?></td>
                                                                         <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="75" id="actual_accounting_efficiency"></td>
                                                                         <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="25">0</td>
 
@@ -368,7 +374,7 @@ include 'dist/js/adminlte.miin.php';
 
                                                                         <th class="th-normal col-md-1" style="font-size: 13px">Starting Balance
                                                                                 Delay:</th>
-                                                                        <td class="col-md-1 text-center"></td>
+                                                                        <td class="col-md-1 text-center"><?= $start_bal_delay; ?></td>
                                                                 </tr>
                                                                 <tr>
                                                                         <th style="cursor:pointer;" onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")' class="th-normal col-md-1">Actual:</th>
@@ -403,7 +409,7 @@ include 'dist/js/adminlte.miin.php';
 
                                                                         <th class="th-normal col-md-1" style="font-size: 13px">Working Time
                                                                                 Plan:</th>
-                                                                        <td class="col-md-1 text-center"></td>
+                                                                        <td class="col-md-1 text-center"><?= $work_time_plan; ?></td>
                                                                 </tr>
                                                                 <tr>
 
