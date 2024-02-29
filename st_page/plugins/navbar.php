@@ -14,7 +14,7 @@ if (!isset($_SESSION['emp_no'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PCAD - ST</title>
 
-  <link rel="icon" href="../dist/img/logo.ico" type="image/x-icon" />
+  <link rel="icon" href="../dist/img/pcad_logo.ico" type="image/x-icon" />
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="../dist/css/font.min.css">
   <!-- Font Awesome -->
@@ -68,11 +68,11 @@ if (!isset($_SESSION['emp_no'])) {
 
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="../dist/img/logo.webp" alt="logo" height="60" width="60">
+    <img class="animation__shake" src="../dist/img/pcad_logo.png" alt="logo" height="60" width="60">
   </div>
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-primary navbar-dark">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">

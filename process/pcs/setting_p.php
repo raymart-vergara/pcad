@@ -157,15 +157,15 @@ if (isset($_POST['request'])) {
         $time_start = date('Y-m-d') . ' ' . $_POST['time_start'];
         $group = $_POST['group'];
 
-        $sql_check_pending = "SELECT COUNT(*) AS count_pending FROM t_plan WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
-        $stmt_check_pending = $conn_pcad->prepare($sql_check_pending);
-        $stmt_check_pending->bindParam(':registlinename', $registlinename);
-        $stmt_check_pending->execute();
-        $count_pending = $stmt_check_pending->fetchColumn();
+        // $sql_check_pending = "SELECT COUNT(*) AS count_pending FROM t_plan WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
+        // $stmt_check_pending = $conn_pcad->prepare($sql_check_pending);
+        // $stmt_check_pending->bindParam(':registlinename', $registlinename);
+        // $stmt_check_pending->execute();
+        // $count_pending = $stmt_check_pending->fetchColumn();
 
-        if ($count_pending > 0) {
-            echo "Cannot add target plan. There is already a pending record for this IRCS Line.";
-        } else {
+        // if ($count_pending > 0) {
+        //     header("location: ../../pcs_page/index.php");
+        // } else {
             if (strtotime($_POST['time_start']) < strtotime('05:50:00')) {
                 $date_now = date('Y-m-d');
                 $new_date_to = new DateTime($date_now);
@@ -217,8 +217,12 @@ if (isset($_POST['request'])) {
             } else {
                 echo "Failed to insert data into t_plan.";
             }
-        }
-    } else if ($request == "getLineNo") {
+         }
+        elseif ($_POST['request'] == "mainMenu") {
+            // Redirect to the main menu without adding target
+            header("Location: ../../pcs_page/index.php");
+            exit();
+        } else if ($request == "getLineNo") {
         $registlinename = $_POST['registlinename'];
         $q = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename ";
         $stmt = $conn_pcad->prepare($q);

@@ -47,6 +47,15 @@ function compute_absent_ratio($actual_absent, $total_active_mp) {
 	}
 }
 
+// function compute_absent_ratio($total_pd_mp, $total_active_mp) {
+// 	if ($total_active_mp != 0) {
+// 		return round(($total_active_mp / $total_pd_mp) * 100, 2);
+// 	} else {
+// 		return 0;
+// 	}
+// }
+
+
 // PCAD Main Functions
 // Must Require Database Config "../conn/pcad.php" before using this functions
 

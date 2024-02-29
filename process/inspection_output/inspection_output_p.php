@@ -30,14 +30,14 @@ if ($method == 'get_overall_inspection') {
         $insp_overall_g = count_overall_g($search_arr, $conn_ircs);
         $insp_overall_ng = count_overall_ng($search_arr, $conn_ircs);
 
-        $dimension_p = count_dimension($search_arr, $conn_ircs);
+        $dimension_p = count_dimension_g($search_arr, $conn_ircs);
         $dimension_p_ng = count_dimension_ng($search_arr, $conn_ircs);
 
-        $ect_p = count_ect($search_arr, $conn_ircs);
-        $ect_p_ng = count_ect_ng($search_arr, $conn_ircs);
+        // $ect_p = count_ect($search_arr, $conn_ircs);
+        // $ect_p_ng = count_ect_ng($search_arr, $conn_ircs);
 
-        $assurance_p = count_assurance($search_arr, $conn_ircs);
-        $assurance_p_ng = count_assurance_ng($search_arr, $conn_ircs);
+        // $assurance_p = count_assurance($search_arr, $conn_ircs);
+        // $assurance_p_ng = count_assurance_ng($search_arr, $conn_ircs);
 
         $response_array = array(
                 'insp_overall_g' => $insp_overall_g,
@@ -46,11 +46,11 @@ if ($method == 'get_overall_inspection') {
                 'dimension_p' => $dimension_p,
                 'dimension_p_ng' => $dimension_p_ng,
 
-                'ect_p' => $ect_p,
-                'ect_p_ng' => $ect_p_ng,
+                // 'ect_p' => $ect_p,
+                // 'ect_p_ng' => $ect_p_ng,
 
-                'assurance_p' => $assurance_p,
-                'assurance_p_ng' => $assurance_p_ng,
+                // 'assurance_p' => $assurance_p,
+                // 'assurance_p_ng' => $assurance_p_ng,
                 'message' => 'success'
         );
 

@@ -17,11 +17,11 @@
                                                 document.getElementById('dimension_p').innerHTML = response_array.dimension_p;
                                                 document.getElementById('dimension_p_ng').innerHTML = response_array.dimension_p_ng;
 
-                                                document.getElementById('ect_p').innerHTML = response_array.ect_p;
-                                                document.getElementById('ect_p_ng').innerHTML = response_array.ect_p_ng;
+                                                // document.getElementById('ect_p').innerHTML = response_array.ect_p;
+                                                // document.getElementById('ect_p_ng').innerHTML = response_array.ect_p_ng;
 
-                                                document.getElementById('assurance_p').innerHTML = response_array.assurance_p;
-                                                document.getElementById('assurance_p_ng').innerHTML = response_array.assurance_p_ng;
+                                                // document.getElementById('assurance_p').innerHTML = response_array.assurance_p;
+                                                // document.getElementById('assurance_p_ng').innerHTML = response_array.assurance_p_ng;
                                         }
                                         else {
                                                 console.log(response);

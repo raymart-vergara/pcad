@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Inspection Output</title>
 
-        <link rel="icon" href="dist/img/logo.ico" type="image/x-icon" />
+        <link rel="icon" href="dist/img/pcad_logo.ico" type="image/x-icon" />
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="../dist/css/font.min.css">
         <!-- Font Awesome -->
@@ -100,7 +100,7 @@
                                                 <th class="th-normal col-md-4 text-center">ECT</th>
                                                 <td id="ect_p_ng" class="col-md-4 text-center"></td>
                                         </tr>
-                                        <tr>
+                                        <!-- <tr>
                                                 <td id="clamp_checking_p" class="col-md-4 text-center"></td>
                                                 <th class="th-normal col-md-4 text-center">Clamp Checking</th>
                                                 <td id="clamp_checking_p_ng" class="col-md-4 text-center"></td>
@@ -109,7 +109,7 @@
                                                 <td id="appearance_p" class="col-md-4 text-center"></td>
                                                 <th class="th-normal col-md-4 text-center">Appearance</th>
                                                 <td id="appearance_p_ng" class="col-md-4 text-center"></td>
-                                        </tr>
+                                        </tr> -->
                                         <tr>
                                                 <td id="assurance_p" class="col-md-4 text-center"></td>
                                                 <th class="th-normal col-md-4 text-center">Assurance</th>
