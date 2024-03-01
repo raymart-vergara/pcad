@@ -39,7 +39,7 @@ function compute_hourly_output($plan, $working_time)
 	}
 }
 
-function compute_converyor_speed($taktime)
+function compute_conveyor_speed($taktime)
 {
 	return doubleval($taktime) * 0.95;
 }
