@@ -91,28 +91,77 @@
                                                 <th class="col-md-4 text-center">NG</th>
                                         </tr>
                                         <tr>
-                                                <td id="dimension_p" class="col-md-4 text-center"></td>
+                                                <td id="dimension_p_g" class="col-md-4 text-center"></td>
                                                 <th class="th-normal col-md-4 text-center">Dimension</th>
                                                 <td id="dimension_p_ng" class="col-md-4 text-center"></td>
                                         </tr>
                                         <tr>
-                                                <td id="ect_p" class="col-md-4 text-center"></td>
+                                                <td id="electric_p_g" class="col-md-4 text-center"></td>
                                                 <th class="th-normal col-md-4 text-center">ECT</th>
-                                                <td id="ect_p_ng" class="col-md-4 text-center"></td>
+                                                <td id="electric_p_ng" class="col-md-4 text-center"></td>
                                         </tr>
                                         <tr>
-                                                <td id="visual_p" class="col-md-4 text-center"></td>
+                                                <td id="visual_p_g" class="col-md-4 text-center"></td>
                                                 <th class="th-normal col-md-4 text-center">Visual</th>
                                                 <td id="visual_p_ng" class="col-md-4 text-center"></td>
                                         </tr>
                                         <tr>
-                                                <td id="assurance_p" class="col-md-4 text-center"></td>
+                                                <td id="assurance_p_g" class="col-md-4 text-center"></td>
                                                 <th class="th-normal col-md-4 text-center">Assurance</th>
                                                 <td id="assurance_p_ng" class="col-md-4 text-center"></td>
                                         </tr>
                                 </table>
                         </div>
                 </div>
+                <div class="row">
+                        <div class="col-4">
+                                <div class="table-responsive m-0 p-0" style="max-height: 250px; overflow-y: auto;">
+                                        <table class="m-0 p-0 table-head-fixed text-nowrap table-hover">
+                                                <thead
+                                                        style="text-align: center; position: sticky; top: 0; background-color: #fff; z-index: 1;">
+                                                        <th class="col-md-4 text-center">GOOD</th>
+                                                        <th class="col-md-4 text-center">INSPECTION</th>
+                                                        <th class="col-md-4 text-center">NG</th>
+                                                </thead>
+                                                <tbody class="mb-0" id="inspection_process_list">
+                                                        <tr>
+                                                                <td colspan="3" style="text-align: center;">
+                                                                        <div class="spinner-border text-dark"
+                                                                                role="status">
+                                                                                <span class="sr-only">Loading...</span>
+                                                                        </div>
+                                                                </td>
+                                                        </tr>
+                                                </tbody>
+                                        </table>
+                                </div>
+                        </div>
+                </div>
+
+                <!-- <div class="row">
+                        <div class="col-6">
+                                <h5>latest ng query</h5><br>
+                                <div class="table-responsive" style="min-height: 250px; max-height: 250px">
+                                        <table class=" m-0 p-0 table-head-fixed text-nowrap table-hover">
+                                                <thead style="text-align: center">
+                                                        <th class="col-md-4 text-center">GOOD</th>
+                                                        <th class="col-md-4 text-center">INSPECTION</th>
+                                                        <th class="col-md-4 text-center">NG</th>
+                                                </thead>
+                                                <tbody class="mb-0" id="inspection_process_list2">
+                                                        <tr>
+                                                                <td colspan="10" style="text-align: center;">
+                                                                        <div class="spinner-border text-dark"
+                                                                                role="status">
+                                                                                <span class="sr-only">Loading...</span>
+                                                                        </div>
+                                                                </td>
+                                                        </tr>
+                                                </tbody>
+                                        </table>
+                                </div>
+                        </div>
+                </div> -->
         </div>
 </body>
 
@@ -128,22 +177,26 @@
 
 <script>
         $(document).ready(function () {
-                // Call andon_d_sum initially to load the chart
+                // get_inspection_list2();
+                // setInterval(get_inspection_list, 10000);
+
+                get_inspection_list();
+                setInterval(get_inspection_list, 10000);
+
                 get_overall_inspection();
-                // Set interval to refresh data every 10 seconds
                 setInterval(get_overall_inspection, 10000); // 10000 milliseconds = 10 seconds
 
-                get_specific_inspection_good();
-                setInterval(get_specific_inspection_good, 10000);
+                // get_specific_inspection_good();
+                // setInterval(get_specific_inspection_good, 10000);
 
-                get_specific_inspection_no_good();
-                setInterval(get_specific_inspection_no_good, 10000);
+                // get_specific_inspection_no_good();
+                // setInterval(get_specific_inspection_no_good, 10000);
         });
 </script>
 
 
 <?php
-include 'plugins/js/inspection_output_script.php'; 
+include 'plugins/js/inspection_output_script.php';
 ?>
 
 </html>
