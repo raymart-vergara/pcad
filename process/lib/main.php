@@ -39,7 +39,7 @@ function compute_hourly_output($plan, $working_time)
 	}
 }
 
-function compute_converyor_speed($taktime)
+function compute_conveyor_speed($taktime)
 {
 	return doubleval($taktime) * 0.95;
 }
@@ -127,6 +127,53 @@ function get_ircs_ip_address($registlinename, $conn_pcad)
 
 	return $response_arr;
 }
+
+// 
+function getIpAddressesFromDatabase($registlinename, $conn_pcad)
+{
+    $ipaddresscolumn = "";
+    $response_arr = array();
+
+    // Retrieve IP addresses from the first column (ip_address) for the specified process
+    $query = "SELECT process, ip_address, ip_address2, ipaddresscolumn FROM m_inspection_ip WHERE ircs_line = :registlinename";
+    $stmt = $conn_pcad->prepare($query);
+    $stmt->bindParam(':registlinename', $registlinename, PDO::PARAM_STR);
+    $stmt->execute();
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+	$ipAddresses = array();
+
+	$process = $row['process'];
+
+	if (!empty($row['ip_address'])) {
+		$ipAddresses[] = $row['ip_address'];
+	}
+	if (!empty($row['ip_address2'])) {
+		$ipAddresses[] = $row['ip_address2'];
+	}
+
+	$ipaddresscolumn = $row['ipaddresscolumn'];
+
+	// Remove duplicates and return the merged result
+	$ipAddresses = array_unique($ipAddresses);
+
+	$inspection_ip_arr = array(
+		"process" => $process,
+		"ipaddresscolumn" => $ipaddresscolumn,
+		"ipAddresses" => $ipAddresses
+	);
+	
+	// Append to the response array
+        $response_arr[] = $inspection_ip_arr;
+	
+	// array_push($response_arr, $inspection_ip_arr);
+    }
+
+    return $response_arr;
+}
+
+
+
 
 
 ?>

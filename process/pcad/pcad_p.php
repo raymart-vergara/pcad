@@ -97,7 +97,7 @@ if ($method == 'get_yield') {
     );
 
     $qa_output = count_output($search_arr, $conn_ircs);
-    $input_ng = count_overall_ng($search_arr, $conn_ircs);
+    $input_ng = count_overall_ng($search_arr, $conn_ircs, $conn_pcad);
     $yield = compute_yield($qa_output, $input_ng);
 
     // echo $qa_output;
@@ -131,7 +131,7 @@ if ($method == 'get_ppm') {
     );
 
     $output = count_output($search_arr, $conn_ircs);
-    $ng = count_overall_ng($search_arr, $conn_ircs);
+    $ng = count_overall_ng($search_arr, $conn_ircs, $conn_pcad);
     $ppm = compute_ppm($ng, $output);
 
     // echo $output;
@@ -162,7 +162,7 @@ if ($method == 'get_conveyor_speed') {
     $taktime = 27000;
     // $taktime = $_GET['taktime'];
 
-    $conveyor_speed = compute_converyor_speed($taktime);
+    $conveyor_speed = compute_conveyor_speed($taktime);
     echo $conveyor_speed;
 }
 
