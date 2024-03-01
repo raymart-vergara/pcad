@@ -29,6 +29,12 @@ if (isset($_GET['registlinename'])) {
         $line_no = $res['Line'];
         $shift_group = $res['group'];
         $Carmodel = $res['Carmodel'];
+        $yeild_target = $res['yeild_target'];
+        $ppm_target = $res['ppm_target'];
+        $acc_eff = $res['acc_eff'];
+        $start_bal_delay = $res['start_bal_delay'];
+        $work_time_plan = $res['work_time_plan'];
+
 
         $sql = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename";
         $stmt = $conn_pcad->prepare($sql);

@@ -68,7 +68,7 @@ if (!isset($_SESSION['emp_id'])) {
 
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="../../dist/img/logo.webp" alt="logo" height="60" width="60">
+    <img class="animation__shake" src="../../dist/img/pcad_logo.png" alt="logo" height="60" width="60">
   </div>
 
   <!-- Navbar -->

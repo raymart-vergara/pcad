@@ -156,16 +156,13 @@ if (isset($_POST['request'])) {
         $registlinename = $_POST['registlinenameplan'];
         $time_start = date('Y-m-d') . ' ' . $_POST['time_start'];
         $group = $_POST['group'];
+        $yeild_target = $_POST['yeild_target'];
+        $ppm_target = $_POST['ppm_target'];
+        $acc_eff = $_POST['acc_eff'];
+        // $hrs_output = $_POST['hrs_output'];
+        $start_bal_delay = $_POST['start_bal_delay'];
+        $work_time_plan = $_POST['work_time_plan'];
 
-        // $sql_check_pending = "SELECT COUNT(*) AS count_pending FROM t_plan WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
-        // $stmt_check_pending = $conn_pcad->prepare($sql_check_pending);
-        // $stmt_check_pending->bindParam(':registlinename', $registlinename);
-        // $stmt_check_pending->execute();
-        // $count_pending = $stmt_check_pending->fetchColumn();
-
-        // if ($count_pending > 0) {
-        //     header("location: ../../pcs_page/index.php");
-        // } else {
             if (strtotime($_POST['time_start']) < strtotime('05:50:00')) {
                 $date_now = date('Y-m-d');
                 $new_date_to = new DateTime($date_now);
@@ -199,8 +196,8 @@ if (isset($_POST['request'])) {
             $car_maker = $car_maker_name[0];
             $takt_secs = TimeToSec($takt_time);
             $status = "Pending";
-            $sql_insert_plan = "INSERT INTO t_plan (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address, `group`) 
-            VALUES (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address, :group)";
+            $sql_insert_plan = "INSERT INTO t_plan (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address, `group`, `yeild_target`, `ppm_target`, `acc_eff`, `start_bal_delay`, `work_time_plan`) 
+            VALUES (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address, :group, :yeild_target, :ppm_target, :acc_eff, :start_bal_delay, :work_time_plan)";
             $stmt_insert_plan = $conn_pcad->prepare($sql_insert_plan);
             $stmt_insert_plan->bindParam(':car_maker', $car_maker);
             $stmt_insert_plan->bindParam(':line_no', $line_no);
@@ -211,6 +208,12 @@ if (isset($_POST['request'])) {
             $stmt_insert_plan->bindParam(':date_actual_start', $date_actual_start);
             $stmt_insert_plan->bindParam(':IP_address', $IP_address);
             $stmt_insert_plan->bindParam(':group', $group);
+            $stmt_insert_plan->bindParam(':yeild_target', $yeild_target);
+            $stmt_insert_plan->bindParam(':ppm_target', $ppm_target);
+            $stmt_insert_plan->bindParam(':acc_eff', $acc_eff);
+            $stmt_insert_plan->bindParam(':start_bal_delay', $start_bal_delay);
+            $stmt_insert_plan->bindParam(':work_time_plan', $work_time_plan);
+
 
             if ($stmt_insert_plan->execute()) {
                 header("location: ../../index.php?registlinename=" . $registlinename);
