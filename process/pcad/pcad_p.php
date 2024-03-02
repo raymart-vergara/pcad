@@ -158,10 +158,12 @@ if ($method == 'get_hourly_output') {
 
     $target_hourly_output = compute_hourly_output($plan, $working_time_hr);
     $actual_hourly_output = count_actual_hourly_output($search_arr, $conn_ircs, $conn_pcad);
+    $gap_hourly_output = $target_hourly_output - $actual_hourly_output;
 
     $response_arr = array(
 		'target_hourly_output' => $target_hourly_output,
 		'actual_hourly_output' => $actual_hourly_output,
+        'gap_hourly_output' => $gap_hourly_output,
 		'message' => 'success'
 	);
 
