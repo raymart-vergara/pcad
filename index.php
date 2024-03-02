@@ -203,7 +203,7 @@ include 'dist/js/adminlte.miin.php';
                                                                         <th colspan="3" class="text-center">PLAN</th>
                                                                         <th colspan="3" class="text-center">ACCOUNTING
                                                                                 EFFICIENCY</th>
-                                                                        <th colspan="3" class="text-center">HOURLY
+                                                                        <th style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' colspan="3" class="text-center">HOURLY
                                                                                 OUTPUT</th>
                                                                 </tr>
                                                                 <tr>
@@ -219,11 +219,11 @@ include 'dist/js/adminlte.miin.php';
                                                                                 Actual</th>
                                                                         <th class="th-normal col-md-1 text-center">Gap
                                                                         </th>
-                                                                        <th class="th-normal col-md-1 text-center">
+                                                                        <th style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="th-normal col-md-1 text-center">
                                                                                 Target</th>
-                                                                        <th class="th-normal col-md-1 text-center">
+                                                                        <th style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="th-normal col-md-1 text-center">
                                                                                 Actual</th>
-                                                                        <th class="th-normal col-md-1 text-center">Gap
+                                                                        <th style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="th-normal col-md-1 text-center">Gap
                                                                         </th>
                                                                 </tr>
                                                                 <tr>
@@ -297,9 +297,9 @@ include 'dist/js/adminlte.miin.php';
                                                                         <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100" id="gap_accounting_efficiency"></td>
 
                                                                         <!-- hourly output value -->
-                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="target_hourly_output"></td>
-                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="actual_hourly_output"></td>
-                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="gap_hourly_output"></td>
+                                                                        <td style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="target_hourly_output"></td>
+                                                                        <td style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="actual_hourly_output"></td>
+                                                                        <td style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="gap_hourly_output"></td>
                                                                 </tr>
                                                         </table>
                                                 </div>

@@ -19,7 +19,7 @@
 
                 var actual_accounting_efficiency = parseFloat(response);
                 var gap_accounting_efficiency = (((target_accounting_efficiency / 100) - (actual_accounting_efficiency / 100)) * 100)
-                document.getElementById('gap_accounting_efficiency').innerHTML = `${gap_accounting_efficiency}%`;
+                document.getElementById('gap_accounting_efficiency').innerHTML = `${gap_accounting_efficiency.toFixed(2)}%`;
             }
         });
     }
