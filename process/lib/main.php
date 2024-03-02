@@ -171,9 +171,4 @@ function getIpAddressesFromDatabase($registlinename, $conn_pcad)
 
     return $response_arr;
 }
-
-
-
-
-
 ?>
