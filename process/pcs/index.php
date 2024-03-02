@@ -6,7 +6,6 @@ require 'process/conn/pcad.php';
 
 // $line_no = '2132';
 // $line_no = $_GET['line_no'];
-// $registlinename = '';
 $registlinename = $_GET['registlinename']; // IRCS LINE (PCS)
 $shift_group = '';
 
@@ -29,7 +28,7 @@ if (isset($_GET['registlinename'])) {
         $line_no = $res['Line'];
         $shift_group = $res['group'];
         $Carmodel = $res['Carmodel'];
-        $yeild_target = $res['yeild_target'];
+        $yield_target = $res['yeild_target'];
         $ppm_target = $res['ppm_target'];
         $acc_eff = $res['acc_eff'];
         $start_bal_delay = $res['start_bal_delay'];
@@ -63,6 +62,4 @@ $dept_qa = 'QA';
 $section_pd = get_section($line_no, $conn_emp_mgt);
 $section_qa = 'QA';
 $shift = get_shift($server_time);
-
-
 ?>

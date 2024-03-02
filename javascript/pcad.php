@@ -3,6 +3,7 @@
         let line_no = document.getElementById('line_no').value;
         let shift_group = document.getElementById('shift_group').value;
         let registlinename = document.getElementById('registlinename').value;
+        let target_accounting_efficiency = parseInt(document.getElementById('acc_eff').value);
         $.ajax({
             url: 'process/pcad/pcad_p.php',
             type: 'GET',
@@ -15,6 +16,10 @@
             },
             success: function (response) {
                 document.getElementById('actual_accounting_efficiency').innerHTML = `${response}%`;
+
+                var actual_accounting_efficiency = parseFloat(response);
+                var gap_accounting_efficiency = (((target_accounting_efficiency / 100) - (actual_accounting_efficiency / 100)) * 100)
+                document.getElementById('gap_accounting_efficiency').innerHTML = `${gap_accounting_efficiency}%`;
             }
         });
     }
@@ -41,6 +46,7 @@
                     if (response_array.message == 'success') {
                         document.getElementById('target_hourly_output').innerHTML = response_array.target_hourly_output;
                         document.getElementById('actual_hourly_output').innerHTML = response_array.actual_hourly_output;
+                        document.getElementById('gap_hourly_output').innerHTML = response_array.gap_hourly_output;
                     } else {
                         console.log(response);
                     }
