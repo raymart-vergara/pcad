@@ -19,7 +19,6 @@ if ($method == 'count_emp') {
 	$line_no = $_GET['line_no'];
 
 	$shift_group = $_GET['shift_group'];
-	// $shift_group = 'A';
 
 	$search_arr = array(
 		'day' => $day,
@@ -32,6 +31,24 @@ if ($method == 'count_emp') {
 
 	$total_pd_mp = count_emp($search_arr, $conn_emp_mgt);
 	$total_present_pd_mp = count_emp_tio($search_arr, $conn_emp_mgt);
+
+	// For PD shift group ADS
+	if ($shift == 'DS') {
+		$search_pd_ads_arr = array(
+			'day' => $day,
+			'shift' => $shift,
+			'shift_group' => "ADS",
+			'dept' => $dept_pd,
+			'section' => $section_pd,
+			'line_no' => $line_no
+		);
+
+		$total_pd_ads_mp = count_emp($search_pd_ads_arr, $conn_emp_mgt);
+		$total_present_pd_ads_mp = count_emp_tio($search_pd_ads_arr, $conn_emp_mgt);
+		$total_pd_mp += $total_pd_ads_mp;
+		$total_present_pd_mp += $total_present_pd_ads_mp;
+	}
+	
 	$total_pd_mp_line_support_from = count_emp_line_support_from($search_arr, $conn_emp_mgt);
 	$total_present_pd_mp -= $total_pd_mp_line_support_from;
 	$total_pd_mp_line_support_to = count_emp_line_support_to($search_arr, $conn_emp_mgt);
@@ -49,6 +66,24 @@ if ($method == 'count_emp') {
 
 	$total_qa_mp = count_emp($search_arr, $conn_emp_mgt);
 	$total_present_qa_mp = count_emp_tio($search_arr, $conn_emp_mgt);
+
+	// For QA shift group ADS
+	if ($shift == 'DS') {
+		$search_qa_ads_arr = array(
+			'day' => $day,
+			'shift' => $shift,
+			'shift_group' => "ADS",
+			'dept' => $dept_qa,
+			'section' => $section_qa,
+			'line_no' => $line_no
+		);
+	
+		$total_qa_ads_mp = count_emp($search_qa_ads_arr, $conn_emp_mgt);
+		$total_present_qa_ads_mp = count_emp_tio($search_qa_ads_arr, $conn_emp_mgt);
+		$total_qa_mp += $total_qa_ads_mp;
+		$total_present_qa_mp += $total_present_qa_ads_mp;
+	}
+
 	$total_qa_mp_line_support_from = count_emp_line_support_from($search_arr, $conn_emp_mgt);
 	$total_present_qa_mp -= $total_qa_mp_line_support_from;
 	$total_qa_mp_line_support_to = count_emp_line_support_to($search_arr, $conn_emp_mgt);
@@ -72,5 +107,5 @@ if ($method == 'count_emp') {
 	echo json_encode($response_arr, JSON_FORCE_OBJECT);
 }
 
-$conn = NULL;
+$conn_emp_mgt = NULL;
 ?>

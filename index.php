@@ -298,7 +298,7 @@ include 'dist/js/adminlte.miin.php';
 
                                                                         <!-- hourly output value -->
                                                                         <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="target_hourly_output"></td>
-                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="actual_hourly_output">0</td>
+                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="actual_hourly_output"></td>
                                                                         <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100">0</td>
                                                                 </tr>
                                                         </table>

@@ -30,7 +30,6 @@ function get_st_data($parts_name, $conn_pcad) {
 // Total ST Per Line Computation
 function get_total_st_per_line($search_arr, $conn_ircs, $conn_pcad) {
     $shift = $search_arr['shift'];
-    // $shift_group = $search_arr['shift_group'];
     $registlinename = addslashes($search_arr['registlinename']);
     $final_process = $search_arr['final_process'];
     $ip = addslashes($search_arr['ip']);
@@ -59,16 +58,6 @@ function get_total_st_per_line($search_arr, $conn_ircs, $conn_pcad) {
             $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
         }
     }
-
-    // if ($shift_group == 'A') {
-    //     $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
-    // } else if ($shift_group == 'B') {
-    //     if ($server_time >= '06:00:00' && $server_time <= '23:59:59') {
-    //         $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
-    //     } else if ($server_time >= '00:00:00' && $server_time < '06:00:00') {
-    //         $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
-    //     }
-    // }
 
     if ($final_process == 'QA') {
         $query = $query . "AND INSPECTION4IPADDRESS = '$ip'";
