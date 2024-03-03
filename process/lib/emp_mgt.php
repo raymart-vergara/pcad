@@ -197,6 +197,9 @@ function count_emp_line_support_from($search_arr, $conn_emp_mgt) {
 function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 	$day = addslashes($search_arr['day']);
 	$shift = addslashes($search_arr['shift']);
+	$shift_group = addslashes($search_arr['shift_group']);
+	$dept = addslashes($search_arr['dept']);
+	$section = addslashes($search_arr['section']);
 	$line_no = addslashes($search_arr['line_no']);
 
 	$total_present_mp = 0;
@@ -225,7 +228,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 03:00:00' AND '$day 03:29:59'";
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 03:00:00' AND '$day 03:29:59'";
 		if (!empty($line_no)) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
@@ -242,7 +245,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 03:30:00' AND '$day 04:29:59'";
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 03:30:00' AND '$day 04:29:59'";
 		if (!empty($line_no)) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
@@ -259,7 +262,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 04:30:00' AND '$day 05:29:59'";
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 04:30:00' AND '$day 05:29:59'";
 		if (!empty($line_no)) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
@@ -276,7 +279,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 05:30:00' AND '$day 06:29:59'";
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 05:30:00' AND '$day 06:29:59'";
 		if (!empty($line_no)) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
@@ -293,7 +296,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 15:00:00' AND '$day 15:29:59'";
+			WHERE tio.day = '$day' AND emp.shift_group IN ('$shift_group', 'ADS') AND tio.time_out BETWEEN '$day 15:00:00' AND '$day 15:29:59'";
 		if (!empty($line_no)) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
@@ -310,7 +313,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 15:30:00' AND '$day 16:29:59'";
+			WHERE tio.day = '$day' AND emp.shift_group IN ('$shift_group', 'ADS') AND tio.time_out BETWEEN '$day 15:30:00' AND '$day 16:29:59'";
 		if (!empty($line_no)) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
@@ -327,7 +330,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 16:30:00' AND '$day 17:29:59'";
+			WHERE tio.day = '$day' AND emp.shift_group IN ('$shift_group', 'ADS') AND tio.time_out BETWEEN '$day 16:30:00' AND '$day 17:29:59'";
 		if (!empty($line_no)) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
@@ -344,7 +347,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 17:30:00' AND '$day 18:29:59'";
+			WHERE tio.day = '$day' AND emp.shift_group IN ('$shift_group', 'ADS') AND tio.time_out BETWEEN '$day 17:30:00' AND '$day 18:29:59'";
 		if (!empty($line_no)) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
@@ -381,6 +384,22 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 	if (empty($total_mp_3) && empty($total_mp_4) && empty($total_mp_5) && empty($total_mp_6)) {
 		// Present MP
 		$total_present_mp = count_emp_tio($search_arr, $conn_emp_mgt);
+
+		// For shift group ADS
+		if ($shift == 'DS') {
+			$search_ads_arr = array(
+				'day' => $day,
+				'shift' => $shift,
+				'shift_group' => "ADS",
+				'dept' => $dept,
+				'section' => $section,
+				'line_no' => $line_no
+			);
+
+			$total_present_ads_mp = count_emp_tio($search_ads_arr, $conn_emp_mgt);
+			$total_present_mp += $total_present_ads_mp;
+		}
+
 		// Working Time based on minutes of work
 		$working_time_initial_pcad = 0;
 		
@@ -469,6 +488,22 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 	} else {
 		// Present MP
 		$total_present_mp = count_emp_tio($search_arr, $conn_emp_mgt);
+
+		// For shift group ADS
+		if ($shift == 'DS') {
+			$search_ads_arr = array(
+				'day' => $day,
+				'shift' => $shift,
+				'shift_group' => "ADS",
+				'dept' => $dept,
+				'section' => $section,
+				'line_no' => $line_no
+			);
+
+			$total_present_ads_mp = count_emp_tio($search_ads_arr, $conn_emp_mgt);
+			$total_present_mp += $total_present_ads_mp;
+		}
+
 		// Working Time based on minutes of work
 		$working_time_initial_pcad = 450;
 
@@ -541,6 +576,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $conn_emp_mgt) {
 	$day = addslashes($search_arr['day']);
 	$shift = addslashes($search_arr['shift']);
+	$shift_group = addslashes($search_arr['shift_group']);
 	$dept = addslashes($search_arr['dept']);
 	$section = addslashes($search_arr['section']);
 	$line_no = addslashes($search_arr['line_no']);
@@ -569,7 +605,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 03:00:00' AND '$day 03:29:59'
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 03:00:00' AND '$day 03:29:59'
 			AND emp.dept = '$dept'";
 		if (!empty($section)) {
 			$sql = $sql . " AND emp.section = '$section'";
@@ -590,7 +626,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 03:30:00' AND '$day 04:29:59'
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 03:30:00' AND '$day 04:29:59'
 			AND emp.dept = '$dept'";
 		if (!empty($section)) {
 			$sql = $sql . " AND emp.section = '$section'";
@@ -611,7 +647,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 04:30:00' AND '$day 05:29:59'
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 04:30:00' AND '$day 05:29:59'
 			AND emp.dept = '$dept'";
 		if (!empty($section)) {
 			$sql = $sql . " AND emp.section = '$section'";
@@ -632,7 +668,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 05:30:00' AND '$day 06:29:59'
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 05:30:00' AND '$day 06:29:59'
 			AND emp.dept = '$dept'";
 		if (!empty($section)) {
 			$sql = $sql . " AND emp.section = '$section'";
@@ -653,7 +689,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 15:00:00' AND '$day 15:29:59'
+			WHERE tio.day = '$day' AND emp.shift_group IN ('$shift_group', 'ADS') AND tio.time_out BETWEEN '$day 15:00:00' AND '$day 15:29:59'
 			AND emp.dept = '$dept'";
 		if (!empty($section)) {
 			$sql = $sql . " AND emp.section = '$section'";
@@ -674,7 +710,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 15:30:00' AND '$day 16:29:59'
+			WHERE tio.day = '$day' AND emp.shift_group IN ('$shift_group', 'ADS') AND tio.time_out BETWEEN '$day 15:30:00' AND '$day 16:29:59'
 			AND emp.dept = '$dept'";
 		if (!empty($section)) {
 			$sql = $sql . " AND emp.section = '$section'";
@@ -695,7 +731,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 16:30:00' AND '$day 17:29:59'
+			WHERE tio.day = '$day' AND emp.shift_group IN ('$shift_group', 'ADS') AND tio.time_out BETWEEN '$day 16:30:00' AND '$day 17:29:59'
 			AND emp.dept = '$dept'";
 		if (!empty($section)) {
 			$sql = $sql . " AND emp.section = '$section'";
@@ -716,7 +752,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND tio.shift = '$shift' AND tio.time_out BETWEEN '$day 17:30:00' AND '$day 18:29:59'
+			WHERE tio.day = '$day' AND emp.shift_group IN ('$shift_group', 'ADS') AND tio.time_out BETWEEN '$day 17:30:00' AND '$day 18:29:59'
 			AND emp.dept = '$dept'";
 		if (!empty($section)) {
 			$sql = $sql . " AND emp.section = '$section'";
@@ -760,6 +796,21 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		// Present MP
 		$total_present_mp = count_emp_tio($search_arr, $conn_emp_mgt);
 
+		// For shift group ADS
+		if ($shift == 'DS') {
+			$search_ads_arr = array(
+				'day' => $day,
+				'shift' => $shift,
+				'shift_group' => "ADS",
+				'dept' => $dept,
+				'section' => $section,
+				'line_no' => $line_no
+			);
+
+			$total_present_ads_mp = count_emp_tio($search_ads_arr, $conn_emp_mgt);
+			$total_present_mp += $total_present_ads_mp;
+		}
+
 		if ($working_time_pcad < $working_time_3) {
 			$wt_x_mp = $working_time_pcad * $total_present_mp;
 		} else if ($working_time_pcad < $working_time_4) {
@@ -775,6 +826,21 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 	} else {
 		// Present MP
 		$total_present_mp = count_emp_tio($search_arr, $conn_emp_mgt);
+
+		// For shift group ADS
+		if ($shift == 'DS') {
+			$search_ads_arr = array(
+				'day' => $day,
+				'shift' => $shift,
+				'shift_group' => "ADS",
+				'dept' => $dept,
+				'section' => $section,
+				'line_no' => $line_no
+			);
+
+			$total_present_ads_mp = count_emp_tio($search_ads_arr, $conn_emp_mgt);
+			$total_present_mp += $total_present_ads_mp;
+		}
 
 		if (!empty($total_mp_3)) {
 			$wt_x_mp_3 = $working_time_3 * $total_mp_3;
