@@ -12,8 +12,6 @@ if ($method == 'get_inspection_list') {
         $registlinename = 'DAIHATSU_30';
         $shift_group = 'B';
 
-        $total_ng = 0;
-
         $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
         $final_process = $ircs_line_data_arr['final_process'];
         $ip = $ircs_line_data_arr['ip'];
@@ -93,11 +91,8 @@ if ($method == 'get_inspection_list') {
                         echo '<td style="text-align:center; background: #fff">' . $process . '</td>';
                         echo '<td style="text-align:center;">' . $p_ng . '</td>';
                         echo '</tr>';
-
-                        $total_ng += $p_ng;
                 } 
         }
-        echo $total_ng;
 }
 
 if ($method == 'get_overall_inspection') {

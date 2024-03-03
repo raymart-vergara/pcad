@@ -114,7 +114,7 @@ include 'dist/js/adminlte.miin.php';
         <input type="hidden" id="andon_line" name="andon_line" value="<?= $andon_line; ?>">
         <input type="hidden" id="final_process" name="final_process" value="<?= $final_process; ?>">
 
-        <input type="hidden" id="yeild_target" name="yeild_target" value="<?= $yeild_target; ?>">
+        <input type="hidden" id="yield_target" name="yield_target" value="<?= $yield_target; ?>">
         <input type="hidden" id="ppm_target" name="ppm_target" value="<?= $ppm_target; ?>">
         <input type="hidden" id="acc_eff" name="acc_eff" value="<?= $acc_eff; ?>">
         <input type="hidden" id="start_bal_delay" name="start_bal_delay" value="<?= $start_bal_delay; ?>">
@@ -176,11 +176,11 @@ include 'dist/js/adminlte.miin.php';
                                                         </table>
                                                         <table style="border-top: none; height: 135px">
                                                                 <tr>
-                                                                        <td class="col-md-2 text-center value-size" ><?= $yeild_target; ?>
+                                                                        <td class="col-md-2 text-center value-size" ><?= $yield_target; ?>%
                                                                         </td>
                                                                         <th class="th-normal col-md-2 text-center">
                                                                                 TARGET</th>
-                                                                        <td class="col-md-2 text-center value-size" ><?= $ppm_target; ?></td>
+                                                                        <td class="col-md-2 text-center value-size" ><?= number_format($ppm_target); ?></td>
                                                                 </tr>
                                                                 <tr>
                                                                         <td class=" col-md-2 text-center value-size""
@@ -203,7 +203,7 @@ include 'dist/js/adminlte.miin.php';
                                                                         <th colspan="3" class="text-center">PLAN</th>
                                                                         <th colspan="3" class="text-center">ACCOUNTING
                                                                                 EFFICIENCY</th>
-                                                                        <th colspan="3" class="text-center">HOURLY
+                                                                        <th style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' colspan="3" class="text-center">HOURLY
                                                                                 OUTPUT</th>
                                                                 </tr>
                                                                 <tr>
@@ -219,11 +219,11 @@ include 'dist/js/adminlte.miin.php';
                                                                                 Actual</th>
                                                                         <th class="th-normal col-md-1 text-center">Gap
                                                                         </th>
-                                                                        <th class="th-normal col-md-1 text-center">
+                                                                        <th style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="th-normal col-md-1 text-center">
                                                                                 Target</th>
-                                                                        <th class="th-normal col-md-1 text-center">
+                                                                        <th style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="th-normal col-md-1 text-center">
                                                                                 Actual</th>
-                                                                        <th class="th-normal col-md-1 text-center">Gap
+                                                                        <th style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="th-normal col-md-1 text-center">Gap
                                                                         </th>
                                                                 </tr>
                                                                 <tr>
@@ -292,14 +292,14 @@ include 'dist/js/adminlte.miin.php';
                                                                         ?>
 
                                                                         <!-- accounting efficiecny value -->
-                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100"><?= $acc_eff; ?></td>
+                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100" id="target_accounting_efficiency"><?= $acc_eff; ?>%</td>
                                                                         <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100" id="actual_accounting_efficiency"></td>
-                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100">0</td>
+                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100" id="gap_accounting_efficiency"></td>
 
                                                                         <!-- hourly output value -->
-                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="target_hourly_output"></td>
-                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="actual_hourly_output">0</td>
-                                                                        <td class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100">0</td>
+                                                                        <td style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="target_hourly_output"></td>
+                                                                        <td style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="actual_hourly_output"></td>
+                                                                        <td style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="gap_hourly_output"></td>
                                                                 </tr>
                                                         </table>
                                                 </div>
