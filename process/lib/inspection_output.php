@@ -91,7 +91,6 @@ function count_overall_ng($search_arr, $conn_ircs, $conn_pcad)
         return $insp_overall_ng;
 }
 
-
 // =====================================================================================================
 function countProcessGood($search_arr, $conn_ircs, $processDetailsGood)
 {
@@ -193,4 +192,113 @@ function countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad)
 
         return $total;
 }
+
+// for inspection details
+function getInspectionDetailsGood($search_arr, $conn_ircs, $inspectionDetailsGood)
+{
+        $shift = $search_arr['shift'];
+        $registlinename = addslashes($search_arr['registlinename']);
+        $server_date_only = $search_arr['server_date_only'];
+        $server_date_only_yesterday = $search_arr['server_date_only_yesterday'];
+        $server_date_only_tomorrow = $search_arr['server_date_only_tomorrow'];
+        $server_time = $search_arr['server_time'];
+
+        $total = 0;
+
+        // Check if the necessary parameters are provided
+        if (!isset($inspectionDetailsGood['ipAddressColumn']) || !isset($inspectionDetailsGood['judgmentColumn']) || !isset($inspectionDetailsGood['ipAddresses'])) {
+                // Handle the case where the required parameters are not provided
+                return $total;
+        }
+
+        $ipAddressColumn = $inspectionDetailsGood['ipAddressColumn'];
+        $ipJudgementColumn = $inspectionDetailsGood['ipJudgementColumn'];
+        $judgmentColumn = $inspectionDetailsGood['judgmentColumn'];
+        $process = $inspectionDetailsGood['process'];
+
+        // Get IP addresses from the database
+        $ipAddresses = $inspectionDetailsGood['ipAddresses'];
+
+        if (empty($ipAddresses)) {
+                // Handle the case where IP addresses are not found
+                return $total;
+        }
+
+        $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
+
+        $query = "SELECT * FROM T_PRODUCTWK WHERE $ipAddressColumn IN ($ipAddressesString) AND REGISTLINENAME = '$registlinename'";
+
+        if ($shift == 'DS') {
+                $query .= " AND $judgmentColumn BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+        } elseif ($shift == 'NS') {
+                if ($server_time >= '06:00:00' && $server_time <= '23:59:59') {
+                        $query .= " AND $judgmentColumn BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+                } elseif ($server_time >= '00:00:00' && $server_time < '06:00:00') {
+                        $query .= " AND $judgmentColumn BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+                }
+        }
+
+        $stmt = oci_parse($conn_ircs, $query);
+        oci_execute($stmt);
+
+        while ($row = oci_fetch_object($stmt, OCI_ASSOC + OCI_RETURN_NULLS)) {
+                $total = $row;
+        }
+
+        return $total;
+}
+
+// function getInspectionDetailsNoGood($search_arr, $conn_ircs, $inspectionDetailsNG)
+// {
+//         $shift = $search_arr['shift'];
+//         $registlinename = addslashes($search_arr['registlinename']);
+//         $server_date_only = $search_arr['server_date_only'];
+//         $server_date_only_yesterday = $search_arr['server_date_only_yesterday'];
+//         $server_date_only_tomorrow = $search_arr['server_date_only_tomorrow'];
+//         $server_time = $search_arr['server_time'];
+
+//         $total = 0;
+
+//         // Check if the necessary parameters are provided
+//         if (!isset($inspectionDetailsNG['ipAddressColumn']) || !isset($inspectionDetailsNG['judgmentColumn']) || !isset($inspectionDetailsNG['ipAddresses'])) {
+//                 // Handle the case where the required parameters are not provided
+//                 return $total;
+//         }
+
+//         $ipAddressColumn = $inspectionDetailsNG['ipAddressColumn'];
+//         $ipJudgementColumn = $inspectionDetailsNG['ipJudgementColumn'];
+//         $judgmentColumn = $inspectionDetailsNG['judgmentColumn'];
+//         $process = $inspectionDetailsNG['process'];
+
+//         // Get IP addresses from the database
+//         $ipAddresses = $inspectionDetailsNG['ipAddresses'];
+
+//         if (empty($ipAddresses)) {
+//                 // Handle the case where IP addresses are not found
+//                 return $total;
+//         }
+
+//         $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
+
+//         $query = "SELECT * FROM T_REPAIRWK WHERE $ipAddressColumn IN ($ipAddressesString) AND $judgmentColumn = '0' AND REGISTLINENAME = '$registlinename'";
+
+//         if ($shift == 'DS') {
+//                 $query .= " AND $ipJudgementColumn BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+//         } elseif ($shift == 'NS') {
+//                 if ($server_time >= '06:00:00' && $server_time <= '23:59:59') {
+//                         $query .= " AND $ipJudgementColumn BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+//                 } elseif ($server_time >= '00:00:00' && $server_time < '06:00:00') {
+//                         $query .= " AND $ipJudgementColumn BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+//                 }
+//         }
+
+//         $stmt = oci_parse($conn_ircs, $query);
+//         oci_execute($stmt);
+
+//         while ($row = oci_fetch_object($stmt, OCI_ASSOC + OCI_RETURN_NULLS)) {
+//                 $total = $row;
+//         }
+
+//         return $total;
+// }
 ?>
