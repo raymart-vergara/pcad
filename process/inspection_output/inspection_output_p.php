@@ -6,6 +6,52 @@ include '../lib/main.php';
 include '../lib/inspection_output.php';
 
 $method = $_GET['method'];
+if ($method == 'get_inspection_details_good') {
+        $shift = 'DS';
+        $registlinename = 'DAIHATSU_30';
+        $shift_group = 'B';
+
+        $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+        $final_process = $ircs_line_data_arr['final_process'];
+        $ip = $ircs_line_data_arr['ip'];
+
+        // Fetch processes and their corresponding IP addresses
+        $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
+
+        if (empty($processesAndIpAddresses)) {
+                echo '<tr>';
+                echo '<td colspan="10" style="text-align:center; color:red;">No Record Found</td>';
+                echo '</tr>';
+        } else {
+                foreach ($processesAndIpAddresses as $processData) {
+                        $process = $processData['process'];
+                        $ipaddresscolumn = $processData['ipaddresscolumn'];
+                        $ipAddresses = $processData['ipAddresses'];
+
+                        $search_arr = array(
+                                'shift' => $shift,
+                                'shift_group' => $shift_group,
+                                'registlinename' => $registlinename,
+                                'server_date_only' => $server_date_only,
+                                'server_date_only_yesterday' => $server_date_only_yesterday,
+                                'server_date_only_tomorrow' => $server_date_only_tomorrow,
+                                'server_time' => $server_time
+                        );
+
+                        $inspection_good = getInspectionDetailsGood($search_arr, $conn_ircs, $inspectionDetailsGood);
+
+                        // Output HTML for each process
+                        echo '<tr style="cursor:pointer;">';
+                        echo '<td style="text-align:center;">' . $inspection_good[''] . '</td>';
+                        echo '<td style="text-align:center;">' . $inspection_good[''] . '</td>';
+                        echo '</tr>';
+                }
+        }
+}
+
+if ($method == 'get_inspection_details_no_good') {
+
+}
 
 if ($method == 'get_inspection_list') {
         $shift = 'DS';
@@ -91,7 +137,7 @@ if ($method == 'get_inspection_list') {
                         echo '<td style="text-align:center; background: #fff">' . $process . '</td>';
                         echo '<td style="text-align:center;">' . $p_ng . '</td>';
                         echo '</tr>';
-                } 
+                }
         }
 }
 

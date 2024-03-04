@@ -8,7 +8,7 @@ include 'dist/js/adminlte.miin.php';
 <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>PCAD</title>
+        <title>PCAD | Dashboard</title>
 
         <link rel="icon" href="dist/img/pcad_logo.ico" type="image/x-icon" />
         <!-- Google Font: Source Sans Pro -->
@@ -309,24 +309,26 @@ include 'dist/js/adminlte.miin.php';
                                         <div class="row mb-3">
                                                 <div class="col-4">
                                                         <!-- overall inspection -->
-                                                        <table style="min-height:225px;">
-                                                                <tr>
-                                                                        <th colspan="4" class="text-center">OVERALL
-                                                                                INSPECTION
-                                                                        </th>
-                                                                </tr>
-                                                                <tr>
-                                                                        <th class="col-md-2 text-center">GOOD</th>
-                                                                        <td id="insp_overall_g"
-                                                                                class="col-md-4 text-center value-size"
-                                                                                style="height: 190px; background: #78c6a3;">
-                                                                        </td>
-                                                                        <td id="insp_overall_ng"
-                                                                                class="col-md-4 text-center value-size"
-                                                                                style="background: #f38375;"> </td>
-                                                                        <th class="col-md-2 text-center">NG</th>
-                                                                </tr>
-                                                        </table>
+                                                        <a target="_blank" href="../pcad/inspection_output/inspection_details.php" style="color: #000">
+                                                                <table style="min-height:225px;">
+                                                                        <tr>
+                                                                                <th colspan="4" class="text-center">OVERALL
+                                                                                        INSPECTION
+                                                                                </th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                                <th class="col-md-2 text-center">GOOD</th>
+                                                                                <td id="insp_overall_g"
+                                                                                        class="col-md-4 text-center value-size"
+                                                                                        style="height: 190px; background: #78c6a3;">
+                                                                                </td>
+                                                                                <td id="insp_overall_ng"
+                                                                                        class="col-md-4 text-center value-size"
+                                                                                        style="background: #f38375;"> </td>
+                                                                                <th class="col-md-2 text-center">NG</th>
+                                                                        </tr>
+                                                                </table>
+                                                        </a>
                                                 </div>
                                                 <!-- <div class="col-1"></div> -->
                                                 <div class="col-8">
@@ -588,6 +590,8 @@ include 'dist/js/adminlte.miin.php';
                 setInterval(get_inspection_list, 10000);
                 get_overall_inspection();
                 setInterval(get_overall_inspection, 10000);
+
+                get_inspection_details_good();
 
                 // Call count_emp initially to load the data from employee management system
                 count_emp();
