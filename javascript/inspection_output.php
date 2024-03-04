@@ -1,5 +1,38 @@
 <script type="text/javascript">
-         const get_inspection_list = () => {
+        $(document).ready(function () {
+                get_inspection_details_good();
+                get_inspection_details_no_good();
+        });
+
+        const get_inspection_details_good = () => {
+                $.ajax({
+                        url: 'process/inspection_output/inspection_output_p.php',
+                        type: 'GET',
+                        cache: false,
+                        data: {
+                                method: 'get_inspection_details_good'
+                        },
+                        success: function (response) {
+                                $('#list_of_good_viewer').html(response);
+                        }
+                });
+        }
+
+        const get_inspection_details_no_good = () => {
+                $.ajax({
+                        url: 'process/inspection_output/inspection_output_p.php',
+                        type: 'GET',
+                        cache: false,
+                        data: {
+                                method: 'get_inspection_details_no_good'
+                        },
+                        success: function (response) {
+                                $('#list_of_no_good_viewer').html(response);
+                        }
+                });
+        }
+
+        const get_inspection_list = () => {
                 $.ajax({
                         url: 'process/inspection_output/inspection_output_p.php',
                         type: 'GET',
@@ -9,9 +42,8 @@
                         },
                         success: function (response) {
                                 $('#inspection_process_list').html(response);
-                                $('#spinner').fadeOut();
                         }
-                })
+                });
         }
 
         const get_overall_inspection = () => {
