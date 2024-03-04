@@ -65,40 +65,87 @@
 </head>
 
 <body class="">
-    <div class="card-body">
-        <h2 class="text-center">Andon Details</h2>
-        <table class="table table-head-fixed text-nowrap table-bordered table-hover">
-            <thead class="text-center">
-                <tr><th>#</th>
-                    <th>Production</th>
-                    <th>Line</th>
-                    <th>Machine</th>
-                    <th>Machine No.</th>
-                    <th>Process</th>
-                    <th>Problem</th>
-                    <th>Production Acct.</th>
-                    <th>Call Date Time</th>
-                    <th>Waiting Time (mins.)</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th>Fixing Time Duration (mins.)</th>
-                    <th>Technician</th>
-                    <th>Department</th>
-                    <th>Solution</th>
-                    <th>Serial Number</th>
-                    <th>Jig Name</th>
-                    <th>Circuit Location</th>
-                    <th>Lot Number</th>
-                    <th>Product Number</th>
-                    <th>Fixing Status</th>
-                    <th>Backup Request Time</th>
-                    <th>Backup Comment</th>
-                    <th>Backup Technician</th>
-                    <th>Backup Confirmation Date Time</th>
-                </tr>
-            </thead>
-            <tbody id="andon_details" style="text-align:center;"></tbody>
-        </table>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="container-fluid">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="row mb-2 ml-1 mr-1">
+                <div class="col-sm-6">
+                    <h1 class="m-0 "> ANDON DETAILS </h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card card-primary card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-history"></i> Andon Details Table</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                                        <i class="fas fa-expand"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+
+                                <div class="my-2">
+                                    <button type="button" class="btn bg-secondary" onclick="location.replace('../process/andon_graph/andon_export_p.php')"> <i
+                                            class="fas fa-download"></i> Export
+                                        Andon Details</button>
+                                </div>
+                                <div id="" class="table-responsive"
+                                    style="max-height: 500px; overflow: auto; display:inline-block;">
+                                    <table class="table table-head-fixed text-nowrap table-bordered table-hover">
+                                        <thead class="text-center">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Production</th>
+                                                <th>Line</th>
+                                                <th>Machine</th>
+                                                <th>Machine No.</th>
+                                                <th>Process</th>
+                                                <th>Problem</th>
+                                                <th>Production Acct.</th>
+                                                <th>Call Date Time</th>
+                                                <th>Waiting Time (mins.)</th>
+                                                <th>Start Time</th>
+                                                <th>End Time</th>
+                                                <th>Fixing Time Duration (mins.)</th>
+                                                <th>Technician</th>
+                                                <th>Department</th>
+                                                <th>Solution</th>
+                                                <th>Serial Number</th>
+                                                <th>Jig Name</th>
+                                                <th>Circuit Location</th>
+                                                <th>Lot Number</th>
+                                                <th>Product Number</th>
+                                                <th>Fixing Status</th>
+                                                <th>Backup Request Time</th>
+                                                <th>Backup Comment</th>
+                                                <th>Backup Technician</th>
+                                                <th>Backup Confirmation Date Time</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="andon_details" style="text-align:center;"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /.row -->
 
@@ -106,3 +153,5 @@
     <?php
     include 'plugins/js/a_graph_script.php';
     ?>
+
+</body>
