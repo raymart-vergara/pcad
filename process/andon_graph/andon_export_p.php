@@ -22,7 +22,7 @@ $f = fopen('php://memory', 'w');
 // Add UTF-8 BOM (For Any characters compatibility)
 fputs($f, "\xEF\xBB\xBF");
 // Set column headers 
-$fields = array('Request ID', 'Status', 'Car Maker', 'Car Model', 'Product', 'Jig Name', 'Drawing No', 'Type', 'Qty', 'Purpose', 'Kigyo Budget', 'Date Requested', 'Requested By', 'Required Delivery Date', 'Remarks (fill up if ECT jig is under new design, supplier)', 'Date of Issuance of RFQ', 'RFQ No', 'Target Date of Reply Quotation', 'Item Code');
+$fields = array('Category', 'Line', 'Machine', '	Machine No.', '	Process', 'Problem', 'Production Acct.', 'Call Date Time', 'Waiting Time (mins.)', 'Start Time', 'End Time', 'Fixing Time Duration (mins.)', 'Technician', 'Department', 'Solution', 'Serial Number', 'Jig Name', 'Circuit Location', 'Lot Number','Product Number','Fixing Status','Backup Request Time','Backup Comment', 'Backup Technician','Backup Confirmation Date Time');
 fputcsv($f, $fields, $delimiter);
 
 $query = "SELECT  category, line, machineName, machineNo, process, problem, operatorName, requestDateTime, waitingTime, startDateTime, endDateTime, fixInterval, technicianName, department, counter_measure, serial_num, jigName, circuit_location, lotNumber, productNumber, fixRemarks, backupRequestTime, backupComment,  backupTechnicianName, backupRequestTime FROM tblhistory 
