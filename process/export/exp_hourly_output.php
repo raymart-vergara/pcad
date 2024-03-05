@@ -1,6 +1,8 @@
 <?php
 include '../server_date_time.php';
+require '../conn/pcad.php';
 require '../conn/ircs.php';
+include '../lib/main.php';
 
 switch (true) {
     case !isset($_GET['registlinename']):
@@ -16,7 +18,22 @@ $hourly_output_date = $_GET['hourly_output_date'];
 $shift = $_GET['shift'];
 $target_output = $_GET['target_output'];
 
+$ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+$final_process = $ircs_line_data_arr['final_process'];
+$ipaddresscolumn = $ircs_line_data_arr['ipaddresscolumn'];
+$ipAddresses = $ircs_line_data_arr['ipAddresses'];
+
 $hourly_output_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_output_date))));
+
+$date_column = "INSPECTION4FINISHDATETIME";
+
+if ($final_process == 'Assurance') {
+    $date_column = "INSPECTION4FINISHDATETIME";
+} else {
+    $date_column = "INSPECTION3FINISHDATETIME";
+}
+
+$ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
 $total_target_output = 0;
 $total_actual_output = 0;
@@ -39,18 +56,22 @@ $fields = array('#', 'Line No.', 'Date', 'Hour', 'Target Output', 'Actual Output
 fputcsv($f, $fields, $delimiter);
 
 $query = "SELECT REGISTLINENAME, DAY, HOUR, COUNT(*) AS TOTAL FROM (
-    SELECT TO_CHAR(T_PRODUCTWK.INSPECTION4FINISHDATETIME, 'YYYY-MM-DD HH24') AS DATE_TIME,
-    TO_CHAR(T_PRODUCTWK.INSPECTION4FINISHDATETIME, 'YYYY-MM-DD') AS DAY,
-    TO_CHAR(T_PRODUCTWK.INSPECTION4FINISHDATETIME, 'HH24') AS HOUR, REGISTLINENAME 
+    SELECT TO_CHAR(T_PRODUCTWK.$date_column, 'YYYY-MM-DD HH24') AS DATE_TIME,
+    TO_CHAR(T_PRODUCTWK.$date_column, 'YYYY-MM-DD') AS DAY,
+    TO_CHAR(T_PRODUCTWK.$date_column, 'HH24') AS HOUR, REGISTLINENAME 
     FROM T_PRODUCTWK
     WHERE REGISTLINENAME = '$registlinename'";
 
+if (!empty($ipAddresses)) {
+    $query = $query . " AND $ipaddresscolumn IN ($ipAddressesString)";
+}
+
 if ($shift == 'DS') {
-    $query = $query . "AND T_PRODUCTWK.INSPECTION4FINISHDATETIME BETWEEN TO_DATE('$hourly_output_date 06:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$hourly_output_date 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+    $query = $query . "AND T_PRODUCTWK.$date_column BETWEEN TO_DATE('$hourly_output_date 06:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$hourly_output_date 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
 } else if ($shift == 'NS') {
-    $query = $query . "AND T_PRODUCTWK.INSPECTION4FINISHDATETIME BETWEEN TO_DATE('$hourly_output_date 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$hourly_output_date_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+    $query = $query . "AND T_PRODUCTWK.$date_column BETWEEN TO_DATE('$hourly_output_date 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$hourly_output_date_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
 } else {
-    $query = $query . "AND T_PRODUCTWK.INSPECTION4FINISHDATETIME BETWEEN TO_DATE('$hourly_output_date 06:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$hourly_output_date_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+    $query = $query . "AND T_PRODUCTWK.$date_column BETWEEN TO_DATE('$hourly_output_date 06:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$hourly_output_date_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
 }
 
 $query = $query . ") GROUP BY REGISTLINENAME, DAY, HOUR, DATE_TIME ORDER BY DATE_TIME";
@@ -87,4 +108,5 @@ header('Content-Disposition: attachment; filename="' . $filename . '";');
 fpassthru($f);
 
 oci_close($conn_ircs);
+$conn_pcad = NULL;
 ?>

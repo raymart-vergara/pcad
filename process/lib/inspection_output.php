@@ -4,8 +4,12 @@ function count_overall_g($search_arr, $conn_ircs)
 {
         $shift = $search_arr['shift'];
         $registlinename = addslashes($search_arr['registlinename']);
-        $final_process = $search_arr['final_process'];
-        $ip = addslashes($search_arr['ip']);
+
+        $ircs_line_data_arr = $search_arr['ircs_line_data_arr'];
+        $final_process = $ircs_line_data_arr['final_process'];
+        $ipaddresscolumn = $ircs_line_data_arr['ipaddresscolumn'];
+        $ipAddresses = $ircs_line_data_arr['ipAddresses'];
+
         $server_date_only = $search_arr['server_date_only'];
         $server_date_only_yesterday = $search_arr['server_date_only_yesterday'];
         $server_date_only_tomorrow = $search_arr['server_date_only_tomorrow'];
@@ -13,15 +17,32 @@ function count_overall_g($search_arr, $conn_ircs)
 
         $total = 0;
 
-        $query = "SELECT COUNT(*) AS OUTPUT FROM T_PACKINGWK WHERE IPADDRESS IN ( '172.25.166.83' ,  '172.25.161.166'  ) AND REGISTLINENAME = '$registlinename' AND PACKINGBOXCARDJUDGMENT = '1'";
+        $date_column = "INSPECTION4FINISHDATETIME";
+
+        if ($final_process == 'Assurance') {
+                $date_column = "INSPECTION4FINISHDATETIME";
+        } else {
+                $date_column = "INSPECTION3FINISHDATETIME";
+        }
+
+        $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
+
+        $query = "SELECT COUNT(*) AS OUTPUT FROM T_PACKINGWK WHERE REGISTLINENAME = '$registlinename' AND PACKINGBOXCARDJUDGMENT = '1'";
+
+        if (!empty($ipAddresses)) {
+                $query .= " AND IPADDRESS IN ($ipAddressesString)";
+        }
 
         if ($shift == 'DS') {
-                $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+                $query .= "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                                AND TO_DATE('$server_date_only_tomorrow 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
         } else if ($shift == 'NS') {
                 if ($server_time >= '06:00:00' && $server_time <= '23:59:59') {
-                        $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+                        $query .= "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                                        AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
                 } else if ($server_time >= '00:00:00' && $server_time < '06:00:00') {
-                        $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+                        $query .= "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                                        AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
                 }
         }
 
@@ -46,29 +67,24 @@ function count_overall_ng($search_arr, $conn_ircs, $conn_pcad)
                         $ipaddresscolumn = $processData['ipaddresscolumn'];
                         $ipAddresses = $processData['ipAddresses'];
 
-                        $judgmentColumnGood = "";
                         $judgmentColumnNG = "";
-                        $ipJudgementColumn = "";
+                        $date_column = "";
 
                         switch ($process) {
                                 case "Dimension":
-                                        $ipJudgementColumn = "INSPECTION1FINISHDATETIME";
-                                        $judgmentColumnGood = "INSPECTION1FINISHDATETIME";
+                                        $date_column = "INSPECTION1FINISHDATETIME";
                                         $judgmentColumnNG = "INSPECTION1JUDGMENT";
                                         break;
                                 case "Electric":
-                                        $ipJudgementColumn = "INSPECTION2FINISHDATETIME";
-                                        $judgmentColumnGood = "INSPECTION2FINISHDATETIME";
+                                        $date_column = "INSPECTION2FINISHDATETIME";
                                         $judgmentColumnNG = "INSPECTION2JUDGMENT";
                                         break;
                                 case "Visual":
-                                        $ipJudgementColumn = "INSPECTION3FINISHDATETIME";
-                                        $judgmentColumnGood = "INSPECTION3FINISHDATETIME";
+                                        $date_column = "INSPECTION3FINISHDATETIME";
                                         $judgmentColumnNG = "INSPECTION3JUDGMENT";
                                         break;
                                 case "Assurance":
-                                        $ipJudgementColumn = "INSPECTION4FINISHDATETIME";
-                                        $judgmentColumnGood = "INSPECTION4FINISHDATETIME";
+                                        $date_column = "INSPECTION4FINISHDATETIME";
                                         $judgmentColumnNG = "INSPECTION4JUDGMENT";
                                         break;
                                 default:
@@ -77,7 +93,7 @@ function count_overall_ng($search_arr, $conn_ircs, $conn_pcad)
 
                         $processDetailsNG = array(
                                 'process' => $process,
-                                'ipJudgementColumn' => $ipJudgementColumn,
+                                'date_column' => $date_column,
                                 'ipAddressColumn' => $ipaddresscolumn,
                                 'judgmentColumn' => $judgmentColumnNG,
                                 'ipAddresses' => $ipAddresses
@@ -105,26 +121,33 @@ function countProcessGood($search_arr, $conn_ircs, $processDetailsGood)
         $total = 0;
 
         // Check if the necessary parameters are provided
-        if (!isset($processDetailsGood['ipAddressColumn']) || !isset($processDetailsGood['judgmentColumn']) || !isset($processDetailsGood['ipAddresses'])) {
+        if (!isset($processDetailsGood['ipAddressColumn']) || !isset($processDetailsGood['ipAddresses'])) {
                 // Handle the case where the required parameters are not provided
                 return $total;
         }
 
         $ipAddressColumn = $processDetailsGood['ipAddressColumn'];
-        $judgmentColumn = $processDetailsGood['judgmentColumn'];
+        $date_column = $processDetailsGood['date_column'];
         $ipAddresses = $processDetailsGood['ipAddresses'];
 
         $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
-        $query = "SELECT COUNT(*) AS PROCESS_COUNT_GOOD FROM T_PRODUCTWK WHERE $ipAddressColumn IN ($ipAddressesString) AND REGISTLINENAME = '$registlinename'";
+        $query = "SELECT COUNT(*) AS PROCESS_COUNT_GOOD FROM T_PRODUCTWK WHERE REGISTLINENAME = '$registlinename'";
+
+        if (!empty($ipAddresses)) {
+                $query .= " AND $ipAddressColumn IN ($ipAddressesString)";
+        }
 
         if ($shift == 'DS') {
-                $query .= " AND $judgmentColumn BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+                $query .= " AND $date_column BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                                AND TO_DATE('$server_date_only_tomorrow 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
         } elseif ($shift == 'NS') {
                 if ($server_time >= '06:00:00' && $server_time <= '23:59:59') {
-                        $query .= " AND $judgmentColumn BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+                        $query .= " AND $date_column BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                                        AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
                 } elseif ($server_time >= '00:00:00' && $server_time < '06:00:00') {
-                        $query .= " AND $judgmentColumn BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+                        $query .= " AND $date_column BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                                        AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
                 }
         }
 
@@ -143,6 +166,7 @@ function countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad)
 {
         $shift = $search_arr['shift'];
         $registlinename = addslashes($search_arr['registlinename']);
+
         $server_date_only = $search_arr['server_date_only'];
         $server_date_only_yesterday = $search_arr['server_date_only_yesterday'];
         $server_date_only_tomorrow = $search_arr['server_date_only_tomorrow'];
@@ -157,9 +181,8 @@ function countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad)
         }
 
         $ipAddressColumn = $processDetailsNG['ipAddressColumn'];
-        $ipJudgementColumn = $processDetailsNG['ipJudgementColumn'];
+        $date_column = $processDetailsNG['date_column'];
         $judgmentColumn = $processDetailsNG['judgmentColumn'];
-        $process = $processDetailsNG['process'];
 
         // Get IP addresses from the database
         $ipAddresses = $processDetailsNG['ipAddresses'];
@@ -171,15 +194,22 @@ function countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad)
 
         $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
-        $query = "SELECT COUNT(*) AS PROCESS_COUNT_NG FROM T_REPAIRWK WHERE $ipAddressColumn IN ($ipAddressesString) AND $judgmentColumn = '0' AND REGISTLINENAME = '$registlinename'";
+        $query = "SELECT COUNT(*) AS PROCESS_COUNT_NG FROM T_REPAIRWK WHERE REGISTLINENAME = '$registlinename' AND $judgmentColumn = '0'";
+
+        if (!empty($ipAddresses)) {
+                $query .= " AND $ipAddressColumn IN ($ipAddressesString)";
+        }
 
         if ($shift == 'DS') {
-                $query .= " AND $ipJudgementColumn BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+                $query .= " AND $date_column BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                                AND TO_DATE('$server_date_only_tomorrow 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
         } elseif ($shift == 'NS') {
                 if ($server_time >= '06:00:00' && $server_time <= '23:59:59') {
-                        $query .= " AND $ipJudgementColumn BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+                        $query .= " AND $date_column BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                                        AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
                 } elseif ($server_time >= '00:00:00' && $server_time < '06:00:00') {
-                        $query .= " AND $ipJudgementColumn BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+                        $query .= " AND $date_column BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                                        AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
                 }
         }
 
