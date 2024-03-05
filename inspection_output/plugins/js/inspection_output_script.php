@@ -1,18 +1,7 @@
 <script type="text/javascript">
-         const get_inspection_list2 = () => {
-                $.ajax({
-                        url: '../process/inspection_output/inspection_output_p.php',
-                        type: 'GET',
-                        cache: false,
-                        data: {
-                                method: 'get_inspection_list2'
-                        },
-                        success: function (response) {
-                                $('#inspection_process_list2').html(response);
-                                $('#spinner').fadeOut();
-                        }
-                })
-        }
+        $(document).ready(function () {
+                
+        });
 
         const get_inspection_list = () => {
                 $.ajax({
