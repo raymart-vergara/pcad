@@ -17,16 +17,14 @@ if ($method == 'count_total_output') {
     $shift_group = 'A';
     // $registlinename = $_GET['registlinename'];
     // $shift_group = $_GET['shift_group'];
+
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
-    $final_process = $ircs_line_data_arr['final_process'];
-    $ip = $ircs_line_data_arr['ip'];
 
     $search_arr = array(
 		'shift' => $shift,
         'shift_group' => $shift_group,
         'registlinename' => $registlinename,
-		'final_process' => $final_process,
-    	'ip' => $ip,
+		'ircs_line_data_arr' => $ircs_line_data_arr,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
@@ -100,9 +98,8 @@ if ($method == 'compute_st_per_line2') {
     $shift_group = 'A';
     // $registlinename = $_POST['registlinename'];
     // $shift_group = $_POST['shift_group'];
+    
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
-    $final_process = $ircs_line_data_arr['final_process'];
-    $ip = $ircs_line_data_arr['ip'];
 
     $search_arr = array(
         'day' => $day,
@@ -112,8 +109,7 @@ if ($method == 'compute_st_per_line2') {
         'section' => "",
 		'line_no' => $line_no,
         'registlinename' => $registlinename,
-		'final_process' => $final_process,
-    	'ip' => $ip,
+		'ircs_line_data_arr' => $ircs_line_data_arr,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,

@@ -2,6 +2,7 @@
 include '../server_date_time.php';
 require '../conn/ircs.php';
 require '../conn/pcad.php';
+include '../lib/emp_mgt.php';
 include '../lib/main.php';
 include '../lib/inspection_output.php';
 
@@ -54,13 +55,9 @@ if ($method == 'get_inspection_details_no_good') {
 }
 
 if ($method == 'get_inspection_list') {
-        $shift = 'DS';
-        $registlinename = 'DAIHATSU_30';
-        $shift_group = 'B';
-
-        $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
-        $final_process = $ircs_line_data_arr['final_process'];
-        $ip = $ircs_line_data_arr['ip'];
+        $shift = get_shift($server_time);
+        $registlinename = $_GET['registlinename'];
+        $shift_group = $_GET['shift_group'];
 
         // Fetch processes and their corresponding IP addresses
         $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
@@ -77,7 +74,7 @@ if ($method == 'get_inspection_list') {
 
                         $judgmentColumnGood = "";
                         $judgmentColumnNG2 = "";
-                        $ipJudgementColumn = "";
+                        $date_column = "";
 
                         $search_arr = array(
                                 'shift' => $shift,
@@ -91,23 +88,19 @@ if ($method == 'get_inspection_list') {
 
                         switch ($process) {
                                 case "Dimension":
-                                        $ipJudgementColumn = "INSPECTION1FINISHDATETIME";
-                                        $judgmentColumnGood = "INSPECTION1FINISHDATETIME";
+                                        $date_column = "INSPECTION1FINISHDATETIME";
                                         $judgmentColumnNG2 = "INSPECTION1JUDGMENT";
                                         break;
                                 case "Electric":
-                                        $ipJudgementColumn = "INSPECTION2FINISHDATETIME";
-                                        $judgmentColumnGood = "INSPECTION2FINISHDATETIME";
+                                        $date_column = "INSPECTION2FINISHDATETIME";
                                         $judgmentColumnNG2 = "INSPECTION2JUDGMENT";
                                         break;
                                 case "Visual":
-                                        $ipJudgementColumn = "INSPECTION3FINISHDATETIME";
-                                        $judgmentColumnGood = "INSPECTION3FINISHDATETIME";
+                                        $date_column = "INSPECTION3FINISHDATETIME";
                                         $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
                                         break;
                                 case "Assurance":
-                                        $ipJudgementColumn = "INSPECTION4FINISHDATETIME";
-                                        $judgmentColumnGood = "INSPECTION4FINISHDATETIME";
+                                        $date_column = "INSPECTION4FINISHDATETIME";
                                         $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
                                         break;
                                 default:
@@ -116,14 +109,14 @@ if ($method == 'get_inspection_list') {
 
                         $processDetailsGood = array(
                                 'process' => $process,
+                                'date_column' => $date_column,
                                 'ipAddressColumn' => $ipaddresscolumn,
-                                'judgmentColumn' => $judgmentColumnGood,
                                 'ipAddresses' => $ipAddresses
                         );
 
                         $processDetailsNG = array(
                                 'process' => $process,
-                                'ipJudgementColumn' => $ipJudgementColumn,
+                                'date_column' => $date_column,
                                 'ipAddressColumn' => $ipaddresscolumn,
                                 'judgmentColumn' => $judgmentColumnNG2,
                                 'ipAddresses' => $ipAddresses
@@ -142,20 +135,17 @@ if ($method == 'get_inspection_list') {
 }
 
 if ($method == 'get_overall_inspection') {
-        $shift = 'DS';
-        $registlinename = 'DAIHATSU_30';
-        $shift_group = 'B';
+        $shift = get_shift($server_time);
+        $registlinename = $_GET['registlinename'];
+        $shift_group = $_GET['shift_group'];
 
         $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
-        $final_process = $ircs_line_data_arr['final_process'];
-        $ip = $ircs_line_data_arr['ip'];
 
         $search_arr = array(
                 'shift' => $shift,
                 'shift_group' => $shift_group,
                 'registlinename' => $registlinename,
-                'final_process' => $final_process,
-                'ip' => $ip,
+                'ircs_line_data_arr' => $ircs_line_data_arr,
                 'server_date_only' => $server_date_only,
                 'server_date_only_yesterday' => $server_date_only_yesterday,
                 'server_date_only_tomorrow' => $server_date_only_tomorrow,
