@@ -14,6 +14,7 @@
                         },
                         success: function (response) {
                                 $('#list_of_good_viewer').html(response);
+                                $('#spinner').fadeOut();
                         }
                 });
         }

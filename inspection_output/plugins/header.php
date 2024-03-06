@@ -39,6 +39,7 @@
             text-align: center;
             border: 1px solid #ddd;
             border-collapse: collapse;
+            background-color: #fff;
         }
     </style>
 </head>

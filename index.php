@@ -184,7 +184,7 @@ include 'dist/js/adminlte.miin.php';
                                                                 </tr>
                                                                 <tr>
                                                                         <td class=" col-md-2 text-center value-size""
-                                                                                style="background: #fae588;"
+                                                                                style="background: #ffe89c;"
                                                                                 id="actual_yield"></td>
                                                                         <th class="th-normal col-md-2 text-center">
                                                                                 ACTUAL</th>
@@ -320,7 +320,7 @@ include 'dist/js/adminlte.miin.php';
                                                                                 <th class="col-md-2 text-center">GOOD</th>
                                                                                 <td id="insp_overall_g"
                                                                                         class="col-md-4 text-center value-size"
-                                                                                        style="height: 190px; background: #78c6a3;">
+                                                                                        style="height: 190px; background: #95d5b2;">
                                                                                 </td>
                                                                                 <td id="insp_overall_ng"
                                                                                         class="col-md-4 text-center value-size"
@@ -591,13 +591,10 @@ include 'dist/js/adminlte.miin.php';
                 get_overall_inspection();
                 setInterval(get_overall_inspection, 10000);
 
-                get_inspection_details_good();
-
                 // Call count_emp initially to load the data from employee management system
                 count_emp();
                 // Set interval to refresh data every 15 seconds
                 setInterval(count_emp, 15000); // 15000 milliseconds = 15 seconds
-
 
                 // Call andon_d_sum initially to load the chart
                 andon_d_sum();
@@ -608,19 +605,19 @@ include 'dist/js/adminlte.miin.php';
         document.querySelectorAll('.numeric-cell').forEach(function (cell) {
                 var value = parseInt(cell.dataset.value);
                 var gradientValue = value + '%';
-                cell.style.background = 'linear-gradient(to right, #98c3e5 ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
+                cell.style.background = 'linear-gradient(to right, #abd2fa ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
         });
 
         document.querySelectorAll('.numeric-cell-acct').forEach(function (cell) {
                 var value = parseInt(cell.dataset.value);
                 var gradientValue = value + '%';
-                cell.style.background = 'linear-gradient(to right, #f38375 ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
+                cell.style.background = 'linear-gradient(to right, #ffe89c ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
         });
 
         document.querySelectorAll('.numeric-cell-hourly').forEach(function (cell) {
                 var value = parseInt(cell.dataset.value);
                 var gradientValue = value + '%';
-                cell.style.background = 'linear-gradient(to right, #78c6a3 ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
+                cell.style.background = 'linear-gradient(to right, #95d5b2 ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
         });
 </script>
 <?php
