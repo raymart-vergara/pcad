@@ -1,7 +1,6 @@
 <body class="hold-transition layout-top-nav accent-primary">
     <div class="wrapper">
 
-        <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center bg-white">
             <img class="animation__shake elevation-3 p-1 bg-light" src="../dist/img/pcad_logo.png" alt="Logo"
                 height="60" width="60">
