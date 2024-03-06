@@ -1,7 +1,7 @@
 <script type="text/javascript">
         $(document).ready(function () {
-                get_inspection_details_good();
-                get_inspection_details_no_good();
+                // get_inspection_details_good();
+                // get_inspection_details_no_good();
         });
 
         const get_inspection_details_good = () => {

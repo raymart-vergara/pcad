@@ -13,8 +13,14 @@
                                 method: 'get_inspection_details_good'
                         },
                         success: function (response) {
-                                $('#list_of_good_viewer').html(response);
-                                $('#spinner').fadeOut();
+                                // Inject the HTML directly into the table
+                                $('#inspection_good_table').html(response);
+
+                                // Initialize DataTable
+                                $('#inspection_good_table').DataTable({
+                                        "scrollX": true
+                                });
+                                $('.dataTables_length').addClass('bs-select');
                         }
                 });
         }
@@ -28,8 +34,14 @@
                                 method: 'get_inspection_details_no_good'
                         },
                         success: function (response) {
-                                $('#list_of_no_good_viewer').html(response);
-                                $('#spinner').fadeOut();
+                                // Inject the HTML directly into the table
+                                $('#inspection_no_good_table').html(response);
+
+                                // Initialize DataTable
+                                $('#inspection_no_good_table').DataTable({
+                                        "scrollX": true
+                                });
+                                $('.dataTables_length').addClass('bs-select');
                         }
                 });
         }

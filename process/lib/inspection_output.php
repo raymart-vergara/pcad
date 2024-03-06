@@ -228,31 +228,54 @@ function get_rows_overall_g($search_arr, $conn_ircs)
 {
         $shift = $search_arr['shift'];
         $registlinename = addslashes($search_arr['registlinename']);
-        $final_process = $search_arr['final_process'];
-        $ip = addslashes($search_arr['ip']);
+
+        $ircs_line_data_arr = $search_arr['ircs_line_data_arr'];
+        $final_process = $ircs_line_data_arr['final_process'];
+        $ipaddresscolumn = $ircs_line_data_arr['ipaddresscolumn'];
+        $ipAddresses = $ircs_line_data_arr['ipAddresses'];
+
         $server_date_only = $search_arr['server_date_only'];
         $server_date_only_yesterday = $search_arr['server_date_only_yesterday'];
         $server_date_only_tomorrow = $search_arr['server_date_only_tomorrow'];
         $server_time = $search_arr['server_time'];
 
-        $total = 0;
+        // $total = 0;
+        $total = array();
 
-        $query = "SELECT * FROM T_PACKINGWK WHERE IPADDRESS IN ( '172.25.166.83' ,  '172.25.161.166'  ) AND REGISTLINENAME = '$registlinename' AND PACKINGBOXCARDJUDGMENT = '1'";
+        $date_column = "INSPECTION4FINISHDATETIME";
+
+        if ($final_process == 'Assurance') {
+                $date_column = "INSPECTION4FINISHDATETIME";
+        } else {
+                $date_column = "INSPECTION3FINISHDATETIME";
+        }
+
+        $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
+
+        $query = "SELECT * FROM T_PRODUCTWK WHERE REGISTLINENAME = '$registlinename'";
+
+        if (!empty($ipAddresses)) {
+                $query .= " AND $ipaddresscolumn IN ($ipAddressesString)";
+        }
 
         if ($shift == 'DS') {
-                $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+                $query .= "AND $date_column BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                                AND TO_DATE('$server_date_only_tomorrow 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
         } else if ($shift == 'NS') {
                 if ($server_time >= '06:00:00' && $server_time <= '23:59:59') {
-                        $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+                        $query .= "AND $date_column BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                                        AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
                 } else if ($server_time >= '00:00:00' && $server_time < '06:00:00') {
-                        $query = $query . "AND REGISTDATETIME BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+                        $query .= "AND $date_column BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                                        AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
                 }
         }
 
         $stmt = oci_parse($conn_ircs, $query);
         oci_execute($stmt);
-        while ($row = oci_fetch_object($stmt, OCI_ASSOC + OCI_RETURN_NULLS)) {
-                $total = $row;
+        while ($row = oci_fetch_assoc($stmt)) {
+                // $total = $row->OUTPUT;
+                $total[] = $row;
         }
         return $total;
 }
@@ -359,8 +382,12 @@ function get_rows_overall_ng($search_arr, $conn_ircs, $conn_pcad)
 
                         $p_ng = get_overall_ng($search_arr, $conn_ircs, $conn_pcad, $processDetailsNG);
 
+                        foreach ($p_ng as $row) {
+                                $insp_overall_ng[] = $row;
+                        }
+
                         // $insp_overall_ng += $p_ng;
-                        $insp_overall_ng[] = $p_ng;
+                        // $insp_overall_ng[] = $p_ng;
                 }
         }
         return $insp_overall_ng;
@@ -415,7 +442,7 @@ function get_overall_ng($search_arr, $conn_ircs, $conn_pcad, $processDetailsNG)
         $stmt = oci_parse($conn_ircs, $query);
         oci_execute($stmt);
 
-        while ($row = oci_fetch_object($stmt, OCI_ASSOC + OCI_RETURN_NULLS)) {
+        while ($row = oci_fetch_assoc($stmt)) {
                 // $total = $row->PROCESS_COUNT_NG;
                 $total[] = $row;
         }
