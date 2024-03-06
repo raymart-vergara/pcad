@@ -5,7 +5,7 @@
                 <b>Beta Version</b> 1.0.0
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2024.</strong>
+            <strong>Copyright &copy; 2024 Developed By IT System Group</strong>
             All rights reserved.
         </footer>
     </div>

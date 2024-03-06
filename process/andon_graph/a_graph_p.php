@@ -87,7 +87,7 @@ if ($method == 'andon_detail'){
         echo '<td>' . $row['fixRemarks'] . '</td>';
         echo '<td>' . $row['backupRequestTime'] . '</td>';
         echo '<td>' . $row['backupComment'] . '</td>';
-        echo '<td>' . $row['backupTecnicianName'] . '</td>';
+        echo '<td>' . $row['backupTechnicianName'] . '</td>';
         echo '<td>' . $row['backupRequestTime'] . '</td>';
         echo '</tr>';
     }
