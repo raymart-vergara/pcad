@@ -34,7 +34,6 @@
         }
 
         const get_inspection_list = () => {
-                let shift_group = document.getElementById('shift_group').value;
                 let registlinename = document.getElementById('registlinename').value;                
                 $.ajax({
                         url: 'process/inspection_output/inspection_output_p.php',
@@ -42,7 +41,6 @@
                         cache: false,
                         data: {
                                 method: 'get_inspection_list',
-                                shift_group: shift_group,
                                 registlinename: registlinename
                         },
                         success: function (response) {
@@ -52,7 +50,6 @@
         }
 
         const get_overall_inspection = () => {
-                let shift_group = document.getElementById('shift_group').value;
                 let registlinename = document.getElementById('registlinename').value;
                 $.ajax({
                         url: 'process/inspection_output/inspection_output_p.php',
@@ -60,7 +57,6 @@
                         cache: false,
                         data: {
                                 method: 'get_overall_inspection',
-                                shift_group: shift_group,
                                 registlinename: registlinename
                         },
                         success: function (response) {

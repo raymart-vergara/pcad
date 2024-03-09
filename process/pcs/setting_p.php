@@ -1,6 +1,10 @@
 <?php
+include '../server_date_time.php';
 include '../conn/pcad.php';
 include '../conn/ircs.php';
+include '../lib/emp_mgt.php';
+include '../lib/main.php';
+include '../lib/inspection_output.php';
 
 function TimeToSec($time)
 {
@@ -19,21 +23,38 @@ if (isset($_POST['request'])) {
         $stmt->execute();
         $plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if ($plans) {
+            $shift = get_shift($server_time);
+
             foreach ($plans as $i => $p) {
                 $IRCS_Line = $p['IRCS_Line'];
-                $Actual_Target = 0;
-                $IRCS_IP = $p['IP_address'];
-                $started = $p['actual_start_DB'];
-                $q = "
-                    SELECT COUNT(*) AS c
-                    FROM IRCS.T_PACKINGWK 
-                    WHERE (REGISTLINENAME LIKE '" . $IRCS_Line . "' OR IPADDRESS = '" . $IRCS_IP . "') 
-                    AND REGISTDATETIME >= TO_DATE('" . $started . "', 'yyyy-MM-dd HH24:MI:SS') AND PACKINGBOXCARDJUDGMENT = '1'";
-                $stid = oci_parse($conn_ircs, $q);
-                oci_execute($stid);
-                while ($row = oci_fetch_object($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
-                    $Actual_Target = $row->C;
-                }
+
+                $ircs_line_data_arr = get_ircs_line_data($IRCS_Line, $conn_pcad);
+
+                $search_arr = array(
+                    'shift' => $shift,
+                    'registlinename' => $IRCS_Line,
+                    'ircs_line_data_arr' => $ircs_line_data_arr,
+                    'server_date_only' => $server_date_only,
+                    'server_date_only_yesterday' => $server_date_only_yesterday,
+                    'server_date_only_tomorrow' => $server_date_only_tomorrow,
+                    'server_time' => $server_time
+                );
+
+                $Actual_Target = count_overall_g($search_arr, $conn_ircs);
+
+                // $IRCS_IP = $p['IP_address'];
+                // $started = $p['actual_start_DB'];
+                // $q = "
+                //     SELECT COUNT(*) AS c
+                //     FROM IRCS.T_PACKINGWK 
+                //     WHERE (REGISTLINENAME LIKE '" . $IRCS_Line . "' OR IPADDRESS = '" . $IRCS_IP . "') 
+                //     AND REGISTDATETIME >= TO_DATE('" . $started . "', 'yyyy-MM-dd HH24:MI:SS') AND PACKINGBOXCARDJUDGMENT = '1'";
+                // $stid = oci_parse($conn_ircs, $q);
+                // oci_execute($stid);
+                // while ($row = oci_fetch_object($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
+                //     $Actual_Target = $row->C;
+                // }
+                
                 $Target = $p['Target'];
                 $Remaining_Target = $Target - $Actual_Target;
                 $class = '';
@@ -56,7 +77,10 @@ if (isset($_POST['request'])) {
             }
         }
     } else if ($request == "getPlanLine") {
+        $shift = get_shift($server_time);
+
         $IRCS_Line = $_POST['registlinename'];
+
         $last_takt = $_POST['last_takt'];
         $sql = " 
         SELECT *
@@ -72,18 +96,32 @@ if (isset($_POST['request'])) {
         $lot_no = explode(',', $line['lot_no']);
         $Target = $line['Target'];
         $IRCS_IP = $line['IP_address'];
-        $Actual_Target = 0;
         $takt = $line['takt_secs_DB'];
         $started = $line['actual_start_DB'];
-        $q = "SELECT COUNT(*) AS c
-        FROM IRCS.T_PACKINGWK 
-        WHERE (REGISTLINENAME LIKE '" . $IRCS_Line . "' OR IPADDRESS = '" . $IRCS_IP . "') AND REGISTDATETIME >= TO_DATE('" . $started . "', 'yyyy-MM-dd HH24:MI:SS') AND PACKINGBOXCARDJUDGMENT = '1'";
 
-        $stid = oci_parse($conn_ircs, $q);
-        oci_execute($stid);
-        while ($row = oci_fetch_object($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
-            $Actual_Target = $row->C;
-        }
+        $ircs_line_data_arr = get_ircs_line_data($IRCS_Line, $conn_pcad);
+
+        $search_arr = array(
+            'shift' => $shift,
+            'registlinename' => $IRCS_Line,
+            'ircs_line_data_arr' => $ircs_line_data_arr,
+            'server_date_only' => $server_date_only,
+            'server_date_only_yesterday' => $server_date_only_yesterday,
+            'server_date_only_tomorrow' => $server_date_only_tomorrow,
+            'server_time' => $server_time
+        );
+
+        $Actual_Target = count_overall_g($search_arr, $conn_ircs);
+
+        // $q = "SELECT COUNT(*) AS c
+        // FROM IRCS.T_PACKINGWK 
+        // WHERE (REGISTLINENAME LIKE '" . $IRCS_Line . "' OR IPADDRESS = '" . $IRCS_IP . "') AND REGISTDATETIME >= TO_DATE('" . $started . "', 'yyyy-MM-dd HH24:MI:SS') AND PACKINGBOXCARDJUDGMENT = '1'";
+
+        // $stid = oci_parse($conn_ircs, $q);
+        // oci_execute($stid);
+        // while ($row = oci_fetch_object($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
+        //     $Actual_Target = $row->C;
+        // }
 
         $Remaining_Target = $Actual_Target - $Target;
 

@@ -200,7 +200,6 @@ $method = $_GET['method'];
 if ($method == 'get_inspection_list') {
         $shift = get_shift($server_time);
         $registlinename = $_GET['registlinename'];
-        $shift_group = $_GET['shift_group'];
 
         // Fetch processes and their corresponding IP addresses
         $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
@@ -221,7 +220,6 @@ if ($method == 'get_inspection_list') {
 
                         $search_arr = array(
                                 'shift' => $shift,
-                                'shift_group' => $shift_group,
                                 'registlinename' => $registlinename,
                                 'server_date_only' => $server_date_only,
                                 'server_date_only_yesterday' => $server_date_only_yesterday,
@@ -280,13 +278,11 @@ if ($method == 'get_inspection_list') {
 if ($method == 'get_overall_inspection') {
         $shift = get_shift($server_time);
         $registlinename = $_GET['registlinename'];
-        $shift_group = $_GET['shift_group'];
 
         $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
         $search_arr = array(
                 'shift' => $shift,
-                'shift_group' => $shift_group,
                 'registlinename' => $registlinename,
                 'ircs_line_data_arr' => $ircs_line_data_arr,
                 'server_date_only' => $server_date_only,
