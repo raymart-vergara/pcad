@@ -125,9 +125,9 @@ if ($result) {
                                     </div>
                                 </div>
                             </div>
-                            <div id="attendanceSummaryReportTableRes" class="table-responsive"
+                            <div id="hourlyOutputTableRes" class="table-responsive"
                                 style="max-height: 500px; overflow: auto; display:inline-block;">
-                                <table id="attendanceSummaryReportTable"
+                                <table id="hourlyOutputTable"
                                     class="table table-sm table-head-fixed table-foot-fixed text-nowrap table-hover">
                                     <thead style="text-align: center;">
                                         <tr>
@@ -143,6 +143,69 @@ if ($result) {
                                     <tbody id="hourlyOutputData" style="text-align: center;">
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-history"></i> Hourly Output Per Process</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div id="hourlyOutputProcessTableRes" class="table-responsive"
+                                style="max-height: 500px; overflow: auto; display:inline-block;">
+                                <table id="hourlyOutputProcessTable"
+                                    class="table table-sm table-head-fixed table-foot-fixed text-nowrap table-bordered">
+                                    <tbody id="hourlyOutputProcessData" style="text-align: center;">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-history"></i> Hourly Output Graph</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div id="chart-container">
+                                        <canvas id="hourly_output_summary_chart" height="100"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
