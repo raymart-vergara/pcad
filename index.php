@@ -207,7 +207,7 @@ include 'dist/js/adminlte.miin.php';
                                                                         <th colspan="3" class="text-center">ACCOUNTING
                                                                                 EFFICIENCY</th>
                                                                         <th style="cursor:pointer;"
-                                                                                onclick='window.open("hourly_output/hourly_output.php","_blank")'
+                                                                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
                                                                                 colspan="3" class="text-center">HOURLY
                                                                                 OUTPUT</th>
                                                                 </tr>
@@ -225,15 +225,15 @@ include 'dist/js/adminlte.miin.php';
                                                                         <th class="th-normal col-md-1 text-center">Gap
                                                                         </th>
                                                                         <th style="cursor:pointer;"
-                                                                                onclick='window.open("hourly_output/hourly_output.php","_blank")'
+                                                                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
                                                                                 class="th-normal col-md-1 text-center">
                                                                                 Target</th>
                                                                         <th style="cursor:pointer;"
-                                                                                onclick='window.open("hourly_output/hourly_output.php","_blank")'
+                                                                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
                                                                                 class="th-normal col-md-1 text-center">
                                                                                 Actual</th>
                                                                         <th style="cursor:pointer;"
-                                                                                onclick='window.open("hourly_output/hourly_output.php","_blank")'
+                                                                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
                                                                                 class="th-normal col-md-1 text-center">
                                                                                 Gap
                                                                         </th>
@@ -318,17 +318,17 @@ include 'dist/js/adminlte.miin.php';
 
                                                                         <!-- hourly output value -->
                                                                         <td style="cursor:pointer;"
-                                                                                onclick='window.open("hourly_output/hourly_output.php","_blank")'
+                                                                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
                                                                                 class="numeric-cell-hourly col-md-1 text-center value-size"
                                                                                 data-value="100"
                                                                                 id="target_hourly_output"></td>
                                                                         <td style="cursor:pointer;"
-                                                                                onclick='window.open("hourly_output/hourly_output.php","_blank")'
+                                                                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
                                                                                 class="numeric-cell-hourly col-md-1 text-center value-size"
                                                                                 data-value="100"
                                                                                 id="actual_hourly_output"></td>
                                                                         <td style="cursor:pointer;"
-                                                                                onclick='window.open("hourly_output/hourly_output.php","_blank")'
+                                                                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
                                                                                 class="numeric-cell-hourly col-md-1 text-center value-size"
                                                                                 data-value="100" id="gap_hourly_output">
                                                                         </td>
@@ -350,7 +350,7 @@ include 'dist/js/adminlte.miin.php';
                                                                 </tr>
                                                                 <tr>
                                                                         <a target="_blank"
-                                                                                href="../pcad/inspection_output/inspection_details.php"
+                                                                                href="../pcad/viewer/good_inspection_details/inspection_details.php"
                                                                                 style="color: #000; cursor: pointer;">
                                                                                 <th class="col-md-2 text-center">GOOD
                                                                                 </th>
@@ -358,11 +358,10 @@ include 'dist/js/adminlte.miin.php';
                                                                                         class="col-md-4 text-center value-size"
                                                                                         style="height: 190px; background: #95d5b2; cursor: pointer;">
                                                                                 </td>
-
                                                                         </a>
 
                                                                         <a target="_blank"
-                                                                                href="../pcad/inspection_output/inspection_details_ng.php"
+                                                                                href="../pcad/viewer/ng_inspection_details/inspection_details_ng.php"
                                                                                 style="color: #000">
                                                                                 <td id="insp_overall_ng"
                                                                                         class="col-md-4 text-center value-size"
@@ -380,7 +379,7 @@ include 'dist/js/adminlte.miin.php';
                                                                 <!-- <h6 class="text-center text-bold">DT / Delay / Andon</h6> -->
 
                                                                 <a target="_blank"
-                                                                        href="../pcad/andon_graph/andon_details.php"
+                                                                        href="../pcad/viewer/andon_details/andon_details.php"
                                                                         class="card-link">
                                                                         <div id="chart-container">
                                                                                 <canvas id="hourly_chart"
@@ -669,13 +668,13 @@ include 'dist/js/adminlte.miin.php';
 
         // Handle click event for GOOD cell
         $('#insp_overall_g').on('click', function () {
-            var specificUrl = '../pcad/inspection_output/inspection_details.php?card=good';
+            var specificUrl = '../pcad/viewer/good_inspection_details/inspection_details.php?card=good';
             window.open(specificUrl, '_blank');
         });
 
         // Handle click event for NG cell
         $('#insp_overall_ng').on('click', function () {
-            var specificUrl = '../pcad/inspection_output/inspection_details_ng.php?card=ng';
+            var specificUrl = '../pcad/viewer/ng_inspection_details/inspection_details_ng.php?card=ng';
             window.open(specificUrl, '_blank');
         });
 </script>

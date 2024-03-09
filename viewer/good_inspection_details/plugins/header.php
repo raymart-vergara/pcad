@@ -6,19 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PCAD | Inspection Details</title>
 
-    <link rel="icon" href="../dist/img/pcad_logo.ico" type="image/x-icon" />
+    <link rel="icon" href="../../dist/img/pcad_logo.ico" type="image/x-icon" />
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="../dist/css/font.min.css">
+    <link rel="stylesheet" href="../../dist/css/font.min.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
     <!-- Sweet Alert -->
-    <link rel="stylesheet" href="../plugins/sweetalert2/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="../../plugins/sweetalert2/dist/sweetalert2.min.css">
     <!-- DataTables -->
-    <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
 
     <style>

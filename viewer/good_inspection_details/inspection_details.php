@@ -1,19 +1,19 @@
 <?php
-include '../process/server_date_time.php';
-include '../process/conn/pcad.php';
+include '../../process/server_date_time.php';
+include '../../process/conn/pcad.php';
 include 'plugins/header.php';
 include 'plugins/preloader.php';
-include 'plugins/navbar.php';
+include 'plugins/navbar/good_inspection_output_navbar.php';
 
 $ircs_lines = array();
 $query = "SELECT * FROM m_ircs_line ORDER BY ircs_line ASC";
 $result = $conn_pcad->query($query);
 
 if ($result) {
-        $ircs_lines = $result->fetchAll(PDO::FETCH_ASSOC);
+    $ircs_lines = $result->fetchAll(PDO::FETCH_ASSOC);
 } else {
-        $errorInfo = $conn_pcad->errorInfo();
-        echo "Error: " . $errorInfo[2];
+    $errorInfo = $conn_pcad->errorInfo();
+    echo "Error: " . $errorInfo[2];
 }
 ?>
 
@@ -23,12 +23,12 @@ if ($result) {
                 <div class="container-fluid">
                         <div class="row mb-2">
                                 <div class="col-sm-6">
-                                        <h1 class="m-0">Inspection Details</h1>
+                                        <h1 class="m-0">Good Inspection Details</h1>
                                 </div><!-- /.col -->
                                 <div class="col-sm-6">
                                         <ol class="breadcrumb float-sm-right">
                                                 <li class="breadcrumb-item"><a href="">PCAD</a></li>
-                                                <li class="breadcrumb-item active">Inspection Details</li>
+                                                <li class="breadcrumb-item active">Good Inspection Details</li>
                                         </ol>
                                 </div><!-- /.col -->
                         </div><!-- /.row -->
@@ -44,7 +44,7 @@ if ($result) {
                                         <div class="card" style="border-top: 3px solid #226f54;"
                                                 id="proceed_to_good_table">
                                                 <div class="card-header">
-                                                        <h3 class="card-title"><img src="../dist/img/view.png"
+                                                        <h3 class="card-title"><img src="../../dist/img/view.png"
                                                                         style="height:28px;">&ensp;Good Inspection
                                                                 Output Table</h3>
                                                         <div class="card-tools">
