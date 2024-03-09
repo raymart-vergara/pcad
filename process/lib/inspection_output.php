@@ -514,4 +514,49 @@ function count_actual_hourly_output($search_arr, $conn_ircs, $conn_pcad)
 
         return $total;
 }
+
+// Actual Hourly Output Per Process
+function count_actual_hourly_output_process($search_arr, $conn_ircs, $conn_pcad, $processDetailsGood)
+{
+        $registlinename = addslashes($search_arr['registlinename']);
+
+        $ipAddressColumn = $processDetailsGood['ipAddressColumn'];
+        $date_column = $processDetailsGood['date_column'];
+        $ipAddresses = $processDetailsGood['ipAddresses'];
+
+        $server_date_only = $search_arr['server_date_only'];
+
+        $hourly_output_date = $server_date_only;
+        $hourly_output_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_output_date))));
+
+        // $total = 0;
+        $total = array();
+
+        $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
+
+        $query = "SELECT DAY, HOUR, COUNT(*) AS TOTAL FROM (
+                SELECT TO_CHAR(T_PRODUCTWK.$date_column, 'YYYY-MM-DD HH24') AS DATE_TIME,
+                TO_CHAR(T_PRODUCTWK.$date_column, 'YYYY-MM-DD') AS DAY,
+                TO_CHAR(T_PRODUCTWK.$date_column, 'HH24') AS HOUR, REGISTLINENAME 
+                FROM T_PRODUCTWK
+                WHERE REGISTLINENAME = '$registlinename'";
+
+        if (!empty($ipAddresses)) {
+                $query = $query . " AND $ipAddressColumn IN ($ipAddressesString)";
+        }
+
+        $query = $query . "AND T_PRODUCTWK.$date_column BETWEEN TO_DATE('$hourly_output_date 06:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                                AND TO_DATE('$hourly_output_date_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+
+        $query = $query . ") GROUP BY REGISTLINENAME, DAY, HOUR, DATE_TIME ORDER BY DATE_TIME";
+
+
+        $stmt = oci_parse($conn_ircs, $query);
+        oci_execute($stmt);
+        while ($row = oci_fetch_assoc($stmt)) {
+                $total[] = $row;
+        }
+
+        return $total;
+}
 ?>
