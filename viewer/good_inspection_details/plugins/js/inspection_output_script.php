@@ -6,7 +6,7 @@
 
         const get_inspection_details_good = () => {
                 $.ajax({
-                        url: '../process/inspection_output/inspection_output_p.php',
+                        url: '../../process/inspection_output/inspection_output_p.php',
                         type: 'GET',
                         cache: false,
                         data: {
@@ -27,7 +27,7 @@
 
         const get_inspection_details_no_good = () => {
                 $.ajax({
-                        url: '../process/inspection_output/inspection_output_p.php',
+                        url: '../../process/inspection_output/inspection_output_p.php',
                         type: 'GET',
                         cache: false,
                         data: {
@@ -48,7 +48,7 @@
 
         const get_inspection_list = () => {
                 $.ajax({
-                        url: '../process/inspection_output/inspection_output_p.php',
+                        url: '../../process/inspection_output/inspection_output_p.php',
                         type: 'GET',
                         cache: false,
                         data: {
@@ -63,7 +63,7 @@
 
         const get_overall_inspection = () => {
                 $.ajax({
-                        url: '../process/inspection_output/inspection_output_p.php',
+                        url: '../../process/inspection_output/inspection_output_p.php',
                         type: 'GET',
                         cache: false,
                         data: {
@@ -88,7 +88,7 @@
 
         const get_specific_inspection_good = () => {
                 $.ajax({
-                        url: '../process/inspection_output/inspection_output_p.php',
+                        url: '../../process/inspection_output/inspection_output_p.php',
                         type: 'GET',
                         cache: false,
                         data: {
@@ -117,7 +117,7 @@
 
         const get_specific_inspection_no_good = () => {
                 $.ajax({
-                        url: '../process/inspection_output/inspection_output_p.php',
+                        url: '../../process/inspection_output/inspection_output_p.php',
                         type: 'GET',
                         cache: false,
                         data: {
@@ -145,10 +145,10 @@
         };
 
         const export_good_record_viewer = () => {
-                window.open('../process/export/exp_good_insp.php', '_blank');
+                window.open('../../process/export/exp_good_insp.php', '_blank');
         }
 
         const export_no_good_record_viewer = () => {
-                window.open('../process/export/exp_no_good_insp.php', '_blank');
+                window.open('../../process/export/exp_no_good_insp.php', '_blank');
         }
 </script>

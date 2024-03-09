@@ -11,7 +11,7 @@ function get_shift($server_time)
         return 'NS';
     }
 }
-// $andon_line = $_POST['andon_line'];
+// $andon_line = $_GET['andon_line'];
 $andon_line = 'DAIHATSU D92-2132';
 $shift = get_shift($server_time);
 
