@@ -1,9 +1,9 @@
 <?php
-include '../process/server_date_time.php';
-include '../process/conn/pcad.php';
+include '../../process/server_date_time.php';
+include '../../process/conn/pcad.php';
 include 'plugins/header.php';
 include 'plugins/preloader.php';
-include 'plugins/navbar.php';
+include 'plugins/navbar/ng_inspection_output_navbar.php';
 
 $ircs_lines = array();
 $query = "SELECT * FROM m_ircs_line ORDER BY ircs_line ASC";
@@ -23,12 +23,12 @@ if ($result) {
                 <div class="container-fluid">
                         <div class="row mb-2">
                                 <div class="col-sm-6">
-                                        <h1 class="m-0">Inspection Details</h1>
+                                        <h1 class="m-0">NG Inspection Details</h1>
                                 </div><!-- /.col -->
                                 <div class="col-sm-6">
                                         <ol class="breadcrumb float-sm-right">
                                                 <li class="breadcrumb-item"><a href="">PCAD</a></li>
-                                                <li class="breadcrumb-item active">Inspection Details</li>
+                                                <li class="breadcrumb-item active">NG Inspection Details</li>
                                         </ol>
                                 </div><!-- /.col -->
                         </div><!-- /.row -->
@@ -43,7 +43,7 @@ if ($result) {
                                 <div class="col-md-12 m-0 p-0">
                                         <div class="card" style="border-top: 3px solid #ca3f3f;" id="proceed_to_no_good_table">
                                                 <div class="card-header">
-                                                        <h3 class="card-title"><img src="../dist/img/view.png"
+                                                        <h3 class="card-title"><img src="../../dist/img/view.png"
                                                                         style="height:28px;">&ensp;No Good Inspection Output Table</h3>
                                                                         <div class="card-tools">
                                                                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>

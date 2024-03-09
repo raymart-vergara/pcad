@@ -304,19 +304,18 @@ if ($method == 'get_overall_inspection') {
 }
 
 if ($method == 'get_inspection_details_no_good') {
-        // $shift = get_shift($server_time);
+        $shift = get_shift($server_time);
         // $registlinename = $_GET['registlinename'];
         // $shift_group = $_GET['shift_group'];
 
-        $shift = 'DS';
+        // $shift = 'DS';
         $registlinename = 'DAIHATSU_30';
-        $shift_group = 'B';
+        // $shift_group = 'B';
 
         $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
         $search_arr = array(
                 'shift' => $shift,
-                'shift_group' => $shift_group,
                 'registlinename' => $registlinename,
                 'ircs_line_data_arr' => $ircs_line_data_arr,
                 'server_date_only' => $server_date_only,
@@ -331,20 +330,20 @@ if ($method == 'get_inspection_details_no_good') {
 
         echo '<thead>
         <tr>
-                <th rowspan="2" style="vertical-align: middle;">#</th>
-                <th class="table-header" colspan="24"></th>
-                <th class="table-header" colspan="24">Inspection 1</th>
-                <th class="table-header" colspan="24">Inspection 2</th>
-                <th class="table-header" colspan="24">Inspection 3</th>
-                <th class="table-header" colspan="24">Inspection 4</th>
-                <th class="table-header" colspan="24">Inspection 5</th>
-                <th class="table-header" colspan="24">Inspection 6</th>
-                <th class="table-header" colspan="24">Inspection 7</th>
-                <th class="table-header" colspan="26">Inspection 8</th>
-                <th class="table-header" colspan="6"></th>
-                <th class="table-header" colspan="2">Infection</th>
-                <th class="table-header" colspan="10">Check Infection</th>
-                <th class="table-header" colspan="19">Inspection 9</th>
+                <th rowspan="2" style="background: #B071CD; color: #fff; font-weight: normal; vertical-align: middle;">#</th>
+                <th colspan="24" style="background: #B071CD;"></th>
+                <th colspan="24" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 1</th>
+                <th colspan="24" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 2</th>
+                <th colspan="24" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 3</th>
+                <th colspan="24" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 4</th>
+                <th colspan="24" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 5</th>
+                <th colspan="24" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 6</th>
+                <th colspan="24" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 7</th>
+                <th colspan="26" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 8</th>
+                <th colspan="6" style="background: #B071CD;"></th>
+                <th colspan="2" style="background: #B071CD; color: #fff; font-weight: normal;">Infection</th>
+                <th colspan="10" style="background: #B071CD; color: #fff; font-weight: normal;">Check Infection</th>
+                <th colspan="19" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 9</th>
         </tr>
         <tr>
                 <th class="table-header">Repair Card Number</th>
@@ -908,19 +907,18 @@ if ($method == 'get_inspection_details_no_good') {
 }
 
 if ($method == 'get_inspection_details_good') {
-        // $shift = get_shift($server_time);
+        $shift = get_shift($server_time);
         // $registlinename = $_GET['registlinename'];
         // $shift_group = $_GET['shift_group'];
 
-        $shift = 'DS';
+        // $shift = 'DS';
         $registlinename = 'DAIHATSU_30';
-        $shift_group = 'B';
+        // $shift_group = 'B';
 
         $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
         $search_arr = array(
                 'shift' => $shift,
-                'shift_group' => $shift_group,
                 'registlinename' => $registlinename,
                 'ircs_line_data_arr' => $ircs_line_data_arr,
                 'server_date_only' => $server_date_only,
@@ -935,19 +933,19 @@ if ($method == 'get_inspection_details_good') {
 
         echo '<thead>
         <tr>
-                <th rowspan="2" style="vertical-align: middle;">#</th>
-                <th class="table-header" colspan="11">Register</th>
-                <th class="table-header" colspan="8">Inspection 1</th>
-                <th class="table-header" colspan="8">Inspection 2</th>
-                <th class="table-header" colspan="8">Inspection 3</th>
-                <th class="table-header" colspan="8">Inspection 4</th>
-                <th class="table-header" colspan="8">Inspection 5</th>
-                <th class="table-header" colspan="8">Inspection 6</th>
-                <th class="table-header" colspan="8">Inspection 7</th>
-                <th class="table-header" colspan="8">Inspection 8</th>
-                <th class="table-header" colspan="8"></th>
-                <th class="table-header" colspan="8">Inspection 9</th>
-                <th class="table-header" colspan="6">Inspection 10</th>
+                <th rowspan="2" style="background: #B071CD; color: #fff; vertical-align: middle; font-weight: normal;">#</th>
+                <th colspan="11" style="background: #B071CD; color: #fff; font-weight: normal;">Register</th>
+                <th colspan="8" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 1</th>
+                <th colspan="8" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 2</th>
+                <th colspan="8" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 3</th>
+                <th colspan="8" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 4</th>
+                <th colspan="8" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 5</th>
+                <th colspan="8" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 6</th>
+                <th colspan="8" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 7</th>
+                <th colspan="8" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 8</th>
+                <th colspan="8" style="background: #B071CD; color: #fff; font-weight: normal;"></th>
+                <th colspan="8" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 9</th>
+                <th colspan="6" style="background: #B071CD; color: #fff; font-weight: normal;">Inspection 10</th>
         </tr>
         <tr>
                 <!-- register -->
