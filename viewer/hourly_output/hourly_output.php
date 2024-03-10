@@ -41,7 +41,7 @@ if ($result) {
                 <div class="col-sm-12">
                     <div class="card card-primary card-outline">
                         <div class="card-header">
-                            <h3 class="card-title"><i class="fas fa-history"></i> Hourly Output Table</h3>
+                            <h3 class="card-title"><img src="../../dist/img/clock.png" style="height:27px;">&ensp;Hourly Output Table</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>

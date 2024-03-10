@@ -29,7 +29,7 @@ include 'plugins/navbar/andon_details_navbar.php';
                 <div class="col-sm-12">
                     <div class="card card-outline" style="border-top: 3px solid #334C69;">
                         <div class="card-header">
-                            <h3 class="card-title"><i class="fas fa-history"></i> Andon Details Table</h3>
+                            <h3 class="card-title"><img src="../../dist/img/dashboard.png" style="height:28px;">&ensp;Andon Details Table</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
