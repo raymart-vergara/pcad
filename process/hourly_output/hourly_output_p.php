@@ -114,11 +114,36 @@ if ($method == 'get_hourly_output') {
 }
 
 
+function get_cell_color($process, $target_output, $actual_output) {
+    $row_class_arr = array('bg-success', 'bg-warning', 'bg-danger');
+    $row_class = "";
+
+    if ($process != 'Hour') {
+        $gap_output = $target_output - $actual_output;
+
+        if ($gap_output < 1) {
+            $row_class = $row_class_arr[0];
+        } else if ($gap_output > 0 && $actual_output < $target_output) {
+            if ($actual_output < 1) {
+                $row_class = $row_class_arr[2];
+            } else {
+                $row_class = $row_class_arr[1];
+            }
+        }
+    }
+
+    return $row_class;
+}
+
+
 // http://172.25.112.131/pcad/process/hourly_output/hourly_output_p.php?method=get_hourly_output_per_process
 if ($method == 'get_hourly_output_per_process') {
-    // $registlinename = $_GET['registlinename'];
-    $registlinename = 'DAIHATSU_30';
-    $shift = get_shift($server_time);
+    $registlinename = $_GET['registlinename'];
+    $hourly_output_date = $_GET['hourly_output_date'];
+    $target_output = intval($_GET['target_output']);
+
+    // $registlinename = 'DAIHATSU_30';
+    // $target_output = 13;
 
     $hourly_output_hour_ds_array = array('06'=>"06",'07'=>"07",'08'=>"08",'09'=>"09",'10'=>"10",'11'=>"11",'12'=>"12",'13'=>"13",'14'=>"14",'15'=>"15",'16'=>"16",'17'=>"17");
     $hourly_output_hour_ns_array = array('18'=>"18",'19'=>"19",'20'=>"20",'21'=>"21",'22'=>"22",'23'=>"23",'00'=>"00",'01'=>"01",'02'=>"02",'03'=>"03",'04'=>"04",'05'=>"05");
@@ -140,9 +165,8 @@ if ($method == 'get_hourly_output_per_process') {
             $date_column = "";
 
             $search_arr = array(
-                'shift' => $shift,
                 'registlinename' => $registlinename,
-                'server_date_only' => $server_date_only,
+                'server_date_only' => $hourly_output_date,
                 'server_date_only_yesterday' => $server_date_only_yesterday,
                 'server_date_only_tomorrow' => $server_date_only_tomorrow,
                 'server_time' => $server_time
@@ -193,7 +217,7 @@ if ($method == 'get_hourly_output_per_process') {
         $insp_overall_g[] = $overall_hour_label_array;
     }
 
-    echo '<table><tbody>';
+    // echo '<table><tbody>';
 
     foreach ($insp_overall_g as &$row) {
         $table_cell_type = "";
@@ -204,37 +228,108 @@ if ($method == 'get_hourly_output_per_process') {
         }
         echo '<tr>';
         echo '<th>' . $row['process'] . '</th>';
-        echo '<'.$table_cell_type.'>' . $row['06'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['07'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['08'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['09'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['10'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['11'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['12'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['13'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['14'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['15'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['16'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['17'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['18'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['19'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['20'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['21'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['22'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['23'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['00'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['01'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['02'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['03'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['04'] . '</'.$table_cell_type.'>';
-        echo '<'.$table_cell_type.'>' . $row['05'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['06'])).'">' . $row['06'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['07'])).'">' . $row['07'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['08'])).'">' . $row['08'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['09'])).'">' . $row['09'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['10'])).'">' . $row['10'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['11'])).'">' . $row['11'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['12'])).'">' . $row['12'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['13'])).'">' . $row['13'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['14'])).'">' . $row['14'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['15'])).'">' . $row['15'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['16'])).'">' . $row['16'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['17'])).'">' . $row['17'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['18'])).'">' . $row['18'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['19'])).'">' . $row['19'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['20'])).'">' . $row['20'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['21'])).'">' . $row['21'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['22'])).'">' . $row['22'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['23'])).'">' . $row['23'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['00'])).'">' . $row['00'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['01'])).'">' . $row['01'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['02'])).'">' . $row['02'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['03'])).'">' . $row['03'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['04'])).'">' . $row['04'] . '</'.$table_cell_type.'>';
+        echo '<'.$table_cell_type.' class="'.get_cell_color($row['process'], $target_output, intval($row['05'])).'">' . $row['05'] . '</'.$table_cell_type.'>';
         echo '</tr>';
     }
 
-    echo '</tbody></table>';
+    // echo '</tbody></table>';
 
     // echo json_encode($hourly_output_hour_array, JSON_FORCE_OBJECT);
     // echo json_encode($insp_overall_g, JSON_FORCE_OBJECT);
+}
+
+// http://172.25.112.131/pcad/process/hourly_output/hourly_output_p.php?method=get_hourly_output_graph
+if ($method == 'get_hourly_output_graph') {
+    $registlinename = $_GET['registlinename'];
+    $hourly_output_date = $_GET['hourly_output_date'];
+
+    // $registlinename = 'DAIHATSU_30';
+
+    $data = [];
+
+    // $hourly_output_hour_ds_array = array("06","07","08","09","10","11","12","13","14","15","16","17");
+    // $hourly_output_hour_ns_array = array("18","19","20","21","22","23","00","01","02","03","04","05");
+    // $hourly_output_hour_array = array_merge($hourly_output_hour_ds_array, $hourly_output_hour_ns_array);
+
+    $hourly_output_hour_array = array();
+
+    $hourly_output_summary_array = array();
+
+    // foreach ($hourly_output_hour_array as &$hour_row) {
+    //     $hourly_output_summary_array[] = 0;
+    // }
+
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $final_process = $ircs_line_data_arr['final_process'];
+    $ipaddresscolumn = $ircs_line_data_arr['ipaddresscolumn'];
+    $ipAddresses = $ircs_line_data_arr['ipAddresses'];
+
+    $date_column = "INSPECTION4FINISHDATETIME";
+
+    if ($final_process == 'Assurance') {
+        $date_column = "INSPECTION4FINISHDATETIME";
+    } else {
+        $date_column = "INSPECTION3FINISHDATETIME";
+    }
+
+    $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
+
+    // $hourly_output_date = $server_date_only;
+    $hourly_output_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_output_date))));
+
+    $c = 0;
+
+    $query = "SELECT DAY, HOUR, COUNT(*) AS TOTAL FROM (
+                SELECT TO_CHAR(T_PRODUCTWK.$date_column, 'YYYY-MM-DD HH24') AS DATE_TIME,
+                TO_CHAR(T_PRODUCTWK.$date_column, 'YYYY-MM-DD') AS DAY,
+                TO_CHAR(T_PRODUCTWK.$date_column, 'HH24') AS HOUR, REGISTLINENAME 
+                FROM T_PRODUCTWK
+                WHERE REGISTLINENAME = '$registlinename'";
+
+    if (!empty($ipAddresses)) {
+        $query = $query . " AND $ipaddresscolumn IN ($ipAddressesString)";
+    }
+    
+    $query = $query . "AND T_PRODUCTWK.$date_column BETWEEN TO_DATE('$hourly_output_date 06:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                            AND TO_DATE('$hourly_output_date_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+
+    $query = $query . ") GROUP BY REGISTLINENAME, DAY, HOUR, DATE_TIME ORDER BY DATE_TIME";
+
+    $stmt = oci_parse($conn_ircs, $query);
+	oci_execute($stmt);
+
+	while ($row = oci_fetch_assoc($stmt)) {
+        $hourly_output_summary_array[] = intval($row['TOTAL']);
+        $hourly_output_hour_array[] = $row['HOUR'];
+    }
+
+    $data[] = $hourly_output_summary_array;
+    $data[] = $hourly_output_hour_array;
+
+    echo json_encode($data);
 }
 
 oci_close($conn_ircs);
