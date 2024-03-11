@@ -176,15 +176,18 @@ include 'dist/js/adminlte.miin.php';
                                                         </table>
                                                         <table style="border-top: none; height: 135px">
                                                                 <tr>
-                                                                        <td class="col-md-2 text-center value-size" ><?= $yield_target; ?>%
+                                                                        <td class="col-md-2 text-center value-size">
+                                                                                <?= $yield_target; ?>%
                                                                         </td>
                                                                         <th class="th-normal col-md-2 text-center">
                                                                                 TARGET</th>
-                                                                        <td class="col-md-2 text-center value-size" ><?= number_format($ppm_target); ?></td>
+                                                                        <td class="col-md-2 text-center value-size">
+                                                                                <?= number_format($ppm_target); ?>
+                                                                        </td>
                                                                 </tr>
                                                                 <tr>
                                                                         <td class=" col-md-2 text-center value-size""
-                                                                                style="background: #fae588;"
+                                                                                style=" background: #ffe89c;"
                                                                                 id="actual_yield"></td>
                                                                         <th class="th-normal col-md-2 text-center">
                                                                                 ACTUAL</th>
@@ -203,7 +206,9 @@ include 'dist/js/adminlte.miin.php';
                                                                         <th colspan="3" class="text-center">PLAN</th>
                                                                         <th colspan="3" class="text-center">ACCOUNTING
                                                                                 EFFICIENCY</th>
-                                                                        <th style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' colspan="3" class="text-center">HOURLY
+                                                                        <th style="cursor:pointer;"
+                                                                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
+                                                                                colspan="3" class="text-center">HOURLY
                                                                                 OUTPUT</th>
                                                                 </tr>
                                                                 <tr>
@@ -219,11 +224,18 @@ include 'dist/js/adminlte.miin.php';
                                                                                 Actual</th>
                                                                         <th class="th-normal col-md-1 text-center">Gap
                                                                         </th>
-                                                                        <th style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="th-normal col-md-1 text-center">
+                                                                        <th style="cursor:pointer;"
+                                                                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
+                                                                                class="th-normal col-md-1 text-center">
                                                                                 Target</th>
-                                                                        <th style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="th-normal col-md-1 text-center">
+                                                                        <th style="cursor:pointer;"
+                                                                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
+                                                                                class="th-normal col-md-1 text-center">
                                                                                 Actual</th>
-                                                                        <th style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="th-normal col-md-1 text-center">Gap
+                                                                        <th style="cursor:pointer;"
+                                                                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
+                                                                                class="th-normal col-md-1 text-center">
+                                                                                Gap
                                                                         </th>
                                                                 </tr>
                                                                 <tr>
@@ -240,7 +252,7 @@ include 'dist/js/adminlte.miin.php';
                                                                                         data-value="100" id="plan_actual"></td>
                                                                                 <td class="plan_gap_value numeric-cell col-md-1 text-center value-size"
                                                                                         data-value="100" id="plan_gap"></td>
-                                                                        <?php
+                                                                                <?php
 
                                                                         } else {
                                                                                 ?>
@@ -292,14 +304,34 @@ include 'dist/js/adminlte.miin.php';
                                                                         ?>
 
                                                                         <!-- accounting efficiecny value -->
-                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100" id="target_accounting_efficiency"><?= $acc_eff; ?>%</td>
-                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100" id="actual_accounting_efficiency"></td>
-                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size" data-value="100" id="gap_accounting_efficiency"></td>
+                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size"
+                                                                                data-value="100"
+                                                                                id="target_accounting_efficiency">
+                                                                                <?= $acc_eff; ?>%
+                                                                        </td>
+                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size"
+                                                                                data-value="100"
+                                                                                id="actual_accounting_efficiency"></td>
+                                                                        <td class="numeric-cell-acct col-md-1 text-center value-size"
+                                                                                data-value="100"
+                                                                                id="gap_accounting_efficiency"></td>
 
                                                                         <!-- hourly output value -->
-                                                                        <td style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="target_hourly_output"></td>
-                                                                        <td style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="actual_hourly_output"></td>
-                                                                        <td style="cursor:pointer;" onclick='window.open("hourly_output/hourly_output.php","_blank")' class="numeric-cell-hourly col-md-1 text-center value-size" data-value="100" id="gap_hourly_output"></td>
+                                                                        <td style="cursor:pointer;"
+                                                                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
+                                                                                class="numeric-cell-hourly col-md-1 text-center value-size"
+                                                                                data-value="100"
+                                                                                id="target_hourly_output"></td>
+                                                                        <td style="cursor:pointer;"
+                                                                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
+                                                                                class="numeric-cell-hourly col-md-1 text-center value-size"
+                                                                                data-value="100"
+                                                                                id="actual_hourly_output"></td>
+                                                                        <td style="cursor:pointer;"
+                                                                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
+                                                                                class="numeric-cell-hourly col-md-1 text-center value-size"
+                                                                                data-value="100" id="gap_hourly_output">
+                                                                        </td>
                                                                 </tr>
                                                         </table>
                                                 </div>
@@ -309,26 +341,36 @@ include 'dist/js/adminlte.miin.php';
                                         <div class="row mb-3">
                                                 <div class="col-4">
                                                         <!-- overall inspection -->
-                                                        <a target="_blank" href="../pcad/inspection_output/inspection_details.php" style="color: #000">
-                                                                <table style="min-height:225px;">
-                                                                        <tr>
-                                                                                <th colspan="4" class="text-center">OVERALL
-                                                                                        INSPECTION
+
+                                                        <table style="min-height:225px;">
+                                                                <tr>
+                                                                        <th colspan="4" class="text-center">OVERALL
+                                                                                INSPECTION
+                                                                        </th>
+                                                                </tr>
+                                                                <tr>
+                                                                        <a target="_blank"
+                                                                                href="../pcad/viewer/good_inspection_details/inspection_details.php"
+                                                                                style="color: #000; cursor: pointer;">
+                                                                                <th class="col-md-2 text-center">GOOD
                                                                                 </th>
-                                                                        </tr>
-                                                                        <tr>
-                                                                                <th class="col-md-2 text-center">GOOD</th>
                                                                                 <td id="insp_overall_g"
                                                                                         class="col-md-4 text-center value-size"
-                                                                                        style="height: 190px; background: #78c6a3;">
+                                                                                        style="height: 190px; background: #95d5b2; cursor: pointer;">
                                                                                 </td>
+                                                                        </a>
+
+                                                                        <a target="_blank"
+                                                                                href="../pcad/viewer/ng_inspection_details/inspection_details_ng.php"
+                                                                                style="color: #000">
                                                                                 <td id="insp_overall_ng"
                                                                                         class="col-md-4 text-center value-size"
-                                                                                        style="background: #f38375;"> </td>
+                                                                                        style="background: #f38375; cursor: pointer;">
+                                                                                </td>
                                                                                 <th class="col-md-2 text-center">NG</th>
-                                                                        </tr>
-                                                                </table>
-                                                        </a>
+                                                                        </a>
+                                                                </tr>
+                                                        </table>
                                                 </div>
                                                 <!-- <div class="col-1"></div> -->
                                                 <div class="col-8">
@@ -337,7 +379,7 @@ include 'dist/js/adminlte.miin.php';
                                                                 <!-- <h6 class="text-center text-bold">DT / Delay / Andon</h6> -->
 
                                                                 <a target="_blank"
-                                                                        href="../pcad/andon_graph/andon_details.php"
+                                                                        href="../pcad/viewer/andon_details/andon_details.php"
                                                                         class="card-link">
                                                                         <div id="chart-container">
                                                                                 <canvas id="hourly_chart"
@@ -411,7 +453,9 @@ include 'dist/js/adminlte.miin.php';
                                                                         <th class="th-normal col-md-1"
                                                                                 style="font-size: 13px">Starting Balance
                                                                                 Delay:</th>
-                                                                        <td class="col-md-1 text-center"><?= $start_bal_delay; ?></td>
+                                                                        <td class="col-md-1 text-center">
+                                                                                <?= $start_bal_delay; ?>
+                                                                        </td>
                                                                 </tr>
                                                                 <tr>
                                                                         <th style="cursor:pointer;"
@@ -483,7 +527,9 @@ include 'dist/js/adminlte.miin.php';
                                                                         <th class="th-normal col-md-1"
                                                                                 style="font-size: 13px">Working Time
                                                                                 Plan:</th>
-                                                                        <td class="col-md-1 text-center"><?= $work_time_plan; ?></td>
+                                                                        <td class="col-md-1 text-center">
+                                                                                <?= $work_time_plan; ?>
+                                                                        </td>
                                                                 </tr>
                                                                 <tr>
 
@@ -591,13 +637,10 @@ include 'dist/js/adminlte.miin.php';
                 get_overall_inspection();
                 setInterval(get_overall_inspection, 10000);
 
-                get_inspection_details_good();
-
                 // Call count_emp initially to load the data from employee management system
                 count_emp();
                 // Set interval to refresh data every 15 seconds
                 setInterval(count_emp, 15000); // 15000 milliseconds = 15 seconds
-
 
                 // Call andon_d_sum initially to load the chart
                 andon_d_sum();
@@ -608,19 +651,31 @@ include 'dist/js/adminlte.miin.php';
         document.querySelectorAll('.numeric-cell').forEach(function (cell) {
                 var value = parseInt(cell.dataset.value);
                 var gradientValue = value + '%';
-                cell.style.background = 'linear-gradient(to right, #98c3e5 ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
+                cell.style.background = 'linear-gradient(to right, #abd2fa ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
         });
 
         document.querySelectorAll('.numeric-cell-acct').forEach(function (cell) {
                 var value = parseInt(cell.dataset.value);
                 var gradientValue = value + '%';
-                cell.style.background = 'linear-gradient(to right, #f38375 ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
+                cell.style.background = 'linear-gradient(to right, #ffe89c ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
         });
 
         document.querySelectorAll('.numeric-cell-hourly').forEach(function (cell) {
                 var value = parseInt(cell.dataset.value);
                 var gradientValue = value + '%';
-                cell.style.background = 'linear-gradient(to right, #78c6a3 ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
+                cell.style.background = 'linear-gradient(to right, #95d5b2 ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
+        });
+
+        // Handle click event for GOOD cell
+        $('#insp_overall_g').on('click', function () {
+            var specificUrl = '../pcad/viewer/good_inspection_details/inspection_details.php?card=good';
+            window.open(specificUrl, '_blank');
+        });
+
+        // Handle click event for NG cell
+        $('#insp_overall_ng').on('click', function () {
+            var specificUrl = '../pcad/viewer/ng_inspection_details/inspection_details_ng.php?card=ng';
+            window.open(specificUrl, '_blank');
         });
 </script>
 <?php

@@ -14,15 +14,12 @@ if ($method == 'count_total_output') {
     $shift = 'DS';
     // $shift = $_GET['shift'];
     $registlinename = 'SUBARU_08';
-    $shift_group = 'A';
     // $registlinename = $_GET['registlinename'];
-    // $shift_group = $_GET['shift_group'];
 
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
     $search_arr = array(
 		'shift' => $shift,
-        'shift_group' => $shift_group,
         'registlinename' => $registlinename,
 		'ircs_line_data_arr' => $ircs_line_data_arr,
         'server_date_only' => $server_date_only,
@@ -32,7 +29,7 @@ if ($method == 'count_total_output') {
     );
 
     $search_arr = array();
-	echo count_output($search_arr, $conn_ircs);
+	echo count_overall_g($search_arr, $conn_ircs);
 }
 
 // http://172.25.112.131/pcad/process/ircs/ircs_p.php?method=compute_st_per_line

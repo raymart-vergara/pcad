@@ -4,7 +4,6 @@ include '../server_date_time.php';
 require '../conn/pcad.php';
 require '../conn/ircs.php';
 require '../conn/emp_mgt.php';
-require '../lib/ircs.php';
 include '../lib/inspection_output.php';
 include '../lib/st.php';
 include '../lib/emp_mgt.php';
@@ -88,7 +87,7 @@ if ($method == 'get_yield') {
         'server_time' => $server_time
     );
 
-    $qa_output = count_output($search_arr, $conn_ircs);
+    $qa_output = count_overall_g($search_arr, $conn_ircs);
     $input_ng = count_overall_ng($search_arr, $conn_ircs, $conn_pcad);
     $yield = compute_yield($qa_output, $input_ng);
 
@@ -115,7 +114,7 @@ if ($method == 'get_ppm') {
         'server_time' => $server_time
     );
 
-    $output = count_output($search_arr, $conn_ircs);
+    $output = count_overall_g($search_arr, $conn_ircs);
     $ng = count_overall_ng($search_arr, $conn_ircs, $conn_pcad);
     $ppm = compute_ppm($ng, $output);
 

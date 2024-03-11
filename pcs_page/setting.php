@@ -77,7 +77,7 @@ if ($result) {
 										<div class="col-lg-3">
 											<div class="form-group">
 												<label>PLAN</label>
-												<input type="text" class="form-control form-control-lg" id="plan" autofocus="on" min="1">
+												<input type="text" class="form-control form-control-lg" id="plan" autofocus="on" min="1" required>
 											</div>
 										</div>
 										<div class="col-lg-3">
@@ -99,7 +99,7 @@ if ($result) {
 										<div class="col-lg-6">
 											<div class="form-group">
 												<label for="d">TARGET PLAN</label>
-												<input type="text" name="plan" class="form-control form-control-lg" id="target_plan" placeholder="" required value="0">
+												<input type="text" name="plan" class="form-control form-control-lg" id="target_plan" placeholder="" value="0" required>
 											</div>
 										</div>
 										<?php
@@ -146,7 +146,7 @@ if ($result) {
 									<tr>
 										<td class="text-right font-weight-bold" style="font-size: 17px;">GROUP</td>
 										<td>
-											<select name="group" id="group" class="form-control ml-4" style="width: 250px;">
+											<select name="group" id="group" class="form-control ml-4" style="width: 250px;" required>
 												<option value="" disabled selected>Select Group </option>
 												<option value="A">A</option>
 												<option value="B">B</option>
@@ -160,7 +160,7 @@ if ($result) {
 										<td class="text-right font-weight-bold" style="font-size: 17px;">Yield</td>
 
 										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;" name="yeild_target" id="yeild_target">
+											<input type="text" class="ml-4 form-control" style="width: 250px;" name="yeild_target" id="yeild_target" required>
 										</td>
 										</td>
 									</tr>
@@ -171,7 +171,7 @@ if ($result) {
 										<td class="text-right font-weight-bold" style="font-size: 17px;">PPM</td>
 
 										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;"  name="ppm_target" id="ppm_target">
+											<input type="text" class="ml-4 form-control" style="width: 250px;"  name="ppm_target" id="ppm_target" required>
 										</td>
 										</td>
 									</tr>
@@ -182,7 +182,7 @@ if ($result) {
 										<td class="text-right font-weight-bold" style="font-size: 17px;">Accounting Efficiency</td>
 
 										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;" name="acc_eff" id="acc_eff">
+											<input type="text" class="ml-4 form-control" style="width: 250px;" name="acc_eff" id="acc_eff" required>
 										</td>
 										</td>
 									</tr>
@@ -204,7 +204,7 @@ if ($result) {
 										<td class="text-right font-weight-bold" style="font-size: 17px;">Starting Balance Delay</td>
 
 										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;" name="start_bal_delay" id="start_bal_delay">
+											<input type="text" class="ml-4 form-control" style="width: 250px;" name="start_bal_delay" id="start_bal_delay" required>
 										</td>
 										</td>
 									</tr>
@@ -215,7 +215,7 @@ if ($result) {
 										<td class="text-right font-weight-bold" style="font-size: 17px;">Working Time Plan (Mins)</td>
 
 										<td>
-										<select name="work_time_plan" id="work_time_plan" class="form-control ml-4" style="width: 250px;">
+										<select name="work_time_plan" id="work_time_plan" class="form-control ml-4" style="width: 250px;" required>
 												<option value="450">450</option>
 												<option value="510">510</option>
 												<option value="570">570</option>
