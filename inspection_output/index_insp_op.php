@@ -162,6 +162,43 @@
                                 </div>
                         </div>
                 </div> -->
+
+                <div class="row">
+                                <div class="col-sm-12">
+                                        <div class="card" style="border-top: 3px solid #ca3f3f;">
+                                                <div class="card-header">
+                                                        <h3 class="card-title"><img src="../../dist/img/bar.png"
+                                                                        style="height:28px;">&ensp;No Good Hourly
+                                                                Output Graph</h3>
+                                                        <div class="card-tools">
+                                                                <button type="button" class="btn btn-tool"
+                                                                        data-card-widget="collapse">
+                                                                        <i class="fas fa-minus"></i>
+                                                                </button>
+                                                                <button type="button" class="btn btn-tool"
+                                                                        data-card-widget="maximize">
+                                                                        <i class="fas fa-expand"></i>
+                                                                </button>
+                                                        </div>
+                                                </div>
+                                                <!-- /.card-header -->
+                                                <div class="card-body">
+                                                        <div class="row">
+                                                                <div class="col-12">
+                                                                        <div id="chart-container">
+                                                                                <canvas id="ng_hourly_output_summary_chart"
+                                                                                        height="100"></canvas>
+                                                                        </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                                <!-- /.card-body -->
+                                        </div>
+                                        <!-- /.card -->
+                                </div>
+                                <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
         </div>
 </body>
 

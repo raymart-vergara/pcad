@@ -21,7 +21,7 @@
     <script src="../../plugins/sweetalert2/dist/sweetalert2.min.js"></script>
     <!-- Chart JS -->
     <script src="../../node_modules/chart.js/dist/chart.umd.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
     <!-- AdminLTE App -->
     <script src="../../dist/js/adminlte.min.js"></script>
 

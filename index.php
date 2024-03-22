@@ -196,7 +196,6 @@ include 'dist/js/adminlte.miin.php';
                                                                                 id="actual_ppm"></td>
                                                                 </tr>
                                                         </table>
-
                                                 </div>
                                                 <!-- <div class="col-1"></div> -->
                                                 <div class="col-8">
@@ -568,41 +567,23 @@ include 'dist/js/adminlte.miin.php';
                 <div class="row">
                         <div class="col-4">
                                 <div>
-                                        <button type="button" class="btn btn-danger btn-block btn-pause">PAUSE <b>[ 1
-                                                        ]</b></button>
+                                        <button type="button" class="btn btn-danger btn-block btn-pause">PAUSE <b>[ 1 ]</b></button>
                                 </div>
                                 <div>
-                                        <button type="button" class="btn btn-info btn-block btn-resume d-none">RESUME
-                                                <b>[ 3 ]</b></button>
+                                        <button type="button" class="btn btn-info btn-block btn-resume d-none">RESUME<b>[ 3 ]</b></button>
                                 </div>
                         </div>
                         <div class="col-4">
-                                <button type="button" class="btn btn-success btn-block btn-target ">END PROCESS <b>[ 2
-                                                ]</b></button>
+                                <button type="button" class="btn btn-success btn-block btn-target ">END PROCESS <b>[ 2 ]</b></button>
                         </div>
                         <div class="col-4">
-                                <a type="button" class="btn btn-secondary btn-block btn-menu" href="pcs_page/index.php">
-                                        MAIN MENU <b>[ 0
-                                                ]</b></a>
+                                <a type="button" class="btn btn-secondary btn-block btn-menu" href="pcs_page/index.php">MAIN MENU <b>[ 0 ]</b></a>
                         </div>
                 </div>
-
                 <div class="col-3">
-                        <a href="pcs_page/setting.php" class="btn  btn-primary btn-set d-none" id="setnewTargetBtn">SET
-                                NEW TARGET
-                                <b>[ 5 ]</b></a>
+                        <a href="pcs_page/setting.php" class="btn  btn-primary btn-set d-none" id="setnewTargetBtn">SET NEW TARGET<b>[ 5 ]</b></a>
                 </div>
-
         </div>
-        <!-- <footer class="footer m-3" style="color: grey">
-                <strong>Copyright &copy; 2024. Developed by FALP IT System Group</strong>
-                All rights reserved.
-                <div class="float-right d-none d-sm-inline-block">
-                        <b>Version</b> 1.0.0
-                </div>
-        </footer> -->
-
-
 </body>
 
 <!-- jQuery -->
@@ -647,44 +628,51 @@ include 'dist/js/adminlte.miin.php';
                 // Set interval to refresh data every 10 seconds
                 setInterval(andon_d_sum, 10000); // 10000 milliseconds = 10 seconds
         });
-        // Apply gradient background dynamically using JavaScript
-        document.querySelectorAll('.numeric-cell').forEach(function (cell) {
-                var value = parseInt(cell.dataset.value);
-                var gradientValue = value + '%';
-                cell.style.background = 'linear-gradient(to right, #abd2fa ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
-        });
 
-        document.querySelectorAll('.numeric-cell-acct').forEach(function (cell) {
-                var value = parseInt(cell.dataset.value);
-                var gradientValue = value + '%';
-                cell.style.background = 'linear-gradient(to right, #ffe89c ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
-        });
+        // ==========================================================================================
 
-        document.querySelectorAll('.numeric-cell-hourly').forEach(function (cell) {
-                var value = parseInt(cell.dataset.value);
+        // Apply gradient styles for specific cell with ID 'total_pd_mp'
+        function applyGradientStyles(selector, color, dataAttribute) {
+            document.querySelectorAll(selector).forEach(function (cell) {
+                var value = parseInt(cell.dataset[dataAttribute]);
                 var gradientValue = value + '%';
-                cell.style.background = 'linear-gradient(to right, #95d5b2 ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
-        });
+                cell.style.background = 'linear-gradient(to right, ' + color + ' ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
+            });
+        }
+
+        // Example usage:
+        applyGradientStyles('.numeric-cell', '#abd2fa', 'value');
+        applyGradientStyles('.numeric-cell-acct', '#ffe89c', 'value');
+        applyGradientStyles('.numeric-cell-hourly', '#95d5b2', 'value');
+
+        // Apply gradient styles for specific cell with ID 'total_pd_mp'
+        var specificCell = document.getElementById('total_pd_mp');
+        if (specificCell) {
+            var specificValue = parseInt(specificCell.dataset.value);
+            var specificGradientValue = specificValue + '%';
+            specificCell.style.background = 'linear-gradient(to right, #your_specific_color ' + specificGradientValue + ', #f6f6f6 ' + specificGradientValue + ')';
+        }
+        // ==========================================================================================
 
         // Handle click event for GOOD cell
         $('#insp_overall_g').on('click', function () {
-            var specificUrl = '../pcad/viewer/good_inspection_details/inspection_details.php?card=good';
-            window.open(specificUrl, '_blank');
+                var specificUrl = '../pcad/viewer/good_inspection_details/inspection_details.php?card=good';
+                window.open(specificUrl, '_blank');
         });
 
         // Handle click event for NG cell
         $('#insp_overall_ng').on('click', function () {
-            var specificUrl = '../pcad/viewer/ng_inspection_details/inspection_details_ng.php?card=ng';
-            window.open(specificUrl, '_blank');
+                var specificUrl = '../pcad/viewer/ng_inspection_details/inspection_details_ng.php?card=ng';
+                window.open(specificUrl, '_blank');
         });
 </script>
+
 <?php
 include 'javascript/pcs.php';
 include 'javascript/pcad.php';
 include 'javascript/emp_mgt.php';
 include 'javascript/andon.php';
 include 'javascript/inspection_output.php';
-
 ?>
 
 </html>

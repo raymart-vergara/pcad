@@ -4,10 +4,10 @@
     // DOMContentLoaded function
     document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('hourly_output_date_search').value = '<?= $server_date_only ?>';
-        // get_hourly_output_per_process();
-        // setInterval(get_hourly_output_per_process, 30000);
-        // get_hourly_output_chart();
-        // setInterval(get_hourly_output_chart, 30000);
+        get_hourly_output_per_process();
+        setInterval(get_hourly_output_per_process, 30000);
+        get_hourly_output_chart();
+        setInterval(get_hourly_output_chart, 30000);
     });
 
     const get_hourly_output_chart = () => {
@@ -103,7 +103,7 @@
             success: function (response) {
                 document.getElementById("hourlyOutputProcessData").innerHTML = response;
             }
-        })
+        });
     }
 
     const get_hourly_output = () => {
@@ -137,7 +137,7 @@
                 // get_hourly_output_per_process();
                 // get_hourly_output_chart();
             }
-        })
+        });
     }
 
     const export_hourly_output = () => {
