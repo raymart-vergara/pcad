@@ -107,5 +107,48 @@ if ($method == 'count_emp') {
 	echo json_encode($response_arr, JSON_FORCE_OBJECT);
 }
 
+if ($method == 'get_process_list') {
+	$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+	
+	// $line_no = $_GET['line_no'];
+	$line_no = '2132';
+	
+	// $shift_group = $_GET['shift_group'];
+	$shift_group = 'A';
+
+	$search_arr = array(
+		'day' => $day,
+		'shift_group' => $shift_group,
+		'line_no' => $line_no
+	);
+
+	$results = get_process_list($search_arr, $conn_emp_mgt);
+
+	$c = 0;
+
+	echo '<table><thead><tr><th>#</th><th>Process</th><th>Target</th><th>Actual</th></tr></thead><tbody>';
+
+	foreach ($results as &$result) {
+		$c++;
+
+		$total = intval($result['total']);
+		$total_present = intval($result['total_present']);
+		// $total_absent = $total - $total_present;
+
+		echo '<tr>';
+		echo '<td>'.$c.'</td>';
+		echo '<td>'.$result['process'].'</td>';
+		echo '<td>'.$result['total'].'</td>';
+		echo '<td>'.$result['total_present'].'</td>';
+		// echo '<td>'.$total_absent.'</td>';
+
+		echo '</tr>';
+	}
+
+	echo '</tbody></table>';
+
+	// echo var_dump($results);
+}
+
 $conn_emp_mgt = NULL;
 ?>
