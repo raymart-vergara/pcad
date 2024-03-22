@@ -135,7 +135,6 @@ function get_cell_color($process, $target_output, $actual_output) {
     return $row_class;
 }
 
-
 // http://172.25.112.131/pcad/process/hourly_output/hourly_output_p.php?method=get_hourly_output_per_process
 if ($method == 'get_hourly_output_per_process') {
     $registlinename = $_GET['registlinename'];
@@ -270,17 +269,17 @@ if ($method == 'get_hourly_output_graph') {
 
     $data = [];
 
-    // $hourly_output_hour_ds_array = array("06","07","08","09","10","11","12","13","14","15","16","17");
-    // $hourly_output_hour_ns_array = array("18","19","20","21","22","23","00","01","02","03","04","05");
-    // $hourly_output_hour_array = array_merge($hourly_output_hour_ds_array, $hourly_output_hour_ns_array);
+    $hourly_output_hour_ds_array = array("06","07","08","09","10","11","12","13","14","15","16","17");
+    $hourly_output_hour_ns_array = array("18","19","20","21","22","23","00","01","02","03","04","05");
+    $hourly_output_hour_array = array_merge($hourly_output_hour_ds_array, $hourly_output_hour_ns_array);
 
-    $hourly_output_hour_array = array();
+    // $hourly_output_hour_array = array();
 
     $hourly_output_summary_array = array();
 
-    // foreach ($hourly_output_hour_array as &$hour_row) {
-    //     $hourly_output_summary_array[] = 0;
-    // }
+    foreach ($hourly_output_hour_array as &$hour_row) {
+        $hourly_output_summary_array[$hour_row] = 0;
+    }
 
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
     $final_process = $ircs_line_data_arr['final_process'];
@@ -322,8 +321,8 @@ if ($method == 'get_hourly_output_graph') {
 	oci_execute($stmt);
 
 	while ($row = oci_fetch_assoc($stmt)) {
-        $hourly_output_summary_array[] = intval($row['TOTAL']);
-        $hourly_output_hour_array[] = $row['HOUR'];
+        $hourly_output_summary_array[$row['HOUR']] = intval($row['TOTAL']);
+        // $hourly_output_hour_array[] = $row['HOUR'];
     }
 
     $data[] = $hourly_output_summary_array;

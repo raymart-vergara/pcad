@@ -1,5 +1,5 @@
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand-md navbar-dark bg-primary text-light border-bottom-0">
+        <nav class="main-header navbar navbar-expand-md navbar-dark text-light border-bottom-0" style="background: #4361EE;">
             <a href="" class="navbar-brand ml-2">
                 <img src="../../dist/img/pcad_logo.ico" alt="Logo" class="brand-image img-circle elevation-3 bg-light p-1"
                     style="opacity: .8">
@@ -19,7 +19,7 @@
                         <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                             <li><a href="../andon_details/andon_details.php" class="dropdown-item">Andon Details</a></li>
                             <li><a href="../hourly_output/hourly_output.php" class="dropdown-item">Hourly Output</a></li>
-                            <li><a href="../good_inspection_details/inspection_details.php" class="dropdown-item active">Inspection Output - GOOD</a></li>
+                            <li><a href="../good_inspection_details/inspection_details.php" class="dropdown-item active" style="background: #4361EE;">Inspection Output - GOOD</a></li>
                             <li><a href="../ng_inspection_details/inspection_details_ng.php" class="dropdown-item">Inspection Output - NG</a></li>
                         </ul>
                     </li>

@@ -254,14 +254,16 @@ if (isset($_POST['request'])) {
 
 
             if ($stmt_insert_plan->execute()) {
-                header("location: ../../index.php?registlinename=" . $registlinename);
+                header("location: ../../design_tv2.php?registlinename=" . $registlinename);
+                // header("location: ../../index.php?registlinename=" . $registlinename);
             } else {
                 echo "Failed to insert data into t_plan.";
             }
          }
         elseif ($_POST['request'] == "mainMenu") {
             // Redirect to the main menu without adding target
-            header("Location: ../../pcs_page/index.php");
+            header("Location: ../../pcs_page/design_tv2.php");
+            // header("Location: ../../pcs_page/index.php");
             exit();
         } else if ($request == "getLineNo") {
         $registlinename = $_POST['registlinename'];

@@ -196,7 +196,6 @@ include 'dist/js/adminlte.miin.php';
                                                                                 id="actual_ppm"></td>
                                                                 </tr>
                                                         </table>
-
                                                 </div>
                                                 <!-- <div class="col-1"></div> -->
                                                 <div class="col-8">
@@ -629,24 +628,6 @@ include 'dist/js/adminlte.miin.php';
                 // Set interval to refresh data every 10 seconds
                 setInterval(andon_d_sum, 10000); // 10000 milliseconds = 10 seconds
         });
-        // Apply gradient background dynamically using JavaScript
-        // document.querySelectorAll('.numeric-cell').forEach(function (cell) {
-        //         var value = parseInt(cell.dataset.value);
-        //         var gradientValue = value + '%';
-        //         cell.style.background = 'linear-gradient(to right, #abd2fa ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
-        // });
-
-        // document.querySelectorAll('.numeric-cell-acct').forEach(function (cell) {
-        //         var value = parseInt(cell.dataset.value);
-        //         var gradientValue = value + '%';
-        //         cell.style.background = 'linear-gradient(to right, #ffe89c ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
-        // });
-
-        // document.querySelectorAll('.numeric-cell-hourly').forEach(function (cell) {
-        //         var value = parseInt(cell.dataset.value);
-        //         var gradientValue = value + '%';
-        //         cell.style.background = 'linear-gradient(to right, #95d5b2 ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
-        // });
 
         // ==========================================================================================
 
