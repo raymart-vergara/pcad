@@ -1,4 +1,5 @@
 <?php
+include '../../process/server_date_time.php';
 include 'plugins/header.php';
 include 'plugins/preloader.php';
 include 'plugins/navbar/andon_details_navbar.php';
@@ -29,7 +30,8 @@ include 'plugins/navbar/andon_details_navbar.php';
                 <div class="col-sm-12">
                     <div class="card card-outline" style="border-top: 3px solid #334C69;">
                         <div class="card-header">
-                            <h3 class="card-title"><i class="fas fa-history"></i> Andon Details Table</h3>
+                            <h3 class="card-title"><img src="../../dist/img/dashboard.png"
+                                    style="height:28px;">&ensp;Andon Details Table</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
@@ -43,7 +45,11 @@ include 'plugins/navbar/andon_details_navbar.php';
                         <div class="card-body">
                             <div class="row mb-4 mt-2">
                                 <div class="col-sm-3">
-                                    <button type="button" class="btn btn-block" style="background: #334C69;  color: #FFF;" onmouseover="this.style.backgroundColor='#22354A'; this.style.color='#fff';" onmouseout="this.style.backgroundColor='#334C69'; this.style.color='#fff';" onclick="location.replace('../../process/andon_graph/andon_export_p.php')">
+                                    <button type="button" class="btn btn-block"
+                                        style="background: #334C69;  color: #FFF;"
+                                        onmouseover="this.style.backgroundColor='#22354A'; this.style.color='#fff';"
+                                        onmouseout="this.style.backgroundColor='#334C69'; this.style.color='#fff';"
+                                        onclick="location.replace('../../process/andon_graph/andon_export_p.php')">
                                         <i class="fas fa-download"></i> Export Andon Details
                                     </button>
                                 </div>
@@ -84,6 +90,35 @@ include 'plugins/navbar/andon_details_navbar.php';
                                     </thead>
                                     <tbody id="andon_details" style="text-align:center;"></tbody>
                                 </table>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+
+                    <div class="card card-outline" style="border-top: 3px solid #334C69;">
+                        <div class="card-header">
+                            <h3 class="card-title"><img src="../../dist/img/bar.png" style="height:28px;">&ensp;Andon
+                                Hourly Graph</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <input type="hidden" id="andon_line" name="andon_line" value="<?= $andon_line; ?>">
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div id="chart-container">
+                                        <canvas id="andon_hourly_chart" height="70"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->

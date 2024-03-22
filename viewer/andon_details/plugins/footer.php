@@ -19,6 +19,8 @@
     <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- SweetAlert --->
     <script src="../../plugins/sweetalert2/dist/sweetalert2.min.js"></script>
+    <!-- Chart JS -->
+    <script src="../../node_modules/chart.js/dist/chart.umd.js"></script>
     <!-- AdminLTE App -->
     <script src="../../dist/js/adminlte.min.js"></script>
 

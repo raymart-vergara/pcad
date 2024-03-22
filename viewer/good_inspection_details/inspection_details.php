@@ -10,10 +10,10 @@ $query = "SELECT * FROM m_ircs_line ORDER BY ircs_line ASC";
 $result = $conn_pcad->query($query);
 
 if ($result) {
-    $ircs_lines = $result->fetchAll(PDO::FETCH_ASSOC);
+        $ircs_lines = $result->fetchAll(PDO::FETCH_ASSOC);
 } else {
-    $errorInfo = $conn_pcad->errorInfo();
-    echo "Error: " . $errorInfo[2];
+        $errorInfo = $conn_pcad->errorInfo();
+        echo "Error: " . $errorInfo[2];
 }
 ?>
 
@@ -40,7 +40,7 @@ if ($result) {
         <section class="content">
                 <div class="container-fluid">
                         <div class="row">
-                                <div class="col-md-12 m-0 p-0">
+                                <div class="col-md-12">
                                         <div class="card" style="border-top: 3px solid #226f54;"
                                                 id="proceed_to_good_table">
                                                 <div class="card-header">
@@ -59,40 +59,31 @@ if ($result) {
                                                         </div>
                                                 </div>
                                                 <!-- /.card-header -->
-                                                <div class="row">
-                                                        <div class="col-sm-12">
-                                                                <div class="card card-light"
-                                                                        style="background: #fcfcfc;">
-                                                                        <div class="m-4">
-                                                                                <!-- main content -->
-                                                                                <div class="row mt-2 mb-4">
-                                                                                        <div class="col-sm-3 col-md-3">
-                                                                                                <!-- export button -->
-                                                                                                <button class="btn btn-block"
-                                                                                                        style="background: #226f54; color: #fff;"
-                                                                                                        onmouseover="this.style.backgroundColor='#174B39'; this.style.color='#fff';"
-                                                                                                        onmouseout="this.style.backgroundColor='#226f54'; this.style.color='#fff';"
-                                                                                                        id="export_good_record_viewer"
-                                                                                                        onclick="export_good_record_viewer()"><i
-                                                                                                                class="fas fa-download">
-                                                                                                        </i>&nbsp;&nbsp;Export
-                                                                                                        Good Inspection
-                                                                                                        Details
-                                                                                                </button>
-                                                                                        </div>
-                                                                                </div>
-                                                                                <div
-                                                                                        class="row table-responsive m-0 p-0">
-                                                                                        <table class="table col-12 table-head-fixed text-nowrap table-bordered table-hover table-header"
-                                                                                                id="inspection_good_table"
-                                                                                                style="background: #F9F9F9;">
-                                                                                                <tbody class="mb-0"
-                                                                                                        id="list_of_good_viewer">
-                                                                                                </tbody>
-                                                                                        </table>
-                                                                                </div>
-                                                                        </div>
+                                                <div class="card-body card-light" style="background: #fcfcfc;">
+                                                        <!-- main content -->
+                                                        <div class="row mt-2 mb-4">
+                                                                <div class="col-sm-3 col-md-3">
+                                                                        <!-- export button -->
+                                                                        <button class="btn btn-block"
+                                                                                style="background: #226f54; color: #fff;"
+                                                                                onmouseover="this.style.backgroundColor='#174B39'; this.style.color='#fff';"
+                                                                                onmouseout="this.style.backgroundColor='#226f54'; this.style.color='#fff';"
+                                                                                id="export_good_record_viewer"
+                                                                                onclick="export_good_record_viewer()"><i
+                                                                                        class="fas fa-download">
+                                                                                </i>&nbsp;&nbsp;Export
+                                                                                Good Inspection
+                                                                                Details
+                                                                        </button>
                                                                 </div>
+                                                        </div>
+                                                        <div class="row table-responsive m-0 p-0">
+                                                                <table class="table col-12 table-head-fixed text-nowrap table-bordered table-hover table-header"
+                                                                        id="inspection_good_table"
+                                                                        style="background: #F9F9F9;">
+                                                                        <tbody class="mb-0" id="list_of_good_viewer">
+                                                                        </tbody>
+                                                                </table>
                                                         </div>
                                                 </div>
                                         </div>

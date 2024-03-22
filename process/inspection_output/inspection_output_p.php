@@ -1,7 +1,7 @@
 <?php
 include '../server_date_time.php';
-require '../conn/ircs.php';
 require '../conn/pcad.php';
+require '../conn/ircs.php';
 include '../lib/emp_mgt.php';
 include '../lib/main.php';
 include '../lib/inspection_output.php';
@@ -198,137 +198,137 @@ $method = $_GET['method'];
 // }
 
 if ($method == 'get_inspection_list') {
-        $shift = get_shift($server_time);
-        $registlinename = $_GET['registlinename'];
+    $shift = get_shift($server_time);
+    $registlinename = $_GET['registlinename'];
 
-        // Fetch processes and their corresponding IP addresses
-        $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
+    // Fetch processes and their corresponding IP addresses
+    $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
 
-        if (empty($processesAndIpAddresses)) {
-                echo '<tr>';
-                echo '<td colspan="10" style="text-align:center; color:red;">No Record Found</td>';
-                echo '</tr>';
-        } else {
-                foreach ($processesAndIpAddresses as $processData) {
-                        $process = $processData['process'];
-                        $ipaddresscolumn = $processData['ipaddresscolumn'];
-                        $ipAddresses = $processData['ipAddresses'];
+    if (empty ($processesAndIpAddresses)) {
+        echo '<tr>';
+        echo '<td colspan="10" style="text-align:center; color:red;">No Record Found</td>';
+        echo '</tr>';
+    } else {
+        foreach ($processesAndIpAddresses as $processData) {
+            $process = $processData['process'];
+            $ipaddresscolumn = $processData['ipaddresscolumn'];
+            $ipAddresses = $processData['ipAddresses'];
 
-                        $judgmentColumnGood = "";
-                        $judgmentColumnNG2 = "";
-                        $date_column = "";
+            $judgmentColumnGood = "";
+            $judgmentColumnNG2 = "";
+            $date_column = "";
 
-                        $search_arr = array(
-                                'shift' => $shift,
-                                'registlinename' => $registlinename,
-                                'server_date_only' => $server_date_only,
-                                'server_date_only_yesterday' => $server_date_only_yesterday,
-                                'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                                'server_time' => $server_time
-                        );
+            $search_arr = array(
+                'shift' => $shift,
+                'registlinename' => $registlinename,
+                'server_date_only' => $server_date_only,
+                'server_date_only_yesterday' => $server_date_only_yesterday,
+                'server_date_only_tomorrow' => $server_date_only_tomorrow,
+                'server_time' => $server_time
+            );
 
-                        switch ($process) {
-                                case "Dimension":
-                                        $date_column = "INSPECTION1FINISHDATETIME";
-                                        $judgmentColumnNG2 = "INSPECTION1JUDGMENT";
-                                        break;
-                                case "Electric":
-                                        $date_column = "INSPECTION2FINISHDATETIME";
-                                        $judgmentColumnNG2 = "INSPECTION2JUDGMENT";
-                                        break;
-                                case "Visual":
-                                        $date_column = "INSPECTION3FINISHDATETIME";
-                                        $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
-                                        break;
-                                case "Assurance":
-                                        $date_column = "INSPECTION4FINISHDATETIME";
-                                        $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
-                                        break;
-                                default:
-                                        break;
-                        }
+            switch ($process) {
+                case "Dimension":
+                    $date_column = "INSPECTION1FINISHDATETIME";
+                    $judgmentColumnNG2 = "INSPECTION1JUDGMENT";
+                    break;
+                case "Electric":
+                    $date_column = "INSPECTION2FINISHDATETIME";
+                    $judgmentColumnNG2 = "INSPECTION2JUDGMENT";
+                    break;
+                case "Visual":
+                    $date_column = "INSPECTION3FINISHDATETIME";
+                    $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
+                    break;
+                case "Assurance":
+                    $date_column = "INSPECTION4FINISHDATETIME";
+                    $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
+                    break;
+                default:
+                    break;
+            }
 
-                        $processDetailsGood = array(
-                                'process' => $process,
-                                'date_column' => $date_column,
-                                'ipAddressColumn' => $ipaddresscolumn,
-                                'ipAddresses' => $ipAddresses
-                        );
+            $processDetailsGood = array(
+                'process' => $process,
+                'date_column' => $date_column,
+                'ipAddressColumn' => $ipaddresscolumn,
+                'ipAddresses' => $ipAddresses
+            );
 
-                        $processDetailsNG = array(
-                                'process' => $process,
-                                'date_column' => $date_column,
-                                'ipAddressColumn' => $ipaddresscolumn,
-                                'judgmentColumn' => $judgmentColumnNG2,
-                                'ipAddresses' => $ipAddresses
-                        );
+            $processDetailsNG = array(
+                'process' => $process,
+                'date_column' => $date_column,
+                'ipAddressColumn' => $ipaddresscolumn,
+                'judgmentColumn' => $judgmentColumnNG2,
+                'ipAddresses' => $ipAddresses
+            );
 
-                        $p_good = countProcessGood($search_arr, $conn_ircs, $processDetailsGood);
-                        $p_ng = countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad);
+            $p_good = countProcessGood($search_arr, $conn_ircs, $processDetailsGood);
+            $p_ng = countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad);
 
-                        echo '<tr style="cursor:pointer;">';
-                        echo '<td style="text-align:center;">' . $p_good . '</td>';
-                        echo '<td style="text-align:center; background: #fff">' . $process . '</td>';
-                        echo '<td style="text-align:center;">' . $p_ng . '</td>';
-                        echo '</tr>';
-                }
+            echo '<tr style="cursor:pointer;">';
+            echo '<td style="text-align:center; font-size: 30px;">' . $p_good . '</td>';
+            echo '<td style="text-align:center; font-size: 30px;">' . $process . '</td>';
+            echo '<td style="text-align:center; font-size: 30px;">' . $p_ng . '</td>';
+            echo '</tr>';
         }
+    }
 }
 
 if ($method == 'get_overall_inspection') {
-        $shift = get_shift($server_time);
-        $registlinename = $_GET['registlinename'];
+    $shift = get_shift($server_time);
+    $registlinename = $_GET['registlinename'];
 
-        $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
-        $search_arr = array(
-                'shift' => $shift,
-                'registlinename' => $registlinename,
-                'ircs_line_data_arr' => $ircs_line_data_arr,
-                'server_date_only' => $server_date_only,
-                'server_date_only_yesterday' => $server_date_only_yesterday,
-                'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                'server_time' => $server_time
-        );
+    $search_arr = array(
+        'shift' => $shift,
+        'registlinename' => $registlinename,
+        'ircs_line_data_arr' => $ircs_line_data_arr,
+        'server_date_only' => $server_date_only,
+        'server_date_only_yesterday' => $server_date_only_yesterday,
+        'server_date_only_tomorrow' => $server_date_only_tomorrow,
+        'server_time' => $server_time
+    );
 
-        $insp_overall_g = count_overall_g($search_arr, $conn_ircs);
-        $insp_overall_ng = count_overall_ng($search_arr, $conn_ircs, $conn_pcad);
+    $insp_overall_g = count_overall_g($search_arr, $conn_ircs);
+    $insp_overall_ng = count_overall_ng($search_arr, $conn_ircs, $conn_pcad);
 
-        $response_array = array(
-                'insp_overall_g' => $insp_overall_g,
-                'insp_overall_ng' => $insp_overall_ng,
-                'message' => 'success'
-        );
+    $response_array = array(
+        'insp_overall_g' => $insp_overall_g,
+        'insp_overall_ng' => $insp_overall_ng,
+        'message' => 'success'
+    );
 
-        echo json_encode($response_array, JSON_FORCE_OBJECT);
+    echo json_encode($response_array, JSON_FORCE_OBJECT);
 }
 
 if ($method == 'get_inspection_details_no_good') {
-        $shift = get_shift($server_time);
-        // $registlinename = $_GET['registlinename'];
-        // $shift_group = $_GET['shift_group'];
+    $shift = get_shift($server_time);
+    // $registlinename = $_GET['registlinename'];
+    // $shift_group = $_GET['shift_group'];
 
-        // $shift = 'DS';
-        $registlinename = 'DAIHATSU_30';
-        // $shift_group = 'B';
+    // $shift = 'DS';
+    $registlinename = 'DAIHATSU_30';
+    // $shift_group = 'B';
 
-        $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
-        $search_arr = array(
-                'shift' => $shift,
-                'registlinename' => $registlinename,
-                'ircs_line_data_arr' => $ircs_line_data_arr,
-                'server_date_only' => $server_date_only,
-                'server_date_only_yesterday' => $server_date_only_yesterday,
-                'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                'server_time' => $server_time
-        );
+    $search_arr = array(
+        'shift' => $shift,
+        'registlinename' => $registlinename,
+        'ircs_line_data_arr' => $ircs_line_data_arr,
+        'server_date_only' => $server_date_only,
+        'server_date_only_yesterday' => $server_date_only_yesterday,
+        'server_date_only_tomorrow' => $server_date_only_tomorrow,
+        'server_time' => $server_time
+    );
 
-        $list_of_no_good_viewer = get_rows_overall_ng($search_arr, $conn_ircs, $conn_pcad);
+    $list_of_no_good_viewer = get_rows_overall_ng($search_arr, $conn_ircs, $conn_pcad);
 
-        $c = 0;
+    $c = 0;
 
-        echo '<thead>
+    echo '<thead>
         <tr>
                 <th rowspan="2" style="background: #B071CD; color: #fff; font-weight: normal; vertical-align: middle;">#</th>
                 <th colspan="24" style="background: #B071CD;"></th>
@@ -629,309 +629,309 @@ if ($method == 'get_inspection_details_no_good') {
 </thead>
 <tbody class="mb-0"
         id="list_of_no_good_viewer">';
-        foreach ($list_of_no_good_viewer as &$row) {
-                $c++;
-                echo '<tr style="border:1px solid #ddd; border-collapse: collapse;">';
+    foreach ($list_of_no_good_viewer as &$row) {
+        $c++;
+        echo '<tr style="border:1px solid #ddd; border-collapse: collapse;">';
 
-                echo '<td>' . $c . '</td>';
-                echo '<td>' . $row['REPAIRCARDNUMBER'] . '</td>';
-                echo '<td>' . $row['REPAIRSTARTDATETIME'] . '</td>';
-                echo '<td>' . $row['RPAIRFINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['REPAIRDEVICEID'] . '</td>';
-                echo '<td>' . $row['OPERATORID'] . '</td>';
-                echo '<td>' . $row['REPAIRJUDGMENT'] . '</td>';
-                echo '<td>' . $row['DISCOVERYPROCESS'] . '</td>';
-                echo '<td>' . $row['NGCONTENT'] . '</td>';
-                echo '<td>' . $row['NGCONTENTDETAIL'] . '</td>';
-                echo '<td>' . $row['REPAIRCONTENT'] . '</td>';
-                echo '<td>' . $row['OUTBREAKPROCESS'] . '</td>';
-                echo '<td>' . $row['OUTBREAKOPERATOR'] . '</td>';
-                echo '<td>' . $row['REGISTDATETIME'] . '</td>';
-                echo '<td>' . $row['REGISTCAMPANYCODE'] . '</td>';
-                echo '<td>' . $row['REGISTDEPARTMENTCODE'] . '</td>';
-                echo '<td>' . $row['REGISTLINENAME'] . '</td>';
-                echo '<td>' . $row['REGISTPROCESS'] . '</td>';
-                echo '<td>' . $row['REGISTDEVICEID'] . '</td>';
-                echo '<td>' . $row['IPADDRESS'] . '</td>';
-                echo '<td>' . $row['REGISTOPERATORID'] . '</td>';
-                echo '<td>' . $row['PARTSNAME'] . '</td>';
-                echo '<td>' . $row['LOT'] . '</td>';
-                echo '<td>' . $row['SERIAL'] . '</td>';
-                echo '<td>' . $row['READNAME'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION1PROCESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION1PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION1OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION1IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION1STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION1FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION1JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION1READOP1NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION1READOP1NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION1READOP2NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION1READOP2NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION1READOP3NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION1READOP3NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION1READOP4NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION1READOP4NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION1SEALRUBBERDETECTJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION1F1JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION1F2JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION1F3JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION1F4JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION1F5JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION1F6JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION1PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION1PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION2PROCESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION2PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION2OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION2IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION2STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION2FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION2JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION2READOP1NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION2READOP1NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION2READOP2NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION2READOP2NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION2READOP3NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION2READOP3NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION2READOP4NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION2READOP4NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION2SEALRUBBERDETECTJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION2F1JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION2F2JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION2F3JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION2F4JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION2F5JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION2F6JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION2PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION2PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION3PROCESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION3PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION3OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION3IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION3STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION3FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION3JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION3READOP1NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION3READOP1NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION3READOP2NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION3READOP2NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION3READOP3NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION3READOP3NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION3READOP4NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION3READOP4NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION3SEALRUBBERDETECTJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION3F1JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION3F2JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION3F3JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION3F4JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION3F5JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION3F6JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION3PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION3PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION4PROCESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION4PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION4OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION4IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION4STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION4FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION4JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION4READOP1NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION4READOP1NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION4READOP2NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION4READOP2NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION4READOP3NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION4READOP3NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION4READOP4NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION4READOP4NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION4SEALRUBBERDETECTJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION4F1JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION4F2JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION4F3JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION4F4JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION4F5JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION4F6JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION4PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION4PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION5PROCESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION5PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION5OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION5IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION5STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION5FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION5JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION5READOP1NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION5READOP1NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION5READOP2NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION5READOP2NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION5READOP3NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION5READOP3NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION5READOP4NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION5READOP4NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION5SEALRUBBERDETECTJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION5F1JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION5F2JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION5F3JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION5F4JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION5F5JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION5F6JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION5PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION5PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION6PROCESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION6PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION6OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION6IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION6STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION6FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION6JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION6READOP1NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION6READOP1NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION6READOP2NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION6READOP2NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION6READOP3NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION6READOP3NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION6READOP4NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION6READOP4NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION6SEALRUBBERDETECTJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION6F1JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION6F2JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION6F3JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION6F4JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION6F5JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION6F6JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION6PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION6PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION7PROCESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION7PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION7OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION7IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION7STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION7FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION7JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION7READOP1NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION7READOP1NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION7READOP2NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION7READOP2NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION7READOP3NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION7READOP3NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION7READOP4NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION7READOP4NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION7SEALRUBBERDETECTJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION7F1JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION7F2JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION7F3JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION7F4JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION7F5JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION7F6JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION7PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION7PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION8PROCESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION8PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION8OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION8IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION8STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION8FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION8FINISHDATE'] . '</td>';
-                echo '<td>' . $row['INSPECTION8FINISHTIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION8JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION8READOP1NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION8READOP1NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION8READOP2NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION8READOP2NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION8READOP3NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION8READOP3NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION8READOP4NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION8READOP4NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION8SEALRUBBERDETECTJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION8F1JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION8F2JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION8F3JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION8F4JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION8F5JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION8F6JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION8PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION8PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['LASTREPAIRCARDNUMBER'] . '</td>';
-                echo '<td>' . $row['REPAIRRESULT'] . '</td>';
-                echo '<td>' . $row['RESETSUPERVISORID'] . '</td>';
-                echo '<td>' . $row['RESETSUPERVISORNAME'] . '</td>';
-                echo '<td>' . $row['NOWMODE'] . '</td>';
-                echo '<td>' . $row['MSGCODE'] . '</td>';
-                echo '<td>' . $row['INFECTIONSTARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INFECTIONFINISHDATETIME'] . '</td>';
-                // 
-                echo '<td>' . $row['CHECKINFECTIONSHIPPED'] . '</td>';
-                echo '<td>' . $row['CHECKINFECTIONCOMPLETED'] . '</td>';
-                echo '<td>' . $row['CHECKINFECTIONINSPECTION'] . '</td>';
-                echo '<td>' . $row['CHECKINFECTIONASSY'] . '</td>';
-                echo '<td>' . $row['CHECKINFECTIONSUB'] . '</td>';
-                echo '<td>' . $row['CHECKINFECTIONSHIKAKARI'] . '</td>';
-                echo '<td>' . $row['CHECKINFECTIONPARTS'] . '</td>';
-                echo '<td>' . $row['CHECKINFECTIONJUDGMENT'] . '</td>';
-                echo '<td>' . $row['CHECKINFECTIONSUPERVISORID'] . '</td>';
-                echo '<td>' . $row['CHECKINFECTIONSUPERVISORNAME'] . '</td>';
-                //
-                echo '<td>' . $row['INSPECTION9PROCESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION9PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION9OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION9IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION9STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION9FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION9JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION9READOP1NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION9READOP1NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION9READOP2NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION9READOP2NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION9READOP3NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION9READOP3NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION9READOP4NAME'] . '</td>';
-                echo '<td>' . $row['INSPECTION9READOP4NAMEJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION9SEALRUBBERDETECTJ'] . '</td>';
-                echo '<td>' . $row['INSPECTION9F1JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION9F2JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION9F3JUDGMENT'] . '</td>';
+        echo '<td>' . $c . '</td>';
+        echo '<td>' . $row['REPAIRCARDNUMBER'] . '</td>';
+        echo '<td>' . $row['REPAIRSTARTDATETIME'] . '</td>';
+        echo '<td>' . $row['RPAIRFINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['REPAIRDEVICEID'] . '</td>';
+        echo '<td>' . $row['OPERATORID'] . '</td>';
+        echo '<td>' . $row['REPAIRJUDGMENT'] . '</td>';
+        echo '<td>' . $row['DISCOVERYPROCESS'] . '</td>';
+        echo '<td>' . $row['NGCONTENT'] . '</td>';
+        echo '<td>' . $row['NGCONTENTDETAIL'] . '</td>';
+        echo '<td>' . $row['REPAIRCONTENT'] . '</td>';
+        echo '<td>' . $row['OUTBREAKPROCESS'] . '</td>';
+        echo '<td>' . $row['OUTBREAKOPERATOR'] . '</td>';
+        echo '<td>' . $row['REGISTDATETIME'] . '</td>';
+        echo '<td>' . $row['REGISTCAMPANYCODE'] . '</td>';
+        echo '<td>' . $row['REGISTDEPARTMENTCODE'] . '</td>';
+        echo '<td>' . $row['REGISTLINENAME'] . '</td>';
+        echo '<td>' . $row['REGISTPROCESS'] . '</td>';
+        echo '<td>' . $row['REGISTDEVICEID'] . '</td>';
+        echo '<td>' . $row['IPADDRESS'] . '</td>';
+        echo '<td>' . $row['REGISTOPERATORID'] . '</td>';
+        echo '<td>' . $row['PARTSNAME'] . '</td>';
+        echo '<td>' . $row['LOT'] . '</td>';
+        echo '<td>' . $row['SERIAL'] . '</td>';
+        echo '<td>' . $row['READNAME'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION1PROCESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION1PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION1OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION1IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION1STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION1FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION1JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION1READOP1NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION1READOP1NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION1READOP2NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION1READOP2NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION1READOP3NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION1READOP3NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION1READOP4NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION1READOP4NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION1SEALRUBBERDETECTJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION1F1JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION1F2JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION1F3JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION1F4JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION1F5JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION1F6JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION1PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION1PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION2PROCESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION2PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION2OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION2IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION2STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION2FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION2JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION2READOP1NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION2READOP1NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION2READOP2NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION2READOP2NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION2READOP3NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION2READOP3NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION2READOP4NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION2READOP4NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION2SEALRUBBERDETECTJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION2F1JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION2F2JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION2F3JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION2F4JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION2F5JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION2F6JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION2PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION2PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION3PROCESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION3PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION3OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION3IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION3STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION3FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION3JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION3READOP1NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION3READOP1NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION3READOP2NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION3READOP2NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION3READOP3NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION3READOP3NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION3READOP4NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION3READOP4NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION3SEALRUBBERDETECTJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION3F1JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION3F2JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION3F3JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION3F4JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION3F5JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION3F6JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION3PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION3PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION4PROCESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION4PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION4OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION4IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION4STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION4FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION4JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION4READOP1NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION4READOP1NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION4READOP2NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION4READOP2NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION4READOP3NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION4READOP3NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION4READOP4NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION4READOP4NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION4SEALRUBBERDETECTJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION4F1JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION4F2JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION4F3JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION4F4JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION4F5JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION4F6JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION4PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION4PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION5PROCESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION5PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION5OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION5IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION5STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION5FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION5JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION5READOP1NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION5READOP1NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION5READOP2NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION5READOP2NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION5READOP3NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION5READOP3NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION5READOP4NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION5READOP4NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION5SEALRUBBERDETECTJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION5F1JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION5F2JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION5F3JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION5F4JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION5F5JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION5F6JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION5PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION5PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION6PROCESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION6PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION6OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION6IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION6STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION6FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION6JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION6READOP1NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION6READOP1NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION6READOP2NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION6READOP2NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION6READOP3NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION6READOP3NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION6READOP4NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION6READOP4NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION6SEALRUBBERDETECTJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION6F1JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION6F2JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION6F3JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION6F4JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION6F5JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION6F6JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION6PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION6PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION7PROCESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION7PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION7OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION7IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION7STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION7FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION7JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION7READOP1NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION7READOP1NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION7READOP2NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION7READOP2NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION7READOP3NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION7READOP3NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION7READOP4NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION7READOP4NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION7SEALRUBBERDETECTJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION7F1JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION7F2JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION7F3JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION7F4JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION7F5JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION7F6JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION7PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION7PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION8PROCESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION8PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION8OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION8IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION8STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION8FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION8FINISHDATE'] . '</td>';
+        echo '<td>' . $row['INSPECTION8FINISHTIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION8JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION8READOP1NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION8READOP1NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION8READOP2NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION8READOP2NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION8READOP3NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION8READOP3NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION8READOP4NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION8READOP4NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION8SEALRUBBERDETECTJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION8F1JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION8F2JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION8F3JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION8F4JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION8F5JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION8F6JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION8PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION8PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['LASTREPAIRCARDNUMBER'] . '</td>';
+        echo '<td>' . $row['REPAIRRESULT'] . '</td>';
+        echo '<td>' . $row['RESETSUPERVISORID'] . '</td>';
+        echo '<td>' . $row['RESETSUPERVISORNAME'] . '</td>';
+        echo '<td>' . $row['NOWMODE'] . '</td>';
+        echo '<td>' . $row['MSGCODE'] . '</td>';
+        echo '<td>' . $row['INFECTIONSTARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INFECTIONFINISHDATETIME'] . '</td>';
+        // 
+        echo '<td>' . $row['CHECKINFECTIONSHIPPED'] . '</td>';
+        echo '<td>' . $row['CHECKINFECTIONCOMPLETED'] . '</td>';
+        echo '<td>' . $row['CHECKINFECTIONINSPECTION'] . '</td>';
+        echo '<td>' . $row['CHECKINFECTIONASSY'] . '</td>';
+        echo '<td>' . $row['CHECKINFECTIONSUB'] . '</td>';
+        echo '<td>' . $row['CHECKINFECTIONSHIKAKARI'] . '</td>';
+        echo '<td>' . $row['CHECKINFECTIONPARTS'] . '</td>';
+        echo '<td>' . $row['CHECKINFECTIONJUDGMENT'] . '</td>';
+        echo '<td>' . $row['CHECKINFECTIONSUPERVISORID'] . '</td>';
+        echo '<td>' . $row['CHECKINFECTIONSUPERVISORNAME'] . '</td>';
+        //
+        echo '<td>' . $row['INSPECTION9PROCESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION9PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION9OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION9IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION9STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION9FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION9JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION9READOP1NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION9READOP1NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION9READOP2NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION9READOP2NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION9READOP3NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION9READOP3NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION9READOP4NAME'] . '</td>';
+        echo '<td>' . $row['INSPECTION9READOP4NAMEJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION9SEALRUBBERDETECTJ'] . '</td>';
+        echo '<td>' . $row['INSPECTION9F1JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION9F2JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION9F3JUDGMENT'] . '</td>';
 
-                echo '</tr>';
-        }
-        echo '</tbody>';
+        echo '</tr>';
+    }
+    echo '</tbody>';
 }
 
 if ($method == 'get_inspection_details_good') {
-        $shift = get_shift($server_time);
-        // $registlinename = $_GET['registlinename'];
-        // $shift_group = $_GET['shift_group'];
+    $shift = get_shift($server_time);
+    // $registlinename = $_GET['registlinename'];
+    // $shift_group = $_GET['shift_group'];
 
-        // $shift = 'DS';
-        $registlinename = 'DAIHATSU_30';
-        // $shift_group = 'B';
+    // $shift = 'DS';
+    $registlinename = 'DAIHATSU_30';
+    // $shift_group = 'B';
 
-        $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
-        $search_arr = array(
-                'shift' => $shift,
-                'registlinename' => $registlinename,
-                'ircs_line_data_arr' => $ircs_line_data_arr,
-                'server_date_only' => $server_date_only,
-                'server_date_only_yesterday' => $server_date_only_yesterday,
-                'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                'server_time' => $server_time
-        );
+    $search_arr = array(
+        'shift' => $shift,
+        'registlinename' => $registlinename,
+        'ircs_line_data_arr' => $ircs_line_data_arr,
+        'server_date_only' => $server_date_only,
+        'server_date_only_yesterday' => $server_date_only_yesterday,
+        'server_date_only_tomorrow' => $server_date_only_tomorrow,
+        'server_time' => $server_time
+    );
 
-        $list_of_good_viewer = get_rows_overall_g($search_arr, $conn_ircs);
+    $list_of_good_viewer = get_rows_overall_g($search_arr, $conn_ircs);
 
-        $c = 0;
+    $c = 0;
 
-        echo '<thead>
+    echo '<thead>
         <tr>
                 <th rowspan="2" style="background: #B071CD; color: #fff; vertical-align: middle; font-weight: normal;">#</th>
                 <th colspan="11" style="background: #B071CD; color: #fff; font-weight: normal;">Register</th>
@@ -1074,125 +1074,466 @@ if ($method == 'get_inspection_details_good') {
 <tbody class="mb-0"
         id="list_of_good_viewer">';
 
-        foreach ($list_of_good_viewer as &$row) {
-                $c++;
-                echo '<tr>';
+    foreach ($list_of_good_viewer as &$row) {
+        $c++;
+        echo '<tr>';
 
-                echo '<td style="text-align:center;">' . $c . '</td>';
-                echo '<td>' . $row['REGISTDATETIME'] . '</td>';
-                echo '<td>' . $row['REGISTCAMPANYCODE'] . '</td>';
-                echo '<td>' . $row['REGISTDEPARTMENTCODE'] . '</td>';
-                echo '<td>' . $row['REGISTLINENAME'] . '</td>';
-                echo '<td>' . $row['REGISTPROCESS'] . '</td>';
-                echo '<td>' . $row['REGISTDEVICEID'] . '</td>';
-                echo '<td>' . $row['IPADDRESS'] . '</td>';
-                echo '<td>' . $row['REGISTOPERATORID'] . '</td>';
-                echo '<td>' . $row['PARTSNAME'] . '</td>';
-                echo '<td>' . $row['LOT'] . '</td>';
-                echo '<td>' . $row['SERIAL'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION1PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION1OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION1IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION1STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION1FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION1JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION1PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION1PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION2PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION2OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION2IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION2STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION2FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION2JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION2PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION2PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION3PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION3OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION3IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION3STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION3FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION3JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION3PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION3PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION4PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION4OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION4IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION4STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION4FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION4JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION4PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION4PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION5PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION5OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION5IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION5STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION5FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION5JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION5PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION5PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION6PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION6OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION6IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION6STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION6FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION6JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION6PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION6PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION7PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION7OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION7IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION7STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION7FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION7JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION7PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION7PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION8PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION8OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION8IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION8STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION8FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION8JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION8PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION8PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['LASTREPAIRCARDNUMBER'] . '</td>';
-                echo '<td>' . $row['REPAIRRESULT'] . '</td>';
-                echo '<td>' . $row['RESETSUPERVISORID'] . '</td>';
-                echo '<td>' . $row['RESETSUPERVISORNAME'] . '</td>';
-                echo '<td>' . $row['NOWMODE'] . '</td>';
-                echo '<td>' . $row['MSGCODE'] . '</td>';
-                echo '<td>' . $row['FINALINSPECTIONNAME'] . '</td>';
-                echo '<td>' . $row['FINALINSPECTIONJUDGMENT'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION9PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION9OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION9IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION9STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION9FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION9JUDGMENT'] . '</td>';
-                echo '<td>' . $row['INSPECTION9PACKINGCHECKCODE'] . '</td>';
-                echo '<td>' . $row['INSPECTION9PACKINGCHECKJ'] . '</td>';
-                // 
-                echo '<td>' . $row['INSPECTION10PERIOD'] . '</td>';
-                echo '<td>' . $row['INSPECTION10OPERATORID'] . '</td>';
-                echo '<td>' . $row['INSPECTION10IPADDRESS'] . '</td>';
-                echo '<td>' . $row['INSPECTION10STARTDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION10FINISHDATETIME'] . '</td>';
-                echo '<td>' . $row['INSPECTION10JUDGMENT'] . '</td>';
+        echo '<td style="text-align:center;">' . $c . '</td>';
+        echo '<td>' . $row['REGISTDATETIME'] . '</td>';
+        echo '<td>' . $row['REGISTCAMPANYCODE'] . '</td>';
+        echo '<td>' . $row['REGISTDEPARTMENTCODE'] . '</td>';
+        echo '<td>' . $row['REGISTLINENAME'] . '</td>';
+        echo '<td>' . $row['REGISTPROCESS'] . '</td>';
+        echo '<td>' . $row['REGISTDEVICEID'] . '</td>';
+        echo '<td>' . $row['IPADDRESS'] . '</td>';
+        echo '<td>' . $row['REGISTOPERATORID'] . '</td>';
+        echo '<td>' . $row['PARTSNAME'] . '</td>';
+        echo '<td>' . $row['LOT'] . '</td>';
+        echo '<td>' . $row['SERIAL'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION1PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION1OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION1IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION1STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION1FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION1JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION1PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION1PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION2PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION2OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION2IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION2STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION2FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION2JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION2PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION2PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION3PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION3OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION3IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION3STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION3FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION3JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION3PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION3PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION4PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION4OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION4IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION4STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION4FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION4JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION4PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION4PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION5PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION5OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION5IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION5STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION5FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION5JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION5PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION5PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION6PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION6OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION6IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION6STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION6FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION6JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION6PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION6PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION7PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION7OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION7IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION7STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION7FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION7JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION7PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION7PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION8PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION8OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION8IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION8STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION8FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION8JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION8PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION8PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['LASTREPAIRCARDNUMBER'] . '</td>';
+        echo '<td>' . $row['REPAIRRESULT'] . '</td>';
+        echo '<td>' . $row['RESETSUPERVISORID'] . '</td>';
+        echo '<td>' . $row['RESETSUPERVISORNAME'] . '</td>';
+        echo '<td>' . $row['NOWMODE'] . '</td>';
+        echo '<td>' . $row['MSGCODE'] . '</td>';
+        echo '<td>' . $row['FINALINSPECTIONNAME'] . '</td>';
+        echo '<td>' . $row['FINALINSPECTIONJUDGMENT'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION9PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION9OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION9IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION9STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION9FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION9JUDGMENT'] . '</td>';
+        echo '<td>' . $row['INSPECTION9PACKINGCHECKCODE'] . '</td>';
+        echo '<td>' . $row['INSPECTION9PACKINGCHECKJ'] . '</td>';
+        // 
+        echo '<td>' . $row['INSPECTION10PERIOD'] . '</td>';
+        echo '<td>' . $row['INSPECTION10OPERATORID'] . '</td>';
+        echo '<td>' . $row['INSPECTION10IPADDRESS'] . '</td>';
+        echo '<td>' . $row['INSPECTION10STARTDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION10FINISHDATETIME'] . '</td>';
+        echo '<td>' . $row['INSPECTION10JUDGMENT'] . '</td>';
 
-                echo '</tr>';
+        echo '</tr>';
+    }
+
+    echo '</tbody>';
+}
+
+function get_ng_cell_color($process, $actual_output)
+{
+    $target_output = 0;
+
+    $row_class_arr = array('bg-danger', 'bg-default');
+    $row_class = "";
+
+    if ($process != 'Hour') {
+        if ($actual_output > $target_output) {
+            $row_class = $row_class_arr[0];
+        } else {
+            $row_class = $row_class_arr[1];
+        }
+    }
+    return $row_class;
+}
+
+if ($method == 'get_ng_hourly_output_per_process') {
+    // $registlinename = $_GET['registlinename'];
+
+    $registlinename = 'DAIHATSU_30';
+
+    $hourly_output_hour_ds_array = array('06' => "06", '07' => "07", '08' => "08", '09' => "09", '10' => "10", '11' => "11", '12' => "12", '13' => "13", '14' => "14", '15' => "15", '16' => "16", '17' => "17");
+    $hourly_output_hour_ns_array = array('18' => "18", '19' => "19", '20' => "20", '21' => "21", '22' => "22", '23' => "23", '00' => "00", '01' => "01", '02' => "02", '03' => "03", '04' => "04", '05' => "05");
+    $hourly_output_hour_array = $hourly_output_hour_ds_array + $hourly_output_hour_ns_array;
+
+    $insp_overall_ng = array();
+
+    // Fetch processes and their corresponding IP addresses
+    $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
+
+    if (!empty ($processesAndIpAddresses)) {
+        foreach ($processesAndIpAddresses as $processData) {
+            $process = $processData['process'];
+            $ipaddresscolumn = $processData['ipaddresscolumn'];
+            $ipAddresses = $processData['ipAddresses'];
+
+            $hourly_output_summary_process_array = array();
+
+            $date_column = "";
+
+            $search_arr = array(
+                'registlinename' => $registlinename,
+                'server_date_only' => $server_date_only,
+                'server_date_only_yesterday' => $server_date_only_yesterday,
+                'server_date_only_tomorrow' => $server_date_only_tomorrow,
+                'server_time' => $server_time
+            );
+
+            switch ($process) {
+                case "Dimension":
+                    $date_column = "INSPECTION1FINISHDATETIME";
+                    break;
+                case "Electric":
+                    $date_column = "INSPECTION2FINISHDATETIME";
+                    break;
+                case "Visual":
+                    $date_column = "INSPECTION3FINISHDATETIME";
+                    break;
+                case "Assurance":
+                    $date_column = "INSPECTION4FINISHDATETIME";
+                    break;
+                default:
+                    break;
+            }
+
+            $processDetailsNG = array(
+                'date_column' => $date_column,
+                'ipAddressColumn' => $ipaddresscolumn,
+                'ipAddresses' => $ipAddresses
+            );
+
+            $p_ng = count_actual_ng_hourly_output_process($search_arr, $conn_ircs, $conn_pcad, $processDetailsNG);
+
+            $hourly_output_summary_process_array["process"] = $process;
+
+            foreach ($hourly_output_hour_array as &$hour_row) {
+                $hourly_output_summary_process_array[$hour_row] = 0;
+            }
+
+            foreach ($p_ng as $row) {
+                $hourly_output_summary_process_array[$row["HOUR"]] = $row["TOTAL"];
+            }
+
+            $insp_overall_ng[] = $hourly_output_summary_process_array;
         }
 
-        echo '</tbody>';
+        $hour_label_array = array("process" => "Hour");
+        // $overall_hour_label_array = array_merge($hour_label_array, $hourly_output_hour_array);
+        $overall_hour_label_array = $hour_label_array + $hourly_output_hour_array;
+
+        $insp_overall_ng[] = $overall_hour_label_array;
+    }
+
+    // echo '<table><tbody>';
+
+    foreach ($insp_overall_ng as &$row) {
+        $table_cell_type = "";
+        if ($row['process'] == 'Hour') {
+            $table_cell_type = "th";
+        } else {
+            $table_cell_type = "td";
+        }
+        echo '<tr>';
+        echo '<th>' . $row['process'] . '</th>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['06'])) . '">' . $row['06'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['07'])) . '">' . $row['07'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['08'])) . '">' . $row['08'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['09'])) . '">' . $row['09'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['10'])) . '">' . $row['10'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['11'])) . '">' . $row['11'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['12'])) . '">' . $row['12'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['13'])) . '">' . $row['13'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['14'])) . '">' . $row['14'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['15'])) . '">' . $row['15'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['16'])) . '">' . $row['16'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['17'])) . '">' . $row['17'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['18'])) . '">' . $row['18'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['19'])) . '">' . $row['19'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['20'])) . '">' . $row['20'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['21'])) . '">' . $row['21'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['22'])) . '">' . $row['22'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['23'])) . '">' . $row['23'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['00'])) . '">' . $row['00'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['01'])) . '">' . $row['01'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['02'])) . '">' . $row['02'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['03'])) . '">' . $row['03'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['04'])) . '">' . $row['04'] . '</' . $table_cell_type . '>';
+        echo '<' . $table_cell_type . ' class="' . get_ng_cell_color($row['process'], intval($row['05'])) . '">' . $row['05'] . '</' . $table_cell_type . '>';
+        echo '</tr>';
+    }
+
+    // echo '</tbody></table>';
+
+    // echo json_encode($hourly_output_hour_array, JSON_FORCE_OBJECT);
+    // echo json_encode($insp_overall_g, JSON_FORCE_OBJECT);
 }
+
+if ($method == 'ng_graph') {
+    // $registlinename = $_GET['registlinename'];
+
+    $registlinename = 'DAIHATSU_30';
+
+    $hour_6_array = array();
+    $hour_7_array = array();
+    $hour_8_array = array();
+    $hour_9_array = array();
+    $hour_10_array = array();
+    $hour_11_array = array();
+    $hour_12_array = array();
+    $hour_13_array = array();
+    $hour_14_array = array();
+    $hour_15_array = array();
+    $hour_16_array = array();
+    $hour_17_array = array();
+    $hour_18_array = array();
+    $hour_19_array = array();
+    $hour_20_array = array();
+    $hour_21_array = array();
+    $hour_22_array = array();
+    $hour_23_array = array();
+    $hour_0_array = array();
+    $hour_1_array = array();
+    $hour_2_array = array();
+    $hour_3_array = array();
+    $hour_4_array = array();
+    $hour_5_array = array();
+    
+    $hourly_output_hour_ds_array = array("06","07","08","09","10","11","12","13","14","15","16","17");
+    $hourly_output_hour_ns_array = array("18","19","20","21","22","23","00","01","02","03","04","05");
+    $hourly_output_hour_array = array_merge($hourly_output_hour_ds_array, $hourly_output_hour_ns_array);
+
+    $hourly_output_summary_array = array();
+
+    $insp_overall_ng = array();
+
+    // Fetch processes and their corresponding IP addresses
+    $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
+
+    if (!empty ($processesAndIpAddresses)) {
+        foreach ($processesAndIpAddresses as $processData) {
+            $process = $processData['process'];
+            $ipaddresscolumn = $processData['ipaddresscolumn'];
+            $ipAddresses = $processData['ipAddresses'];
+
+            $hourly_output_summary_process_array = array();
+
+            $date_column = "";
+
+            $search_arr = array(
+                'registlinename' => $registlinename,
+                'server_date_only' => $server_date_only,
+                'server_date_only_yesterday' => $server_date_only_yesterday,
+                'server_date_only_tomorrow' => $server_date_only_tomorrow,
+                'server_time' => $server_time
+            );
+
+            switch ($process) {
+                case "Dimension":
+                    $date_column = "INSPECTION1FINISHDATETIME";
+                    break;
+                case "Electric":
+                    $date_column = "INSPECTION2FINISHDATETIME";
+                    break;
+                case "Visual":
+                    $date_column = "INSPECTION3FINISHDATETIME";
+                    break;
+                case "Assurance":
+                    $date_column = "INSPECTION4FINISHDATETIME";
+                    break;
+                default:
+                    break;
+            }
+
+            $processDetailsNG = array(
+                'date_column' => $date_column,
+                'ipAddressColumn' => $ipaddresscolumn,
+                'ipAddresses' => $ipAddresses
+            );
+
+            $p_ng = count_actual_ng_hourly_output_process($search_arr, $conn_ircs, $conn_pcad, $processDetailsNG);
+
+            foreach ($hourly_output_hour_array as &$hour_row) {
+                $hourly_output_summary_process_array[$hour_row] = 0;
+            }
+
+            foreach ($p_ng as $row) {
+                switch ($row["HOUR"]) {
+                    case "06":
+                        $hour_6_array[] = $row["TOTAL"];
+                        // $hour_6 += intval($row["TOTAL"]);
+                        break;
+                    case "07":
+                        $hour_7_array[] = $row["TOTAL"];
+                        break;
+                    case "08":
+                        $hour_8_array[] = $row["TOTAL"];
+                        break;
+                    case "09":
+                        $hour_9_array[] = $row["TOTAL"];
+                        break;
+                    case "10":
+                        $hour_10_array[] = $row["TOTAL"];
+                        break;
+                    case "11":
+                        $hour_11_array[] = $row["TOTAL"];
+                        break;
+                    case "12":
+                        $hour_12_array[] = $row["TOTAL"];
+                        break;
+                    case "13":
+                        $hour_13_array[] = $row["TOTAL"];
+                        break;
+                    case "14":
+                        $hour_14_array[] = $row["TOTAL"];
+                        break;
+                    case "15":
+                        $hour_15_array[] = $row["TOTAL"];
+                        break;
+                    case "16":
+                        $hour_16_array[] = $row["TOTAL"];
+                        break;
+                    case "17":
+                        $hour_17_array[] = $row["TOTAL"];
+                        break;
+                    case "18":
+                        $hour_18_array[] = $row["TOTAL"];
+                        break;
+                    case "19":
+                        $hour_19_array[] = $row["TOTAL"];
+                        break;
+                    case "20":
+                        $hour_20_array[] = $row["TOTAL"];
+                        break;
+                    case "21":
+                        $hour_21_array[] = $row["TOTAL"];
+                        break;
+                    case "22":
+                        $hour_22_array[] = $row["TOTAL"];
+                        break;
+                    case "23":
+                        $hour_23_array[] = $row["TOTAL"];
+                        break;
+                    case "00":
+                        $hour_0_array[] = $row["TOTAL"];
+                        break;
+                    case "01":
+                        $hour_1_array[] = $row["TOTAL"];
+                        break;
+                    case "02":
+                        $hour_2_array[] = $row["TOTAL"];
+                        break;
+                    case "03":
+                        $hour_3_array[] = $row["TOTAL"];
+                        break;
+                    case "04":
+                        $hour_4_array[] = $row["TOTAL"];
+                        break;
+                    case "05":
+                        $hour_5_array[] = $row["TOTAL"];
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        $hourly_output_summary_array[] = array_sum($hour_6_array);
+        $hourly_output_summary_array[] = array_sum($hour_7_array);
+        $hourly_output_summary_array[] = array_sum($hour_8_array);
+        $hourly_output_summary_array[] = array_sum($hour_9_array);
+        $hourly_output_summary_array[] = array_sum($hour_10_array);
+        $hourly_output_summary_array[] = array_sum($hour_11_array);
+        $hourly_output_summary_array[] = array_sum($hour_12_array);
+        $hourly_output_summary_array[] = array_sum($hour_13_array);
+        $hourly_output_summary_array[] = array_sum($hour_14_array);
+        $hourly_output_summary_array[] = array_sum($hour_15_array);
+        $hourly_output_summary_array[] = array_sum($hour_16_array);
+        $hourly_output_summary_array[] = array_sum($hour_17_array);
+        $hourly_output_summary_array[] = array_sum($hour_18_array);
+        $hourly_output_summary_array[] = array_sum($hour_19_array);
+        $hourly_output_summary_array[] = array_sum($hour_20_array);
+        $hourly_output_summary_array[] = array_sum($hour_21_array);
+        $hourly_output_summary_array[] = array_sum($hour_22_array);
+        $hourly_output_summary_array[] = array_sum($hour_23_array);
+        $hourly_output_summary_array[] = array_sum($hour_0_array);
+        $hourly_output_summary_array[] = array_sum($hour_1_array);
+        $hourly_output_summary_array[] = array_sum($hour_2_array);
+        $hourly_output_summary_array[] = array_sum($hour_3_array);
+        $hourly_output_summary_array[] = array_sum($hour_4_array);
+        $hourly_output_summary_array[] = array_sum($hour_5_array);
+    }
+
+    $data[] = $hourly_output_summary_array;
+    $data[] = $hourly_output_hour_array;
+
+    echo json_encode($data);
+}
+
+
 
 oci_close($conn_ircs);
 $conn_pcad = NULL;
