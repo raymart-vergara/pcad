@@ -157,7 +157,7 @@ if ($result) {
 										<td style="height: 10px;"></td>
 									</tr>
 									<tr>
-										<td class="text-right font-weight-bold" style="font-size: 17px;">Yield</td>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Yield (%)</td>
 
 										<td>
 											<input type="text" class="ml-4 form-control" style="width: 250px;" name="yeild_target" id="yeild_target">
@@ -168,7 +168,7 @@ if ($result) {
 										<td style="height: 10px;"></td>
 									</tr>
 									<tr>
-										<td class="text-right font-weight-bold" style="font-size: 17px;">PPM</td>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Defect Rate (PPM)</td>
 
 										<td>
 											<input type="text" class="ml-4 form-control" style="width: 250px;"  name="ppm_target" id="ppm_target">
@@ -179,7 +179,7 @@ if ($result) {
 										<td style="height: 10px;"></td>
 									</tr>
 									<tr>
-										<td class="text-right font-weight-bold" style="font-size: 17px;">Accounting Efficiency</td>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Accounting Efficiency (%)</td>
 
 										<td>
 											<input type="text" class="ml-4 form-control" style="width: 250px;" name="acc_eff" id="acc_eff">
@@ -201,7 +201,7 @@ if ($result) {
 										<td style="height: 10px;"></td>
 									</tr> -->
 									<tr>
-										<td class="text-right font-weight-bold" style="font-size: 17px;">Starting Balance Delay</td>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Starting Balance Delay (Set)</td>
 
 										<td>
 											<input type="text" class="ml-4 form-control" style="width: 250px;" name="start_bal_delay" id="start_bal_delay" value="0">

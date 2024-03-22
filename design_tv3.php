@@ -57,22 +57,25 @@ include 'process/pcs/index.php';
             font-family: 'Montserrat', sans-serif;
             height: 100%;
             margin: 0;
+            overflow-x: hidden; 
         }
 
         .tv-background {
             background-image: url('dist/img/tv-background.png');
-            height: 100%;
+            /* height: 100%; */
+            min-height: 100vh;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+            overflow-x: hidden;
 
-            position: relative;
-            z-index: 1;
+            /* position: relative;
+            z-index: 1; */
         }
 
         .table-container {
-            position: relative;
-            z-index: 2;
+            /* position: relative;
+            z-index: 2; */
         }
 
         .table-container table {
@@ -85,14 +88,6 @@ include 'process/pcs/index.php';
             border: none;
             width: 100%;
         }
-
-        /* th,
-                td {
-                        border-bottom: 1px solid #515151;
-                        padding: 3px;
-                        border-right: 1px solid #515151;
-                        ;
-                } */
 
         tr:hover {
             /* background-color: #000; */
@@ -116,18 +111,18 @@ include 'process/pcs/index.php';
         }
 
         .value-size1 {
-            font-size: 120px;
+            font-size: 100px;
             font-family: 'Norwester', sans-serif;
         }
 
         .value-size2 {
-            font-size: 100px;
+            font-size: 80px;
             font-family: 'Norwester', sans-serif;
             /* text-align: center; */
         }
 
         .value-size {
-            font-size: 50px;
+            font-size: 30px;
             font-family: 'Norwester', sans-serif;
         }
 
@@ -168,8 +163,8 @@ include 'process/pcs/index.php';
         }
 
         .equal-width {
-            width: 25%;
-            font-size: 30px;
+            /* width: 25%; */
+            font-size: 28px;
             font-family: 'Montserrat', sans-serif;
         }
 
@@ -179,7 +174,7 @@ include 'process/pcs/index.php';
 
         .equal-py {
             width: 50%;
-            font-size: 40px;
+            font-size: 30px;
             /* font-family: 'Digitalism', sans-serif; */
         }
 
@@ -207,22 +202,22 @@ include 'process/pcs/index.php';
         }
 
         .font-plan {
-            font-size: 40px;
+            font-size: 30px;
             width: 33.33%;
             padding-left: 10px;
         }
 
         .font-plan-sub {
-            font-size: 35px;
+            font-size: 30px;
         }
 
         .font-others {
-            font-size: 25px;
+            font-size: 20px;
             padding-left: 10px;
         }
 
         .font-others-value {
-            font-size: 50px;
+            font-size: 40px;
             font-family: 'Norwester', sans-serif;
             padding-left: 20px;
         }
@@ -241,7 +236,7 @@ include 'process/pcs/index.php';
     </style>
 </head>
 
-<body>
+<body class="tv-background">
     <input type="hidden" id="shift" value="<?= $shift ?>">
     <input type="hidden" id="shift_group" value="<?= $shift_group ?>">
     <input type="hidden" id="dept_pd" value="<?= $dept_pd ?>">
@@ -270,7 +265,7 @@ include 'process/pcs/index.php';
         </div>
     </div>
 
-    <div class="container-fluid tv-background">
+    <div class="container-fluid">
         <?php
         if ($processing) {
             ?>
@@ -314,26 +309,26 @@ include 'process/pcs/index.php';
         ?>
 
         <div class="table-container">
-            <table class="table table-container mt-2" style="height: 80px;">
+            <table class="table table-container mt-2">
                 <tbody>
                     <tr>
                         <td scope="col" class="equal-width p-4 table-bg" id="carmodel_label"
                             style="vertical-align: middle;">
-                            Car Maker / Model: &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            Car Maker / Model: &emsp;&emsp;&emsp;
                             <?= $Carmodel ?>
                         </td>
                         <td scope="col" class="equal-width p-4 table-bg" id="server_date_only_label"
                             style="vertical-align: middle;">Date:
-                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                             <?= $server_date_only ?>
                         </td>
                     </tr>
                     <tr>
                         <td scope="col" class="equal-width p-4 table-bg" id="line_no_label">
-                            Line:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
+                            Line:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
                             <?= $line_no ?>
                         <td scope="col" class="equal-width p-4 table-bg" id="shift_label">
-                            Shift:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
+                            Shift:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
                             <?= $shift ?>
                     </tr>
                 </tbody>
@@ -352,7 +347,7 @@ include 'process/pcs/index.php';
                 <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
             </ol>
             <div class="carousel-inner">
-                <div class="carousel-item active" style="height: 600px; margin-top: 260px;">
+                <div class="carousel-item active" style="height: 535px; margin-top: 260px;">
                     <table class="table text-center m-0 p-4 table-bg" style="border-bottom: 1px solid #E6E6E6">
                         <thead>
                             <tr style="height: 90px;">
@@ -368,7 +363,7 @@ include 'process/pcs/index.php';
                                 <td scope="col" class="value-size1">
                                     <?= $yield_target; ?>%
                                 </td>
-                                <td scope="col" style="vertical-align: middle; font-size: 35px;">
+                                <td scope="col" style="vertical-align: middle; font-size: 30px;">
                                     TARGET</td>
                                 <td scope="col" class="value-size1">
                                     <?= number_format($ppm_target); ?>
@@ -378,7 +373,7 @@ include 'process/pcs/index.php';
                                 <td scope="col" class="value-size1" id="actual_yield"
                                     style="background: #FFD445; color: #000;">
                                 </td>
-                                <td scope="col" style="vertical-align: middle; font-size: 35px;">
+                                <td scope="col" style="vertical-align: middle; font-size: 30px;">
                                     ACTUAL</td>
                                 <td scope="col" class="value-size1" id="actual_ppm"
                                     style="background: #F87261; color: #000;">
@@ -387,7 +382,7 @@ include 'process/pcs/index.php';
                         </tbody>
                     </table>
                 </div>
-                <div class="carousel-item" style="height: 600px; margin-top: 260px;">
+                <div class="carousel-item" style="height: 535px; margin-top: 260px;">
                     <table class="table-bg" style="width: 100%;">
                         <tbody class="text-center">
                             <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
@@ -442,7 +437,7 @@ include 'process/pcs/index.php';
                         </tbody>
                     </table>
                 </div>
-                <div class="carousel-item" style="height: 600px; margin-top: 260px;">
+                <div class="carousel-item" style="height: 535px; margin-top: 260px;">
                     <table class="table-bg text-center mb-2" style="width: 100%">
                         <thead style="height: 90px;">
                             <tr>
@@ -500,7 +495,7 @@ include 'process/pcs/index.php';
                                         </div>
                                 </div> -->
 
-                <div class="carousel-item" style="height: 600px; margin-top: 260px;">
+                <div class="carousel-item" style="height: 535px; margin-top: 260px;">
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
@@ -513,8 +508,8 @@ include 'process/pcs/index.php';
                 </div>
 
                 <!-- ================================================================================================== -->
-                <div class="carousel-item" style="height: 600px; margin-top: 260px;">
-                    <table class="table-bg">
+                <div class="carousel-item" style="height: 535px; margin-top: 260px;">
+                    <table class="table-bg" style="width: 100%;">
                         <thead style="height: 90px; border-bottom: 1px solid #E6E6E6;">
                             <tr class="text-center">
                                 <td colspan="2" class="equal-details font-plan">PD
@@ -732,7 +727,7 @@ include 'process/pcs/index.php';
         // Call andon_d_sum initially to load the chart
         andon_d_sum();
         // Set interval to refresh data every 10 seconds
-        setInterval(andon_d_sum, 30000); // 10000 milliseconds = 10 seconds
+        setInterval(andon_d_sum, 70000); // 10000 milliseconds = 10 seconds
     });
 
     // ==========================================================================================
