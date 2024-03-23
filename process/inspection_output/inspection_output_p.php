@@ -267,9 +267,9 @@ if ($method == 'get_inspection_list') {
             $p_ng = countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad);
 
             echo '<tr style="cursor:pointer;">';
-            echo '<td style="text-align:center; font-size: 30px;">' . $p_good . '</td>';
-            echo '<td style="text-align:center; font-size: 30px;">' . $process . '</td>';
-            echo '<td style="text-align:center; font-size: 30px;">' . $p_ng . '</td>';
+            echo '<td style="text-align:center; font-size: 22px;">' . $p_good . '</td>';
+            echo '<td style="text-align:center; font-size: 22px;">' . $process . '</td>';
+            echo '<td style="text-align:center; font-size: 22px;">' . $p_ng . '</td>';
             echo '</tr>';
         }
     }
