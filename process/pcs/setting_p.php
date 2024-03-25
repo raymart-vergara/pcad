@@ -252,7 +252,6 @@ if (isset($_POST['request'])) {
             $stmt_insert_plan->bindParam(':start_bal_delay', $start_bal_delay);
             $stmt_insert_plan->bindParam(':work_time_plan', $work_time_plan);
 
-
             if ($stmt_insert_plan->execute()) {
                 header("location: ../../design_tv3.php?registlinename=" . $registlinename);
                 // header("location: ../../index.php?registlinename=" . $registlinename);
