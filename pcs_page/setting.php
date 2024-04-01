@@ -160,8 +160,7 @@ if ($result) {
 										<td class="text-right font-weight-bold" style="font-size: 17px;">Yield (%)</td>
 
 										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;" name="yeild_target" id="yeild_target">
-										</td>
+											<input type="text" class="ml-4 form-control" style="width: 250px;" name="yeild_target" id="yeild_target" value="98">										</td>
 										</td>
 									</tr>
 									<tr>
@@ -171,7 +170,7 @@ if ($result) {
 										<td class="text-right font-weight-bold" style="font-size: 17px;">Defect Rate (PPM)</td>
 
 										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;"  name="ppm_target" id="ppm_target">
+											<input type="text" class="ml-4 form-control" style="width: 250px;"  name="ppm_target" id="ppm_target" value="7000">
 										</td>
 										</td>
 									</tr>
