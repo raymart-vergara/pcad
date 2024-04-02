@@ -37,13 +37,16 @@ include 'plugins/head.php';
 								<div class="icon">
 									<i class="fa fa-play fa-4x" style="font-size: 100px;"></i>
 								</div>
-								<a href="../index.php?registlinename=registlinename"
+								<a href="../design_tv3.php?registlinename=registlinename"
 									id="runcounterbtn"
 									class="small-box-footer monitor" style="font-size: 18px;">Proceed
 									&ensp;<i class="fas fa-arrow-right"></i></a>
+								<!-- <a href="../index.php?registlinename=registlinename"
+									id="runcounterbtn"
+									class="small-box-footer monitor" style="font-size: 18px;">Proceed
+									&ensp;<i class="fas fa-arrow-right"></i></a> -->
 							</div>
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -77,7 +80,7 @@ include 'plugins/footer.php';
 					window.open(href, "_self");
 				} else {
 					var registlinename = localStorage.getItem("registlinename");
-					window.open("../index.php?registlinename=" + registlinename, "_self");
+					window.open("../design_tv3.php?registlinename=" + registlinename, "_self");
 				}
 			}
 
@@ -101,7 +104,7 @@ include 'plugins/footer.php';
 				window.open(href, "_self");
 			} else {
 				var registlinename = localStorage.getItem("registlinename");
-				window.open("../index.php?registlinename=" + registlinename, "_self");
+				window.open("../design_tv3.php?registlinename=" + registlinename, "_self");
 			}
 		});
 	});

@@ -887,4 +887,73 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 	return $response_arr;
 }
 
+function get_process_list($search_arr, $conn_emp_mgt) {
+	$results = array();
+
+	$day = $search_arr['day'];
+	$shift_group = addslashes($search_arr['shift_group']);
+	$line_no = addslashes($search_arr['line_no']);
+
+	$sql = "SELECT IFNULL(process, 'No Process') AS process1, 
+			COUNT(emp_no) AS total 
+		FROM `m_employees` 
+		WHERE shift_group = '$shift_group' AND dept != ''";
+
+	if ($line_no == 'No Line') {
+		$sql = $sql . " AND line_no IS NULL";
+	} else if (!empty($line_no)) {
+		$sql = $sql . " AND line_no LIKE '$line_no%'";
+	} else {
+		$sql = $sql . " AND (line_no = '' OR line_no IS NULL)";
+	}
+
+	$sql = $sql . " AND (resigned_date IS NULL OR resigned_date = '0000-00-00' OR resigned_date >= '$day')";
+	$sql = $sql . " GROUP BY process1";
+
+	$stmt = $conn_emp_mgt->prepare($sql);
+	$stmt->execute();
+	if ($stmt->rowCount() > 0) {
+		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
+			if ($row['process1'] == '') {
+				array_push($results, array('process' => 'No Process', 'total_present' => 0, 'total' => $row['total']));
+			} else {
+				array_push($results, array('process' => $row['process1'], 'total_present' => 0, 'total' => $row['total']));
+			}
+		}
+	}
+
+	$sql = "SELECT IFNULL(emp.process, 'No Process') AS process1, 
+			COUNT(tio.emp_no) AS total_present 
+		FROM `t_time_in_out` tio 
+		LEFT JOIN `m_employees` emp 
+		ON tio.emp_no = emp.emp_no 
+		WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND emp.dept != ''";
+
+	if ($line_no == 'No Line') {
+		$sql = $sql . " AND line_no IS NULL";
+	} else if (!empty($line_no)) {
+		$sql = $sql . " AND line_no LIKE '$line_no%'";
+	} else {
+		$sql = $sql . " AND (line_no = '' OR line_no IS NULL)";
+	}
+	$sql = $sql . " AND (emp.resigned_date IS NULL OR emp.resigned_date = '0000-00-00' OR emp.resigned_date >= '$day')";
+	$sql = $sql . " GROUP BY process1";
+
+	$stmt = $conn_emp_mgt->prepare($sql);
+	$stmt->execute();
+	if ($stmt->rowCount() > 0) {
+		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
+			foreach ($results as &$result) {
+				if ($result['process'] == $row['process1']) {
+					$result['total_present'] = $row['total_present'];
+					break; // exit the loop once you've found and updated the process
+				}
+			}
+			unset($result); // unset reference to last element
+		}
+	}
+
+	return $results;
+}
+
 ?>

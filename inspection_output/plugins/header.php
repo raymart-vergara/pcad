@@ -15,6 +15,12 @@
     <link rel="stylesheet" href="../dist/css/adminlte.min.css">
     <!-- Sweet Alert -->
     <link rel="stylesheet" href="../plugins/sweetalert2/dist/sweetalert2.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+
     <style>
         .loader {
             border: 16px solid #f3f3f3;
@@ -37,8 +43,13 @@
         }
         .table-header {
             text-align: center;
-            border: 1px solid #ddd;
+            /* border: 1px solid #ddd; */
             border-collapse: collapse;
+            /* background-color: #fff; */
+            background: #B071CD;
+            color: #fff;
+            font-weight: normal;
+            
         }
     </style>
 </head>

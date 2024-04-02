@@ -1,13 +1,13 @@
 <script type="text/javascript">
-   const andon_detail = () =>{
-        let andon_line =document.getElementById('andon_line').value
+    const andon_detail = () => {
+        let andon_line = document.getElementById('andon_line').value
         $.ajax({
             url: '../process/andon_graph/a_graph_p.php',
             type: 'POST',
             cache: false,
             data: {
                 method: 'andon_detail',
-                andon_line:andon_line
+                andon_line: andon_line
             }, success: function (response) {
                 $('#andon_details').html(response);
             }
@@ -16,7 +16,7 @@
     }
 
     const andon_d_sum = () => {
-        let andon_line =document.getElementById('andon_line').value
+        let andon_line = document.getElementById('andon_line').value
         $.ajax({
             url: 'process/andon_graph/a_graph_p.php',
             type: 'POST',
@@ -24,7 +24,7 @@
             cache: false, // Disable browser caching for this request
             data: {
                 method: 'a_down_time',
-                andon_line : andon_line
+                andon_line: andon_line
             },
             success: function (data) {
                 let department = [];
@@ -43,23 +43,51 @@
                 let configuration = {
                     type: 'bar',
                     options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'DT / Delay / Andon',
+                                font: {
+                                    size: 30,
+                                    family: 'Montserrat',
+                                },
+                                // color: 'white',
+                            }
+                        },
                         scales: {
                             y: {
+                                // grid: {
+                                //     color: '#777777'
+                                // },
                                 stacked: true,
                                 ticks: {
                                     autoSkip: false,
+                                    font: {
+                                        size: 17
+                                    },
+                                    // color: 'white',
                                 }
                             },
                             x: {
+                                // grid: {
+                                //     color: '#777777'
+                                // },
                                 stacked: true,
                                 ticks: {
                                     autoSkip: false,
+                                    font: {
+                                        size: 17
+                                    },
+                                    // color: 'white',
                                 }
                             },
+                        },
+                        layout: {
+                            padding: 15
                         }
                     },
                     data: {
-                        labels: machinename, // Use machine names as the primary labels
+                        labels: machinename,
                         datasets: [{
                             label: 'Waiting Time',
                             backgroundColor: 'rgba(1, 56, 99, 1)',
@@ -77,6 +105,7 @@
                         }],
                     },
                 };
+
                 // Set department labels as sub-labels for each machine
                 configuration.data.labels = machinename.map((machine, index) => [machine, department[index]]);
                 // Destroy previous chart instance before creating a new one
@@ -85,6 +114,88 @@
                 }
                 chart = new Chart(ctx, configuration);
             },
+        });
+    }
+
+    // for andon hourly graph
+    const andon_hourly = () => {
+        let andon_line = document.getElementById('andon_line').value
+
+        $.ajax({
+            url: '../process/andon_graph/a_graph_p.php',
+            type: 'POST',
+            cache: false,
+            data: {
+                method: 'andon_hourly',
+                andon_line: andon_line
+            },
+            success: function (data) {
+                let hour_starts = [];
+                let total_counts = [];
+
+                // Extract hour starts and total counts from the data
+                for (let i = 0; i < data.length; i++) {
+                    hour_starts.push(data[i].hour_start);
+                    total_counts.push(data[i].total_count);
+                }
+
+                let ctx = document.getElementById('hourly_chart').getContext('2d');
+                let configuration = {
+                    type: 'bar',
+                    options: {
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Hourly Andon Events Count',
+                                font: {
+                                    size: 30,
+                                    family: 'Montserrat',
+                                },
+                            }
+                        },
+                        scales: {
+                            y: {
+                                stacked: true,
+                                ticks: {
+                                    autoSkip: false,
+                                    font: {
+                                        size: 17
+                                    },
+                                }
+                            },
+                            x: {
+                                stacked: true,
+                                ticks: {
+                                    autoSkip: false,
+                                    font: {
+                                        size: 17
+                                    },
+                                }
+                            },
+                        },
+                        layout: {
+                            padding: 15
+                        }
+                    },
+                    data: {
+                        labels: hour_starts, // Use hour starts as labels
+                        datasets: [{
+                            label: 'Total Andon Events',
+                            backgroundColor: 'rgba(1, 56, 99, 1)',
+                            borderColor: 'rgba(1, 56, 99, 1)',
+                            borderWidth: 2,
+                            data: total_counts, // Use total counts as data
+                            yAxisID: 'y',
+                        }],
+                    },
+                };
+
+                // Destroy previous chart instance before creating a new one
+                if (chart) {
+                    chart.destroy();
+                }
+                chart = new Chart(ctx, configuration);
+            }
         });
     }
 </script>

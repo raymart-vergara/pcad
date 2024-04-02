@@ -83,7 +83,7 @@ if ($result) {
 										<div class="col-lg-3">
 											<div class="form-group">
 												<label>SECONDS</label>
-												<input type="text" class="form-control form-control-lg" id="secs" readonly required value="27000">
+												<input type="text" class="form-control form-control-lg" id="secs" readonly value="27000">
 											</div>
 										</div>
 										<div class="col-lg-3">
@@ -99,7 +99,7 @@ if ($result) {
 										<div class="col-lg-6">
 											<div class="form-group">
 												<label for="d">TARGET PLAN</label>
-												<input type="text" name="plan" class="form-control form-control-lg" id="target_plan" placeholder="" required value="0">
+												<input type="text" name="plan" class="form-control form-control-lg" id="target_plan" placeholder="" value="0">
 											</div>
 										</div>
 										<?php
@@ -157,10 +157,20 @@ if ($result) {
 										<td style="height: 10px;"></td>
 									</tr>
 									<tr>
-										<td class="text-right font-weight-bold" style="font-size: 17px;">Yield</td>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Yield (%)</td>
 
 										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;" name="yeild_target" id="yeild_target">
+											<input type="text" class="ml-4 form-control" style="width: 250px;" name="yeild_target" id="yeild_target" value="98">										</td>
+										</td>
+									</tr>
+									<tr>
+										<td style="height: 10px;"></td>
+									</tr>
+									<tr>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Defect Rate (PPM)</td>
+
+										<td>
+											<input type="text" class="ml-4 form-control" style="width: 250px;"  name="ppm_target" id="ppm_target" value="7000">
 										</td>
 										</td>
 									</tr>
@@ -168,18 +178,7 @@ if ($result) {
 										<td style="height: 10px;"></td>
 									</tr>
 									<tr>
-										<td class="text-right font-weight-bold" style="font-size: 17px;">PPM</td>
-
-										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;"  name="ppm_target" id="ppm_target">
-										</td>
-										</td>
-									</tr>
-									<tr>
-										<td style="height: 10px;"></td>
-									</tr>
-									<tr>
-										<td class="text-right font-weight-bold" style="font-size: 17px;">Accounting Efficiency</td>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Accounting Efficiency (%)</td>
 
 										<td>
 											<input type="text" class="ml-4 form-control" style="width: 250px;" name="acc_eff" id="acc_eff">
@@ -201,10 +200,10 @@ if ($result) {
 										<td style="height: 10px;"></td>
 									</tr> -->
 									<tr>
-										<td class="text-right font-weight-bold" style="font-size: 17px;">Starting Balance Delay</td>
+										<td class="text-right font-weight-bold" style="font-size: 17px;">Starting Balance Delay (Set)</td>
 
 										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;" name="start_bal_delay" id="start_bal_delay">
+											<input type="text" class="ml-4 form-control" style="width: 250px;" name="start_bal_delay" id="start_bal_delay" value="0">
 										</td>
 										</td>
 									</tr>

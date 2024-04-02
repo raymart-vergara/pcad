@@ -1,7 +1,50 @@
 <script type="text/javascript">
         $(document).ready(function () {
-                
+                get_inspection_details_good();
+                get_inspection_details_no_good();
         });
+
+        const get_inspection_details_good = () => {
+                $.ajax({
+                        url: '../process/inspection_output/inspection_output_p.php',
+                        type: 'GET',
+                        cache: false,
+                        data: {
+                                method: 'get_inspection_details_good'
+                        },
+                        success: function (response) {
+                                // Inject the HTML directly into the table
+                                $('#inspection_good_table').html(response);
+
+                                // Initialize DataTable
+                                $('#inspection_good_table').DataTable({
+                                        "scrollX": true
+                                });
+                                $('.dataTables_length').addClass('bs-select');
+                        }
+                });
+        }
+
+        const get_inspection_details_no_good = () => {
+                $.ajax({
+                        url: '../process/inspection_output/inspection_output_p.php',
+                        type: 'GET',
+                        cache: false,
+                        data: {
+                                method: 'get_inspection_details_no_good'
+                        },
+                        success: function (response) {
+                                // Inject the HTML directly into the table
+                                $('#inspection_no_good_table').html(response);
+
+                                // Initialize DataTable
+                                $('#inspection_no_good_table').DataTable({
+                                        "scrollX": true
+                                });
+                                $('.dataTables_length').addClass('bs-select');
+                        }
+                });
+        }
 
         const get_inspection_list = () => {
                 $.ajax({
@@ -17,7 +60,6 @@
                         }
                 })
         }
-
 
         const get_overall_inspection = () => {
                 $.ajax({
@@ -101,4 +143,12 @@
                         }
                 });
         };
+
+        const export_good_record_viewer = () => {
+                window.open('../process/export/exp_good_insp.php', '_blank');
+        }
+
+        const export_no_good_record_viewer = () => {
+                window.open('../process/export/exp_no_good_insp.php', '_blank');
+        }
 </script>
