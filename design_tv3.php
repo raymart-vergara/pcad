@@ -691,6 +691,10 @@ include 'process/pcs/index.php';
 
     let chart; // Declare chart variable globally
 
+    // Set LocalStorage for these variables
+    localStorage.setItem("andon_line", $("#andon_line").val());
+    localStorage.setItem("shift", $("#shift").val());
+
     $(document).ready(function () {
         // Call these functions initially to load the data from PCAD and other Systems
         // Set interval to refresh data every 30 seconds

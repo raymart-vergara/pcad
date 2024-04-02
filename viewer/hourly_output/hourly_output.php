@@ -76,9 +76,9 @@ if ($result) {
                                 <div class="col-sm-3">
                                     <label>Shift</label>
                                     <select class="form-control" id="shift_search" style="width: 100%;" required>
-                                        <option selected value="DS">DS</option>
+                                        <option value="DS">DS</option>
                                         <option value="NS">NS</option>
-                                        <option value="">All</option>
+                                        <option selected value="">All</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-3">

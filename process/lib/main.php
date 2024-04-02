@@ -70,6 +70,7 @@ function get_ircs_line_data($registlinename, $conn_pcad)
 {
 	$registlinename = addslashes($registlinename);
 	$final_process = '';
+	$ipaddresscolumn = 'INSPECTION4IPADDRESS';
 	$ipAddresses = array();
 	$response_arr = array();
 	
