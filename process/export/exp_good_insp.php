@@ -6,16 +6,16 @@ include '../lib/emp_mgt.php';
 include '../lib/main.php';
 include '../lib/inspection_output.php';
 
-// switch (true) {
-//   case !isset($_GET['registlinename']):
-//     echo 'Query Parameters Not Set';
-//     exit;
-// }
+switch (true) {
+  case !isset($_GET['registlinename']):
+    echo 'Query Parameters Not Set';
+    exit;
+}
 
 $shift = get_shift($server_time);
 
-// $registlinename = addslashes(trim($_GET['registlinename']));
-$registlinename = 'DAIHATSU_30';
+$registlinename = $_GET['registlinename'];
+// $registlinename = 'DAIHATSU_30';
 
 $delimiter = ","; 
 

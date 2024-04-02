@@ -4,9 +4,10 @@
     // DOMContentLoaded function
     document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('hourly_output_date_search').value = '<?= $server_date_only ?>';
-        get_hourly_output_per_process();
+        get_hourly_output();
+        // get_hourly_output_per_process();
         setInterval(get_hourly_output_per_process, 30000);
-        get_hourly_output_chart();
+        // get_hourly_output_chart();
         setInterval(get_hourly_output_chart, 30000);
     });
 
@@ -107,10 +108,33 @@
     }
 
     const get_hourly_output = () => {
-        let registlinename = document.getElementById('line_no_search').value;
+        let registlinename = '';
+        let shift = '';
+        let target_output = '';
+
+        let registlinename1 = document.getElementById('line_no_search').value;
+        let shift1 = document.getElementById('shift_search').value;
+        let target_output1 = document.getElementById('target_output_search').value;
+
+        if (registlinename1 != '') {
+            registlinename = registlinename1;
+        } else {
+            registlinename = localStorage.getItem("registlinename");
+        }
+
+        if (shift1 != '') {
+            shift = shift1;
+        } else {
+            shift = localStorage.getItem("shift");
+        }
+
+        if (target_output1 != '') {
+            target_output = target_output1;
+        } else {
+            target_output = localStorage.getItem("target_hourly_output");
+        }
+
         let hourly_output_date = document.getElementById('hourly_output_date_search').value;
-        let shift = document.getElementById('shift_search').value;
-        let target_output = document.getElementById('target_output_search').value;
 
         $.ajax({
             url: '../../process/hourly_output/hourly_output_p.php',
@@ -134,8 +158,8 @@
                 sessionStorage.setItem('hourly_output_date_search', hourly_output_date);
                 sessionStorage.setItem('shift_search', shift);
                 sessionStorage.setItem('target_output_search', target_output);
-                // get_hourly_output_per_process();
-                // get_hourly_output_chart();
+                get_hourly_output_per_process();
+                get_hourly_output_chart();
             }
         });
     }
