@@ -47,6 +47,8 @@
                         document.getElementById('target_hourly_output').innerHTML = response_array.target_hourly_output;
                         document.getElementById('actual_hourly_output').innerHTML = response_array.actual_hourly_output;
                         document.getElementById('gap_hourly_output').innerHTML = response_array.gap_hourly_output;
+                        // Set LocalStorage for these variables
+                        localStorage.setItem("target_hourly_output", response_array.target_hourly_output);
                     } else {
                         console.log(response);
                     }

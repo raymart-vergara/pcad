@@ -110,8 +110,7 @@ include 'plugins/navbar/andon_details_navbar.php';
                             </div>
                         </div>
                         <!-- /.card-header -->
-                        <input type="hidden" id="andon_line" name="andon_line" value="<?= $andon_line; ?>">
-
+                        
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">

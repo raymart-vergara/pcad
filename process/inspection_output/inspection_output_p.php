@@ -305,11 +305,11 @@ if ($method == 'get_overall_inspection') {
 
 if ($method == 'get_inspection_details_no_good') {
     $shift = get_shift($server_time);
-    // $registlinename = $_GET['registlinename'];
+    $registlinename = $_GET['registlinename'];
     // $shift_group = $_GET['shift_group'];
 
     // $shift = 'DS';
-    $registlinename = 'DAIHATSU_30';
+    // $registlinename = 'DAIHATSU_30';
     // $shift_group = 'B';
 
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
@@ -908,11 +908,11 @@ if ($method == 'get_inspection_details_no_good') {
 
 if ($method == 'get_inspection_details_good') {
     $shift = get_shift($server_time);
-    // $registlinename = $_GET['registlinename'];
+    $registlinename = $_GET['registlinename'];
     // $shift_group = $_GET['shift_group'];
 
     // $shift = 'DS';
-    $registlinename = 'DAIHATSU_30';
+    // $registlinename = 'DAIHATSU_30';
     // $shift_group = 'B';
 
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
@@ -1212,9 +1212,9 @@ function get_ng_cell_color($process, $actual_output)
 }
 
 if ($method == 'get_ng_hourly_output_per_process') {
-    // $registlinename = $_GET['registlinename'];
+    $registlinename = $_GET['registlinename'];
 
-    $registlinename = 'DAIHATSU_30';
+    // $registlinename = 'DAIHATSU_30';
 
     $hourly_output_hour_ds_array = array('06' => "06", '07' => "07", '08' => "08", '09' => "09", '10' => "10", '11' => "11", '12' => "12", '13' => "13", '14' => "14", '15' => "15", '16' => "16", '17' => "17");
     $hourly_output_hour_ns_array = array('18' => "18", '19' => "19", '20' => "20", '21' => "21", '22' => "22", '23' => "23", '00' => "00", '01' => "01", '02' => "02", '03' => "03", '04' => "04", '05' => "05");
@@ -1333,9 +1333,9 @@ if ($method == 'get_ng_hourly_output_per_process') {
 }
 
 if ($method == 'ng_graph') {
-    // $registlinename = $_GET['registlinename'];
+    $registlinename = $_GET['registlinename'];
 
-    $registlinename = 'DAIHATSU_30';
+    // $registlinename = 'DAIHATSU_30';
 
     $hour_6_array = array();
     $hour_7_array = array();
@@ -1532,8 +1532,6 @@ if ($method == 'ng_graph') {
 
     echo json_encode($data);
 }
-
-
 
 oci_close($conn_ircs);
 $conn_pcad = NULL;
