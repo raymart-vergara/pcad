@@ -290,9 +290,8 @@ include 'dist/js/adminlte.miin.php';
         }
 
         .manpower-title {
-            text-align: left;
+            text-align: center;
             font-size: 20px;
-            padding-left: 10px;
             background: #F4F4F4;
             border: 1px solid #F4F4F4;
             border-radius: 5px;
@@ -683,20 +682,36 @@ include 'dist/js/adminlte.miin.php';
                             <td colspan="3" class="plan-title">Hourly Output</td>
                         </tr>
                         <tr>
-                            <td class="plan-sub-title">Target</td>
-                            <td class="plan-sub-title">Actual</td>
-                            <td class="plan-sub-title">Gap</td>
+                            <td class="plan-sub-title"
+                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'>Target &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img
+                                    class="icon-2" src="dist/img/expand-dark.png"
+                                    data-light-src="dist/img/expand-light.png" data-dark-src="dist/img/expand-dark.png">
+                            </td>
+                            <td class="plan-sub-title"
+                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'>Actual &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img
+                                    class="icon-2" src="dist/img/expand-dark.png"
+                                    data-light-src="dist/img/expand-light.png" data-dark-src="dist/img/expand-dark.png">
+                            </td>
+                            <td class="plan-sub-title"
+                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'>Gap &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img
+                                    class="icon-2" src="dist/img/expand-dark.png"
+                                    data-light-src="dist/img/expand-light.png" data-dark-src="dist/img/expand-dark.png">
+                            </td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td class="plan-content" id="target_hourly_output"
+                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
                                 style="border-right: 1px solid #E0E0E0; background: #38C578;">
                             </td>
                             <td class="plan-content" id="actual_hourly_output"
+                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
                                 style="border-right: 1px solid #E0E0E0; background: #38C578;">
                             </td>
-                            <td class="plan-content" id="gap_hourly_output" style="background: #38C578;"></td>
+                            <td class="plan-content" id="gap_hourly_output"
+                                onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'
+                                style="background: #38C578;"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -749,11 +764,15 @@ include 'dist/js/adminlte.miin.php';
                     <table>
                         <tbody>
                             <tr>
-                                <td class="inspection-sub-title">Good <img class="icon-2" src="dist/img/expand-dark.png"
+                                <td class="inspection-sub-title"
+                                    onclick='window.open("viewer/good_inspection_details/inspection_details.php","_blank")'>
+                                    Good &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img class="icon-2" src="dist/img/expand-dark.png"
                                         data-light-src="dist/img/expand-light.png"
                                         data-dark-src="dist/img/expand-dark.png">
                                 </td>
-                                <td class="inspection-sub-title">NG <img class="icon-2" src="dist/img/expand-dark.png"
+                                <td class="inspection-sub-title"
+                                    onclick='window.open("viewer/ng_inspection_details/inspection_details_ng.php","_blank")'>
+                                    NG &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img class="icon-2" src="dist/img/expand-dark.png"
                                         data-light-src="dist/img/expand-light.png"
                                         data-dark-src="dist/img/expand-dark.png">
                                 </td>
@@ -789,7 +808,11 @@ include 'dist/js/adminlte.miin.php';
                 <table>
                     <thead>
                         <tr>
-                            <td colspan="2" class="manpower-title">PD Manpower</td>
+                            <td colspan="2" class="manpower-title"
+                                onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")'>
+                                PD Manpower &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img class="icon-2" src="dist/img/expand-dark.png"
+                                    data-light-src="dist/img/expand-light.png" data-dark-src="dist/img/expand-dark.png">
+                            </td>
                         </tr>
                     </thead>
                     <tbody>
@@ -821,7 +844,11 @@ include 'dist/js/adminlte.miin.php';
                 <table>
                     <thead>
                         <tr>
-                            <td colspan="2" class="manpower-title">QA Manpower</td>
+                            <td colspan="2" class="manpower-title"
+                                onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")'>
+                                QA Manpower &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img class="icon-2" src="dist/img/expand-dark.png"
+                                    data-light-src="dist/img/expand-light.png" data-dark-src="dist/img/expand-dark.png">
+                            </td>
                         </tr>
                     </thead>
                     <tbody>
@@ -853,7 +880,11 @@ include 'dist/js/adminlte.miin.php';
                 <table>
                     <thead>
                         <tr>
-                            <td colspan="2" class="manpower-title">Other Details</td>
+                            <td colspan="2" class="manpower-title"
+                                onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")'>
+                                Other Details &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<img class="icon-2" src="dist/img/expand-dark.png"
+                                    data-light-src="dist/img/expand-light.png" data-dark-src="dist/img/expand-dark.png">
+                            </td>
                         </tr>
                     </thead>
                     <tbody>
