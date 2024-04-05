@@ -57,7 +57,7 @@ include 'process/pcs/index.php';
             font-family: 'Montserrat', sans-serif;
             height: 100%;
             margin: 0;
-            overflow-x: hidden; 
+            overflow-x: hidden;
         }
 
         .tv-background {
@@ -481,31 +481,62 @@ include 'process/pcs/index.php';
                             </tr>
                         </tbody>
                     </table>
-
                 </div>
-                <!-- <div class="carousel-item" style="height: 640px;">
-                                        <div class="row">
-                                                <div class="col-12">
-                                                        <div class="card" style="border: 1px solid #515151;">
-                                                                <div id="chart-container">
-                                                                        <canvas id="hourly_chart" height="50"></canvas>
-                                                                </div>
-                                                        </div>
-                                                </div>
-                                        </div>
-                                </div> -->
 
+                <!-- andon details -->
                 <div class="carousel-item" style="height: 535px; margin-top: 260px;">
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <div id="chart-container" style="width: 100%; height: 100%;">
+                                <div id="chart-container-1" style="width: 100%; height: 100%;">
                                     <canvas id="hourly_chart" height="80" style="background-color: #F8F9FA;"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- andon count graph -->
+                <!-- <div class="carousel-item" style="height: 535px; margin-top: 260px;">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="card">
+                                <div id="chart-container-2" style="width: 100%; height: 100%;">
+                                    <canvas id="andon_hourly_chart" height="80"
+                                        style="background-color: #F8F9FA;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- good hourly count graph -->
+                <!-- <div class="carousel-item" style="height: 535px; margin-top: 260px;">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="card">
+                                <div id="chart-container-3" style="width: 100%; height: 100%;">
+                                    <canvas id="hourly_output_summary_chart" height="80"
+                                        style="background-color: #F8F9FA;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- ng hourly count graph -->
+                <!-- <div class="carousel-item" style="height: 535px; margin-top: 260px;">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="card">
+                                <div id="chart-container-4" style="width: 100%; height: 100%;">
+                                    <canvas id="ng_summary_chart" height="80"
+                                        style="background-color: #F8F9FA;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
 
                 <!-- ================================================================================================== -->
                 <div class="carousel-item" style="height: 535px; margin-top: 260px;">
@@ -638,51 +669,12 @@ include 'process/pcs/index.php';
                 NEW TARGET<b>[ 5 ]</b></a>
         </div>
     </div>
-
-
-
-    <!-- table legend -->
-    <!-- <div class="row mt-3">
-                        <div class="col-4">
-                                <table>
-                                        <tr>
-                                                <th colspan="2">Legend</th>
-                                        </tr>
-                                        <tr>
-                                                <th class="text-center">[1]</th>
-                                                <th class="th-normal">Yield / PPM</th>
-                                        </tr>
-                                        <tr>
-                                                <th class="text-center">[2]</th>
-                                                <th class="th-normal">Plan / Accounting Efficiency / Hourly Output</th>
-                                        </tr>
-                                        <tr>
-                                                <th class="text-center">[3]</th>
-                                                <th class="th-normal">Overall Inspection</th>
-                                        </tr>
-                                        <tr>
-                                                <th class="text-center">[4]</th>
-                                                <th class="th-normal">DT / Delay / Andon Graph</th>
-                                        </tr>
-                                        <tr>
-                                                <th class="text-center">[5]</th>
-                                                <th class="th-normal">PD Manpower / QA Manpower / Other Details</th>
-                                        </tr>
-                                </table>
-                        </div>
-                </div> -->
-    </div>
 </body>
 
 <!-- jQuery -->
 <script src="plugins/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-
-
-
-
 <!-- mdb -->
 <script src="plugins/mdb/js/mdb.min.js"></script>
 <script src="plugins/mdb/js/mdb.js"></script>
@@ -691,7 +683,6 @@ include 'process/pcs/index.php';
 <!--Moment JS -->
 <script src="plugins/moment-js/moment.min.js"></script>
 <script src="plugins/moment-js/moment-duration-format.min.js"></script>
-
 
 <script>
     $('.carousel').carousel({
@@ -729,9 +720,21 @@ include 'process/pcs/index.php';
         setInterval(count_emp, 15000); // 15000 milliseconds = 15 seconds
 
         // Call andon_d_sum initially to load the chart
+        // Initialize chart for carousel item 1
         andon_d_sum();
-        // Set interval to refresh data every 10 seconds
-        setInterval(andon_d_sum, 70000); // 10000 milliseconds = 10 seconds
+        setInterval(andon_d_sum, 70000);
+
+        // Initialize chart for carousel item 2
+        andon_hourly_graph();
+        setInterval(andon_hourly_graph, 70000);
+
+        // Initialize chart for carousel item 3
+        get_hourly_output_chart();
+        setInterval(get_hourly_output_chart, 70000);
+
+        // Initialize chart for carousel item 4
+        ng_graph();
+        setInterval(ng_graph, 70000);
     });
 
     // ==========================================================================================
@@ -760,16 +763,16 @@ include 'process/pcs/index.php';
     // ==========================================================================================
 
     // Handle click event for GOOD cell
-    $('#insp_overall_g').on('click', function () {
-        var specificUrl = '../pcad/viewer/good_inspection_details/inspection_details.php?card=good';
-        window.open(specificUrl, '_blank');
-    });
+    // $('#insp_overall_g').on('click', function () {
+    //     var specificUrl = '../pcad/viewer/good_inspection_details/inspection_details.php?card=good';
+    //     window.open(specificUrl, '_blank');
+    // });
 
     // Handle click event for NG cell
-    $('#insp_overall_ng').on('click', function () {
-        var specificUrl = '../pcad/viewer/ng_inspection_details/inspection_details_ng.php?card=ng';
-        window.open(specificUrl, '_blank');
-    });
+    // $('#insp_overall_ng').on('click', function () {
+    //     var specificUrl = '../pcad/viewer/ng_inspection_details/inspection_details_ng.php?card=ng';
+    //     window.open(specificUrl, '_blank');
+    // });
 </script>
 
 <?php
@@ -777,6 +780,7 @@ include 'javascript/pcs.php';
 include 'javascript/pcad.php';
 include 'javascript/emp_mgt.php';
 include 'javascript/andon.php';
+include 'javascript/hourly_graph.php';
 include 'javascript/inspection_output.php';
 ?>
 
