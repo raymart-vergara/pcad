@@ -73,6 +73,7 @@ include 'dist/js/adminlte.miin.php';
             min-height: 100vh;
             margin: 0;
             transition: background 0.2s linear;
+            cursor: pointer;
         }
 
         table {
@@ -111,7 +112,7 @@ include 'dist/js/adminlte.miin.php';
         .icon-h2,
         .icon-h3,
         .icon-h4 {
-            width: 40px;
+            width: 45px;
         }
 
         .header-width {
@@ -392,6 +393,10 @@ include 'dist/js/adminlte.miin.php';
             content: url('dist/img/expand-light.png');
         }
 
+        body[light-mode="dark"] .nav-icon-top {
+            content: url('dist/img/up-arrow-light.png');
+        }
+
         .checkbox {
             opacity: 0;
             position: absolute;
@@ -450,7 +455,25 @@ include 'dist/js/adminlte.miin.php';
         .support a:hover {
             transform: scale(1.1);
         }
+
         /* ================================================== */
+        .return-to-top {
+            position: fixed;
+            right: 15px;
+            bottom: 15px;
+            border: none;
+            background: none;
+            border-radius: 15%;
+        }
+
+        .return-to-top:hover {
+            border: none;
+        }
+
+        .nav-icon-top {
+            cursor: pointer;
+            height: 50px;
+        }
     </style>
 </head>
 
@@ -667,11 +690,13 @@ include 'dist/js/adminlte.miin.php';
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="plan-content" id="target_hourly_output" style="border-right: 1px solid #E0E0E0; background: #76E1A7;">
+                            <td class="plan-content" id="target_hourly_output"
+                                style="border-right: 1px solid #E0E0E0; background: #38C578;">
                             </td>
-                            <td class="plan-content" id="actual_hourly_output" style="border-right: 1px solid #E0E0E0; background: #76E1A7;">
+                            <td class="plan-content" id="actual_hourly_output"
+                                style="border-right: 1px solid #E0E0E0; background: #38C578;">
                             </td>
-                            <td class="plan-content" id="gap_hourly_output" style="background: #76E1A7;"></td>
+                            <td class="plan-content" id="gap_hourly_output" style="background: #38C578;"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -734,7 +759,7 @@ include 'dist/js/adminlte.miin.php';
                                 </td>
                             </tr>
                             <tr>
-                                <td class="inspection-content" id="insp_overall_g" style="background: #76E1A7;"></td>
+                                <td class="inspection-content" id="insp_overall_g" style="background: #38C578;"></td>
                                 <td class="inspection-content" id="insp_overall_ng" style="background: #DD6A5B;"></td>
                             </tr>
                         </tbody>
@@ -994,6 +1019,11 @@ include 'dist/js/adminlte.miin.php';
             <a href="pcs_page/setting.php" class="btn  btn-primary btn-set d-none" id="setnewTargetBtn">SET NEW
                 TARGET<b>[ 5 ]</b></a>
         </div> -->
+
+        <!-- return to top -->
+        <button id="back-to-top" type="button" class="return-to-top"><img class="nav-icon-top nav-icon"
+                src="dist/img/up-arrow-dark.png" data-light-src="dist/img/up-arrow-light.png"
+                data-dark-src="dist/img/up-arrow-dark.png"></button>
     </div>
 </body>
 
@@ -1052,13 +1082,25 @@ include 'dist/js/adminlte.miin.php';
         setInterval(ng_graph, 30000);
     });
 
+    // return to top button
+    (function ($) {
+        /*--Scroll Back to Top Button Show--*/
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 300) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
+
+        //Click event scroll to top button jquery
+        $('#back-to-top').click(function () {
+            $('html, body').animate({ scrollTop: 0 }, 600);
+            return false;
+        });
+    })(jQuery);
+
     // toggle mode
-    // const checkbox = document.getElementById("checkbox")
-    // checkbox.addEventListener("change", () => {
-    //     // document.body.classList.toggle("dark");
-
-    // })
-
     function toggle_light_mode() {
         var app = document.getElementsByTagName("BODY")[0];
         if (localStorage.lightMode == "dark") {
