@@ -496,8 +496,8 @@ include 'process/pcs/index.php';
                     </div>
                 </div>
 
-                <!-- andon count graoh -->
-                <div class="carousel-item" style="height: 535px; margin-top: 260px;">
+                <!-- andon count graph -->
+                <!-- <div class="carousel-item" style="height: 535px; margin-top: 260px;">
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
@@ -508,10 +508,10 @@ include 'process/pcs/index.php';
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- good hourly count graph -->
-                <div class="carousel-item" style="height: 535px; margin-top: 260px;">
+                <!-- <div class="carousel-item" style="height: 535px; margin-top: 260px;">
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
@@ -522,10 +522,10 @@ include 'process/pcs/index.php';
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- ng hourly count graph -->
-                <div class="carousel-item" style="height: 535px; margin-top: 260px;">
+                <!-- <div class="carousel-item" style="height: 535px; margin-top: 260px;">
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
@@ -536,7 +536,7 @@ include 'process/pcs/index.php';
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- ================================================================================================== -->
                 <div class="carousel-item" style="height: 535px; margin-top: 260px;">

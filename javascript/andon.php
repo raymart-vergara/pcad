@@ -12,7 +12,6 @@
                 $('#andon_details').html(response);
             }
         });
-
     }
 
     const andon_d_sum = () => {

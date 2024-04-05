@@ -1,6 +1,6 @@
 <script type="text/javascript">
     const andon_hourly_graph = () => {
-        // let andon_line = document.getElementById('andon_line').value
+        let andon_line = localStorage.getItem("andon_line");
 
         $.ajax({
             url: 'process/andon_graph/a_hourly_p.php',
@@ -9,7 +9,7 @@
             cache: false,
             data: {
                 method: 'andon_hourly',
-                // andon_line: andon_line
+                andon_line: andon_line
             },
             success: function (data) {
                 let total_counts = data[0];
@@ -23,11 +23,14 @@
                         plugins: {
                             title: {
                                 display: true,
-                                text: 'Hourly Andon Events Count',
+                                text: 'Hourly Andon Events',
                                 font: {
-                                    size: 30,
-                                    family: 'Montserrat',
+                                    size: 18,
+                                    family: 'Poppins',
+                                    weight: 'normal'
                                 },
+                                align: 'start',
+                                color: '#000000'
                             }
                         },
                         scales: {
@@ -38,6 +41,16 @@
                                     font: {
                                         size: 17
                                     },
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Count',
+                                    font: {
+                                        size: 10,
+                                        family: 'Poppins',
+                                        weight: 'normal'
+                                    },
+                                    color: '#717171'
                                 }
                             },
                             x: {
@@ -47,18 +60,21 @@
                                     font: {
                                         size: 17
                                     },
-                                }
+                                },
+                                grid: { 
+                                    display: false,
+                                },
                             },
                         },
                         layout: {
-                            padding: 15
+                            padding: 20
                         }
                     },
                     data: {
                         labels: hour_starts, // Use hour starts as labels
                         datasets: [{
-                            label: 'Total Andon Events',
-                            backgroundColor: 'rgba(1, 56, 99, 1)',
+                            label: 'Andon Hourly Count',
+                            backgroundColor: 'rgba(1, 56, 99, 0.8)',
                             borderColor: 'rgba(1, 56, 99, 1)',
                             borderWidth: 2,
                             data: total_counts, // Use total counts as data
@@ -68,18 +84,19 @@
                 };
 
                 // Destroy previous chart instance before creating a new one
-                if (chart) {
-                    chart.destroy();
+                if (chartAndonHourly) {
+                    chartAndonHourly.destroy();
                 }
-                chart = new Chart(ctx, configuration);
+                chartAndonHourly = new Chart(ctx, configuration);
             }
         });
     }
 
     const get_hourly_output_chart = () => {
-        let registlinename = sessionStorage.getItem('line_no_search');
-        let hourly_output_date = sessionStorage.getItem('hourly_output_date_search');
-        let target_output = parseInt(sessionStorage.getItem('target_output_search'));
+        // let registlinename = sessionStorage.getItem('line_no_search');
+        let registlinename = localStorage.getItem("registlinename");
+        let hourly_output_date = '<?= $server_date_only ?>';
+        let target_output = parseInt(localStorage.getItem('target_hourly_output'));
 
         $.ajax({
             url: 'process/hourly_output/hourly_output_p.php',
@@ -105,14 +122,30 @@
                                 stacked: true,
                                 ticks: {
                                     autoSkip: false,
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Count',
+                                    font: {
+                                        size: 10,
+                                        family: 'Poppins',
+                                        weight: 'normal'
+                                    },
+                                    color: '#717171'
                                 }
                             },
                             x: {
                                 stacked: true,
                                 ticks: {
                                     autoSkip: false,
-                                }
+                                },
+                                grid: { 
+                                    display: false,
+                                },
                             },
+                        },
+                        layout: {
+                            padding: 20
                         },
                         // Add annotation here
                         plugins: {
@@ -126,7 +159,18 @@
                                         borderWidth: 2,
                                     }
                                 }
-                            }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Hourly Output',
+                                font: {
+                                    size: 18,
+                                    family: 'Poppins',
+                                    weight: 'normal'
+                                },
+                                align: 'start',
+                                color: '#000000'
+                            },
                         }
                     },
                     data: {
@@ -143,22 +187,25 @@
                 };
 
                 // Destroy previous chart instance before creating a new one
-                if (chart) {
-                    chart.destroy();
+                if (chartHourlyOutput) {
+                    chartHourlyOutput.destroy();
                 }
-                chart = new Chart(ctx, configuration);
+                chartHourlyOutput = new Chart(ctx, configuration);
             },
         });
     }
 
     const ng_graph = () => {
+        let registlinename = localStorage.getItem("registlinename");
+
         $.ajax({
             url: 'process/inspection_output/inspection_output_p.php',
             type: 'GET',
             cache: false,
             dataType: 'json',
             data: {
-                method: 'ng_graph'
+                method: 'ng_graph',
+                registlinename: registlinename
             },
             success: function (data) {
                 let hourly_ng_summary = data[0];
@@ -167,7 +214,7 @@
                 let barChartData = {
                     labels: hour_label,
                     datasets: [{
-                        label: 'NG Output per Hour',
+                        label: 'NG Hourly Output',
                         backgroundColor: 'rgba(202, 63, 63, 0.5)',
                         borderColor: 'rgba(202, 63, 63)',
                         borderWidth: 1,
@@ -187,28 +234,53 @@
                             y: {
                                 ticks: {
                                     autoSkip: false,
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Count',
+                                    font: {
+                                        size: 10,
+                                        family: 'Poppins',
+                                        weight: 'normal'
+                                    },
+                                    color: '#717171'
                                 }
                             },
                             x: {
                                 ticks: {
                                     autoSkip: false,
-                                }
+                                },
+                                grid: { 
+                                    display: false,
+                                },
+                            },
+                        },
+                        layout: {
+                            padding: 20
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'NG Hourly Output',
+                                font: {
+                                    size: 18,
+                                    family: 'Poppins',
+                                    weight: 'normal'
+                                },
+                                align: 'start',
+                                color: '#000000'
                             },
                         }
                     }
                 };
 
                 // Destroy previous chart instance before creating a new one
-                if (chart) {
-                    chart.destroy();
+                if (chartNGhourly) {
+                    chartNGhourly.destroy();
                 }
-                chart = new Chart(ctx, configuration);
+                chartNGhourly = new Chart(ctx, configuration);
             }
 
         });
     }
-
-    
-
-
 </script>
