@@ -204,7 +204,7 @@ if ($method == 'get_inspection_list') {
     // Fetch processes and their corresponding IP addresses
     $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
 
-    if (empty ($processesAndIpAddresses)) {
+    if (empty($processesAndIpAddresses)) {
         echo '<tr>';
         echo '<td colspan="10" style="text-align:center; color:red;">No Record Found</td>';
         echo '</tr>';
@@ -241,6 +241,14 @@ if ($method == 'get_inspection_list') {
                     $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
                     break;
                 case "Assurance":
+                    $date_column = "INSPECTION4FINISHDATETIME";
+                    $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
+                    break;
+                case "Components":
+                    $date_column = "INSPECTION3FINISHDATETIME";
+                    $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
+                    break;
+                case "Fuse Checking":
                     $date_column = "INSPECTION4FINISHDATETIME";
                     $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
                     break;
@@ -282,7 +290,7 @@ if ($method == 'get_inspection_list_copy') {
     // Fetch processes and their corresponding IP addresses
     $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
 
-    if (empty ($processesAndIpAddresses)) {
+    if (empty($processesAndIpAddresses)) {
         echo '<tr>';
         echo '<td colspan="10" style="text-align:center; color:red;">No Record Found</td>';
         echo '</tr>';
@@ -319,6 +327,14 @@ if ($method == 'get_inspection_list_copy') {
                     $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
                     break;
                 case "Assurance":
+                    $date_column = "INSPECTION4FINISHDATETIME";
+                    $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
+                    break;
+                case "Components":
+                    $date_column = "INSPECTION3FINISHDATETIME";
+                    $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
+                    break;
+                case "Fuse Checking":
                     $date_column = "INSPECTION4FINISHDATETIME";
                     $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
                     break;
@@ -1302,7 +1318,7 @@ if ($method == 'get_ng_hourly_output_per_process') {
     // Fetch processes and their corresponding IP addresses
     $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
 
-    if (!empty ($processesAndIpAddresses)) {
+    if (!empty($processesAndIpAddresses)) {
         foreach ($processesAndIpAddresses as $processData) {
             $process = $processData['process'];
             $ipaddresscolumn = $processData['ipaddresscolumn'];
@@ -1331,6 +1347,12 @@ if ($method == 'get_ng_hourly_output_per_process') {
                     $date_column = "INSPECTION3FINISHDATETIME";
                     break;
                 case "Assurance":
+                    $date_column = "INSPECTION4FINISHDATETIME";
+                    break;
+                case "Components":
+                    $date_column = "INSPECTION3FINISHDATETIME";
+                    break;
+                case "Fuse Checking":
                     $date_column = "INSPECTION4FINISHDATETIME";
                     break;
                 default:
@@ -1437,9 +1459,9 @@ if ($method == 'ng_graph') {
     $hour_3_array = array();
     $hour_4_array = array();
     $hour_5_array = array();
-    
-    $hourly_output_hour_ds_array = array("06","07","08","09","10","11","12","13","14","15","16","17");
-    $hourly_output_hour_ns_array = array("18","19","20","21","22","23","00","01","02","03","04","05");
+
+    $hourly_output_hour_ds_array = array("06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17");
+    $hourly_output_hour_ns_array = array("18", "19", "20", "21", "22", "23", "00", "01", "02", "03", "04", "05");
     $hourly_output_hour_array = array_merge($hourly_output_hour_ds_array, $hourly_output_hour_ns_array);
 
     $hourly_output_summary_array = array();
@@ -1449,7 +1471,7 @@ if ($method == 'ng_graph') {
     // Fetch processes and their corresponding IP addresses
     $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
 
-    if (!empty ($processesAndIpAddresses)) {
+    if (!empty($processesAndIpAddresses)) {
         foreach ($processesAndIpAddresses as $processData) {
             $process = $processData['process'];
             $ipaddresscolumn = $processData['ipaddresscolumn'];
@@ -1478,6 +1500,12 @@ if ($method == 'ng_graph') {
                     $date_column = "INSPECTION3FINISHDATETIME";
                     break;
                 case "Assurance":
+                    $date_column = "INSPECTION4FINISHDATETIME";
+                    break;
+                case "Components":
+                    $date_column = "INSPECTION3FINISHDATETIME";
+                    break;
+                case "Fuse Checking":
                     $date_column = "INSPECTION4FINISHDATETIME";
                     break;
                 default:
