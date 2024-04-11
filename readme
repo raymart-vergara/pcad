@@ -1,1 +1,14 @@
-Production Conveyor Analysis Dashboard
+## About Production Conveyor Analysis Dashboard
+
+A web application for dashboard and data visualization of manpower count per line, accounting efficiency, production plan, production output, conveyor speed, 
+Andon data, yield and PPM. 
+
+Features:
+- dashboard (production lines and top management)
+- masterlist (ST Masterlist, Line Name Masterlist)
+- settings and configuration for dashboard of production lines
+- data visualization such as charts for Delay, Hourly Output and NG
+- summary report graph for past production plans
+
+A Native PHP project for back end of web application and to all database connections from other systems. 
+Using HTML5, CSS3 and JavaScript with JQuery and AJAX for the web interface and behavior of all users from Production Line.
