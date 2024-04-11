@@ -76,12 +76,11 @@ if ($result) {
                     <div class="col-12 px-5 d-flex justify-content-center align-items-center">
                         <button type="submit"
                             style="width: 75%; border-radius: 20px; background-color: #0069B0; color: #FFF"
-                            onmouseover="this.style.backgroundColor='#005996'; this.style.color='#fff';"
+                            onmouseover="this.style.backgroundColor='#00538B'; this.style.color='#fff';"
                             onmouseout="this.style.backgroundColor='#0069B0'; this.style.color='#fff';"
                             class="btn btn-hover" id="menuBtn" name="request" value="mainMenu">
                             Proceed
                         </button>
-
                     </div>
                 </div>
             </div>

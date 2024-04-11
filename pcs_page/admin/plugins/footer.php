@@ -11,6 +11,7 @@ include '../../modals/logoutpcs.php';
 include '../../modals/addpcs.php';
 include '../../modals/updatepcs.php';
 include '../../modals/deletepcs.php';
+include '../../modals/add_inspection.php';
 ?>
 <!-- jQuery -->
 <script src="../../plugins/jquery/dist/jquery.min.js"></script>
