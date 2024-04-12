@@ -51,7 +51,7 @@ if ($method == 'insp_list_last_page') {
 		"process" => $process
 	);
 
-	$results_per_page = 20;
+	$results_per_page = 10;
 
 	$number_of_result = intval(count_insp_list($search_arr, $conn_pcad));
 
