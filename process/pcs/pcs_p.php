@@ -187,7 +187,6 @@ if ($method == 'update_pcs') {
 	}
 }
 
-
 if ($method == 'delete_pcs') {
 	$id = $_POST['id'];
 
