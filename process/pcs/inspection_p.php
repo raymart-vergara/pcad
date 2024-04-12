@@ -6,6 +6,42 @@ require '../../process/conn/pcad.php';
 
 $method = $_POST['method'];
 
+if ($method == 'fetch_process') {
+	$final_process = array();
+	$query = "SELECT final_process FROM m_final_process ORDER BY final_process ASC";
+
+	$stmt = $conn_pcad->query($query);
+
+	$final_process = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	if ($final_process) {
+		echo '<option value="">Select process</option>';
+		foreach ($final_process as $i => $ircs) {
+			echo '<option value="' . $ircs['final_process'] . '">' . $ircs['final_process'] . '</option>';
+		}
+	} else {
+		echo '<option> - - - - </option>';
+	}
+}
+
+if ($method == 'fetch_ip_address_column') {
+	$ip_address_col = array();
+	$query = "SELECT ipaddresscolumn FROM m_final_process";
+
+	$stmt = $conn_pcad->query($query);
+
+	$ip_address_col = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	if ($ip_address_col) {
+		echo '<option value="">Select IP address column</option>';
+		foreach ($ip_address_col as $i => $ircs) {
+			echo '<option value="' . $ircs['ipaddresscolumn'] . '">' . $ircs['ipaddresscolumn'] . '</option>';
+		}
+	} else {
+		echo '<option> - - - - </option>';
+	}
+}
+
 function count_insp_list($search_arr, $conn_pcad)
 {
 	$query = "SELECT count(id) AS total FROM m_inspection_ip WHERE 1";
