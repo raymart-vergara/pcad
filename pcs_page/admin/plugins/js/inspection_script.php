@@ -201,7 +201,7 @@
                     if (response == 'success') {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Succesfully Recorded!!!',
+                            title: 'Successfully Recorded!!!',
                             text: 'Success',
                             showConfirmButton: false,
                             timer: 1000
@@ -233,4 +233,223 @@
         }
     }
 
+    const get_insp_details = (param) => {
+        var string = param.split('~!~');
+        var id = string[0];
+        var ircs_line = string[1];
+        var process = string[2];
+        var ip_address_1 = string[3];
+        var ip_address_2 = string[4];
+        var ip_address_col = string[5];
+
+        document.getElementById('id_insp_update').value = id;
+        document.getElementById('ircs_line_insp_master_update').value = ircs_line;
+        document.getElementById('process_insp_master_update').value = process;
+        document.getElementById('ip_address_1_insp_master_update').value = ip_address_1;
+        document.getElementById('ip_address_2_insp_master_update').value = ip_address_2;
+        document.getElementById('ip_address_column_insp_master_update').value = ip_address_col;
+    }
+
+    const update_insp = () => {
+        var id = document.getElementById('id_insp_update').value;
+        var ircs_line = document.getElementById('ircs_line_insp_master_update').value;
+        var process = document.getElementById('process_insp_master_update').value;
+        var ip_address_1 = document.getElementById('ip_address_1_insp_master_update').value;
+        var ip_address_2 = document.getElementById('ip_address_2_insp_master_update').value;
+        var ip_address_col = document.getElementById('ip_address_column_insp_master_update').value;
+
+        if (ircs_line == '') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Please Input IRCS Line',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        } else if (process == '') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Please Input Process',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        } else if (ip_address_1 == '') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Please Input IP Address 1',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        } else if (ip_address_col == '') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Please Input IP Address Column',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        } else {
+            $.ajax({
+                url: '../../process/pcs/inspection_p.php',
+                type: 'POST',
+                cache: false,
+                data: {
+                    method: 'update_insp',
+                    id: id,
+                    ircs_line: ircs_line,
+                    process: process,
+                    ip_address_1: ip_address_1,
+                    ip_address_2: ip_address_2,
+                    ip_address_col: ip_address_col
+                }, success: function (response) {
+                    console.log(response);
+                    if (response == 'success') {
+                        console.log(response);
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Successfully Recorded!!!',
+                            text: 'Success',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                        $('#id_insp_update').val('');
+                        $('#ircs_line_insp_master_update').val('');
+                        $('#process_insp_master_update').val('');
+                        $('#ip_address_1_insp_master_update').val('');
+                        $('#ip_address_2_insp_master_update').val('');
+                        $('#ip_address_column_insp_master_update').val('');
+                        load_insp(1);
+                        $('#update_modal_insp').modal('hide');
+                    } else if (response == 'Already Exist') {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Duplicate Data',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                }
+            })
+        }
+    }
+
+    const delete_insp = () => {
+        var id = document.getElementById('id_insp_update').value;
+        $.ajax({
+            url: '../../process/pcs/inspection_p.php',
+            type: 'POST',
+            cache: false,
+            data: {
+                method: 'delete_insp',
+                id: id
+            }, success: function (response) {
+                console.log(response);
+                if (response == 'success') {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Successfully Deleted',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+                    load_insp(1);
+                    $('#update_modal_insp').modal('hide');
+                }
+            }
+        })
+    }
+
+    const uncheck_all = () => {
+        var select_all = document.getElementById('check_all');
+        select_all.checked = false;
+        document.querySelectorAll(".singleCheck").forEach((el, i) => {
+            el.checked = false;
+        });
+        get_checked_length();
+    }
+
+    const select_all_func = () => {
+        var select_all = document.getElementById('check_all');
+        if (select_all.checked == true) {
+            console.log('check');
+            document.querySelectorAll(".singleCheck").forEach((el, i) => {
+                el.checked = true;
+            });
+        } else {
+            console.log('uncheck');
+            document.querySelectorAll(".singleCheck").forEach((el, i) => {
+                el.checked = false;
+            });
+        }
+        get_checked_length();
+    }
+
+    const get_checked_length = () => {
+        var arr = [];
+        document.querySelectorAll("input.singleCheck[type='checkbox']:checked").forEach((el, i) => {
+            arr.push(el.value);
+        });
+        console.log(arr);
+        var numberOfChecked = arr.length;
+        console.log(numberOfChecked);
+        if (numberOfChecked > 0) {
+            document.getElementById("count_delete_insp_selected").innerHTML = `${numberOfChecked} Row/s Selected`;
+            document.getElementById("btnDeleteSelected").removeAttribute('disabled');
+        } else {
+            document.getElementById("btnDeleteSelected").setAttribute('disabled', true);
+        }
+    }
+
+    const delete_insp_selected = () => {
+        var arr = [];
+        document.querySelectorAll("input.singleCheck[type='checkbox']:checked").forEach((el, i) => {
+            arr.push(el.value);
+        });
+        console.log(arr);
+        var numberOfChecked = arr.length;
+        if (numberOfChecked > 0) {
+            id_arr = Object.values(arr);
+            $.ajax({
+                url: '../../process/pcs/inspection_p.php',
+                type: 'POST',
+                cache: false,
+                data: {
+                    method: 'delete_insp_selected',
+                    id_arr: id_arr
+                }, success: function (response) {
+                    console.log('response');
+                    if (response == 'success') {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Successfully Deleted',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                        load_insp(1);
+                        document.getElementById("btnDeleteSelected").setAttribute('disabled', true);
+                        $('#delete_insp_selected').modal('hide');
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            showConfirmButton: false,
+                            timer: 1000
+                        });
+                    }
+                }
+            });
+        } else {
+            Swal.fire({
+                icon: 'info',
+                title: 'No Row Selected',
+                text: 'Information',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        }
+    }
 </script>

@@ -415,8 +415,6 @@
         });
     }
 
-
-
     // uncheck all
     const uncheck_all = () => {
         var select_all = document.getElementById('check_all');
