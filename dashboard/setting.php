@@ -15,10 +15,10 @@ if ($result) {
 ?>
 
 <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="card col-5" style="border-radius: 5px;">
+    <div class="card col-5" style="border-radius: 10px;">
         <div class="row" style="height: 500px;">
             <div class="col-5 m-0 p-0 d-flex justify-content-center align-items-center"
-                style="background: #0D2D5E; color: #FFF; border-radius: 5px 0px 0px 5px;">
+                style="background: #0D2D5E; color: #FFF; border-radius: 10px 0px 0px 10px;">
                 <div class="d-flex flex-column justify-content-center align-items-left" style="margin: 0; padding: 0;">
                     <div class="row">
                         <div class="col-12">
@@ -79,7 +79,9 @@ if ($result) {
                             onmouseover="this.style.backgroundColor='#00538B'; this.style.color='#fff';"
                             onmouseout="this.style.backgroundColor='#0069B0'; this.style.color='#fff';"
                             class="btn btn-hover" id="menuBtn" name="request" value="mainMenu">
-                            Proceed
+                            <a href="../index_IV.php?registlinename=registlinename" id="runcounterbtn"
+                                class="small-box-footer monitor" style="color: #FFF;">Proceed
+                                &ensp;<i class="fas fa-arrow-right"></i></a>
                         </button>
                     </div>
                 </div>

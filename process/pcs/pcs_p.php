@@ -219,20 +219,38 @@ if ($method == 'delete_pcs_selected') {
 	}
 }
 
+// if ($method == 'final_process') {
+// 	$final_process = array();
+// 	$query = "SELECT final_process FROM m_final_process ORDER BY final_process ASC";
+
+// 	$stmt = $conn_pcad->query($query);
+
+// 	$final_process = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// 	if ($final_process) {
+// 		foreach ($final_process as $i => $ircs) {
+// 			echo '<option value="' . $ircs['final_process'] . '">' . $ircs['final_process'] . '</option>';
+// 		}
+// 	} else {
+// 		echo '<option> - - - </option>';
+// 	}
+// }
+
 if ($method == 'final_process') {
-	$final_process = array();
-	$query = "SELECT final_process FROM m_final_process ORDER BY final_process ASC";
+	$ip_address_col = array();
+	$query = "SELECT ipaddresscolumn FROM m_final_process";
 
 	$stmt = $conn_pcad->query($query);
 
-	$final_process = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	$ip_address_col = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-	if ($final_process) {
-		foreach ($final_process as $i => $ircs) {
-			echo '<option value="' . $ircs['final_process'] . '">' . $ircs['final_process'] . '</option>';
+	if ($ip_address_col) {
+		echo '<option value="">Select IP address column</option>';
+		foreach ($ip_address_col as $i => $ircs) {
+			echo '<option value="' . $ircs['ipaddresscolumn'] . '">' . $ircs['ipaddresscolumn'] . '</option>';
 		}
 	} else {
-		echo '<option> - - - </option>';
+		echo '<option> - - - - </option>';
 	}
 }
 
