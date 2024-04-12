@@ -133,7 +133,7 @@
                 if (current_page == 1) {
                     $('#list_of_insp_table tbody').html(response);
                 } else {
-                    $('#list_of_insp_table tbody').append(loading);
+                    $('#list_of_insp_table tbody').append(response);
                 }
                 sessionStorage.setItem('list_of_insp_table_pagination', current_page);
                 count_insp_list();
