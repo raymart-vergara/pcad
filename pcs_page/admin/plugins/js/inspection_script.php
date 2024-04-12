@@ -1,6 +1,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
         load_insp(1);
+        fetch_process();
+        fetch_ip_address_column();
     });
 
     document.getElementById("ircs_line_insp_search").addEventListener("keyup", e => {
@@ -10,6 +12,44 @@
     document.getElementById("process_insp_search").addEventListener("keyup", e => {
         load_insp(1);
     });
+
+    function fetch_process() {
+        $.ajax({
+            url: '../../process/pcs/inspection_p.php',
+            type: 'POST',
+            cache: false,
+            data: {
+                method: 'fetch_process'
+            },
+            dataType: 'html',
+            success: function (response) {
+                $('#process_insp_master').html(response);
+            },
+            error: function () {
+                console.error('Error fetching data');
+                $('#process_insp_master').html('<option>Error fetching data</option>');
+            }
+        })
+    }
+
+    function fetch_ip_address_column() {
+        $.ajax({
+            url: '../../process/pcs/inspection_p.php',
+            type: 'POST',
+            cache: false,
+            data: {
+                method: 'fetch_ip_address_column'
+            },
+            dataType: 'html',
+            success: function (response) {
+                $('#ip_address_column_insp_master').html(response);
+            },
+            error: function () {
+                console.error('Error fetching data');
+                $('#ip_address_column_insp_master').html('<option>Error fetching data</option>');
+            }
+        })
+    }
 
     // Table Responsive Scroll Event for Load More
     document.getElementById("list_of_insp_res").addEventListener("scroll", function () {

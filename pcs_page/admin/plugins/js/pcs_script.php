@@ -527,7 +527,6 @@
         });
     }
 
-
     $(document).ready(function () {
         fetchFinalProcess();
     });

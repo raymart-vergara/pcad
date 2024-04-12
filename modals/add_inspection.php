@@ -16,14 +16,18 @@
                         <label>IRCS Line</label>
                         <input type="text" id="ircs_line_insp_master" class="form-control" autocomplete="off">
                     </div>
-                    <!-- DROPDOWN!!! -->
                     <div class="col-4">
-                        <label>Process</label>
-                        <input type="text" id="process_insp_master" class="form-control" autocomplete="off">
+                        <label for="process_insp_master">Process</label>
+                        <select id="process_insp_master" class="form-control" maxlength="255" autocomplete="off">
+                            <option value=""></option>
+                        </select>
                     </div>
+
                     <div class="col-4">
-                        <label>IP Address Column</label>
-                        <input type="text" id="ip_address_column_insp_master" class="form-control" autocomplete="off">
+                        <label for="ip_address_column_insp_master">IP Address Column</label>
+                        <select id="ip_address_column_insp_master" class="form-control" maxlength="255" autocomplete="off">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
                 <div class="row mt-4">
