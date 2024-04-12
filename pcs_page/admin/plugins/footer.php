@@ -1,5 +1,5 @@
  <footer class="main-footer">
-    <strong>Copyright &copy; 2024. Developed by: Jane Irish Bautista</strong>
+    <strong>Copyright &copy; 2024. Developed by: Jane Irish Bautista & AKM</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 1.0.0

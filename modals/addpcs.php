@@ -1,5 +1,6 @@
-<div class="modal fade bd-example-modal-xl" id="new_pcs" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade bd-example-modal-xl" id="new_pcs" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
@@ -24,11 +25,11 @@
             <input type="text" id="andon_line_master" class="form-control" autocomplete="off">
           </div>
         </div>
-        <div class="row">
+        <div class="row mt-4">
           <div class="col-4">
-            <label for="final_process_master">Final Process</label>
+            <label for="final_process_master">IP Address Column</label>
             <select id="final_process_master" class="form-control" maxlength="255" autocomplete="off">
-              <option value="">......</option> 
+              <option value="">......</option>
             </select>
           </div>
           <div class="col-4">
