@@ -14,7 +14,6 @@
                 <div class="row">
                     <div class="col-4">
                         <input type="hidden" id="id_insp_update" class="form-control">
-
                         <label>IRCS Line</label>
                         <input type="text" id="ircs_line_insp_master_update" class="form-control" autocomplete="off">
                     </div>

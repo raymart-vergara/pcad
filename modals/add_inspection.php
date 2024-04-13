@@ -22,7 +22,6 @@
                             <option value=""></option>
                         </select>
                     </div>
-
                     <div class="col-4">
                         <label for="ip_address_column_insp_master">IP Address Column</label>
                         <select id="ip_address_column_insp_master" class="form-control" maxlength="255" autocomplete="off">
