@@ -29,7 +29,7 @@
         <div class="row mt-4">
           <div class="col-4">
             <input type="hidden" id="id_update" class="form-control">
-            <label>IP Address Column</label>
+            <label>Final Process</label>
             <input type="text" id="final_process_update" class="form-control" maxlength="255" autocomplete="off">
           </div>
           <div class="col-4">
