@@ -83,7 +83,7 @@
                       <th>Line No.</th>
                       <th>IRCS Line</th>
                       <th>Andon Line</th>
-                      <th>IP Address Column</th>
+                      <th>Final Process</th>
                       <th>IP Address</th>
                     </tr>
                   </thead>

@@ -27,7 +27,7 @@
         </div>
         <div class="row mt-4">
           <div class="col-4">
-            <label for="final_process_master">IP Address Column</label>
+            <label for="final_process_master">Final Process</label>
             <select id="final_process_master" class="form-control" maxlength="255" autocomplete="off">
               <option value="">......</option>
             </select>
