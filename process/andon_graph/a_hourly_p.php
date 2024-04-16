@@ -7,8 +7,9 @@ $method = $_GET['method'];
 
 // for andon hourly graph
 if ($method == 'andon_hourly') {
-    // $andon_line = $_GET['andon_line'];
-    $andon_line = 'DAIHATSU D92-2132';
+    $andon_line = $_GET['andon_line'];
+    // $andon_line = 'DAIHATSU D92-2132';
+
 
     $data = [];
 

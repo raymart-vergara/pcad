@@ -70,14 +70,15 @@ function get_ircs_line_data($registlinename, $conn_pcad)
 {
 	$registlinename = addslashes($registlinename);
 	$final_process = '';
+	$ipaddresscolumn = 'INSPECTION4IPADDRESS';
 	$ipAddresses = array();
 	$response_arr = array();
 	
 	if (!empty($registlinename)) {
-		$query = "SELECT i.ircs_line, i.final_process, insp.ip_address, insp.ip_address2, insp.ipaddresscolumn 
+		$query = "SELECT i.ircs_line, i.final_process, insp.ip_address, insp.ip_address2, insp.ipaddresscolumn, insp.finishdatetime, insp.judgement 
 				FROM m_ircs_line i
 				LEFT JOIN m_inspection_ip insp
-				ON i.ircs_line = insp.ircs_line AND i.final_process = insp.process
+				ON i.ircs_line = insp.ircs_line AND i.final_process = insp.finishdatetime
 				WHERE i.ircs_line = '$registlinename' LIMIT 1";
 		$stmt = $conn_pcad->prepare($query);
 		$stmt->execute();
@@ -86,6 +87,8 @@ function get_ircs_line_data($registlinename, $conn_pcad)
 				$registlinename = $row['ircs_line'];
 				$final_process = $row['final_process'];
 				$ipaddresscolumn = $row['ipaddresscolumn'];
+				$finishdatetime = $row['finishdatetime'];
+				$judgement = $row['judgement'];
 				
 				if (!empty($row['ip_address'])) {
 					$ipAddresses[] = $row['ip_address'];
@@ -104,7 +107,9 @@ function get_ircs_line_data($registlinename, $conn_pcad)
 		'registlinename' => $registlinename,
 		'final_process' => $final_process,
 		'ipaddresscolumn' => $ipaddresscolumn,
-		"ipAddresses" => $ipAddresses
+		"ipAddresses" => $ipAddresses,
+		'finishdatetime' => $finishdatetime,
+		'judgement' => $judgement
 	);
 	return $response_arr;
 }
@@ -152,38 +157,44 @@ function getIpAddressesFromDatabase($registlinename, $conn_pcad)
     $response_arr = array();
 
     // Retrieve IP addresses from the first column (ip_address) for the specified process
-    $query = "SELECT process, ip_address, ip_address2, ipaddresscolumn FROM m_inspection_ip WHERE ircs_line = :registlinename";
+    $query = "SELECT process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement FROM m_inspection_ip WHERE ircs_line = :registlinename";
     $stmt = $conn_pcad->prepare($query);
     $stmt->bindParam(':registlinename', $registlinename, PDO::PARAM_STR);
     $stmt->execute();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	$ipAddresses = array();
+		$ipAddresses = array();
 
-	$process = $row['process'];
+		$process = $row['process'];
 
-	if (!empty($row['ip_address'])) {
-		$ipAddresses[] = $row['ip_address'];
-	}
-	if (!empty($row['ip_address2'])) {
-		$ipAddresses[] = $row['ip_address2'];
-	}
+		if (!empty($row['ip_address'])) {
+			$ipAddresses[] = $row['ip_address'];
+		}
+		if (!empty($row['ip_address2'])) {
+			$ipAddresses[] = $row['ip_address2'];
+		}
 
-	$ipaddresscolumn = $row['ipaddresscolumn'];
+		$ipaddresscolumn = $row['ipaddresscolumn'];
 
-	// Remove duplicates and return the merged result
-	$ipAddresses = array_unique($ipAddresses);
+		$finishdatetime = $row['finishdatetime'];
 
-	$inspection_ip_arr = array(
-		"process" => $process,
-		"ipaddresscolumn" => $ipaddresscolumn,
-		"ipAddresses" => $ipAddresses
-	);
-	
-	// Append to the response array
-        $response_arr[] = $inspection_ip_arr;
-	
-	// array_push($response_arr, $inspection_ip_arr);
+		$judgement = $row['judgement'];
+
+		// Remove duplicates and return the merged result
+		$ipAddresses = array_unique($ipAddresses);
+
+		$inspection_ip_arr = array(
+			"process" => $process,
+			"ipaddresscolumn" => $ipaddresscolumn,
+			"ipAddresses" => $ipAddresses,
+			"finishdatetime" => $finishdatetime,
+			"judgement" => $judgement
+		);
+
+		// Append to the response array
+		$response_arr[] = $inspection_ip_arr;
+
+		// array_push($response_arr, $inspection_ip_arr);
     }
 
     return $response_arr;

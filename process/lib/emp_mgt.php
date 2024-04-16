@@ -887,13 +887,15 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 	return $response_arr;
 }
 
-function get_process_list($search_arr, $conn_emp_mgt) {
+function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 	$results = array();
 
+	$registlinename = $search_arr['registlinename'];
 	$day = $search_arr['day'];
 	$shift_group = addslashes($search_arr['shift_group']);
 	$line_no = addslashes($search_arr['line_no']);
 
+	// Get Process by m_employees
 	$sql = "SELECT IFNULL(process, 'No Process') AS process1, 
 			COUNT(emp_no) AS total 
 		FROM `m_employees` 
@@ -922,6 +924,7 @@ function get_process_list($search_arr, $conn_emp_mgt) {
 		}
 	}
 
+	// Get Total Present per Process by joining t_time_in_out on m_employees
 	$sql = "SELECT IFNULL(emp.process, 'No Process') AS process1, 
 			COUNT(tio.emp_no) AS total_present 
 		FROM `t_time_in_out` tio 
@@ -946,6 +949,23 @@ function get_process_list($search_arr, $conn_emp_mgt) {
 			foreach ($results as &$result) {
 				if ($result['process'] == $row['process1']) {
 					$result['total_present'] = $row['total_present'];
+					break; // exit the loop once you've found and updated the process
+				}
+			}
+			unset($result); // unset reference to last element
+		}
+	}
+
+	// Get total by process_design (process) and registlinename on m_process_design
+	$sql = "SELECT process_design, mp_count FROM m_process_design WHERE ircs_line = '$registlinename'";
+
+	$stmt = $conn_pcad->prepare($sql);
+	$stmt->execute();
+	if ($stmt->rowCount() > 0) {
+		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
+			foreach ($results as &$result) {
+				if ($result['process'] == $row['process_design']) {
+					$result['total'] = $row['mp_count'];
 					break; // exit the loop once you've found and updated the process
 				}
 			}

@@ -1,5 +1,5 @@
-<?php include 'plugins/navbar.php';?>
-<?php include 'plugins/sidebar/pcs_bar.php';?>
+<?php include 'plugins/navbar.php'; ?>
+<?php include 'plugins/sidebar/pcs_bar.php'; ?>
 
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -25,7 +25,8 @@
     <div class="container-fluid">
       <div class="row mb-4">
         <div class="col-sm-2">
-          <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#new_pcs"><i class="fas fa-plus-circle"></i> Add New PCS</button>
+          <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#new_pcs"><i
+              class="fas fa-plus-circle"></i> Add New PCS</button>
         </div>
       </div>
       <div class="row">
@@ -47,26 +48,33 @@
               <div class="row mb-4">
                 <div class="col-sm-2">
                   <label>Line No.</label>
-                  <input type="text" class="form-control" id="line_no_search" placeholder="Search" autocomplete="off" maxlength="255">
+                  <input type="text" class="form-control" id="line_no_search" placeholder="Search" autocomplete="off"
+                    maxlength="255">
                 </div>
                 <div class="col-sm-3">
                   <label>IRCS Line</label>
-                  <input type="text" class="form-control" id="ircs_search" placeholder="Search" autocomplete="off" maxlength="255">
+                  <input type="text" class="form-control" id="ircs_search" placeholder="Search" autocomplete="off"
+                    maxlength="255">
                 </div>
                 <div class="col-sm-3">
                   <label>Andon Line</label>
-                  <input type="text" class="form-control" id="andon_search" placeholder="Search" autocomplete="off" maxlength="255">
+                  <input type="text" class="form-control" id="andon_search" placeholder="Search" autocomplete="off"
+                    maxlength="255">
                 </div>
                 <div class="col-sm-2">
                   <label>&nbsp;</label>
-                  <button type="button" class="btn bg-primary btn-block" onclick="load_pcs(1)"><i class="fas fa-search"></i> Search</button>
+                  <button type="button" class="btn bg-primary btn-block" onclick="load_pcs(1)"><i
+                      class="fas fa-search"></i> Search</button>
                 </div>
                 <div class="col-sm-2">
                   <label>&nbsp;</label>
-                  <button type="button" class="btn bg-danger btn-block" data-toggle="modal" data-target="#delete_pcs_selected" id="btnDeleteSelected" disabled><i class="fas fa-trash"></i> Delete Selected</button>
+                  <button type="button" class="btn bg-danger btn-block" data-toggle="modal"
+                    data-target="#delete_pcs_selected" id="btnDeleteSelected" disabled><i class="fas fa-trash"></i>
+                    Delete Selected</button>
                 </div>
               </div>
-              <div id="list_of_pcs_res" class="table-responsive" style="max-height: 500px; overflow: auto; display:inline-block;">
+              <div id="list_of_pcs_res" class="table-responsive"
+                style="max-height: 500px; overflow: auto; display:inline-block;">
                 <table id="list_of_pcs_table" class="table table-sm table-head-fixed text-nowrap table-hover">
                   <thead style="text-align: center;">
                     <tr>
@@ -94,7 +102,8 @@
                 <div class="dataTables_info" id="list_of_pcs_info" role="status" aria-live="polite"></div>
               </div>
               <div class="d-flex justify-content-sm-center">
-                <button type="button" class="btn bg-primary" id="btnNextPage" style="display:none;" onclick="get_next_page()">Load more</button>
+                <button type="button" class="btn bg-primary" id="btnNextPage" style="display:none;"
+                  onclick="get_next_page()">Load more</button>
               </div>
             </div>
             <!-- /.card-body -->
@@ -108,5 +117,5 @@
   </section>
 </div>
 
-<?php include 'plugins/footer.php';?>
+<?php include 'plugins/footer.php'; ?>
 <?php include 'plugins/js/pcs_script.php'; ?>

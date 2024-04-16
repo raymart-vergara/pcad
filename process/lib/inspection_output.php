@@ -17,19 +17,20 @@ function count_overall_g($search_arr, $conn_ircs)
 
    $total = 0;
 
-   $date_column = "INSPECTION4FINISHDATETIME";
+   // $date_column = "INSPECTION4FINISHDATETIME";
+   $date_column = $final_process;
 
-   if ($final_process == 'Assurance') {
-      $date_column = "INSPECTION4FINISHDATETIME";
-   } else {
-      $date_column = "INSPECTION3FINISHDATETIME";
-   }
+   // if ($final_process == 'Assurance') {
+   //    $date_column = "INSPECTION4FINISHDATETIME";
+   // } else {
+   //    $date_column = "INSPECTION3FINISHDATETIME";
+   // }
 
    $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
    $query = "SELECT COUNT(*) AS OUTPUT FROM T_PRODUCTWK WHERE REGISTLINENAME = '$registlinename'";
 
-   if (!empty ($ipAddresses)) {
+   if (!empty($ipAddresses)) {
       $query .= " AND $ipaddresscolumn IN ($ipAddressesString)";
    }
 
@@ -61,35 +62,43 @@ function count_overall_ng($search_arr, $conn_ircs, $conn_pcad)
    // Fetch processes and their corresponding IP addresses
    $processesAndIpAddresses = getIpAddressesFromDatabase($search_arr['registlinename'], $conn_pcad);
 
-   if (!empty ($processesAndIpAddresses)) {
+   if (!empty($processesAndIpAddresses)) {
       foreach ($processesAndIpAddresses as $processData) {
          $process = $processData['process'];
          $ipaddresscolumn = $processData['ipaddresscolumn'];
          $ipAddresses = $processData['ipAddresses'];
 
-         $judgmentColumnNG = "";
-         $date_column = "";
+         $judgmentColumnNG = $processData['judgement'];
+         $date_column = $processData['finishdatetime'];
 
-         switch ($process) {
-            case "Dimension":
-               $date_column = "INSPECTION1FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION1JUDGMENT";
-               break;
-            case "Electric":
-               $date_column = "INSPECTION2FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION2JUDGMENT";
-               break;
-            case "Visual":
-               $date_column = "INSPECTION3FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION3JUDGMENT";
-               break;
-            case "Assurance":
-               $date_column = "INSPECTION4FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION4JUDGMENT";
-               break;
-            default:
-               break;
-         }
+         // switch ($process) {
+         //    case "Dimension":
+         //       $date_column = "INSPECTION1FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION1JUDGMENT";
+         //       break;
+         //    case "Electric":
+         //       $date_column = "INSPECTION2FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION2JUDGMENT";
+         //       break;
+         //    case "Visual":
+         //       $date_column = "INSPECTION3FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION3JUDGMENT";
+         //       break;
+         //    case "Assurance":
+         //       $date_column = "INSPECTION4FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION4JUDGMENT";
+         //       break;
+         //    case "Components":
+         //       $date_column = "INSPECTION3FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION3JUDGMENT";
+         //       break;
+         //    case "Fuse Checking":
+         //       $date_column = "INSPECTION4FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION4JUDGMENT";
+         //       break;
+         //    default:
+         //       break;
+         // }
 
          $processDetailsNG = array(
             'process' => $process,
@@ -121,7 +130,7 @@ function countProcessGood($search_arr, $conn_ircs, $processDetailsGood)
    $total = 0;
 
    // Check if the necessary parameters are provided
-   if (!isset ($processDetailsGood['ipAddressColumn']) || !isset ($processDetailsGood['ipAddresses'])) {
+   if (!isset($processDetailsGood['ipAddressColumn']) || !isset($processDetailsGood['ipAddresses'])) {
       // Handle the case where the required parameters are not provided
       return $total;
    }
@@ -129,12 +138,14 @@ function countProcessGood($search_arr, $conn_ircs, $processDetailsGood)
    $ipAddressColumn = $processDetailsGood['ipAddressColumn'];
    $date_column = $processDetailsGood['date_column'];
    $ipAddresses = $processDetailsGood['ipAddresses'];
+   // $finishdatetime = $processDetailsGood['finishdatetime'];
+   // $judgement = $processDetailsGood['judgement'];
 
    $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
    $query = "SELECT COUNT(*) AS PROCESS_COUNT_GOOD FROM T_PRODUCTWK WHERE REGISTLINENAME = '$registlinename'";
 
-   if (!empty ($ipAddresses)) {
+   if (!empty($ipAddresses)) {
       $query .= " AND $ipAddressColumn IN ($ipAddressesString)";
    }
 
@@ -175,7 +186,7 @@ function countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad)
    $total = 0;
 
    // Check if the necessary parameters are provided
-   if (!isset ($processDetailsNG['ipAddressColumn']) || !isset ($processDetailsNG['judgmentColumn']) || !isset ($processDetailsNG['ipAddresses'])) {
+   if (!isset($processDetailsNG['ipAddressColumn']) || !isset($processDetailsNG['judgmentColumn']) || !isset($processDetailsNG['ipAddresses'])) {
       // Handle the case where the required parameters are not provided
       return $total;
    }
@@ -187,7 +198,7 @@ function countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad)
    // Get IP addresses from the database
    $ipAddresses = $processDetailsNG['ipAddresses'];
 
-   if (empty ($ipAddresses)) {
+   if (empty($ipAddresses)) {
       // Handle the case where IP addresses are not found
       return $total;
    }
@@ -196,7 +207,7 @@ function countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad)
 
    $query = "SELECT COUNT(*) AS PROCESS_COUNT_NG FROM T_REPAIRWK WHERE REGISTLINENAME = '$registlinename' AND $judgmentColumn = '0'";
 
-   if (!empty ($ipAddresses)) {
+   if (!empty($ipAddresses)) {
       $query .= " AND $ipAddressColumn IN ($ipAddressesString)";
    }
 
@@ -242,19 +253,20 @@ function get_rows_overall_g($search_arr, $conn_ircs)
    // $total = 0;
    $total = array();
 
-   $date_column = "INSPECTION4FINISHDATETIME";
+   $date_column = $final_process;
+   // $date_column = $final_process;
 
-   if ($final_process == 'Assurance') {
-      $date_column = "INSPECTION4FINISHDATETIME";
-   } else {
-      $date_column = "INSPECTION3FINISHDATETIME";
-   }
+   // if ($final_process == 'Assurance') {
+   //    $date_column = "INSPECTION4FINISHDATETIME";
+   // } else {
+   //    $date_column = "INSPECTION3FINISHDATETIME";
+   // }
 
    $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
    $query = "SELECT * FROM T_PRODUCTWK WHERE REGISTLINENAME = '$registlinename'";
 
-   if (!empty ($ipAddresses)) {
+   if (!empty($ipAddresses)) {
       $query .= " AND $ipaddresscolumn IN ($ipAddressesString)";
    }
 
@@ -293,7 +305,7 @@ function get_overall_g($search_arr, $conn_ircs, $processDetailsGood)
    $total = 0;
 
    // Check if the necessary parameters are provided
-   if (!isset ($processDetailsGood['ipAddressColumn']) || !isset ($processDetailsGood['judgmentColumn']) || !isset ($processDetailsGood['ipAddresses'])) {
+   if (!isset($processDetailsGood['ipAddressColumn']) || !isset($processDetailsGood['judgmentColumn']) || !isset($processDetailsGood['ipAddresses'])) {
       // Handle the case where the required parameters are not provided
       return $total;
    }
@@ -306,7 +318,7 @@ function get_overall_g($search_arr, $conn_ircs, $processDetailsGood)
 
    $query = "SELECT COUNT(*) AS PROCESS_COUNT_GOOD FROM T_PRODUCTWK WHERE REGISTLINENAME = '$registlinename'";
 
-   if (!empty ($ipAddresses)) {
+   if (!empty($ipAddresses)) {
       $query .= " AND $ipAddressColumn IN ($ipAddressesString)";
    }
 
@@ -344,40 +356,50 @@ function get_rows_overall_ng($search_arr, $conn_ircs, $conn_pcad)
    // Fetch processes and their corresponding IP addresses
    $processesAndIpAddresses = getIpAddressesFromDatabase($search_arr['registlinename'], $conn_pcad);
 
-   if (!empty ($processesAndIpAddresses)) {
+   if (!empty($processesAndIpAddresses)) {
       foreach ($processesAndIpAddresses as $processData) {
          $process = $processData['process'];
          $ipaddresscolumn = $processData['ipaddresscolumn'];
          $ipAddresses = $processData['ipAddresses'];
 
          $judgmentColumnGood = "";
-         $judgmentColumnNG = "";
-         $ipJudgementColumn = "";
+         $judgmentColumnNG = $processData['judgement'];
+         $ipJudgementColumn = $processData['finishdatetime'];
 
-         switch ($process) {
-            case "Dimension":
-               $ipJudgementColumn = "INSPECTION1FINISHDATETIME";
-               $judgmentColumnGood = "INSPECTION1FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION1JUDGMENT";
-               break;
-            case "Electric":
-               $ipJudgementColumn = "INSPECTION2FINISHDATETIME";
-               $judgmentColumnGood = "INSPECTION2FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION2JUDGMENT";
-               break;
-            case "Visual":
-               $ipJudgementColumn = "INSPECTION3FINISHDATETIME";
-               $judgmentColumnGood = "INSPECTION3FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION3JUDGMENT";
-               break;
-            case "Assurance":
-               $ipJudgementColumn = "INSPECTION4FINISHDATETIME";
-               $judgmentColumnGood = "INSPECTION4FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION4JUDGMENT";
-               break;
-            default:
-               break;
-         }
+         // switch ($process) {
+         //    case "Dimension":
+         //       $ipJudgementColumn = "INSPECTION1FINISHDATETIME";
+         //       $judgmentColumnGood = "INSPECTION1FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION1JUDGMENT";
+         //       break;
+         //    case "Electric":
+         //       $ipJudgementColumn = "INSPECTION2FINISHDATETIME";
+         //       $judgmentColumnGood = "INSPECTION2FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION2JUDGMENT";
+         //       break;
+         //    case "Visual":
+         //       $ipJudgementColumn = "INSPECTION3FINISHDATETIME";
+         //       $judgmentColumnGood = "INSPECTION3FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION3JUDGMENT";
+         //       break;
+         //    case "Assurance":
+         //       $ipJudgementColumn = "INSPECTION4FINISHDATETIME";
+         //       $judgmentColumnGood = "INSPECTION4FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION4JUDGMENT";
+         //       break;
+         //    case "Components":
+         //       $ipJudgementColumn = "INSPECTION3FINISHDATETIME";
+         //       $judgmentColumnGood = "INSPECTION3FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION3JUDGMENT";
+         //       break;
+         //    case "Fuse Checking":
+         //       $ipJudgementColumn = "INSPECTION4FINISHDATETIME";
+         //       $judgmentColumnGood = "INSPECTION4FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION4JUDGMENT";
+         //       break;
+         //    default:
+         //       break;
+         // }
 
          $processDetailsNG = array(
             'process' => $process,
@@ -413,7 +435,7 @@ function get_overall_ng($search_arr, $conn_ircs, $conn_pcad, $processDetailsNG)
    $total = array();
 
    // Check if the necessary parameters are provided
-   if (!isset ($processDetailsNG['ipAddressColumn']) || !isset ($processDetailsNG['judgmentColumn']) || !isset ($processDetailsNG['ipAddresses'])) {
+   if (!isset($processDetailsNG['ipAddressColumn']) || !isset($processDetailsNG['judgmentColumn']) || !isset($processDetailsNG['ipAddresses'])) {
       // Handle the case where the required parameters are not provided
       return $total;
    }
@@ -426,7 +448,7 @@ function get_overall_ng($search_arr, $conn_ircs, $conn_pcad, $processDetailsNG)
    // Get IP addresses from the database
    $ipAddresses = $processDetailsNG['ipAddresses'];
 
-   if (empty ($ipAddresses)) {
+   if (empty($ipAddresses)) {
       // Handle the case where IP addresses are not found
       return $total;
    }
@@ -436,7 +458,7 @@ function get_overall_ng($search_arr, $conn_ircs, $conn_pcad, $processDetailsNG)
    // $query = "SELECT COUNT(*) AS PROCESS_COUNT_NG FROM T_REPAIRWK WHERE $ipAddressColumn IN ($ipAddressesString) AND $judgmentColumn = '0' AND REGISTLINENAME = '$registlinename'";
    $query = "SELECT * FROM T_REPAIRWK WHERE REGISTLINENAME = '$registlinename' AND $judgmentColumn = '0'";
 
-   if (!empty ($ipAddresses)) {
+   if (!empty($ipAddresses)) {
       $query .= " AND $ipAddressColumn IN ($ipAddressesString)";
    }
 
@@ -477,13 +499,13 @@ function count_actual_hourly_output($search_arr, $conn_ircs, $conn_pcad)
 
    $server_date_only = $search_arr['server_date_only'];
 
-   $date_column = "INSPECTION4FINISHDATETIME";
+   $date_column = $final_process;
 
-   if ($final_process == 'Assurance') {
-      $date_column = "INSPECTION4FINISHDATETIME";
-   } else {
-      $date_column = "INSPECTION3FINISHDATETIME";
-   }
+   // if ($final_process == 'Assurance') {
+   //    $date_column = "INSPECTION4FINISHDATETIME";
+   // } else {
+   //    $date_column = "INSPECTION3FINISHDATETIME";
+   // }
 
    $total = 0;
 
@@ -499,7 +521,7 @@ function count_actual_hourly_output($search_arr, $conn_ircs, $conn_pcad)
    $query = "SELECT COUNT(PARTSNAME) AS HOURLY_OUTPUT 
             FROM T_PRODUCTWK WHERE REGISTLINENAME = '$registlinename'";
 
-   if (!empty ($ipAddresses)) {
+   if (!empty($ipAddresses)) {
       $query = $query . " AND $ipaddresscolumn IN ($ipAddressesString)";
    }
 
@@ -541,7 +563,7 @@ function count_actual_hourly_output_process($search_arr, $conn_ircs, $conn_pcad,
                 FROM T_PRODUCTWK
                 WHERE REGISTLINENAME = '$registlinename'";
 
-   if (!empty ($ipAddresses)) {
+   if (!empty($ipAddresses)) {
       $query = $query . " AND $ipAddressColumn IN ($ipAddressesString)";
    }
 
@@ -586,7 +608,7 @@ function count_actual_ng_hourly_output_process($search_arr, $conn_ircs, $conn_pc
                 FROM T_REPAIRWK
                 WHERE REGISTLINENAME = '$registlinename'";
 
-   if (!empty ($ipAddresses)) {
+   if (!empty($ipAddresses)) {
       $query = $query . " AND $ipAddressColumn IN ($ipAddressesString)";
    }
 
