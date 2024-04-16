@@ -43,4 +43,24 @@
             }
         });
     }
+
+    const get_process_design = () => {
+        let registlinename = document.getElementById('registlinename').value;
+        let shift_group = document.getElementById('shift_group').value;
+        let line_no = document.getElementById('line_no').value;
+        $.ajax({
+            url: 'process/emp_mgt/emp_mgt_p.php',
+            type: 'GET',
+            cache: false,
+            data: {
+                method: 'get_process_design',
+                registlinename: registlinename,
+                shift_group: shift_group,
+                line_no: line_no
+            },
+            success: function (response) {
+                document.getElementById('process_design_data').innerHTML = response;
+            }
+        });
+    }
 </script>
