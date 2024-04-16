@@ -17,13 +17,14 @@ function count_overall_g($search_arr, $conn_ircs)
 
    $total = 0;
 
-   $date_column = "INSPECTION4FINISHDATETIME";
+   // $date_column = "INSPECTION4FINISHDATETIME";
+   $date_column = $final_process;
 
-   if ($final_process == 'Assurance') {
-      $date_column = "INSPECTION4FINISHDATETIME";
-   } else {
-      $date_column = "INSPECTION3FINISHDATETIME";
-   }
+   // if ($final_process == 'Assurance') {
+   //    $date_column = "INSPECTION4FINISHDATETIME";
+   // } else {
+   //    $date_column = "INSPECTION3FINISHDATETIME";
+   // }
 
    $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
@@ -67,37 +68,37 @@ function count_overall_ng($search_arr, $conn_ircs, $conn_pcad)
          $ipaddresscolumn = $processData['ipaddresscolumn'];
          $ipAddresses = $processData['ipAddresses'];
 
-         $judgmentColumnNG = "";
-         $date_column = "";
+         $judgmentColumnNG = $processData['judgement'];
+         $date_column = $processData['finishdatetime'];
 
-         switch ($process) {
-            case "Dimension":
-               $date_column = "INSPECTION1FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION1JUDGMENT";
-               break;
-            case "Electric":
-               $date_column = "INSPECTION2FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION2JUDGMENT";
-               break;
-            case "Visual":
-               $date_column = "INSPECTION3FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION3JUDGMENT";
-               break;
-            case "Assurance":
-               $date_column = "INSPECTION4FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION4JUDGMENT";
-               break;
-            case "Components":
-               $date_column = "INSPECTION3FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION3JUDGMENT";
-               break;
-            case "Fuse Checking":
-               $date_column = "INSPECTION4FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION4JUDGMENT";
-               break;
-            default:
-               break;
-         }
+         // switch ($process) {
+         //    case "Dimension":
+         //       $date_column = "INSPECTION1FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION1JUDGMENT";
+         //       break;
+         //    case "Electric":
+         //       $date_column = "INSPECTION2FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION2JUDGMENT";
+         //       break;
+         //    case "Visual":
+         //       $date_column = "INSPECTION3FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION3JUDGMENT";
+         //       break;
+         //    case "Assurance":
+         //       $date_column = "INSPECTION4FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION4JUDGMENT";
+         //       break;
+         //    case "Components":
+         //       $date_column = "INSPECTION3FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION3JUDGMENT";
+         //       break;
+         //    case "Fuse Checking":
+         //       $date_column = "INSPECTION4FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION4JUDGMENT";
+         //       break;
+         //    default:
+         //       break;
+         // }
 
          $processDetailsNG = array(
             'process' => $process,
@@ -137,6 +138,8 @@ function countProcessGood($search_arr, $conn_ircs, $processDetailsGood)
    $ipAddressColumn = $processDetailsGood['ipAddressColumn'];
    $date_column = $processDetailsGood['date_column'];
    $ipAddresses = $processDetailsGood['ipAddresses'];
+   // $finishdatetime = $processDetailsGood['finishdatetime'];
+   // $judgement = $processDetailsGood['judgement'];
 
    $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
@@ -250,13 +253,14 @@ function get_rows_overall_g($search_arr, $conn_ircs)
    // $total = 0;
    $total = array();
 
-   $date_column = "INSPECTION4FINISHDATETIME";
+   $date_column = $final_process;
+   // $date_column = $final_process;
 
-   if ($final_process == 'Assurance') {
-      $date_column = "INSPECTION4FINISHDATETIME";
-   } else {
-      $date_column = "INSPECTION3FINISHDATETIME";
-   }
+   // if ($final_process == 'Assurance') {
+   //    $date_column = "INSPECTION4FINISHDATETIME";
+   // } else {
+   //    $date_column = "INSPECTION3FINISHDATETIME";
+   // }
 
    $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
@@ -359,43 +363,43 @@ function get_rows_overall_ng($search_arr, $conn_ircs, $conn_pcad)
          $ipAddresses = $processData['ipAddresses'];
 
          $judgmentColumnGood = "";
-         $judgmentColumnNG = "";
-         $ipJudgementColumn = "";
+         $judgmentColumnNG = $processData['judgement'];
+         $ipJudgementColumn = $processData['finishdatetime'];
 
-         switch ($process) {
-            case "Dimension":
-               $ipJudgementColumn = "INSPECTION1FINISHDATETIME";
-               $judgmentColumnGood = "INSPECTION1FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION1JUDGMENT";
-               break;
-            case "Electric":
-               $ipJudgementColumn = "INSPECTION2FINISHDATETIME";
-               $judgmentColumnGood = "INSPECTION2FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION2JUDGMENT";
-               break;
-            case "Visual":
-               $ipJudgementColumn = "INSPECTION3FINISHDATETIME";
-               $judgmentColumnGood = "INSPECTION3FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION3JUDGMENT";
-               break;
-            case "Assurance":
-               $ipJudgementColumn = "INSPECTION4FINISHDATETIME";
-               $judgmentColumnGood = "INSPECTION4FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION4JUDGMENT";
-               break;
-            case "Components":
-               $ipJudgementColumn = "INSPECTION3FINISHDATETIME";
-               $judgmentColumnGood = "INSPECTION3FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION3JUDGMENT";
-               break;
-            case "Fuse Checking":
-               $ipJudgementColumn = "INSPECTION4FINISHDATETIME";
-               $judgmentColumnGood = "INSPECTION4FINISHDATETIME";
-               $judgmentColumnNG = "INSPECTION4JUDGMENT";
-               break;
-            default:
-               break;
-         }
+         // switch ($process) {
+         //    case "Dimension":
+         //       $ipJudgementColumn = "INSPECTION1FINISHDATETIME";
+         //       $judgmentColumnGood = "INSPECTION1FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION1JUDGMENT";
+         //       break;
+         //    case "Electric":
+         //       $ipJudgementColumn = "INSPECTION2FINISHDATETIME";
+         //       $judgmentColumnGood = "INSPECTION2FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION2JUDGMENT";
+         //       break;
+         //    case "Visual":
+         //       $ipJudgementColumn = "INSPECTION3FINISHDATETIME";
+         //       $judgmentColumnGood = "INSPECTION3FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION3JUDGMENT";
+         //       break;
+         //    case "Assurance":
+         //       $ipJudgementColumn = "INSPECTION4FINISHDATETIME";
+         //       $judgmentColumnGood = "INSPECTION4FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION4JUDGMENT";
+         //       break;
+         //    case "Components":
+         //       $ipJudgementColumn = "INSPECTION3FINISHDATETIME";
+         //       $judgmentColumnGood = "INSPECTION3FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION3JUDGMENT";
+         //       break;
+         //    case "Fuse Checking":
+         //       $ipJudgementColumn = "INSPECTION4FINISHDATETIME";
+         //       $judgmentColumnGood = "INSPECTION4FINISHDATETIME";
+         //       $judgmentColumnNG = "INSPECTION4JUDGMENT";
+         //       break;
+         //    default:
+         //       break;
+         // }
 
          $processDetailsNG = array(
             'process' => $process,
@@ -495,13 +499,13 @@ function count_actual_hourly_output($search_arr, $conn_ircs, $conn_pcad)
 
    $server_date_only = $search_arr['server_date_only'];
 
-   $date_column = "INSPECTION4FINISHDATETIME";
+   $date_column = $final_process;
 
-   if ($final_process == 'Assurance') {
-      $date_column = "INSPECTION4FINISHDATETIME";
-   } else {
-      $date_column = "INSPECTION3FINISHDATETIME";
-   }
+   // if ($final_process == 'Assurance') {
+   //    $date_column = "INSPECTION4FINISHDATETIME";
+   // } else {
+   //    $date_column = "INSPECTION3FINISHDATETIME";
+   // }
 
    $total = 0;
 

@@ -19,13 +19,13 @@ if ($method == 'get_hourly_output') {
     $ipaddresscolumn = $ircs_line_data_arr['ipaddresscolumn'];
     $ipAddresses = $ircs_line_data_arr['ipAddresses'];
 
-    $date_column = "INSPECTION4FINISHDATETIME";
+    $date_column = $final_process;
 
-    if ($final_process == 'Assurance') {
-        $date_column = "INSPECTION4FINISHDATETIME";
-    } else {
-        $date_column = "INSPECTION3FINISHDATETIME";
-    }
+    // if ($final_process == 'Assurance') {
+    //     $date_column = "INSPECTION4FINISHDATETIME";
+    // } else {
+    //     $date_column = "INSPECTION3FINISHDATETIME";
+    // }
 
     $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
@@ -158,10 +158,11 @@ if ($method == 'get_hourly_output_per_process') {
             $process = $processData['process'];
             $ipaddresscolumn = $processData['ipaddresscolumn'];
             $ipAddresses = $processData['ipAddresses'];
+            $finishdatetime = $processData['finishdatetime'];
 
             $hourly_output_summary_process_array = array();
 
-            $date_column = "";
+            $date_column = $finishdatetime;
 
             $search_arr = array(
                 'registlinename' => $registlinename,
@@ -171,22 +172,22 @@ if ($method == 'get_hourly_output_per_process') {
                 'server_time' => $server_time
             );
 
-            switch ($process) {
-                case "Dimension":
-                    $date_column = "INSPECTION1FINISHDATETIME";
-                    break;
-                case "Electric":
-                    $date_column = "INSPECTION2FINISHDATETIME";
-                    break;
-                case "Visual":
-                    $date_column = "INSPECTION3FINISHDATETIME";
-                    break;
-                case "Assurance":
-                    $date_column = "INSPECTION4FINISHDATETIME";
-                    break;
-                default:
-                    break;
-            }
+            // switch ($process) {
+            //     case "Dimension":
+            //         $date_column = "INSPECTION1FINISHDATETIME";
+            //         break;
+            //     case "Electric":
+            //         $date_column = "INSPECTION2FINISHDATETIME";
+            //         break;
+            //     case "Visual":
+            //         $date_column = "INSPECTION3FINISHDATETIME";
+            //         break;
+            //     case "Assurance":
+            //         $date_column = "INSPECTION4FINISHDATETIME";
+            //         break;
+            //     default:
+            //         break;
+            // }
 
             $processDetailsGood = array(
                 'date_column' => $date_column,
@@ -286,13 +287,13 @@ if ($method == 'get_hourly_output_graph') {
     $ipaddresscolumn = $ircs_line_data_arr['ipaddresscolumn'];
     $ipAddresses = $ircs_line_data_arr['ipAddresses'];
 
-    $date_column = "INSPECTION4FINISHDATETIME";
+    $date_column = $final_process;
 
-    if ($final_process == 'Assurance') {
-        $date_column = "INSPECTION4FINISHDATETIME";
-    } else {
-        $date_column = "INSPECTION3FINISHDATETIME";
-    }
+    // if ($final_process == 'Assurance') {
+    //     $date_column = "INSPECTION4FINISHDATETIME";
+    // } else {
+    //     $date_column = "INSPECTION3FINISHDATETIME";
+    // }
 
     $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 

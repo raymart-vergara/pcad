@@ -65,12 +65,9 @@ $combined_c_fields = array_merge($f_c_blank1, $f_c_inspection1, $f_c_inspection2
 
 fputcsv($f, $combined_c_fields, $delimiter); 
 
-$ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
-
 $search_arr = array(
         'shift' => $shift,
         'registlinename' => $registlinename,
-        'ircs_line_data_arr' => $ircs_line_data_arr,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,

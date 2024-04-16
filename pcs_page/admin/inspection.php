@@ -82,6 +82,8 @@
                                             <th>IP Address 1</th>
                                             <th>IP Address 2</th>
                                             <th>IP Address Column</th>
+                                            <th>Finish Date Time</th>
+                                            <th>Judgement</th>
                                         </tr>
                                     </thead>
                                     <tbody id="list_of_insp" style="text-align: center;">
