@@ -45,13 +45,13 @@ function get_total_st_per_line($search_arr, $conn_ircs, $conn_pcad) {
     $st_per_product = 0;
     $st_per_product_arr = array();
 
-    $date_column = "INSPECTION4FINISHDATETIME";
+    $date_column = $final_process;
 
-    if ($final_process == 'Assurance') {
-        $date_column = "INSPECTION4FINISHDATETIME";
-    } else {
-        $date_column = "INSPECTION3FINISHDATETIME";
-    }
+    // if ($final_process == 'Assurance') {
+    //     $date_column = "INSPECTION4FINISHDATETIME";
+    // } else {
+    //     $date_column = "INSPECTION3FINISHDATETIME";
+    // }
 
     $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
     

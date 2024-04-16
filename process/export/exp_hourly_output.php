@@ -25,13 +25,13 @@ $ipAddresses = $ircs_line_data_arr['ipAddresses'];
 
 $hourly_output_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_output_date))));
 
-$date_column = "INSPECTION4FINISHDATETIME";
+$date_column = $final_process;
 
-if ($final_process == 'Assurance') {
-    $date_column = "INSPECTION4FINISHDATETIME";
-} else {
-    $date_column = "INSPECTION3FINISHDATETIME";
-}
+// if ($final_process == 'Assurance') {
+//     $date_column = "INSPECTION4FINISHDATETIME";
+// } else {
+//     $date_column = "INSPECTION3FINISHDATETIME";
+// }
 
 $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 

@@ -3,6 +3,8 @@
         load_insp(1);
         fetch_process();
         fetch_ip_address_column();
+        fetch_finish_date_time();
+        fetch_judgement();
     });
 
     document.getElementById("ircs_line_insp_search").addEventListener("keyup", e => {
@@ -29,7 +31,7 @@
                 console.error('Error fetching data');
                 $('#process_insp_master').html('<option>Error fetching data</option>');
             }
-        })
+        });
     }
 
     function fetch_ip_address_column() {
@@ -48,7 +50,45 @@
                 console.error('Error fetching data');
                 $('#ip_address_column_insp_master').html('<option>Error fetching data</option>');
             }
-        })
+        });
+    }
+
+    function fetch_finish_date_time() {
+        $.ajax({
+            url: '../../process/pcs/inspection_p.php',
+            type: 'POST',
+            cache: false,
+            data: {
+                method: 'fetch_finish_date_time'
+            },
+            dataType: 'html',
+            success: function (response) {
+                $('#finish_date_time_insp_master').html(response);
+            },
+            error: function () {
+                console.error('Error fetching data');
+                $('#finish_date_time_insp_master').html('<option>Error fetching data</option>');
+            }
+        });
+    }
+
+    function fetch_judgement() {
+        $.ajax({
+            url: '../../process/pcs/inspection_p.php',
+            type: 'POST',
+            cache: false,
+            data: {
+                method: 'fetch_judgement'
+            },
+            dataType: 'html',
+            success: function (response) {
+                $('#judgement_insp_master').html(response);
+            },
+            error: function () {
+                console.error('Error fetching data');
+                $('#judgement_insp_master').html('<option>Error fetching data</option>');
+            }
+        });
     }
 
     // Table Responsive Scroll Event for Load More
@@ -186,7 +226,8 @@
         document.getElementById('process_insp_master').value = '';
         document.getElementById('ip_address_1_insp_master').value = '';
         document.getElementById('ip_address_2_insp_master').value = '';
-        document.getElementById('ip_address_column_insp_master').value = '';
+        document.getElementById('finish_date_time_insp_master').value = '';
+        document.getElementById('judgement_insp_master').value = '';
     });
 
     const add_insp = () => {
@@ -195,6 +236,8 @@
         var ip_address_1 = document.getElementById('ip_address_1_insp_master').value;
         var ip_address_2 = document.getElementById('ip_address_2_insp_master').value;
         var ip_address_col = document.getElementById('ip_address_column_insp_master').value;
+        var finish_date_time = document.getElementById('finish_date_time_insp_master').value;
+        var judgement = document.getElementById('judgement_insp_master').value;
 
         if (ircs_line == '') {
             Swal.fire({
@@ -224,6 +267,20 @@
                 showConfirmButton: false,
                 timer: 1000
             });
+        } else if (finish_date_time == '') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Please Finish Date Time',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        } else if (judgement == '') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Please Input Judgement',
+                showConfirmButton: false,
+                timer: 1000
+            });
         } else {
             $.ajax({
                 url: '../../process/pcs/inspection_p.php',
@@ -235,7 +292,9 @@
                     process: process,
                     ip_address_1: ip_address_1,
                     ip_address_2: ip_address_2,
-                    ip_address_col: ip_address_col
+                    ip_address_col: ip_address_col,
+                    finish_date_time: finish_date_time,
+                    judgement: judgement
                 }, success: function (response) {
                     console.log(response);
                     if (response == 'success') {
@@ -251,6 +310,8 @@
                         $('#ip_address_1_insp_master').val('');
                         $('#ip_address_2_insp_master').val('');
                         $('#ip_address_column_insp_master').val('');
+                        $('#finish_date_time_insp_master').val('');
+                        $('#judgement_insp_master').val('');
                         load_insp(1);
                         $('#new_insp').modal('hide');
                     } else if (response == 'Already Exist') {
@@ -281,6 +342,8 @@
         var ip_address_1 = string[3];
         var ip_address_2 = string[4];
         var ip_address_col = string[5];
+        var finish_date_time = string[6];
+        var judgement = string[7];
 
         document.getElementById('id_insp_update').value = id;
         document.getElementById('ircs_line_insp_master_update').value = ircs_line;
@@ -288,6 +351,8 @@
         document.getElementById('ip_address_1_insp_master_update').value = ip_address_1;
         document.getElementById('ip_address_2_insp_master_update').value = ip_address_2;
         document.getElementById('ip_address_column_insp_master_update').value = ip_address_col;
+        document.getElementById('finish_date_time_insp_master_update').value = finish_date_time;
+        document.getElementById('judgement_insp_master_update').value = judgement;
     }
 
     const update_insp = () => {
@@ -297,6 +362,8 @@
         var ip_address_1 = document.getElementById('ip_address_1_insp_master_update').value;
         var ip_address_2 = document.getElementById('ip_address_2_insp_master_update').value;
         var ip_address_col = document.getElementById('ip_address_column_insp_master_update').value;
+        var finish_date_time = document.getElementById('finish_date_time_insp_master_update').value;
+        var judgement = document.getElementById('judgement_insp_master_update').value;
 
         if (ircs_line == '') {
             Swal.fire({
@@ -326,6 +393,20 @@
                 showConfirmButton: false,
                 timer: 1000
             });
+        } else if (finish_date_time == '') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Please Input Finish Date Time',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        } else if (judgement == '') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Please Input Judgement Column',
+                showConfirmButton: false,
+                timer: 1000
+            });
         } else {
             $.ajax({
                 url: '../../process/pcs/inspection_p.php',
@@ -338,7 +419,9 @@
                     process: process,
                     ip_address_1: ip_address_1,
                     ip_address_2: ip_address_2,
-                    ip_address_col: ip_address_col
+                    ip_address_col: ip_address_col,
+                    finish_date_time:finish_date_time,
+                    judgement:judgement
                 }, success: function (response) {
                     console.log(response);
                     if (response == 'success') {
@@ -356,6 +439,8 @@
                         $('#ip_address_1_insp_master_update').val('');
                         $('#ip_address_2_insp_master_update').val('');
                         $('#ip_address_column_insp_master_update').val('');
+                        $('#finish_date_time_insp_master_update').val('');
+                        $('#judgement_insp_master_update').val('');
                         load_insp(1);
                         $('#update_modal_insp').modal('hide');
                     } else if (response == 'Already Exist') {
