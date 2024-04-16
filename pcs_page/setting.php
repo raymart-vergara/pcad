@@ -89,7 +89,7 @@ if ($result) {
 										<div class="col-lg-3">
 											<div class="form-group">
 												<label for="c">TAKT TIME</label>
-												<input type="text" name="takt_time" class="form-control form-control-lg" id="takt_time" readonly placeholder="00">
+												<input type="text" name="takt_time" class="form-control form-control-lg" id="takt_time" placeholder="00">
 											</div>
 										</div>
 									</div>
