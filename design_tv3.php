@@ -27,6 +27,28 @@ include 'process/pcs/index.php';
     <link rel="stylesheet" href="plugins/sweetalert2/dist/sweetalert2.min.css">
 
     <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 10px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #383B46;
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #332D2D;
+        }
+
         @font-face {
             font-family: 'Norwester';
             src: url('dist/font/norwester/norwester.otf') format('opentype');
@@ -464,23 +486,18 @@ include 'process/pcs/index.php';
                     </table>
                     <!--  -->
 
-                    <table class="table-bg text-center table-head-fixed text-nowrap"
-                        style="max-height: 200px; overflow-y: auto; width: 100%;">
-                        <thead
-                            style="position: sticky; top: 0; z-index: 1; height: 80px; border-bottom: 1px solid #E6E6E6"">
-                                                        <tr>
-                                                                <td class=" equal-insp-info font-plan-sub">GOOD</td>
-                            <td class="equal-insp-info font-plan-sub">INSPECTION
-                            </td>
-                            <td class="equal-insp-info font-plan-sub">NG</td>
-                            </tr>
-                        </thead>
-                        <tbody class="mb-0" id="inspection_process_list">
-                            <tr>
-                                <!-- <td scope="col" style="text-align: center;"></td> -->
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive m-0 p-0" style="max-height: 215px; overflow-y: auto;">
+                        <table class="table-bg m-0 p-0 table-head-fixed text-nowrap" style="width: 100%;">
+                            <thead style="text-align: center; position: sticky; top: 0; z-index: 1; height: 55px">
+                                <tr style="border-bottom: 1px solid #E6E6E6;">
+                                    <td class=" equal-insp-info font-plan-sub">GOOD</td>
+                                    <td class="equal-insp-info font-plan-sub">INSPECTION</td>
+                                    <td class="equal-insp-info font-plan-sub">NG</td>
+                                </tr>
+                            </thead>
+                            <tbody class="mb-0" id="inspection_process_list"></tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <!-- andon details -->
