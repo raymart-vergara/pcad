@@ -809,7 +809,7 @@ include 'dist/js/adminlte.miin.php';
                     <table>
                         <thead>
                             <tr>
-                                <td class="inspection-title">Overall Inspection</td>
+                                <td class="inspection-title pt-1">Overall Inspection</td>
                             </tr>
                         </thead>
                     </table>
