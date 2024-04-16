@@ -78,7 +78,7 @@ function get_ircs_line_data($registlinename, $conn_pcad)
 		$query = "SELECT i.ircs_line, i.final_process, insp.ip_address, insp.ip_address2, insp.ipaddresscolumn, insp.finishdatetime, insp.judgement 
 				FROM m_ircs_line i
 				LEFT JOIN m_inspection_ip insp
-				ON i.ircs_line = insp.ircs_line AND i.final_process = insp.process
+				ON i.ircs_line = insp.ircs_line AND i.final_process = insp.finishdatetime
 				WHERE i.ircs_line = '$registlinename' LIMIT 1";
 		$stmt = $conn_pcad->prepare($query);
 		$stmt->execute();

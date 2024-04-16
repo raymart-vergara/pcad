@@ -26,7 +26,7 @@ include 'dist/js/adminlte.miin.php';
 
     <style>
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 8px;
             height: 10px;
         }
 
@@ -847,8 +847,8 @@ include 'dist/js/adminlte.miin.php';
 
                 <div class="inspection-container-3 table-responsive m-0 p-0" style="max-height: 215px; overflow-y: auto;">
                     <!-- inspection details -->
-                    <table class="m-0 p-0 table-head-fixed text-nowrap table-hover">
-                        <thead style="text-align: center; position: sticky; top: 0; background-color: #fff; z-index: 1; height: 55px">
+                    <table class="m-0 p-0 table-head-fixed text-nowrap">
+                        <thead style="text-align: center; position: sticky; top: 0; z-index: 1; height: 55px">
                             <td class="inspection-sub-title-2">Good</td>
                             <td class="inspection-sub-title-2">Inspection</td>
                             <td class="inspection-sub-title-2">NG</td>
