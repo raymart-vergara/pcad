@@ -30,6 +30,14 @@
             </p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="inspection.php" class="nav-link">
+            <i class="nav-icon fas fa-file-alt"></i>
+            <p>
+              Inspection Masterlist
+            </p>
+          </a>
+        </li>
         <?php include 'logout.php' ;?>
       </ul>
     </nav>

@@ -49,6 +49,22 @@
                 });
         }
 
+        const get_inspection_list_copy = () => {
+                let registlinename = document.getElementById('registlinename').value;                
+                $.ajax({
+                        url: 'process/inspection_output/inspection_output_p.php',
+                        type: 'GET',
+                        cache: false,
+                        data: {
+                                method: 'get_inspection_list_copy',
+                                registlinename: registlinename
+                        },
+                        success: function (response) {
+                                $('#inspection_process_list_copy').html(response);
+                        }
+                });
+        }
+
         const get_overall_inspection = () => {
                 let registlinename = document.getElementById('registlinename').value;
                 $.ajax({

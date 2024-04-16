@@ -1,5 +1,6 @@
-<div class="modal fade bd-example-modal-xl" id="updatepcs" tabindex="-1"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade bd-example-modal-xl" id="updatepcs" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
@@ -25,7 +26,7 @@
             <input type="text" id="andon_line_update" class="form-control" autocomplete="off">
           </div>
         </div>
-        <div class="row">
+        <div class="row mt-4">
           <div class="col-4">
             <input type="hidden" id="id_update" class="form-control">
             <label>Final Process</label>
@@ -50,9 +51,9 @@
             </div>
           </div>
         </div>
-      <!-- /.card-body -->
+        <!-- /.card-body -->
       </div>
-    <!-- /.card -->
+      <!-- /.card -->
     </div>
   </div>
 </div>

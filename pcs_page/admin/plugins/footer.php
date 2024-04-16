@@ -1,5 +1,5 @@
  <footer class="main-footer">
-    <strong>Copyright &copy; 2024. Developed by: Jane Irish Bautista</strong>
+    <strong>Copyright &copy; 2024. Developed by: Jane Irish Bautista & AKM</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 1.0.0
@@ -11,6 +11,9 @@ include '../../modals/logoutpcs.php';
 include '../../modals/addpcs.php';
 include '../../modals/updatepcs.php';
 include '../../modals/deletepcs.php';
+include '../../modals/add_inspection.php';
+include '../../modals/update_inspection.php';
+include '../../modals/delete_inspection.php';
 ?>
 <!-- jQuery -->
 <script src="../../plugins/jquery/dist/jquery.min.js"></script>

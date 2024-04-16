@@ -12,7 +12,6 @@
                 $('#andon_details').html(response);
             }
         });
-
     }
 
     const andon_d_sum = () => {
@@ -114,88 +113,6 @@
                 }
                 chart = new Chart(ctx, configuration);
             },
-        });
-    }
-
-    // for andon hourly graph
-    const andon_hourly = () => {
-        let andon_line = document.getElementById('andon_line').value
-
-        $.ajax({
-            url: '../process/andon_graph/a_graph_p.php',
-            type: 'POST',
-            cache: false,
-            data: {
-                method: 'andon_hourly',
-                andon_line: andon_line
-            },
-            success: function (data) {
-                let hour_starts = [];
-                let total_counts = [];
-
-                // Extract hour starts and total counts from the data
-                for (let i = 0; i < data.length; i++) {
-                    hour_starts.push(data[i].hour_start);
-                    total_counts.push(data[i].total_count);
-                }
-
-                let ctx = document.getElementById('hourly_chart').getContext('2d');
-                let configuration = {
-                    type: 'bar',
-                    options: {
-                        plugins: {
-                            title: {
-                                display: true,
-                                text: 'Hourly Andon Events Count',
-                                font: {
-                                    size: 30,
-                                    family: 'Montserrat',
-                                },
-                            }
-                        },
-                        scales: {
-                            y: {
-                                stacked: true,
-                                ticks: {
-                                    autoSkip: false,
-                                    font: {
-                                        size: 17
-                                    },
-                                }
-                            },
-                            x: {
-                                stacked: true,
-                                ticks: {
-                                    autoSkip: false,
-                                    font: {
-                                        size: 17
-                                    },
-                                }
-                            },
-                        },
-                        layout: {
-                            padding: 15
-                        }
-                    },
-                    data: {
-                        labels: hour_starts, // Use hour starts as labels
-                        datasets: [{
-                            label: 'Total Andon Events',
-                            backgroundColor: 'rgba(1, 56, 99, 1)',
-                            borderColor: 'rgba(1, 56, 99, 1)',
-                            borderWidth: 2,
-                            data: total_counts, // Use total counts as data
-                            yAxisID: 'y',
-                        }],
-                    },
-                };
-
-                // Destroy previous chart instance before creating a new one
-                if (chart) {
-                    chart.destroy();
-                }
-                chart = new Chart(ctx, configuration);
-            }
         });
     }
 </script>

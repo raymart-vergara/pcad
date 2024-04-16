@@ -10,6 +10,7 @@ if ($method == 'andon_hourly') {
     $andon_line = $_GET['andon_line'];
     // $andon_line = 'DAIHATSU D92-2132';
 
+
     $data = [];
 
     $andon_hour_ds_array = array("06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17");

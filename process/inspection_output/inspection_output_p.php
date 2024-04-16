@@ -204,7 +204,7 @@ if ($method == 'get_inspection_list') {
     // Fetch processes and their corresponding IP addresses
     $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
 
-    if (empty ($processesAndIpAddresses)) {
+    if (empty($processesAndIpAddresses)) {
         echo '<tr>';
         echo '<td colspan="10" style="text-align:center; color:red;">No Record Found</td>';
         echo '</tr>';
@@ -213,10 +213,15 @@ if ($method == 'get_inspection_list') {
             $process = $processData['process'];
             $ipaddresscolumn = $processData['ipaddresscolumn'];
             $ipAddresses = $processData['ipAddresses'];
+            // $finishdatetime = $processData['finishdatetime'];
+            $date_column = $processData['finishdatetime'];
+            // $judgement = $processData['judgement'];
+            $judgmentColumnNG2 = $processData['judgement'];
 
-            $judgmentColumnGood = "";
-            $judgmentColumnNG2 = "";
-            $date_column = "";
+            // $judgmentColumnGood = "";
+            // $judgmentColumnNG2 = "";
+
+            // $date_column = "";
 
             $search_arr = array(
                 'shift' => $shift,
@@ -227,26 +232,123 @@ if ($method == 'get_inspection_list') {
                 'server_time' => $server_time
             );
 
-            switch ($process) {
-                case "Dimension":
-                    $date_column = "INSPECTION1FINISHDATETIME";
-                    $judgmentColumnNG2 = "INSPECTION1JUDGMENT";
-                    break;
-                case "Electric":
-                    $date_column = "INSPECTION2FINISHDATETIME";
-                    $judgmentColumnNG2 = "INSPECTION2JUDGMENT";
-                    break;
-                case "Visual":
-                    $date_column = "INSPECTION3FINISHDATETIME";
-                    $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
-                    break;
-                case "Assurance":
-                    $date_column = "INSPECTION4FINISHDATETIME";
-                    $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
-                    break;
-                default:
-                    break;
-            }
+            // $date_column = $finishdatetime;
+            // $judgmentColumnNG2 = $judgement;
+                      
+            // switch ($process) {
+            //     case "Dimension":
+            //         $date_column = "INSPECTION1FINISHDATETIME";
+            //         $judgmentColumnNG2 = "INSPECTION1JUDGMENT";
+            //         break;
+            //     case "Electric":
+            //         $date_column = "INSPECTION2FINISHDATETIME";
+            //         $judgmentColumnNG2 = "INSPECTION2JUDGMENT";
+            //         break;
+            //     case "Visual":
+            //         $date_column = "INSPECTION3FINISHDATETIME";
+            //         $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
+            //         break;
+            //     case "Assurance":
+            //         $date_column = "INSPECTION4FINISHDATETIME";
+            //         $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
+            //         break;
+            //     case "Components":
+            //         $date_column = "INSPECTION3FINISHDATETIME";
+            //         $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
+            //         break;
+            //     case "Fuse Checking":
+            //         $date_column = "INSPECTION4FINISHDATETIME";
+            //         $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
+            //         break;
+            //     default:
+            //         break;
+            // }
+
+            $processDetailsGood = array(
+                'process' => $process,
+                'date_column' => $date_column,
+                'ipAddressColumn' => $ipaddresscolumn,
+                'ipAddresses' => $ipAddresses,
+            );
+
+            $processDetailsNG = array(
+                'process' => $process,
+                'date_column' => $date_column,
+                'ipAddressColumn' => $ipaddresscolumn,
+                'judgmentColumn' => $judgmentColumnNG2,
+                'ipAddresses' => $ipAddresses
+            );
+
+            $p_good = countProcessGood($search_arr, $conn_ircs, $processDetailsGood);
+            $p_ng = countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad);
+
+            echo '<tr style="cursor:pointer;">';
+            echo '<td style="text-align:center; font-size: 22px;">' . $p_good . '</td>';
+            echo '<td style="text-align:center; font-size: 22px;">' . $process . '</td>';
+            echo '<td style="text-align:center; font-size: 22px;">' . $p_ng . '</td>';
+            echo '</tr>';
+        }
+    }
+}
+
+if ($method == 'get_inspection_list_copy') {
+    $shift = get_shift($server_time);
+    $registlinename = $_GET['registlinename'];
+
+    // Fetch processes and their corresponding IP addresses
+    $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
+
+    if (empty($processesAndIpAddresses)) {
+        echo '<tr>';
+        echo '<td colspan="10" style="text-align:center; color:red;">No Record Found</td>';
+        echo '</tr>';
+    } else {
+        foreach ($processesAndIpAddresses as $processData) {
+            $process = $processData['process'];
+            $ipaddresscolumn = $processData['ipaddresscolumn'];
+            $ipAddresses = $processData['ipAddresses'];
+
+            $judgmentColumnGood = "";
+            $judgmentColumnNG2 = $processData['judgement'];
+            $date_column = $processData['finishdatetime'];
+
+            $search_arr = array(
+                'shift' => $shift,
+                'registlinename' => $registlinename,
+                'server_date_only' => $server_date_only,
+                'server_date_only_yesterday' => $server_date_only_yesterday,
+                'server_date_only_tomorrow' => $server_date_only_tomorrow,
+                'server_time' => $server_time
+            );
+
+            // switch ($process) {
+            //     case "Dimension":
+            //         $date_column = "INSPECTION1FINISHDATETIME";
+            //         $judgmentColumnNG2 = "INSPECTION1JUDGMENT";
+            //         break;
+            //     case "Electric":
+            //         $date_column = "INSPECTION2FINISHDATETIME";
+            //         $judgmentColumnNG2 = "INSPECTION2JUDGMENT";
+            //         break;
+            //     case "Visual":
+            //         $date_column = "INSPECTION3FINISHDATETIME";
+            //         $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
+            //         break;
+            //     case "Assurance":
+            //         $date_column = "INSPECTION4FINISHDATETIME";
+            //         $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
+            //         break;
+            //     case "Components":
+            //         $date_column = "INSPECTION3FINISHDATETIME";
+            //         $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
+            //         break;
+            //     case "Fuse Checking":
+            //         $date_column = "INSPECTION4FINISHDATETIME";
+            //         $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
+            //         break;
+            //     default:
+            //         break;
+            // }
 
             $processDetailsGood = array(
                 'process' => $process,
@@ -267,9 +369,9 @@ if ($method == 'get_inspection_list') {
             $p_ng = countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad);
 
             echo '<tr style="cursor:pointer;">';
-            echo '<td style="text-align:center; font-size: 22px;">' . $p_good . '</td>';
-            echo '<td style="text-align:center; font-size: 22px;">' . $process . '</td>';
-            echo '<td style="text-align:center; font-size: 22px;">' . $p_ng . '</td>';
+            echo '<td style="text-align:center; font-size: 16px;">' . $p_good . '</td>';
+            echo '<td style="text-align:center; font-size: 16px;">' . $process . '</td>';
+            echo '<td style="text-align:center; font-size: 16px;">' . $p_ng . '</td>';
             echo '</tr>';
         }
     }
@@ -1213,7 +1315,6 @@ function get_ng_cell_color($process, $actual_output)
 
 if ($method == 'get_ng_hourly_output_per_process') {
     $registlinename = $_GET['registlinename'];
-
     // $registlinename = 'DAIHATSU_30';
 
     $hourly_output_hour_ds_array = array('06' => "06", '07' => "07", '08' => "08", '09' => "09", '10' => "10", '11' => "11", '12' => "12", '13' => "13", '14' => "14", '15' => "15", '16' => "16", '17' => "17");
@@ -1225,7 +1326,7 @@ if ($method == 'get_ng_hourly_output_per_process') {
     // Fetch processes and their corresponding IP addresses
     $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
 
-    if (!empty ($processesAndIpAddresses)) {
+    if (!empty($processesAndIpAddresses)) {
         foreach ($processesAndIpAddresses as $processData) {
             $process = $processData['process'];
             $ipaddresscolumn = $processData['ipaddresscolumn'];
@@ -1233,7 +1334,7 @@ if ($method == 'get_ng_hourly_output_per_process') {
 
             $hourly_output_summary_process_array = array();
 
-            $date_column = "";
+            $date_column = $processData['finishdatetime'];
 
             $search_arr = array(
                 'registlinename' => $registlinename,
@@ -1243,22 +1344,28 @@ if ($method == 'get_ng_hourly_output_per_process') {
                 'server_time' => $server_time
             );
 
-            switch ($process) {
-                case "Dimension":
-                    $date_column = "INSPECTION1FINISHDATETIME";
-                    break;
-                case "Electric":
-                    $date_column = "INSPECTION2FINISHDATETIME";
-                    break;
-                case "Visual":
-                    $date_column = "INSPECTION3FINISHDATETIME";
-                    break;
-                case "Assurance":
-                    $date_column = "INSPECTION4FINISHDATETIME";
-                    break;
-                default:
-                    break;
-            }
+            // switch ($process) {
+            //     case "Dimension":
+            //         $date_column = "INSPECTION1FINISHDATETIME";
+            //         break;
+            //     case "Electric":
+            //         $date_column = "INSPECTION2FINISHDATETIME";
+            //         break;
+            //     case "Visual":
+            //         $date_column = "INSPECTION3FINISHDATETIME";
+            //         break;
+            //     case "Assurance":
+            //         $date_column = "INSPECTION4FINISHDATETIME";
+            //         break;
+            //     case "Components":
+            //         $date_column = "INSPECTION3FINISHDATETIME";
+            //         break;
+            //     case "Fuse Checking":
+            //         $date_column = "INSPECTION4FINISHDATETIME";
+            //         break;
+            //     default:
+            //         break;
+            // }
 
             $processDetailsNG = array(
                 'date_column' => $date_column,
@@ -1334,7 +1441,6 @@ if ($method == 'get_ng_hourly_output_per_process') {
 
 if ($method == 'ng_graph') {
     $registlinename = $_GET['registlinename'];
-
     // $registlinename = 'DAIHATSU_30';
 
     $hour_6_array = array();
@@ -1361,9 +1467,9 @@ if ($method == 'ng_graph') {
     $hour_3_array = array();
     $hour_4_array = array();
     $hour_5_array = array();
-    
-    $hourly_output_hour_ds_array = array("06","07","08","09","10","11","12","13","14","15","16","17");
-    $hourly_output_hour_ns_array = array("18","19","20","21","22","23","00","01","02","03","04","05");
+
+    $hourly_output_hour_ds_array = array("06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17");
+    $hourly_output_hour_ns_array = array("18", "19", "20", "21", "22", "23", "00", "01", "02", "03", "04", "05");
     $hourly_output_hour_array = array_merge($hourly_output_hour_ds_array, $hourly_output_hour_ns_array);
 
     $hourly_output_summary_array = array();
@@ -1373,7 +1479,7 @@ if ($method == 'ng_graph') {
     // Fetch processes and their corresponding IP addresses
     $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
 
-    if (!empty ($processesAndIpAddresses)) {
+    if (!empty($processesAndIpAddresses)) {
         foreach ($processesAndIpAddresses as $processData) {
             $process = $processData['process'];
             $ipaddresscolumn = $processData['ipaddresscolumn'];
@@ -1381,7 +1487,7 @@ if ($method == 'ng_graph') {
 
             $hourly_output_summary_process_array = array();
 
-            $date_column = "";
+            $date_column = $processData['finishdatetime'];
 
             $search_arr = array(
                 'registlinename' => $registlinename,
@@ -1391,22 +1497,28 @@ if ($method == 'ng_graph') {
                 'server_time' => $server_time
             );
 
-            switch ($process) {
-                case "Dimension":
-                    $date_column = "INSPECTION1FINISHDATETIME";
-                    break;
-                case "Electric":
-                    $date_column = "INSPECTION2FINISHDATETIME";
-                    break;
-                case "Visual":
-                    $date_column = "INSPECTION3FINISHDATETIME";
-                    break;
-                case "Assurance":
-                    $date_column = "INSPECTION4FINISHDATETIME";
-                    break;
-                default:
-                    break;
-            }
+            // switch ($process) {
+            //     case "Dimension":
+            //         $date_column = "INSPECTION1FINISHDATETIME";
+            //         break;
+            //     case "Electric":
+            //         $date_column = "INSPECTION2FINISHDATETIME";
+            //         break;
+            //     case "Visual":
+            //         $date_column = "INSPECTION3FINISHDATETIME";
+            //         break;
+            //     case "Assurance":
+            //         $date_column = "INSPECTION4FINISHDATETIME";
+            //         break;
+            //     case "Components":
+            //         $date_column = "INSPECTION3FINISHDATETIME";
+            //         break;
+            //     case "Fuse Checking":
+            //         $date_column = "INSPECTION4FINISHDATETIME";
+            //         break;
+            //     default:
+            //         break;
+            // }
 
             $processDetailsNG = array(
                 'date_column' => $date_column,
