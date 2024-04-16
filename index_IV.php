@@ -1004,7 +1004,7 @@ include 'dist/js/adminlte.miin.php';
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody id="process_design_data">
                         <tr>
                             <td class="process-sub-title">Sub Assy</td>
                             <td class="process-content"></td>
@@ -1186,6 +1186,11 @@ include 'dist/js/adminlte.miin.php';
 
         ng_graph();
         setInterval(ng_graph, 30000);
+
+        // Call get_process_design initially to load the process design data from employee management system and pcad
+        get_process_design();
+        // Set interval to refresh data every 15 seconds
+        setInterval(get_process_design, 30000); // 15000 milliseconds = 15 seconds
     });
 
     // return to top button
