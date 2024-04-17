@@ -433,10 +433,6 @@ include 'dist/js/adminlte.miin.php';
             background-color: #B13D2F;
         }
 
-        body[light-mode="dark"] .red-bg {
-            background-color: #B13D2F;
-        }
-
         body[light-mode="dark"] .grey-bg {
             background-color: #666666;
         }
@@ -522,14 +518,27 @@ include 'dist/js/adminlte.miin.php';
 </head>
 
 <body>
-    <!-- ===================== LIGHT/DARK MODE TOGGLE-->
-    <div class="mt-3 ml-2">
-        <input type="checkbox" class="checkbox" id="checkbox" onclick="toggle_light_mode()">
-        <label for="checkbox" class="checkbox-label">
-            <i class="fas fa-moon"></i>
-            <i class="fas fa-sun"></i>
-            <span class="ball"></span>
-        </label>
+    <!-- ===================== LIGHT/DARK MODE TOGGLE AND RETURN TO SETTING-->
+    <div class="row">
+        <div class="col-6">
+            <div class="float-left mt-3 ml-2">
+                <a href="../pcad/dashboard/setting.php">
+                    <button class="btn btn-secondary return-btn" style="background: #f4f4f4; border: none; color: #000;"
+                        onmouseover="this.style.backgroundColor='#383B46'; this.style.color='#FFF';"
+                        onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';"><i class="fas fa-angle-left" style="width"></i>&ensp;&ensp;Return to Setting</button>
+                </a>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="float-right mt-3 mr-2">
+                <input type="checkbox" class="checkbox" id="checkbox" onclick="toggle_light_mode()">
+                <label for="checkbox" class="checkbox-label">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                    <span class="ball"></span>
+                </label>
+            </div>
+        </div>
     </div>
 
     <!-- ===================== -->
@@ -1014,9 +1023,11 @@ include 'dist/js/adminlte.miin.php';
                 <div id="chart-container1">
                     <canvas id="andon_hourly_chart" height="60"></canvas>
                     <a target="_blank" href="../pcad/viewer/andon_details/andon_details.php">
-                        <button class="btn btn-secondary ml-4 mb-1" style="background: #f4f4f4; border: none; color: #000;"
+                        <button class="btn btn-secondary ml-4 mb-1 andon-btn"
+                            style="background: #f4f4f4; border: none; color: #000;"
                             onmouseover="this.style.backgroundColor='#013863'; this.style.color='#FFF';"
-                            onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly Andon Details</button>
+                            onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly
+                            Andon Details</button>
                     </a>
                 </div>
                 <!-- </div> -->
