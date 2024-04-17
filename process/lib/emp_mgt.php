@@ -957,7 +957,17 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 	}
 
 	// Get total by process_design (process) and registlinename on m_process_design
-	$sql = "SELECT process_design, mp_count FROM m_process_design WHERE ircs_line = '$registlinename'";
+	$sql = "SELECT process_design";
+
+	if ($shift_group == 'A') {
+		$sql = $sql . ", mp_count_a AS mp_count ";
+	} else if ($shift_group == 'B') {
+		$sql = $sql . ", mp_count_b AS mp_count ";
+	} else {
+		$sql = $sql . ", mp_count_a AS mp_count ";
+	}
+
+	$sql = $sql . "FROM m_process_design WHERE ircs_line = '$registlinename'";
 
 	$stmt = $conn_pcad->prepare($sql);
 	$stmt->execute();
