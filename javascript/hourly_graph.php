@@ -61,7 +61,7 @@
                                         size: 17
                                     },
                                 },
-                                grid: { 
+                                grid: {
                                     display: false,
                                 },
                             },
@@ -139,7 +139,7 @@
                                 ticks: {
                                     autoSkip: false,
                                 },
-                                grid: { 
+                                grid: {
                                     display: false,
                                 },
                             },
@@ -250,7 +250,7 @@
                                 ticks: {
                                     autoSkip: false,
                                 },
-                                grid: { 
+                                grid: {
                                     display: false,
                                 },
                             },

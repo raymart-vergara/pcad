@@ -341,6 +341,7 @@ include 'dist/js/adminlte.miin.php';
 
         .process-content {
             font-size: 20px;
+            text-align: center;
         }
 
         .andon-container,
@@ -704,12 +705,10 @@ include 'dist/js/adminlte.miin.php';
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="plan-content yellow-bg" id="target_accounting_efficiency"
-                                >
+                            <td class="plan-content yellow-bg" id="target_accounting_efficiency">
                                 <?= $acc_eff; ?>%
                             </td>
-                            <td class="plan-content yellow-bg" id="actual_accounting_efficiency"
-                                ></td>
+                            <td class="plan-content yellow-bg" id="actual_accounting_efficiency"></td>
                             <td class="plan-content yellow-bg" id="gap_accounting_efficiency"></td>
                         </tr>
                     </tbody>
@@ -845,7 +844,8 @@ include 'dist/js/adminlte.miin.php';
                     </table>
                 </div>
 
-                <div class="inspection-container-3 table-responsive m-0 p-0" style="max-height: 215px; overflow-y: auto;">
+                <div class="inspection-container-3 table-responsive m-0 p-0"
+                    style="max-height: 215px; overflow-y: auto;">
                     <!-- inspection details -->
                     <table class="m-0 p-0 table-head-fixed text-nowrap">
                         <thead style="text-align: center; position: sticky; top: 0; z-index: 1; height: 55px">
@@ -1003,87 +1003,21 @@ include 'dist/js/adminlte.miin.php';
                             <td class="process-title">Actual</td>
                         </tr>
                     </thead>
-
-                    <tbody id="process_design_data">
-                        <tr>
-                            <td class="process-sub-title">Sub Assy</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Bukumi</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Parts</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Layout</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Assy</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Shiage</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Dimension</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">ECT</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">ECT (Clamp)</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title"> Clamp Checking Option</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Appearance</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Assurance</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Jr Staff</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Expert</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                    </tbody>
+                    <tbody id="process_design_data"></tbody>
                 </table>
             </div>
 
             <div class="card graphs-container">
                 <!-- andon count graph -->
                 <!-- <div class="card andon-container"> -->
+
                 <div id="chart-container1">
                     <canvas id="andon_hourly_chart" height="60"></canvas>
+                    <a target="_blank" href="../pcad/viewer/andon_details/andon_details.php">
+                        <button class="btn btn-secondary ml-4 mb-1" style="background: #f4f4f4; border: none; color: #000;"
+                            onmouseover="this.style.backgroundColor='#013863'; this.style.color='#FFF';"
+                            onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly Andon Details</button>
+                    </a>
                 </div>
                 <!-- </div> -->
 
