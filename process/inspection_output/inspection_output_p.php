@@ -1334,6 +1334,7 @@ if ($method == 'get_ng_hourly_output_per_process') {
 
             $hourly_output_summary_process_array = array();
 
+            $judgmentColumnNG2 = $processData['judgement'];
             $date_column = $processData['finishdatetime'];
 
             $search_arr = array(
@@ -1370,6 +1371,7 @@ if ($method == 'get_ng_hourly_output_per_process') {
             $processDetailsNG = array(
                 'date_column' => $date_column,
                 'ipAddressColumn' => $ipaddresscolumn,
+                'judgmentColumn' => $judgmentColumnNG2,
                 'ipAddresses' => $ipAddresses
             );
 
@@ -1487,6 +1489,7 @@ if ($method == 'ng_graph') {
 
             $hourly_output_summary_process_array = array();
 
+            $judgmentColumnNG2 = $processData['judgement'];
             $date_column = $processData['finishdatetime'];
 
             $search_arr = array(
@@ -1523,6 +1526,7 @@ if ($method == 'ng_graph') {
             $processDetailsNG = array(
                 'date_column' => $date_column,
                 'ipAddressColumn' => $ipaddresscolumn,
+                'judgmentColumn' => $judgmentColumnNG2,
                 'ipAddresses' => $ipAddresses
             );
 

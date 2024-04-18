@@ -589,6 +589,8 @@ function count_actual_ng_hourly_output_process($search_arr, $conn_ircs, $conn_pc
 
    $ipAddressColumn = $processDetailsNG['ipAddressColumn'];
    $date_column = $processDetailsNG['date_column'];
+   $judgmentColumn = $processDetailsNG['judgmentColumn'];
+
    $ipAddresses = $processDetailsNG['ipAddresses'];
 
    $server_date_only = $search_arr['server_date_only'];
@@ -606,7 +608,7 @@ function count_actual_ng_hourly_output_process($search_arr, $conn_ircs, $conn_pc
                 TO_CHAR(T_REPAIRWK.$date_column, 'YYYY-MM-DD') AS DAY,
                 TO_CHAR(T_REPAIRWK.$date_column, 'HH24') AS HOUR, REGISTLINENAME 
                 FROM T_REPAIRWK
-                WHERE REGISTLINENAME = '$registlinename'";
+                WHERE REGISTLINENAME = '$registlinename' AND $judgmentColumn = '0'";
 
    if (!empty($ipAddresses)) {
       $query = $query . " AND $ipAddressColumn IN ($ipAddressesString)";
