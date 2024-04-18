@@ -341,6 +341,7 @@ include 'dist/js/adminlte.miin.php';
 
         .process-content {
             font-size: 20px;
+            text-align: center;
         }
 
         .andon-container,
@@ -432,17 +433,35 @@ include 'dist/js/adminlte.miin.php';
             background-color: #B13D2F;
         }
 
-        body[light-mode="dark"] .red-bg {
-            background-color: #B13D2F;
-        }
-
         body[light-mode="dark"] .grey-bg {
             background-color: #666666;
+        }
+
+        body[light-mode=dark] .for-btn {
+            background: #3D414F;
+            color: #fff;
+        }
+
+        body[light-mode=dark] .row-btn {
+            background: #495057;
+            color: #fff;
+        }
+
+        .for-btn {
+            background: #f4f4f4;
+            border: none;
+            color: #000;
         }
 
         .checkbox {
             opacity: 0;
             position: absolute;
+        }
+
+        .row-btn {
+            background: #FBFBFB;
+            height: 60px;
+            border-radius: 4px;
         }
 
         .checkbox-label {
@@ -521,14 +540,28 @@ include 'dist/js/adminlte.miin.php';
 </head>
 
 <body>
-    <!-- ===================== LIGHT/DARK MODE TOGGLE-->
-    <div class="mt-3 ml-2">
-        <input type="checkbox" class="checkbox" id="checkbox" onclick="toggle_light_mode()">
-        <label for="checkbox" class="checkbox-label">
-            <i class="fas fa-moon"></i>
-            <i class="fas fa-sun"></i>
-            <span class="ball"></span>
-        </label>
+    <!-- ===================== LIGHT/DARK MODE TOGGLE AND RETURN TO SETTING-->
+    <div class="row">
+        <div class="col-6">
+            <div class="float-left mt-3 ml-2">
+                <a href="../pcad/dashboard/setting.php">
+                    <button class="btn btn-secondary return-btn" style="background: #f4f4f4; border: none; color: #000;"
+                        onmouseover="this.style.backgroundColor='#383B46'; this.style.color='#FFF';"
+                        onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';"><i
+                            class="fas fa-angle-left" style="width"></i>&ensp;&ensp;Return to Setting</button>
+                </a>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="float-right mt-3 mr-2">
+                <input type="checkbox" class="checkbox" id="checkbox" onclick="toggle_light_mode()">
+                <label for="checkbox" class="checkbox-label">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-sun"></i>
+                    <span class="ball"></span>
+                </label>
+            </div>
+        </div>
     </div>
 
     <!-- ===================== -->
@@ -704,12 +737,10 @@ include 'dist/js/adminlte.miin.php';
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="plan-content yellow-bg" id="target_accounting_efficiency"
-                                >
+                            <td class="plan-content yellow-bg" id="target_accounting_efficiency">
                                 <?= $acc_eff; ?>%
                             </td>
-                            <td class="plan-content yellow-bg" id="actual_accounting_efficiency"
-                                ></td>
+                            <td class="plan-content yellow-bg" id="actual_accounting_efficiency"></td>
                             <td class="plan-content yellow-bg" id="gap_accounting_efficiency"></td>
                         </tr>
                     </tbody>
@@ -809,7 +840,7 @@ include 'dist/js/adminlte.miin.php';
                     <table>
                         <thead>
                             <tr>
-                                <td class="inspection-title">Overall Inspection</td>
+                                <td class="inspection-title pt-1">Overall Inspection</td>
                             </tr>
                         </thead>
                     </table>
@@ -845,7 +876,8 @@ include 'dist/js/adminlte.miin.php';
                     </table>
                 </div>
 
-                <div class="inspection-container-3 table-responsive m-0 p-0" style="max-height: 215px; overflow-y: auto;">
+                <div class="inspection-container-3 table-responsive m-0 p-0"
+                    style="max-height: 215px; overflow-y: auto;">
                     <!-- inspection details -->
                     <table class="m-0 p-0 table-head-fixed text-nowrap">
                         <thead style="text-align: center; position: sticky; top: 0; z-index: 1; height: 55px">
@@ -950,14 +982,10 @@ include 'dist/js/adminlte.miin.php';
                 <table>
                     <thead>
                         <tr>
-                            <td colspan="2" class="manpower-title"
-                                onclick='window.open("http://172.25.116.188:3000/emp_mgt/viewer/dashboard.php","_blank")'>
+                            <td colspan="2" class="manpower-title">
                                 <div class="pl-2 pr-2"
                                     style="display: flex; justify-content: space-between; align-items: center;">
                                     <span>Other Details</span>
-                                    <img class="icon-2" src="dist/img/expand-dark.png"
-                                        data-light-src="dist/img/expand-light.png"
-                                        data-dark-src="dist/img/expand-dark.png">
                                 </div>
                             </td>
                         </tr>
@@ -1003,128 +1031,59 @@ include 'dist/js/adminlte.miin.php';
                             <td class="process-title">Actual</td>
                         </tr>
                     </thead>
-
-                    <tbody id="process_design_data">
-                        <tr>
-                            <td class="process-sub-title">Sub Assy</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Bukumi</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Parts</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Layout</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Assy</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Shiage</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Dimension</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">ECT</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">ECT (Clamp)</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title"> Clamp Checking Option</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Appearance</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Assurance</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Jr Staff</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                        <tr>
-                            <td class="process-sub-title">Expert</td>
-                            <td class="process-content"></td>
-                            <td class="process-content"></td>
-                        </tr>
-                    </tbody>
+                    <tbody id="process_design_data"></tbody>
                 </table>
             </div>
 
             <div class="card graphs-container">
+
                 <!-- andon count graph -->
-                <!-- <div class="card andon-container"> -->
                 <div id="chart-container1">
-                    <canvas id="andon_hourly_chart" height="60"></canvas>
+                    <a target="_blank" href="../pcad/viewer/andon_details/andon_details.php">
+                        <canvas id="andon_hourly_chart" height="60"></canvas>
+                    </a>
                 </div>
-                <!-- </div> -->
 
                 <!-- good hourly count graph -->
-                <!-- <div class="card good-container"> -->
                 <div id="chart-container2">
-                    <canvas id="hourly_output_summary_chart" height="60"></canvas>
+                    <a target="_blank" href="../pcad/viewer/hourly_output/hourly_output.php">
+                        <canvas id="hourly_output_summary_chart" height="60"></canvas>
+                    </a>
                 </div>
-                <!-- </div> -->
 
                 <!-- ng hourly count graph -->
-                <!-- <div class="card ng-container"> -->
                 <div id="chart-container3">
-                    <canvas id="ng_summary_chart" height="60"></canvas>
+                    <a target="_blank" href="../pcad/viewer/ng_inspection_details/inspection_details_ng.php">
+                        <canvas id="ng_summary_chart" height="60"></canvas>
+                    </a>
                 </div>
-                <!-- </div> -->
+
+                <div class="row mx-1 my-1 row-btn">
+                    <div class="col-12 my-auto">
+                        <a target="_blank" href="../pcad/viewer/andon_details/andon_details.php">
+                            <button class="btn btn-secondary ml-1 for-btn"
+                                onmouseover="this.style.backgroundColor='#005BA3'; this.style.color='#FFF';"
+                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly
+                                Andon Details</button>
+                        </a>
+                        &ensp;&ensp;&ensp;
+                        <a target="_blank" href="../pcad/viewer/hourly_output/hourly_output.php">
+                            <button class="btn btn-secondary ml-1 for-btn"
+                                onmouseover="this.style.backgroundColor='#10BA68'; this.style.color='#FFF';"
+                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly
+                                Output Details</button>
+                        </a>
+                        &ensp;&ensp;&ensp;
+                        <a target="_blank" href="../pcad/viewer/ng_inspection_details/inspection_details_ng.php">
+                            <button class="btn btn-secondary ml-1 for-btn"
+                                onmouseover="this.style.backgroundColor='#E14747'; this.style.color='#FFF';"
+                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View NG
+                                Hourly Details</button>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- Buttons (Progress Counter TV) -->
-        <!-- <div class="row">
-            <div class="col-4">
-                <div>
-                    <button type="button" class="btn btn-danger btn-block btn-pause">PAUSE <b>[ 1 ]</b></button>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-info btn-block btn-resume d-none">RESUME<b>[ 3 ]</b></button>
-                </div>
-            </div>
-            <div class="col-4">
-                <button type="button" class="btn btn-success btn-block btn-target ">END PROCESS <b>[ 2 ]</b></button>
-            </div>
-            <div class="col-4">
-                <a type="button" class="btn btn-secondary btn-block btn-menu" href="pcs_page/index.php">MAIN MENU <b>[ 0
-                        ]</b></a>
-            </div>
-        </div> -->
-        <!-- <div class="col-3">
-            <a href="pcs_page/setting.php" class="btn  btn-primary btn-set d-none" id="setnewTargetBtn">SET NEW
-                TARGET<b>[ 5 ]</b></a>
-        </div> -->
 
         <!-- return to top -->
         <button id="back-to-top" type="button" class="return-to-top"><img class="nav-icon-top nav-icon"
@@ -1187,6 +1146,8 @@ include 'dist/js/adminlte.miin.php';
         ng_graph();
         setInterval(ng_graph, 30000);
 
+        setInterval(refreshGraphs, 30000);
+
         // Call get_process_design initially to load the process design data from employee management system and pcad
         get_process_design();
         // Set interval to refresh data every 15 seconds
@@ -1225,6 +1186,29 @@ include 'dist/js/adminlte.miin.php';
 
             updateChartColors('dark');
         }
+    }
+
+    function toggleDarkMode(isDarkMode) {
+        var buttons = document.querySelectorAll(".for-btn");
+        buttons.forEach(function (button) {
+            if (isDarkMode) {
+                // Dark mode styles
+                button.style.backgroundColor = '#3D414F';
+                button.style.color = '#fff';
+            } else {
+                // Light mode styles
+                button.style.backgroundColor = '#f4f4f4';
+                button.style.color = '#000';
+            }
+        });
+    }
+
+    function refreshGraphs() {
+        // Add code to refresh your graphs here
+        
+        // After refreshing, reapply dark mode styles to graphs
+        var isDarkMode = localStorage.lightMode === 'dark'; // Assuming you store dark mode state in localStorage
+        updateChartColors(isDarkMode);
     }
 
     // for chart dark mode
