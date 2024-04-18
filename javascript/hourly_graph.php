@@ -61,7 +61,7 @@
                                         size: 17
                                     },
                                 },
-                                grid: {
+                                grid: { 
                                     display: false,
                                 },
                             },
@@ -139,7 +139,7 @@
                                 ticks: {
                                     autoSkip: false,
                                 },
-                                grid: {
+                                grid: { 
                                     display: false,
                                 },
                             },
@@ -177,8 +177,10 @@
                         labels: hour_label, // Use machine names as the primary labels
                         datasets: [{
                             label: 'Hourly Output',
-                            backgroundColor: 'rgba(23, 162, 184, 0.5)',
-                            borderColor: 'rgba(23, 162, 184, 1)',
+                            // backgroundColor: 'rgba(23, 162, 184, 0.5)',
+                            // borderColor: 'rgba(23, 162, 184, 1)',
+                            backgroundColor: 'rgba(11, 143, 80, 0.5)',
+                            borderColor: 'rgba(11, 143, 80, 1)',
                             borderWidth: 1,
                             data: hourly_output_summary,
                             yAxisID: 'y',
@@ -250,7 +252,7 @@
                                 ticks: {
                                     autoSkip: false,
                                 },
-                                grid: {
+                                grid: { 
                                     display: false,
                                 },
                             },
