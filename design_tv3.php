@@ -739,7 +739,7 @@ include 'process/pcs/index.php';
         // Call andon_d_sum initially to load the chart
         // Initialize chart for carousel item 1
         andon_d_sum();
-        setInterval(andon_d_sum, 70000);
+        setInterval(andon_d_sum, 120000);
 
         // Initialize chart for carousel item 2
         andon_hourly_graph();
