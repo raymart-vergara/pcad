@@ -25,12 +25,10 @@
                                 display: true,
                                 text: 'Hourly Andon Events',
                                 font: {
-                                    size: 18,
-                                    family: 'Poppins',
-                                    weight: 'normal'
+                                    size: 30,
+                                    family: 'Montserrat',
                                 },
-                                align: 'start',
-                                color: '#000000'
+                                align: 'center',
                             }
                         },
                         scales: {
@@ -39,18 +37,27 @@
                                 ticks: {
                                     autoSkip: false,
                                     font: {
-                                        size: 15
+                                        size: 17
+                                    },
+                                    callback: function (value, index, values) {
+                                        // Check if the value is a whole number
+                                        if (value % 1 === 0) {
+                                            // Return the whole number without decimal point
+                                            return value;
+                                        } else {
+                                            // Return an empty string for non-whole numbers
+                                            return '';
+                                        }
                                     },
                                 },
                                 title: {
                                     display: true,
                                     text: 'Count',
                                     font: {
-                                        size: 10,
-                                        family: 'Poppins',
+                                        size: 15,
+                                        family: 'Montserrat',
                                         weight: 'normal'
                                     },
-                                    color: '#717171'
                                 }
                             },
                             x: {
@@ -58,10 +65,10 @@
                                 ticks: {
                                     autoSkip: false,
                                     font: {
-                                        size: 15
+                                        size: 17
                                     },
                                 },
-                                grid: { 
+                                grid: {
                                     display: false,
                                 },
                             },
@@ -123,18 +130,27 @@
                                 ticks: {
                                     autoSkip: false,
                                     font: {
-                                        size: 15
+                                        size: 17
+                                    },
+                                    callback: function (value, index, values) {
+                                        // Check if the value is a whole number
+                                        if (value % 1 === 0) {
+                                            // Return the whole number without decimal point
+                                            return value;
+                                        } else {
+                                            // Return an empty string for non-whole numbers
+                                            return '';
+                                        }
                                     },
                                 },
                                 title: {
                                     display: true,
                                     text: 'Count',
                                     font: {
-                                        size: 10,
-                                        family: 'Poppins',
+                                        size: 15,
+                                        family: 'Montserrat',
                                         weight: 'normal'
                                     },
-                                    color: '#717171'
                                 }
                             },
                             x: {
@@ -142,10 +158,10 @@
                                 ticks: {
                                     autoSkip: false,
                                     font: {
-                                        size: 15
+                                        size: 17
                                     },
                                 },
-                                grid: { 
+                                grid: {
                                     display: false,
                                 },
                             },
@@ -170,12 +186,11 @@
                                 display: true,
                                 text: 'Hourly Output',
                                 font: {
-                                    size: 18,
-                                    family: 'Poppins',
+                                    size: 30,
+                                    family: 'Montserrat',
                                     weight: 'normal'
                                 },
-                                align: 'start',
-                                color: '#000000'
+                                align: 'center',
                             },
                         }
                     },
@@ -243,28 +258,27 @@
                                 ticks: {
                                     autoSkip: false,
                                     font: {
-                                        size: 15
+                                        size: 17
                                     },
                                 },
                                 title: {
                                     display: true,
                                     text: 'Count',
                                     font: {
-                                        size: 10,
-                                        family: 'Poppins',
+                                        size: 15,
+                                        family: 'Montserrat',
                                         weight: 'normal'
                                     },
-                                    color: '#717171'
                                 }
                             },
                             x: {
                                 ticks: {
                                     autoSkip: false,
                                     font: {
-                                        size: 15
+                                        size: 17
                                     },
                                 },
-                                grid: { 
+                                grid: {
                                     display: false,
                                 },
                             },
@@ -277,12 +291,11 @@
                                 display: true,
                                 text: 'NG Hourly Output',
                                 font: {
-                                    size: 18,
-                                    family: 'Poppins',
+                                    size: 30,
+                                    family: 'Montserrat',
                                     weight: 'normal'
                                 },
-                                align: 'start',
-                                color: '#000000'
+                                align: 'center',
                             },
                         }
                     }
