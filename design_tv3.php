@@ -96,8 +96,8 @@ include 'process/pcs/index.php';
         }
 
         .table-container {
-            /* position: relative;
-            z-index: 2; */
+            position: relative;
+            z-index: 2;
         }
 
         .table-container table {
