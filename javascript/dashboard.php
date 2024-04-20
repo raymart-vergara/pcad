@@ -16,25 +16,7 @@
         $('.btn-pause').addClass('d-none');
     }
 
-    checkPausedStatus();
-
-    function checkPausedStatus() {
-        if ($("#is_paused").val() == "YES") {
-            isPause = true;
-            $('.btn-resume').removeClass('d-none');
-            $('.btn-pause').addClass('d-none');
-
-        } else {
-            isPause = false;
-            $('.btn-pause').removeClass('d-none');
-            $('.btn-resume').addClass('d-none');
-        }
-
-        $(".takt-value").text(moment.utc(timerTakt * 1000).format('HH:mm:ss'));
-        var takt = $('#takt').val();
-        var taktset = moment.utc(takt * 1000).format('HH:mm:ss');
-        $('#taktset').text(taktset);
-    }
+  
 
     if (processing == 1) {
         getValues();
@@ -63,7 +45,7 @@
             var last_takt = $("#last_takt").val();
             var added_takt_plan = $("#added_takt_plan").val();
             // console.log(registlinename);
-            $.post('process/pcs/dashboard_setting_p.php', {
+            $.post('process/pcs/setting_p.php', {
                 request: 'getPlanLine',
                 registlinename: registlinename,
                 last_takt: last_takt
@@ -143,7 +125,7 @@
 
     function updateTakt() {
         var added_takt_plan = $("#added_takt_plan").val();
-        $.post('process/pcs/dashboard_setting_p.php', {
+        $.post('process/pcs/setting_p.php', {
             request: 'updateTakt',
             registlinename: $('#registlinename').val(),
             added_takt_plan: added_takt_plan
@@ -153,18 +135,6 @@
             }
         });
     }
-
-  
- 
-    // ---EVENT LISTENER -----------------------------------------------------------------//
-   
-        // END TARGET USING KEY NUMBER 2 -----------------------------------------------------------------------------
-       
-        // RESUME BUTTON
-    
-
-
-    // TIMER FOR DIGIT LENGTH CHECK
 
 
     function fetch_digit() {

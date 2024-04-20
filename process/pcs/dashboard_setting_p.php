@@ -15,7 +15,7 @@ function TimeToSec($time)
 
 if (isset($_POST['request'])) {
     $request = $_POST['request'];
-   if ($request == "getPlanLine") {
+    if ($request == "getPlanLine") {
         $shift = get_shift($server_time);
 
         $IRCS_Line = $_POST['registlinename'];
@@ -51,6 +51,17 @@ if (isset($_POST['request'])) {
         );
 
         $Actual_Target = count_overall_g($search_arr, $conn_ircs);
+
+        // $q = "SELECT COUNT(*) AS c
+        // FROM IRCS.T_PACKINGWK 
+        // WHERE (REGISTLINENAME LIKE '" . $IRCS_Line . "' OR IPADDRESS = '" . $IRCS_IP . "') AND REGISTDATETIME >= TO_DATE('" . $started . "', 'yyyy-MM-dd HH24:MI:SS') AND PACKINGBOXCARDJUDGMENT = '1'";
+
+        // $stid = oci_parse($conn_ircs, $q);
+        // oci_execute($stid);
+        // while ($row = oci_fetch_object($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
+        //     $Actual_Target = $row->C;
+        // }
+
         $Remaining_Target = $Actual_Target - $Target;
 
         if (!$Target) {
@@ -107,7 +118,7 @@ if (isset($_POST['request'])) {
         } else {
             echo 'false';
         }
-    } else if ($request == "addTarget") {
+    }else if ($request == "addTarget") {
         $registlinename = $_POST['registlinename'];
         $group = $_POST['group'];
     
@@ -121,9 +132,7 @@ if (isset($_POST['request'])) {
         } else {
             echo "Failed to execute the query.";
         }
-    }
-    
-     else if ($request == "getLineNo") {
+    }else if ($request == "getLineNo") {
         $registlinename = $_POST['registlinename'];
         $q = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename ";
         $stmt = $conn_pcad->prepare($q);
@@ -137,6 +146,5 @@ if (isset($_POST['request'])) {
         }
     } 
 }
-
 
 
