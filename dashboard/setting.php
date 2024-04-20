@@ -16,25 +16,25 @@ if ($result) {
 
 <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
     <div class="card col-5" style="border-radius: 10px;">
-        <div class="row" style="height: 500px;">
-            <div class="col-5 m-0 p-0 d-flex justify-content-center align-items-center"
-                style="background: #0D2D5E; color: #FFF; border-radius: 10px 0px 0px 10px;">
-                <div class="d-flex flex-column justify-content-center align-items-left" style="margin: 0; padding: 0;">
-                    <div class="row">
-                        <div class="col-12">
-                            <p class="mb-0 pcad-title">
-                                Production <br>
-                                Conveyor <br>
-                                Analysis <br>
-                                Dashboard
-                            </p>
+        <form method="post" action="../process/pcs/dashboard_setting_p.php">
+            <input type="hidden" name="request" value="addTarget">
+            <div class="row" style="height: 500px;">
+                <div class="col-5 m-0 p-0 d-flex justify-content-center align-items-center"
+                    style="background: #0D2D5E; color: #FFF; border-radius: 10px 0px 0px 10px;">
+                    <div class="d-flex flex-column justify-content-center align-items-left"
+                        style="margin: 0; padding: 0;">
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="mb-0 pcad-title">
+                                    Production <br>
+                                    Conveyor <br>
+                                    Analysis <br>
+                                    Dashboard
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <form method="post" action="../process/pcs/dashboard_setting_p.php">
-                <input type="hidden" name="request" value="addTarget">
                 <div class="col-7" style="">
                     <div class="row">
                         <div class="col-12 text-right p-5" style="color: #0069B0; font-size: 22px;">
@@ -80,16 +80,15 @@ if ($result) {
                                 style="width: 75%; border-radius: 20px; background-color: #0069B0; color: #FFF"
                                 onmouseover="this.style.backgroundColor='#00538B'; this.style.color='#fff';"
                                 onmouseout="this.style.backgroundColor='#0069B0'; this.style.color='#fff';"
-                                class="btn btn-hover" id="menuBtn" name="request" value="mainMenu">
+                                class="btn btn-hover">
                                 <a value="addTarget" id="runcounterbtn" class="small-box-footer monitor"
-                                    style="color: #FFF;">Proceed
-                                    &ensp;<i class="fas fa-arrow-right"></i></a>
+                                    style="color: #FFF;">Proceed &ensp;<i class="fas fa-arrow-right"></i></a>
                             </button>
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </div>
 

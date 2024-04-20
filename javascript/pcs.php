@@ -57,7 +57,6 @@
             }
         }, interval);
 
-
         function getValues() {
             var registlinename = $("#registlinename").val();
             var last_takt = $("#last_takt").val();
@@ -74,7 +73,6 @@
                 if ($('.plan_target_value').text() != response.plan) {
                     $('.plan_target_value').addClass('reloadedLine');
                     $('.plan_target_value').css('margin-top', '-100px');
-
                 }
 
                 if ($('.plan_actual_value').text() != response.actual) {
@@ -90,9 +88,7 @@
                 $('.plan_target_value').text(parseInt(response.plan));
                 $('.plan_actual_value').text(parseInt(response.actual));
                 $('.plan_gap_value').text(response.remaining);
-
             });
-
         }
 
         setInterval(function() {
@@ -120,12 +116,9 @@
                             updateTakt();
                         }
                     }
-
                 }
             }
-
         }, 1000);
-
     } else {
         $(document).ready(function() {
             $('#plannotset').modal('show');
@@ -277,9 +270,7 @@
         }
     });
 
-
     // TIMER FOR DIGIT LENGTH CHECK
-
 
     function fetch_digit() {
         var plan_length = $('#plan_target').text().length;

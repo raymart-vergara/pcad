@@ -1,14 +1,13 @@
 <?php
 include '../conn/pcad.php';
 
-
 if (isset($_POST['request'])) {
     $request = $_POST['request'];
     if ($request == "addTarget") {
         $registlinename = $_POST['registlinenameplan'];
         $group = $_POST['group'];
       
-        $sql_get_line = "SELECT * FROM t_plan WHERE ircs_line = '$registlinename' AND group = '$group'";
+        $sql_get_line = "SELECT * FROM t_plan WHERE ircs_line = '$registlinename' AND `group` = '$group'";
         $stmt_get_line = $conn_pcad->prepare($sql_get_line);
             if ($stmt_get_line->execute()) {
                 header("location: ../../index_IV.php?registlinename=" . $registlinename);
