@@ -123,6 +123,7 @@ if (isset($_POST['request'])) {
         $group = $_POST['group'];
     
         $sql_get_line = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND `group` = :group";
+
         $stmt_get_line = $conn_pcad->prepare($sql_get_line);
         $stmt_get_line->bindParam(':registlinename', $registlinename);
         $stmt_get_line->bindParam(':group', $group);
