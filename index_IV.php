@@ -1327,7 +1327,7 @@ include 'dist/js/adminlte.miin.php';
 
 <?php
 include 'javascript/pcs.php';
-include 'javascript/pcad.php';
+include 'javascript/dashboard.php';
 include 'javascript/emp_mgt.php';
 include 'javascript/andon.php';
 include 'javascript/inspection_output.php';

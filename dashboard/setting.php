@@ -80,8 +80,8 @@ if ($result) {
                                 style="width: 75%; border-radius: 20px; background-color: #0069B0; color: #FFF"
                                 onmouseover="this.style.backgroundColor='#00538B'; this.style.color='#fff';"
                                 onmouseout="this.style.backgroundColor='#0069B0'; this.style.color='#fff';"
-                                class="btn btn-hover" id="menuBtn" name="request" value="mainMenu">
-                                <a value="addTarget" id="runcounterbtn" class="small-box-footer monitor"
+                                class="btn btn-hover" id="runcounterbtn" name="request" value="addTarget">
+                                <a  class="small-box-footer monitor"
                                     style="color: #FFF;">Proceed
                                     &ensp;<i class="fas fa-arrow-right"></i></a>
                             </button>
