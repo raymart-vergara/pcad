@@ -26,7 +26,7 @@ include 'plugins/head.php';
 							</div>
 						</div>
 						<!-- RUN COUNTER -->
-						<div class="col-lg-6 col-10 ">
+						<div class="col-lg-6 col-10">
 							<div class="small-box" style="background: #0069B0;">
 								<div class="inner">
 									<h3 style="color: #fff; font-size: 60px">[ 2 ]
@@ -83,10 +83,7 @@ include 'plugins/footer.php';
 					window.open("../design_tv5.php?registlinename=" + registlinename, "_self");
 				}
 			}
-
-
 		});
-
 	}
 	// -----------------------------------------------------------------------------------------------------------------------------------
 	$(document).ready(function () {
@@ -96,7 +93,6 @@ include 'plugins/footer.php';
 		if (localStorage.getItem("registlinename") == "null") {
 			window.open("setting.php", "_self");
 		}
-
 		$(document).on('click', 'a.monitor', function (e) {
 			e.preventDefault();
 			var href = $(this).prop('href');

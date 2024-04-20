@@ -57,12 +57,13 @@
             }
         }, interval);
 
+
         function getValues() {
             var registlinename = $("#registlinename").val();
             var last_takt = $("#last_takt").val();
             var added_takt_plan = $("#added_takt_plan").val();
             // console.log(registlinename);
-            $.post('process/pcs/setting_p.php', {
+            $.post('process/pcs/dashboard_setting_p.php', {
                 request: 'getPlanLine',
                 registlinename: registlinename,
                 last_takt: last_takt
@@ -73,6 +74,7 @@
                 if ($('.plan_target_value').text() != response.plan) {
                     $('.plan_target_value').addClass('reloadedLine');
                     $('.plan_target_value').css('margin-top', '-100px');
+
                 }
 
                 if ($('.plan_actual_value').text() != response.actual) {
@@ -88,7 +90,9 @@
                 $('.plan_target_value').text(parseInt(response.plan));
                 $('.plan_actual_value').text(parseInt(response.actual));
                 $('.plan_gap_value').text(response.remaining);
+
             });
+
         }
 
         setInterval(function() {
@@ -116,9 +120,12 @@
                             updateTakt();
                         }
                     }
+
                 }
             }
+
         }, 1000);
+
     } else {
         $(document).ready(function() {
             $('#plannotset').modal('show');
@@ -136,7 +143,7 @@
 
     function updateTakt() {
         var added_takt_plan = $("#added_takt_plan").val();
-        $.post('process/pcs/setting_p.php', {
+        $.post('process/pcs/dashboard_setting_p.php', {
             request: 'updateTakt',
             registlinename: $('#registlinename').val(),
             added_takt_plan: added_takt_plan
@@ -147,130 +154,18 @@
         });
     }
 
-    $(document).on('click', '.btn-target', function(e) {
-        e.preventDefault();
-
-        $('.btn-resume').addClass('d-none');
-        $('.btn-pause').addClass('d-none');
-
-        var registlinename = $("#registlinename").val();
-        $.post('process/pcs/setting_p.php', {
-            request: 'endTarget',
-            registlinename: registlinename
-        }, function(response) {
-            console.log(response);
-
-            if (response.trim() == 'true') {
-                timerOn = false;
-                $('.btn-set').removeClass('d-none');
-                $('.btn-target').addClass('d-none');
-                $('.btn-menu').addClass('d-none');
-            }
-        });
-    });
-
-    $(document).on('click', '.btn-pause', function(e) {
-        e.preventDefault();
-        var el = $(this);
-        $.post('process/pcs/setting_p.php', {
-            request: 'setPaused',
-            registlinename: $("#registlinename").val(),
-            is_paused: 'YES'
-        }, function(response) {
-            console.log(response);
-            el.addClass('d-none');
-            $('.btn-resume').removeClass('d-none');
-            isPause = true;
-        });
-    });
-    $(document).on('click', '.btn-resume', function(e) {
-        e.preventDefault();
-        var el = $(this);
-
-        $.post('process/pcs/setting_p.php', {
-            request: 'setPaused',
-            registlinename: $("#registlinename").val(),
-            is_paused: 'NO'
-        }, function(response) {
-            console.log(response);
-            el.addClass('d-none');
-            $('.btn-pause').removeClass('d-none');
-            isPause = false;
-        });
-    });
+  
+ 
     // ---EVENT LISTENER -----------------------------------------------------------------//
-    document.addEventListener("keypress", function(x) {
-        // PAUSE USING KEY NUMBER 1
-        if (x.keyCode == 49 || x.keyCode == 97) {
-            var el = $(this);
-            $.post('process/pcs/setting_p.php', {
-                request: 'setPaused',
-                registlinename: $("#registlinename").val(),
-                is_paused: 'YES'
-            }, function(response) {
-                console.log(response);
-                el.addClass('d-none');
-                $('.btn-pause').addClass('d-none');
-                $('.btn-resume').removeClass('d-none');
-                isPause = true;
-            });
-        }
+   
         // END TARGET USING KEY NUMBER 2 -----------------------------------------------------------------------------
-        if (x.keyCode == 50 || x.keyCode == 98) {
-            var x = confirm('Confirm to end the target?');
-            if (x == true) {
-                $('.btn-resume').addClass('d-none');
-                $('.btn-pause').addClass('d-none');
-
-                var registlinename = $("#registlinename").val();
-                $.post('process/pcs/setting_p.php', {
-                    request: 'endTarget',
-                    registlinename: registlinename
-                }, function(response) {
-                    console.log(response);
-                    if (response.trim() == 'true') {
-                        timerOn = false;
-                        $('.btn-set').removeClass('d-none');
-                        $('.btn-target').addClass('d-none');
-                        $('.btn-menu').addClass('d-none');
-                    }
-                });
-            } else {
-                // DO NOTHING
-            }
-        }
+       
         // RESUME BUTTON
-        if (x.keyCode == 51 || x.keyCode == 99) {
-            var el = $(this);
-            $.post('process/pcs/setting_p.php', {
-                request: 'setPaused',
-                registlinename: $("#registlinename").val(),
-                is_paused: 'NO'
-            }, function(response) {
-                console.log(response);
-                el.addClass('d-none');
-                $('.btn-resume').addClass('d-none');
-                $('.btn-pause').removeClass('d-none');
-                isPause = false;
-            });
-        }
-        // MAIN MENU
-        if (x.keyCode == 48 || x.keyCode == 96) {
-            window.open('pcs_page/index.php', '_self');
-        }
-        // SET PLAN ------------------------------------------------------------------------------------------------------------
-        if (x.keyCode == 52 || x.keyCode == 100) {
-            var url = $('#setplanBtn').prop('href');
-            window.open(url, "_self");
-        }
-        // SET NEW TARGET
-        if (x.keyCode == 53 || x.keyCode == 101) {
-            var url = $('#setnewTargetBtn').prop('href');
-            window.open(url, "_self");
-        }
-    });
+    
+
 
     // TIMER FOR DIGIT LENGTH CHECK
+
 
     function fetch_digit() {
         var plan_length = $('#plan_target').text().length;
