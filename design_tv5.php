@@ -136,12 +136,12 @@ include 'process/pcs/index.php';
         }
 
         .value-size1 {
-            font-size: 100px;
+            font-size: 90px;
             font-family: 'Norwester', sans-serif;
         }
 
         .value-size2 {
-            font-size: 90px;
+            font-size: 100px;
             font-family: 'Norwester', sans-serif;
             /* text-align: center; */
         }
@@ -187,7 +187,7 @@ include 'process/pcs/index.php';
         }
 
         .equal-width {
-            font-size: 35px;
+            font-size: 45px;
             font-family: 'Montserrat', sans-serif;
         }
 
@@ -327,22 +327,22 @@ include 'process/pcs/index.php';
                 <li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
             </ol>
             <div class="carousel-inner">
-                <div class="carousel-item active" style="height: 700px; margin-top: 10px;">
+                <div class="carousel-item active" style="height: 650px; margin-top: 10px;">
                     <table class="table table-container">
                         <tbody>
                             <tr>
                                 <td scope="col" class="equal-width p-3 table-bg" id="carmodel_label"
                                     style="vertical-align: middle;">
-                                    Car Maker / Model: &emsp;&emsp;
+                                    Car Maker / Model:
                                     <?= $Carmodel ?> <br>
-                                    Line:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
+                                    Line:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
                                     <?= $line_no ?>
                                 </td>
                                 <td scope="col" class="equal-width p-3 table-bg" id="server_date_only_label"
                                     style="vertical-align: middle;">Date:
-                                    &emsp;&emsp;&emsp;&emsp;&emsp;
+                                    &emsp;
                                     <?= $server_date_only ?> <br>
-                                    Shift:&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
+                                    Shift:&emsp;&ensp;
                                     <?= $shift ?>
                                 </td>
                             </tr>
@@ -383,7 +383,7 @@ include 'process/pcs/index.php';
                         </tbody>
                     </table>
                 </div>
-                <div class="carousel-item" style="height: 700px; margin-top: 10px;">
+                <div class="carousel-item" style="height: 650px; margin-top: 10px;">
                     <table class="table-bg" style="width: 100%;">
                         <tbody class="text-center">
                             <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
@@ -439,7 +439,7 @@ include 'process/pcs/index.php';
                     </table>
                 </div>
 
-                <div class="carousel-item" style="height: 700px; margin-top: 10px;">
+                <div class="carousel-item" style="height: 650px; margin-top: 10px;">
                     <table class="table-bg" style="width: 100%;">
                         <tbody class="text-center">
                             <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
@@ -511,7 +511,7 @@ include 'process/pcs/index.php';
                     </div>
                 </div>
 
-                <div class="carousel-item" style="height: 700px; margin-top: 10px;">
+                <div class="carousel-item" style="height: 650px; margin-top: 10px;">
                     <table class="table-bg" style="width: 100%;">
                         <tbody class="text-center">
                             <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
@@ -547,15 +547,15 @@ include 'process/pcs/index.php';
                     <div class="row mt-3">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <div id="chart-container" style="width: 100%; height: 100%;">
-                                    <canvas id="hourly_chart" height="55" style="background-color: #F8F9FA;"></canvas>
-                                </div>
+                                <!-- <div id="chart-container" style="width: 100%; height: 100%;"> -->
+                                    <canvas id="hourly_chart" height="100"></canvas>
+                                <!-- </div> -->
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="carousel-item" style="height: 700px; margin-top: 10px;">
+                <div class="carousel-item" style="height: 650px; margin-top: 10px;">
                     <table class="table-bg" style="width: 100%;">
                         <tbody class="text-center">
                             <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
@@ -591,16 +591,15 @@ include 'process/pcs/index.php';
                     <div class="row mt-3">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <div id="chart-container" style="width: 100%; height: 100%;">
-                                    <canvas id="andon_hourly_chart" height="55"
-                                        style="background-color: #F8F9FA;"></canvas>
-                                </div>
+                                <!-- <div id="chart-container" style="width: 100%; height: 100%;"> -->
+                                    <canvas id="andon_hourly_chart" height="100"></canvas>
+                                <!-- </div> -->
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="carousel-item" style="height: 700px; margin-top: 10px;">
+                <div class="carousel-item" style="height: 650px; margin-top: 10px;">
                     <table class="table-bg" style="width: 100%;">
                         <tbody class="text-center">
                             <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
@@ -636,16 +635,15 @@ include 'process/pcs/index.php';
                     <div class="row mt-3">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <div id="chart-container" style="width: 100%; height: 100%;">
-                                    <canvas id="hourly_output_summary_chart" height="55"
-                                        style="background-color: #F8F9FA;"></canvas>
-                                </div>
+                                <!-- <div id="chart-container" style="width: 100%; height: 100%;"> -->
+                                    <canvas id="hourly_output_summary_chart" height="100"></canvas>
+                                <!-- </div> -->
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="carousel-item" style="height: 700px; margin-top: 10px;">
+                <div class="carousel-item" style="height: 650px; margin-top: 10px;">
                     <table class="table-bg" style="width: 100%;">
                         <tbody class="text-center">
                             <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
@@ -681,16 +679,15 @@ include 'process/pcs/index.php';
                     <div class="row mt-3">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <div id="chart-container" style="width: 100%; height: 100%;">
-                                    <canvas id="ng_summary_chart" height="55"
-                                        style="background-color: #F8F9FA;"></canvas>
-                                </div>
+                                <!-- <div id="chart-container" style="width: 100%; height: 100%;"> -->
+                                    <canvas id="ng_summary_chart" height="100""></canvas>
+                                <!-- </div> -->
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="carousel-item" style="height: 700px; margin-top: 10px;">
+                <div class="carousel-item" style="height: 650px; margin-top: 10px;">
                     <table class="table-bg" style="width: 100%;">
                         <tbody class="text-center">
                             <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
