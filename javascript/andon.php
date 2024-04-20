@@ -50,34 +50,37 @@
                                     size: 30,
                                     family: 'Montserrat',
                                 },
-                                // color: 'white',
                             }
                         },
                         scales: {
                             y: {
-                                // grid: {
-                                //     color: '#777777'
-                                // },
                                 stacked: true,
                                 ticks: {
                                     autoSkip: false,
                                     font: {
                                         size: 17
                                     },
-                                    // color: 'white',
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Minutes',
+                                    font: {
+                                        size: 15,
+                                        family: 'Montserrat',
+                                        weight: 'normal'
+                                    },
                                 }
                             },
                             x: {
-                                // grid: {
-                                //     color: '#777777'
-                                // },
                                 stacked: true,
                                 ticks: {
                                     autoSkip: false,
                                     font: {
                                         size: 17
                                     },
-                                    // color: 'white',
+                                },
+                                grid: {
+                                    display: false,
                                 }
                             },
                         },

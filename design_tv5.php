@@ -7,7 +7,7 @@ include 'process/pcs/index.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PCAD | DASHBOARD IMG</title>
+    <title>PCAD | REVISED 2 DASHBOARD IMG</title>
 
     <!-- mdb -->
     <!-- <link rel="stylesheet" href="plugins/mdb/css/mdb.min.css"> -->
@@ -65,7 +65,6 @@ include 'process/pcs/index.php';
             }
         }
 
-
         @media screen and (min-width: 1920px) and (max-width: 1920px) {
             .container-fluid {
                 width: 100%;
@@ -101,18 +100,22 @@ include 'process/pcs/index.php';
         }
 
         .table-container table {
-            position: absolute;
-            top: 0;
-
-            /* border-collapse: collapse; */
+            position: relative;
             border-collapse: separate;
-            border-spacing: 20px;
+            border-spacing: 10px;
             border: none;
             width: 100%;
+            z-index: 1;
+        }
+
+        .carousel {
+            position: relative;
+            z-index: 2;
+            margin-left: 20px;
+            margin-right: 20px;
         }
 
         tr:hover {
-            /* background-color: #000; */
             cursor: pointer;
         }
 
@@ -138,7 +141,7 @@ include 'process/pcs/index.php';
         }
 
         .value-size2 {
-            font-size: 80px;
+            font-size: 90px;
             font-family: 'Norwester', sans-serif;
             /* text-align: center; */
         }
@@ -153,7 +156,6 @@ include 'process/pcs/index.php';
             width: 100%;
             border-collapse: collapse;
             border-spacing: 0;
-            /* border: 1px solid #515151; */
         }
 
         /* To display the block as level element */
@@ -185,8 +187,7 @@ include 'process/pcs/index.php';
         }
 
         .equal-width {
-            /* width: 25%; */
-            font-size: 28px;
+            font-size: 35px;
             font-family: 'Montserrat', sans-serif;
         }
 
@@ -196,8 +197,7 @@ include 'process/pcs/index.php';
 
         .equal-py {
             width: 50%;
-            font-size: 30px;
-            /* font-family: 'Digitalism', sans-serif; */
+            font-size: 35px;
         }
 
         .equal-insp {
@@ -215,7 +215,6 @@ include 'process/pcs/index.php';
 
         .equal-sub-details {
             width: 16.66%;
-            /* text-align: right; */
         }
 
         .table th,
@@ -224,22 +223,22 @@ include 'process/pcs/index.php';
         }
 
         .font-plan {
-            font-size: 30px;
+            font-size: 50px;
             width: 33.33%;
             padding-left: 10px;
         }
 
         .font-plan-sub {
-            font-size: 30px;
+            font-size: 60px;
         }
 
         .font-others {
-            font-size: 20px;
+            font-size: 25px;
             padding-left: 10px;
         }
 
         .font-others-value {
-            font-size: 40px;
+            font-size: 35px;
             font-family: 'Norwester', sans-serif;
             padding-left: 20px;
         }
@@ -247,13 +246,6 @@ include 'process/pcs/index.php';
         .table-bg {
             background-color: rgba(0, 0, 0, 0.50);
             border-radius: 3px;
-        }
-
-        .carousel {
-            position: relative;
-            z-index: 2;
-            margin-left: 20px;
-            margin-right: 20px;
         }
     </style>
 </head>
@@ -280,12 +272,6 @@ include 'process/pcs/index.php';
     <input type="hidden" id="acc_eff" name="acc_eff" value="<?= $acc_eff; ?>">
     <input type="hidden" id="start_bal_delay" name="start_bal_delay" value="<?= $start_bal_delay; ?>">
     <input type="hidden" id="work_time_plan" name="work_time_plan" value="<?= $work_time_plan; ?>">
-    <div class="container-fluid">
-        <div class="flex-column justify-content-center align-items-center">
-            <!-- <img class="animation__shake" src="dist/img/logo.webp" alt="logo" height="40" width="40"> -->
-            <!-- <span class="h6">PCAD<span> -->
-        </div>
-    </div>
 
     <div class="container-fluid">
         <?php
@@ -311,14 +297,12 @@ include 'process/pcs/index.php';
                                 <div class="col-3">
                                     <a href="pcs_page/setting.php" class="btn btn-lg btn-success text-white btn-close"
                                         id="setplanBtn">SET
-                                        PLAN<b>[ 4
-                                            ]</b></a>
+                                        PLAN<b>[ 4 ]</b></a>
                                 </div>
                                 <div class="col-3">
                                     <a href="pcs_page/index.php" class="btn btn-lg btn-secondary text-white btn-close">MAIN
                                         MENU
-                                        <b>[ 0
-                                            ]</b></a>
+                                        <b>[ 0 ]</b></a>
                                 </div>
                             </div>
                         </div>
@@ -330,35 +314,7 @@ include 'process/pcs/index.php';
         }
         ?>
 
-        <div class="table-container">
-            <table class="table table-container mt-2">
-                <tbody>
-                    <tr>
-                        <td scope="col" class="equal-width p-4 table-bg" id="carmodel_label"
-                            style="vertical-align: middle;">
-                            Car Maker / Model: &emsp;&emsp;&emsp;
-                            <?= $Carmodel ?>
-                        </td>
-                        <td scope="col" class="equal-width p-4 table-bg" id="server_date_only_label"
-                            style="vertical-align: middle;">Date:
-                            &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                            <?= $server_date_only ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td scope="col" class="equal-width p-4 table-bg" id="line_no_label">
-                            Line:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
-                            <?= $line_no ?>
-                        <td scope="col" class="equal-width p-4 table-bg" id="shift_label">
-                            Shift:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
-                            <?= $shift ?>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- carousel -->
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <div id="carouselExampleIndicators" class="carousel slide mx-3" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
                 </li>
@@ -367,9 +323,32 @@ include 'process/pcs/index.php';
                 <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
             </ol>
             <div class="carousel-inner">
-                <div class="carousel-item active" style="height: 535px; margin-top: 260px;">
+                <div class="carousel-item active" style="height: 700px; margin-top: 10px;">
+                    <table class="table table-container">
+                        <tbody>
+                            <tr>
+                                <td scope="col" class="equal-width p-3 table-bg" id="carmodel_label"
+                                    style="vertical-align: middle;">
+                                    Car Maker / Model: &emsp;&emsp;
+                                    <?= $Carmodel ?> <br>
+                                    Line:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
+                                    <?= $line_no ?>
+                                </td>
+                                <td scope="col" class="equal-width p-3 table-bg" id="server_date_only_label"
+                                    style="vertical-align: middle;">Date:
+                                    &emsp;&emsp;&emsp;&emsp;&emsp;
+                                    <?= $server_date_only ?> <br>
+                                    Shift:&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
+                                    <?= $shift ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                     <table class="table text-center m-0 p-4 table-bg" style="border-bottom: 1px solid #E6E6E6">
                         <thead>
                             <tr style="height: 90px;">
@@ -385,7 +364,7 @@ include 'process/pcs/index.php';
                                 <td scope="col" class="value-size1">
                                     <?= $yield_target; ?>%
                                 </td>
-                                <td scope="col" style="vertical-align: middle; font-size: 30px;">
+                                <td scope="col" style="vertical-align: middle; font-size: 40px;">
                                     TARGET</td>
                                 <td scope="col" class="value-size1">
                                     <?= number_format($ppm_target); ?>
@@ -395,7 +374,7 @@ include 'process/pcs/index.php';
                                 <td scope="col" class="value-size1" id="actual_yield"
                                     style="background: #FFD445; color: #000;">
                                 </td>
-                                <td scope="col" style="vertical-align: middle; font-size: 30px;">
+                                <td scope="col" style="vertical-align: middle; font-size: 40px;">
                                     ACTUAL</td>
                                 <td scope="col" class="value-size1" id="actual_ppm"
                                     style="background: #F87261; color: #000;">
@@ -404,7 +383,7 @@ include 'process/pcs/index.php';
                         </tbody>
                     </table>
                 </div>
-                <div class="carousel-item" style="height: 535px; margin-top: 260px;">
+                <div class="carousel-item" style="height: 700px; margin-top: 10px;">
                     <table class="table-bg" style="width: 100%;">
                         <tbody class="text-center">
                             <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
@@ -431,7 +410,7 @@ include 'process/pcs/index.php';
                                     style="background: #ABD2FA; color: #000;">
                                 </td>
                                 <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr"
-                                    style="background: #ABD2FA; color: #000;">
+                                    style="background: #F87261; color: #000;">
                                 </td>
                             </tr>
                             <tr style="border-bottom: 1px solid #E6E6E6">
@@ -459,40 +438,72 @@ include 'process/pcs/index.php';
                         </tbody>
                     </table>
                 </div>
-                <div class="carousel-item" style="height: 535px; margin-top: 260px;">
-                    <table class="table-bg text-center mb-2" style="width: 100%">
-                        <thead style="height: 90px;">
+
+                <div class="carousel-item" style="height: 700px; margin-top: 10px;">
+                    <table class="table-bg" style="width: 100%;">
+                        <tbody class="text-center">
+                            <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
+                                <td scope="col"></td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Target
+                                </td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Actual
+                                </td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Gap
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody class="text-center">
+                            <tr style="border-bottom: 1px solid #E6E6E6">
+                                <input type="hidden" id="processing" value="1">
+                                <td scope="col" class="font-plan equal-plan-acct-hr">
+                                    Plan</td>
+                                <td scope="col" id="plan_target"
+                                    class="plan_target_value value-size2 equal-plan-acct-hr"
+                                    style="background: #ABD2FA; color: #000;">
+                                </td>
+                                <td scope="col" id="plan_actual"
+                                    class="plan_actual_value value-size2 equal-plan-acct-hr"
+                                    style="background: #ABD2FA; color: #000;">
+                                </td>
+                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr"
+                                    style="background: #F87261; color: #000;">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="table-bg text-center mb-2 mt-3" style="width: 100%">
+                        <thead>
                             <tr>
-                                <td colspan="4" class="font-plan"
-                                    style="vertical-align: middle; border-bottom: 1px solid #E6E6E6">
+                                <td colspan="4"
+                                    style="vertical-align: middle; border-bottom: 1px solid #E6E6E6; font-size: 30px;">
                                     OVERALL INSPECTION
                                 </td>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <th scope="col" class="equal-insp font-plan-sub th-normal">GOOD
+                                <th scope="col" class="equal-insp th-normal" style="font-size: 30px;">GOOD
                                 </th>
-                                <td scope="col" id="insp_overall_g" class="value-size1"
-                                    style="background: #50A363; color: #000;">
+                                <td scope="col" id="insp_overall_g" class=""
+                                    style="background: #50A363; color: #000; font-size: 60px;">
                                 </td>
-                                <td scope="col" id="insp_overall_ng" class="value-size1"
-                                    style="background: #F87261; color: #000;">
+                                <td scope="col" id="insp_overall_ng" class=""
+                                    style="background: #F87261; color: #000; font-size: 60px;">
                                 </td>
-                                <th scope="col" class="equal-insp font-plan-sub th-normal">NG
+                                <th scope="col" class="equal-insp th-normal" style="font-size: 30px;">NG
                                 </th>
                             </tr>
                         </tbody>
                     </table>
-                    <!--  -->
 
                     <div class="table-responsive m-0 p-0" style="max-height: 215px; overflow-y: auto;">
                         <table class="table-bg m-0 p-0 table-head-fixed text-nowrap" style="width: 100%;">
-                            <thead style="text-align: center; position: sticky; top: 0; z-index: 1; height: 55px">
+                            <thead style="text-align: center; position: sticky; top: 0; z-index: 1;">
                                 <tr style="border-bottom: 1px solid #E6E6E6;">
-                                    <td class=" equal-insp-info font-plan-sub">GOOD</td>
-                                    <td class="equal-insp-info font-plan-sub">INSPECTION</td>
-                                    <td class="equal-insp-info font-plan-sub">NG</td>
+                                    <td class="equal-insp-info" style="font-size: 30px;">GOOD</td>
+                                    <td class="equal-insp-info" style="font-size: 30px;">INSPECTION</td>
+                                    <td class="equal-insp-info" style="font-size: 30px;">NG</td>
                                 </tr>
                             </thead>
                             <tbody class="mb-0" id="inspection_process_list"></tbody>
@@ -500,71 +511,226 @@ include 'process/pcs/index.php';
                     </div>
                 </div>
 
-                <!-- andon details -->
-                <div class="carousel-item" style="height: 535px; margin-top: 260px;">
-                    <div class="row">
+                <div class="carousel-item" style="height: 700px; margin-top: 10px;">
+                    <table class="table-bg" style="width: 100%;">
+                        <tbody class="text-center">
+                            <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
+                                <td scope="col"></td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Target
+                                </td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Actual
+                                </td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Gap
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody class="text-center">
+                            <tr style="border-bottom: 1px solid #E6E6E6">
+                                <input type="hidden" id="processing" value="1">
+                                <td scope="col" class="font-plan equal-plan-acct-hr">
+                                    Plan</td>
+                                <td scope="col" id="plan_target"
+                                    class="plan_target_value value-size2 equal-plan-acct-hr"
+                                    style="background: #ABD2FA; color: #000;">
+                                </td>
+                                <td scope="col" id="plan_actual"
+                                    class="plan_actual_value value-size2 equal-plan-acct-hr"
+                                    style="background: #ABD2FA; color: #000;">
+                                </td>
+                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr"
+                                    style="background: #F87261; color: #000;">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row mt-3">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <div id="chart-container-1" style="width: 100%; height: 100%;">
-                                    <canvas id="hourly_chart" height="80" style="background-color: #F8F9FA;"></canvas>
+                                <div id="chart-container" style="width: 100%; height: 100%;">
+                                    <canvas id="hourly_chart" height="55" style="background-color: #F8F9FA;"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- andon count graph -->
-                <!-- <div class="carousel-item" style="height: 535px; margin-top: 260px;">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-12">
-                            <div class="card">
-                                <div id="chart-container-2" style="width: 100%; height: 100%;">
-                                    <canvas id="andon_hourly_chart" height="80"
-                                        style="background-color: #F8F9FA;"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
-                <!-- good hourly count graph -->
-                <!-- <div class="carousel-item" style="height: 535px; margin-top: 260px;">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-12">
-                            <div class="card">
-                                <div id="chart-container-3" style="width: 100%; height: 100%;">
-                                    <canvas id="hourly_output_summary_chart" height="80"
-                                        style="background-color: #F8F9FA;"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
-                <!-- ng hourly count graph -->
-                <!-- <div class="carousel-item" style="height: 535px; margin-top: 260px;">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-12">
-                            <div class="card">
-                                <div id="chart-container-4" style="width: 100%; height: 100%;">
-                                    <canvas id="ng_summary_chart" height="80"
-                                        style="background-color: #F8F9FA;"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
-                <!-- ================================================================================================== -->
-                <div class="carousel-item" style="height: 535px; margin-top: 260px;">
+                <div class="carousel-item" style="height: 700px; margin-top: 10px;">
                     <table class="table-bg" style="width: 100%;">
-                        <thead style="height: 90px; border-bottom: 1px solid #E6E6E6;">
+                        <tbody class="text-center">
+                            <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
+                                <td scope="col"></td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Target
+                                </td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Actual
+                                </td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Gap
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody class="text-center">
+                            <tr style="border-bottom: 1px solid #E6E6E6">
+                                <input type="hidden" id="processing" value="1">
+                                <td scope="col" class="font-plan equal-plan-acct-hr">
+                                    Plan</td>
+                                <td scope="col" id="plan_target"
+                                    class="plan_target_value value-size2 equal-plan-acct-hr"
+                                    style="background: #ABD2FA; color: #000;">
+                                </td>
+                                <td scope="col" id="plan_actual"
+                                    class="plan_actual_value value-size2 equal-plan-acct-hr"
+                                    style="background: #ABD2FA; color: #000;">
+                                </td>
+                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr"
+                                    style="background: #F87261; color: #000;">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row mt-3">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="card">
+                                <div id="chart-container" style="width: 100%; height: 100%;">
+                                    <canvas id="andon_hourly_chart" height="55"
+                                        style="background-color: #F8F9FA;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item" style="height: 700px; margin-top: 10px;">
+                    <table class="table-bg" style="width: 100%;">
+                        <tbody class="text-center">
+                            <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
+                                <td scope="col"></td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Target
+                                </td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Actual
+                                </td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Gap
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody class="text-center">
+                            <tr style="border-bottom: 1px solid #E6E6E6">
+                                <input type="hidden" id="processing" value="1">
+                                <td scope="col" class="font-plan equal-plan-acct-hr">
+                                    Plan</td>
+                                <td scope="col" id="plan_target"
+                                    class="plan_target_value value-size2 equal-plan-acct-hr"
+                                    style="background: #ABD2FA; color: #000;">
+                                </td>
+                                <td scope="col" id="plan_actual"
+                                    class="plan_actual_value value-size2 equal-plan-acct-hr"
+                                    style="background: #ABD2FA; color: #000;">
+                                </td>
+                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr"
+                                    style="background: #F87261; color: #000;">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row mt-3">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="card">
+                                <div id="chart-container" style="width: 100%; height: 100%;">
+                                    <canvas id="hourly_output_summary_chart" height="55"
+                                        style="background-color: #F8F9FA;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item" style="height: 700px; margin-top: 10px;">
+                    <table class="table-bg" style="width: 100%;">
+                        <tbody class="text-center">
+                            <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
+                                <td scope="col"></td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Target
+                                </td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Actual
+                                </td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Gap
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody class="text-center">
+                            <tr style="border-bottom: 1px solid #E6E6E6">
+                                <input type="hidden" id="processing" value="1">
+                                <td scope="col" class="font-plan equal-plan-acct-hr">
+                                    Plan</td>
+                                <td scope="col" id="plan_target"
+                                    class="plan_target_value value-size2 equal-plan-acct-hr"
+                                    style="background: #ABD2FA; color: #000;">
+                                </td>
+                                <td scope="col" id="plan_actual"
+                                    class="plan_actual_value value-size2 equal-plan-acct-hr"
+                                    style="background: #ABD2FA; color: #000;">
+                                </td>
+                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr"
+                                    style="background: #F87261; color: #000;">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row mt-3">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="card">
+                                <div id="chart-container" style="width: 100%; height: 100%;">
+                                    <canvas id="ng_summary_chart" height="55"
+                                        style="background-color: #F8F9FA;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item" style="height: 700px; margin-top: 10px;">
+                    <table class="table-bg" style="width: 100%;">
+                        <tbody class="text-center">
+                            <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
+                                <td scope="col"></td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Target
+                                </td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Actual
+                                </td>
+                                <td scope="col" class="equal-plan-acct-hr font-plan-sub">Gap
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody class="text-center">
+                            <tr style="border-bottom: 1px solid #E6E6E6">
+                                <input type="hidden" id="processing" value="1">
+                                <td scope="col" class="font-plan equal-plan-acct-hr">
+                                    Plan</td>
+                                <td scope="col" id="plan_target"
+                                    class="plan_target_value value-size2 equal-plan-acct-hr"
+                                    style="background: #ABD2FA; color: #000;">
+                                </td>
+                                <td scope="col" id="plan_actual"
+                                    class="plan_actual_value value-size2 equal-plan-acct-hr"
+                                    style="background: #ABD2FA; color: #000;">
+                                </td>
+                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr"
+                                    style="background: #F87261; color: #000;">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="table-bg mt-3" style="width: 100%;">
+                        <thead style="border-bottom: 1px solid #E6E6E6;">
                             <tr class="text-center">
-                                <td colspan="2" class="equal-details font-plan">PD
+                                <td colspan="2" class="equal-details" style="font-size: 35px;">PD
                                     MANPOWER</td>
-                                <td colspan="2" class="equal-details font-plan">QA
+                                <td colspan="2" class="equal-details" style="font-size: 35px;">QA
                                     MANPOWER</th>
-                                <td colspan="2" class="equal-details font-plan">OTHER
+                                <td colspan="2" class="equal-details" style="font-size: 35px;">OTHER
                                     DETAILS</td>
                             </tr>
                         </thead>
@@ -646,7 +812,6 @@ include 'process/pcs/index.php';
                                 <td class="text-left font-others-value" style="background: #CFCFCF; color: #000;"></td>
                             </tr>
                         </tbody>
-
                     </table>
                 </div>
             </div>
@@ -661,7 +826,7 @@ include 'process/pcs/index.php';
         </div>
 
         <!-- buttons for tv -->
-        <div class="row ml-2 mr-2">
+        <div class="row ml-2 mr-2 mt-3">
             <div class="col-4">
                 <div>
                     <button type="button" class="btn btn-danger btn-block btn-pause">PAUSE <b>[ 1
@@ -685,6 +850,10 @@ include 'process/pcs/index.php';
             <a href="pcs_page/setting.php" class="btn  btn-primary btn-set d-none" id="setnewTargetBtn">SET
                 NEW TARGET<b>[ 5 ]</b></a>
         </div>
+
+
+
+
     </div>
 </body>
 
@@ -697,6 +866,8 @@ include 'process/pcs/index.php';
 <script src="plugins/mdb/js/mdb.js"></script>
 <!-- Chart JS -->
 <script src="node_modules/chart.js/dist/chart.umd.js"></script>
+<script src="plugins/chart.js/annotation/chartjs-plugin-annotation-1.0.2.js"></script>
+
 <!--Moment JS -->
 <script src="plugins/moment-js/moment.min.js"></script>
 <script src="plugins/moment-js/moment-duration-format.min.js"></script>
@@ -706,7 +877,11 @@ include 'process/pcs/index.php';
         interval: 30000
     })
 
-    let chart; // Declare chart variable globally
+    let chart; // for andon only
+
+    let chartAndonHourly;
+    let chartHourlyOutput;
+    let chartNGhourly;
 
     // Set LocalStorage for these variables
     localStorage.setItem("andon_line", $("#andon_line").val());
@@ -743,15 +918,15 @@ include 'process/pcs/index.php';
 
         // Initialize chart for carousel item 2
         andon_hourly_graph();
-        setInterval(andon_hourly_graph, 70000);
+        setInterval(andon_hourly_graph, 130000);
 
         // Initialize chart for carousel item 3
         get_hourly_output_chart();
-        setInterval(get_hourly_output_chart, 70000);
+        setInterval(get_hourly_output_chart, 140000);
 
         // Initialize chart for carousel item 4
         ng_graph();
-        setInterval(ng_graph, 70000);
+        setInterval(ng_graph, 150000);
     });
 
     // ==========================================================================================
@@ -777,19 +952,6 @@ include 'process/pcs/index.php';
         var specificGradientValue = specificValue + '%';
         specificCell.style.background = 'linear-gradient(to right, #your_specific_color ' + specificGradientValue + ', #f6f6f6 ' + specificGradientValue + ')';
     }
-    // ==========================================================================================
-
-    // Handle click event for GOOD cell
-    // $('#insp_overall_g').on('click', function () {
-    //     var specificUrl = '../pcad/viewer/good_inspection_details/inspection_details.php?card=good';
-    //     window.open(specificUrl, '_blank');
-    // });
-
-    // Handle click event for NG cell
-    // $('#insp_overall_ng').on('click', function () {
-    //     var specificUrl = '../pcad/viewer/ng_inspection_details/inspection_details_ng.php?card=ng';
-    //     window.open(specificUrl, '_blank');
-    // });
 </script>
 
 <?php
@@ -797,7 +959,7 @@ include 'javascript/pcs.php';
 include 'javascript/pcad.php';
 include 'javascript/emp_mgt.php';
 include 'javascript/andon.php';
-include 'javascript/hourly_graph.php';
+include 'javascript/hourly_graph_tv.php';
 include 'javascript/inspection_output.php';
 ?>
 
