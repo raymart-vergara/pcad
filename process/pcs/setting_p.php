@@ -253,7 +253,7 @@ if (isset($_POST['request'])) {
             $stmt_insert_plan->bindParam(':work_time_plan', $work_time_plan);
 
             if ($stmt_insert_plan->execute()) {
-                header("location: ../../design_tv3.php?registlinename=" . $registlinename);
+                header("location: ../../design_tv5.php?registlinename=" . $registlinename);
                 // header("location: ../../index.php?registlinename=" . $registlinename);
             } else {
                 echo "Failed to insert data into t_plan.";

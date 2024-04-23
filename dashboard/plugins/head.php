@@ -48,7 +48,7 @@
         .pcad-title {
             margin: 0;
             padding: 0;
-            font-size: 27px;
+            font-size: 30px;
         }
     </style>
 </head>

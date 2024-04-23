@@ -26,7 +26,7 @@ include 'plugins/head.php';
 							</div>
 						</div>
 						<!-- RUN COUNTER -->
-						<div class="col-lg-6 col-10 ">
+						<div class="col-lg-6 col-10">
 							<div class="small-box" style="background: #0069B0;">
 								<div class="inner">
 									<h3 style="color: #fff; font-size: 60px">[ 2 ]
@@ -37,7 +37,7 @@ include 'plugins/head.php';
 								<div class="icon">
 									<i class="fa fa-play fa-4x" style="font-size: 100px;"></i>
 								</div>
-								<a href="../design_tv3.php?registlinename=registlinename"
+								<a href="../design_tv5.php?registlinename=registlinename"
 									id="runcounterbtn"
 									class="small-box-footer monitor" style="font-size: 18px;">Proceed
 									&ensp;<i class="fas fa-arrow-right"></i></a>
@@ -80,13 +80,10 @@ include 'plugins/footer.php';
 					window.open(href, "_self");
 				} else {
 					var registlinename = localStorage.getItem("registlinename");
-					window.open("../design_tv3.php?registlinename=" + registlinename, "_self");
+					window.open("../design_tv5.php?registlinename=" + registlinename, "_self");
 				}
 			}
-
-
 		});
-
 	}
 	// -----------------------------------------------------------------------------------------------------------------------------------
 	$(document).ready(function () {
@@ -96,7 +93,6 @@ include 'plugins/footer.php';
 		if (localStorage.getItem("registlinename") == "null") {
 			window.open("setting.php", "_self");
 		}
-
 		$(document).on('click', 'a.monitor', function (e) {
 			e.preventDefault();
 			var href = $(this).prop('href');
@@ -104,7 +100,7 @@ include 'plugins/footer.php';
 				window.open(href, "_self");
 			} else {
 				var registlinename = localStorage.getItem("registlinename");
-				window.open("../design_tv3.php?registlinename=" + registlinename, "_self");
+				window.open("../design_tv5.php?registlinename=" + registlinename, "_self");
 			}
 		});
 	});

@@ -39,7 +39,7 @@
                                 ticks: {
                                     autoSkip: false,
                                     font: {
-                                        size: 17
+                                        size: 15
                                     },
                                 },
                                 title: {
@@ -58,7 +58,7 @@
                                 ticks: {
                                     autoSkip: false,
                                     font: {
-                                        size: 17
+                                        size: 15
                                     },
                                 },
                                 grid: { 
@@ -122,6 +122,9 @@
                                 stacked: true,
                                 ticks: {
                                     autoSkip: false,
+                                    font: {
+                                        size: 15
+                                    },
                                 },
                                 title: {
                                     display: true,
@@ -138,6 +141,9 @@
                                 stacked: true,
                                 ticks: {
                                     autoSkip: false,
+                                    font: {
+                                        size: 15
+                                    },
                                 },
                                 grid: { 
                                     display: false,
@@ -236,6 +242,9 @@
                             y: {
                                 ticks: {
                                     autoSkip: false,
+                                    font: {
+                                        size: 15
+                                    },
                                 },
                                 title: {
                                     display: true,
@@ -251,6 +260,9 @@
                             x: {
                                 ticks: {
                                     autoSkip: false,
+                                    font: {
+                                        size: 15
+                                    },
                                 },
                                 grid: { 
                                     display: false,

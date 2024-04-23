@@ -372,6 +372,18 @@ include 'dist/js/adminlte.miin.php';
             background: #EAEAEA;
         }
 
+        .for-btn {
+            background: #f4f4f4;
+            border: none;
+            color: #000;
+        }
+
+        .row-btn {
+            background: #FBFBFB;
+            height: 60px;
+            border-radius: 4px;
+        }
+
         /* ================================================== */
         body[light-mode=dark] {
             background-color: #212529;
@@ -447,21 +459,9 @@ include 'dist/js/adminlte.miin.php';
             color: #fff;
         }
 
-        .for-btn {
-            background: #f4f4f4;
-            border: none;
-            color: #000;
-        }
-
         .checkbox {
             opacity: 0;
             position: absolute;
-        }
-
-        .row-btn {
-            background: #FBFBFB;
-            height: 60px;
-            border-radius: 4px;
         }
 
         .checkbox-label {
@@ -1036,7 +1036,6 @@ include 'dist/js/adminlte.miin.php';
             </div>
 
             <div class="card graphs-container">
-
                 <!-- andon count graph -->
                 <div id="chart-container1">
                     <a target="_blank" href="../pcad/viewer/andon_details/andon_details.php">
@@ -1205,7 +1204,7 @@ include 'dist/js/adminlte.miin.php';
 
     function refreshGraphs() {
         // Add code to refresh your graphs here
-        
+
         // After refreshing, reapply dark mode styles to graphs
         var isDarkMode = localStorage.lightMode === 'dark'; // Assuming you store dark mode state in localStorage
         updateChartColors(isDarkMode);
@@ -1328,7 +1327,7 @@ include 'dist/js/adminlte.miin.php';
 
 <?php
 include 'javascript/pcs.php';
-include 'javascript/pcad.php';
+include 'javascript/dashboard.php';
 include 'javascript/emp_mgt.php';
 include 'javascript/andon.php';
 include 'javascript/inspection_output.php';
