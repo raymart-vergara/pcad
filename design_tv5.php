@@ -548,7 +548,7 @@ include 'process/pcs/index.php';
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
                                 <!-- <div id="chart-container" style="width: 100%; height: 100%;"> -->
-                                    <canvas id="hourly_chart" height="100"></canvas>
+                                <canvas id="hourly_chart" height="90"></canvas>
                                 <!-- </div> -->
                             </div>
                         </div>
@@ -592,7 +592,7 @@ include 'process/pcs/index.php';
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
                                 <!-- <div id="chart-container" style="width: 100%; height: 100%;"> -->
-                                    <canvas id="andon_hourly_chart" height="100"></canvas>
+                                <canvas id="andon_hourly_chart" height="90"></canvas>
                                 <!-- </div> -->
                             </div>
                         </div>
@@ -636,7 +636,7 @@ include 'process/pcs/index.php';
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
                                 <!-- <div id="chart-container" style="width: 100%; height: 100%;"> -->
-                                    <canvas id="hourly_output_summary_chart" height="100"></canvas>
+                                <canvas id="hourly_output_summary_chart" height="90"></canvas>
                                 <!-- </div> -->
                             </div>
                         </div>
@@ -680,7 +680,12 @@ include 'process/pcs/index.php';
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
                                 <!-- <div id="chart-container" style="width: 100%; height: 100%;"> -->
-                                    <canvas id="ng_summary_chart" height="100"></canvas>
+                                <canvas id="ng_summary_chart" height="90""></canvas>
+
+                                <!-- <canvas id=" ng_summary_chart" class="chartjs-render-monitor" height="100"
+                                    style="width: 100px; height: 50px;"></canvas> -->
+                                <!-- <canvas id="ng_summary_chart" width="800" height="400"></canvas> -->
+
                                 <!-- </div> -->
                             </div>
                         </div>
@@ -755,10 +760,12 @@ include 'process/pcs/index.php';
                             <tr>
                                 <th class="th-normal text-left font-others">Actual:</th>
                                 <td id="total_present_pd_mp" class="text-left font-others-value"
-                                    style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;"></td>
+                                    style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                </td>
                                 <th class="th-normal text-left font-others">Actual:</th>
                                 <td id="total_present_qa_mp" class="text-left font-others-value"
-                                    style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;"></td>
+                                    style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                </td>
                                 <th class="th-normal text-left font-others">Conveyor
                                     Speed:</th>
                                 <td id="taktset" class="text-left font-others-value"
@@ -768,10 +775,12 @@ include 'process/pcs/index.php';
                             <tr>
                                 <th class="th-normal text-left font-others">Absent:</th>
                                 <td id="total_absent_pd_mp" class="text-left font-others-value"
-                                    style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;"></td>
+                                    style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                </td>
                                 <th class="th-normal text-left font-others">Absent:</th>
                                 <td id="total_absent_qa_mp" class="text-left font-others-value"
-                                    style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;"></td>
+                                    style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                </td>
                                 <th class="th-normal takt-label text-left font-others">
                                     Takt Time:</th>
                                 <td class="takt-value text-left font-others-value"
@@ -798,14 +807,15 @@ include 'process/pcs/index.php';
                                 <th class="th-normal text-left font-others">Absent Rate:
                                 </th>
                                 <td id="absent_ratio_pd_mp" class="text-left font-others-value"
-                                    style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;"></td>
+                                    style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                </td>
                                 <th class="th-normal text-left font-others">Absent Rate:
                                 </th>
                                 <td id="absent_ratio_qa_mp" class="text-left font-others-value"
-                                    style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;"></td>
-                                <th class="th-normal text-left font-others">Working Time
-                                    Actual:
-                                </th>
+                                    style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                </td>
+                                <!-- <th class="th-normal text-left font-others">Working Time Actual:</th> -->
+                                <th class="th-normal text-left font-others"></th>
                                 <td class="text-left font-others-value" style="background: #CFCFCF; color: #000;"></td>
                             </tr>
                         </tbody>
@@ -871,7 +881,10 @@ include 'process/pcs/index.php';
 <script src="plugins/moment-js/moment-duration-format.min.js"></script>
 
 <script>
-    // Chart Variables
+    $('.carousel').carousel({
+        interval: 20000
+    })
+
     let chart; // for andon only
     let chartAndonHourly;
     let chartHourlyOutput;
@@ -1062,27 +1075,21 @@ include 'process/pcs/index.php';
         // setInterval(count_emp, 15000); // 15000 milliseconds = 15 seconds
 
         // Call andon_d_sum initially to load the chart
-        // Initialize chart for carousel item 1
-        // andon_d_sum();
-        // setInterval(andon_d_sum, 120000);
-
-        // Initialize chart for carousel item 2
-        // andon_hourly_graph();
-        // setInterval(andon_hourly_graph, 130000);
-
-        // Initialize chart for carousel item 3
-        // get_hourly_output_chart();
-        // setInterval(get_hourly_output_chart, 140000);
-
         // Initialize chart for carousel item 4
-        // ng_graph();
-        // setInterval(ng_graph, 150000);
+        andon_d_sum();
+        setInterval(andon_d_sum, 30000);
 
-        // Run First Slide Recursive SetTimeout Functions
-        recursive_realtime_get_yield();
-        recursive_realtime_get_ppm();
+        // Initialize chart for carousel item 5
+        andon_hourly_graph();
+        setInterval(andon_hourly_graph, 30000);
 
-        init_charts();
+        // Initialize chart for carousel item 6
+        get_hourly_output_chart();
+        setInterval(get_hourly_output_chart, 30000);
+
+        // Initialize chart for carousel item 7
+        ng_graph();
+        setInterval(ng_graph, 30000);
     });
 
     // ==========================================================================================
