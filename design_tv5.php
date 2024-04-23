@@ -881,12 +881,8 @@ include 'process/pcs/index.php';
 <script src="plugins/moment-js/moment-duration-format.min.js"></script>
 
 <script>
-    $('.carousel').carousel({
-        interval: 20000
-    })
-
+    // Chart Variables
     let chart; // for andon only
-
     let chartAndonHourly;
     let chartHourlyOutput;
     let chartNGhourly;
@@ -895,46 +891,207 @@ include 'process/pcs/index.php';
     localStorage.setItem("andon_line", $("#andon_line").val());
     localStorage.setItem("shift", $("#shift").val());
 
+    // Interval Variables
+    let realtime_get_accounting_efficiency;
+    let realtime_get_hourly_output;
+    let realtime_get_yield;
+    let realtime_get_ppm;
+    let realtime_get_inspection_list;
+    let realtime_get_overall_inspection;
+    let realtime_count_emp;
+    let realtime_andon_d_sum;
+    let realtime_andon_hourly_graph;
+    let realtime_get_hourly_output_chart;
+    let realtime_ng_graph;
+
+    // Recursive setTimeout Functions
+    const recursive_realtime_get_accounting_efficiency = () => {
+        get_accounting_efficiency();
+        realtime_get_accounting_efficiency = setTimeout(recursive_realtime_get_accounting_efficiency, 30000);
+    }
+    const recursive_realtime_get_hourly_output = () => {
+        get_hourly_output();
+        realtime_get_hourly_output = setTimeout(recursive_realtime_get_hourly_output, 30000);
+    }
+    const recursive_realtime_get_yield = () => {
+        get_yield();
+        realtime_get_yield = setTimeout(recursive_realtime_get_yield, 30000);
+    }
+    const recursive_realtime_get_ppm = () => {
+        get_ppm();
+        realtime_get_ppm = setTimeout(recursive_realtime_get_ppm, 30000);
+    }
+    const recursive_realtime_get_inspection_list = () => {
+        get_inspection_list();
+        realtime_get_inspection_list = setTimeout(recursive_realtime_get_inspection_list, 30000);
+    }
+    const recursive_realtime_get_overall_inspection = () => {
+        get_overall_inspection();
+        realtime_get_overall_inspection = setTimeout(recursive_realtime_get_overall_inspection, 30000);
+    }
+    const recursive_realtime_count_emp = () => {
+        count_emp();
+        realtime_count_emp = setTimeout(recursive_realtime_count_emp, 30000);
+    }
+    const recursive_realtime_andon_d_sum = () => {
+        andon_d_sum();
+        realtime_andon_d_sum = setTimeout(recursive_realtime_andon_d_sum, 30000);
+    }
+    const recursive_realtime_andon_hourly_graph = () => {
+        andon_hourly_graph();
+        realtime_andon_hourly_graph = setTimeout(recursive_realtime_andon_hourly_graph, 30000);
+    }
+    const recursive_realtime_get_hourly_output_chart = () => {
+        get_hourly_output_chart();
+        realtime_get_hourly_output_chart = setTimeout(recursive_realtime_get_hourly_output_chart, 30000);
+    }
+    const recursive_realtime_ng_graph = () => {
+        ng_graph();
+        realtime_ng_graph = setTimeout(recursive_realtime_ng_graph, 30000);
+    }
+
+    // Carousel Variables
+    let slide_number = 1;
+
+    $('.carousel').carousel({
+        interval: 60000
+    });
+
+    // Fire Event on Carousel
+    $('.carousel').bind('slide.bs.carousel', e => {
+        console.log(`slide number:${slide_number}`);
+
+        if (e.direction == 'left') {
+            if (slide_number == 8) {
+                slide_number = 0;
+            }
+            slide_number++;
+        } else if (e.direction == 'right') {
+            if (slide_number == 1) {
+                slide_number = 9;
+            }
+            slide_number--;
+        }
+
+        console.log(`slide number:${slide_number}`);
+        console.log(e.direction);
+
+        switch (slide_number) {
+            case 1:
+                clearTimeout(recursive_realtime_count_emp);
+                clearTimeout(realtime_get_accounting_efficiency);
+                clearTimeout(realtime_get_hourly_output);
+                recursive_realtime_get_yield();
+                recursive_realtime_get_ppm();
+                break;
+            case 2:
+                clearTimeout(realtime_get_yield);
+                clearTimeout(realtime_get_ppm);
+                clearTimeout(realtime_get_inspection_list);
+                clearTimeout(realtime_get_overall_inspection);
+                recursive_realtime_get_accounting_efficiency();
+                recursive_realtime_get_hourly_output();
+                break;
+            case 3:
+                clearTimeout(realtime_get_accounting_efficiency);
+                clearTimeout(realtime_get_hourly_output);
+                clearTimeout(realtime_andon_d_sum);
+                recursive_realtime_get_inspection_list();
+                recursive_realtime_get_overall_inspection();
+                break;
+            case 4:
+                clearTimeout(realtime_get_inspection_list);
+                clearTimeout(realtime_get_overall_inspection);
+                clearTimeout(realtime_andon_hourly_graph);
+                recursive_realtime_andon_d_sum();
+                break;
+            case 5:
+                clearTimeout(realtime_andon_d_sum);
+                clearTimeout(realtime_get_hourly_output_chart);
+                recursive_realtime_andon_hourly_graph();
+                break;
+            case 6:
+                clearTimeout(realtime_andon_hourly_graph);
+                clearTimeout(realtime_ng_graph);
+                recursive_realtime_get_hourly_output_chart();
+                break;
+            case 7:
+                clearTimeout(realtime_get_hourly_output_chart);
+                clearTimeout(recursive_realtime_count_emp);
+                recursive_realtime_ng_graph();
+                break;
+            case 8:
+                clearTimeout(realtime_ng_graph);
+                clearTimeout(realtime_get_yield);
+                clearTimeout(realtime_get_ppm);
+                recursive_realtime_count_emp();
+                break;
+            default:
+        }
+    });
+
+    // Initialization for Charts (Included due to Recursive SetInterval Functions)
+    const init_charts = () => {
+        var configuration = {};
+        // Andon
+        var ctx = document.getElementById('hourly_chart').getContext('2d');
+        chart = new Chart(ctx, configuration);
+        // Andon Hourly
+        var ctx = document.getElementById('andon_hourly_chart').getContext('2d');
+        chartAndonHourly = new Chart(ctx, configuration);
+        // Hourly Output
+        var ctx = document.getElementById('hourly_output_summary_chart').getContext('2d');
+        chartHourlyOutput = new Chart(ctx, configuration);
+        // NG Summary
+        var ctx = document.getElementById('ng_summary_chart').getContext('2d');
+        chartNGhourly = new Chart(ctx, configuration);
+    }
+
     $(document).ready(function () {
         // Call these functions initially to load the data from PCAD and other Systems
         // Set interval to refresh data every 30 seconds
         // 30000 milliseconds = 30 seconds
-        get_accounting_efficiency();
-        setInterval(get_accounting_efficiency, 30000);
-        get_hourly_output();
-        setInterval(get_hourly_output, 30000);
-        get_yield();
-        setInterval(get_yield, 30000);
-        get_ppm();
-        setInterval(get_ppm, 30000);
+        // get_accounting_efficiency();
+        // setInterval(get_accounting_efficiency, 30000);
+        // get_hourly_output();
+        // setInterval(get_hourly_output, 30000);
+        // get_yield();
+        // setInterval(get_yield, 30000);
+        // get_ppm();
+        // setInterval(get_ppm, 30000);
 
         // INSPECTION
-        get_inspection_list();
-        setInterval(get_inspection_list, 10000);
-        get_overall_inspection();
-        setInterval(get_overall_inspection, 10000);
+        // get_inspection_list();
+        // setInterval(get_inspection_list, 10000);
+        // get_overall_inspection();
+        // setInterval(get_overall_inspection, 10000);
 
         // Call count_emp initially to load the data from employee management system
-        count_emp();
+        // count_emp();
         // Set interval to refresh data every 15 seconds
-        setInterval(count_emp, 15000); // 15000 milliseconds = 15 seconds
+        // setInterval(count_emp, 15000); // 15000 milliseconds = 15 seconds
 
         // Call andon_d_sum initially to load the chart
         // Initialize chart for carousel item 4
-        andon_d_sum();
-        setInterval(andon_d_sum, 30000);
+        // andon_d_sum();
+        // setInterval(andon_d_sum, 30000);
 
         // Initialize chart for carousel item 5
-        andon_hourly_graph();
-        setInterval(andon_hourly_graph, 30000);
+        // andon_hourly_graph();
+        // setInterval(andon_hourly_graph, 30000);
 
         // Initialize chart for carousel item 6
-        get_hourly_output_chart();
-        setInterval(get_hourly_output_chart, 30000);
+        // get_hourly_output_chart();
+        // setInterval(get_hourly_output_chart, 30000);
 
         // Initialize chart for carousel item 7
-        ng_graph();
-        setInterval(ng_graph, 30000);
+        // ng_graph();
+        // setInterval(ng_graph, 30000);
+
+        recursive_realtime_get_yield();
+        recursive_realtime_get_ppm();
+
+        init_charts();
     });
 
     // ==========================================================================================
