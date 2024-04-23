@@ -23,7 +23,7 @@
                         plugins: {
                             title: {
                                 display: true,
-                                text: 'Hourly Andon Events',
+                                text: 'Hourly Andon Count',
                                 font: {
                                     size: 30,
                                     family: 'Montserrat',
@@ -52,7 +52,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'Count',
+                                    text: 'pcs per hour',
                                     font: {
                                         size: 15,
                                         family: 'Montserrat',
@@ -145,7 +145,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'Count',
+                                    text: 'pcs per hour',
                                     font: {
                                         size: 15,
                                         family: 'Montserrat',
@@ -237,7 +237,7 @@
                 let barChartData = {
                     labels: hour_label,
                     datasets: [{
-                        label: 'NG Hourly Output',
+                        label: 'Defect Hourly Output',
                         backgroundColor: 'rgba(202, 63, 63, 0.5)',
                         borderColor: 'rgba(202, 63, 63)',
                         borderWidth: 1,
@@ -263,7 +263,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'Count',
+                                    text: 'pcs per hour',
                                     font: {
                                         size: 15,
                                         family: 'Montserrat',
@@ -289,7 +289,7 @@
                         plugins: {
                             title: {
                                 display: true,
-                                text: 'NG Hourly Output',
+                                text: 'Defect Hourly Output',
                                 font: {
                                     size: 30,
                                     family: 'Montserrat',
