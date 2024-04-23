@@ -870,10 +870,11 @@ include 'process/pcs/index.php';
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- mdb -->
-<script src="plugins/mdb/js/mdb.min.js"></script>
-<script src="plugins/mdb/js/mdb.js"></script>
+<!-- <script src="plugins/mdb/js/mdb.min.js"></script> -->
+<!-- <script src="plugins/mdb/js/mdb.js"></script> -->
 <!-- Chart JS -->
-<script src="node_modules/chart.js/dist/chart.umd.js"></script>
+<!-- <script src="node_modules/chart.js/dist/chart.umd.js"></script> -->
+<script src="plugins/chart.js/3.9.1/chart.umd.js"></script>
 <script src="plugins/chart.js/annotation/chartjs-plugin-annotation-1.0.2.js"></script>
 
 <!--Moment JS -->
