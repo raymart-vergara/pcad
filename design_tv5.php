@@ -1076,20 +1076,25 @@ include 'process/pcs/index.php';
 
         // Call andon_d_sum initially to load the chart
         // Initialize chart for carousel item 4
-        andon_d_sum();
-        setInterval(andon_d_sum, 30000);
+        // andon_d_sum();
+        // setInterval(andon_d_sum, 30000);
 
         // Initialize chart for carousel item 5
-        andon_hourly_graph();
-        setInterval(andon_hourly_graph, 30000);
+        // andon_hourly_graph();
+        // setInterval(andon_hourly_graph, 30000);
 
         // Initialize chart for carousel item 6
-        get_hourly_output_chart();
-        setInterval(get_hourly_output_chart, 30000);
+        // get_hourly_output_chart();
+        // setInterval(get_hourly_output_chart, 30000);
 
         // Initialize chart for carousel item 7
-        ng_graph();
-        setInterval(ng_graph, 30000);
+        // ng_graph();
+        // setInterval(ng_graph, 30000);
+
+        recursive_realtime_get_yield();
+        recursive_realtime_get_ppm();
+
+        init_charts();
     });
 
     // ==========================================================================================
