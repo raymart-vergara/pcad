@@ -881,10 +881,7 @@ include 'process/pcs/index.php';
 <script src="plugins/moment-js/moment-duration-format.min.js"></script>
 
 <script>
-    $('.carousel').carousel({
-        interval: 20000
-    })
-
+    // Chart Variables
     let chart; // for andon only
     let chartAndonHourly;
     let chartHourlyOutput;
