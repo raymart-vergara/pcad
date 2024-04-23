@@ -6,7 +6,7 @@
 
 // ST Data
 function get_st_data($parts_name, $conn_pcad) {
-	$parts_name = addslashes($parts_name);
+	$parts_name = addslashes(trim($parts_name));
 	$st = 0;
 	$response_arr = array();
 	if (!empty($parts_name)) {
