@@ -1,19 +1,8 @@
 <script type="text/javascript">
-    let chart; // Declare chart variable globally
-
-    $(document).ready(function () {
-        andon_detail();
-        setInterval(andon_detail, 30000);
-
-        andon_hourly();
-        setInterval(andon_hourly, 30000);
-    });
-
     const andon_detail = () => {
-        // let andon_line = 'DAIHATSU D92-2132';
-        let andon_line = localStorage.getItem("andon_line");
+        let andon_line = document.getElementById('andon_line').value
         $.ajax({
-            url: '../../process/andon_graph/a_graph_p.php',
+            url: '../process/andon_graph/a_graph_p.php',
             type: 'POST',
             cache: false,
             data: {
@@ -25,32 +14,38 @@
         });
     }
 
-    const andon_hourly = () => {
-        // let andon_line = document.getElementById('andon_line').value;
-        let andon_line = localStorage.getItem("andon_line");
-
+    const andon_d_sum = () => {
+        let andon_line = document.getElementById('andon_line').value
         $.ajax({
-            url: '../../process/andon_graph/a_hourly_p.php',
-            type: 'GET',
+            url: 'process/andon_graph/a_graph_p.php',
+            type: 'POST',
             dataType: 'json',
-            cache: false,
+            cache: false, // Disable browser caching for this request
             data: {
-                method: 'andon_hourly',
+                method: 'a_down_time',
                 andon_line: andon_line
             },
             success: function (data) {
-                let total_counts = data[0];
-                let hour_starts = data[1];
-
-                let ctx = document.getElementById('andon_hourly_chart').getContext('2d');
-
+                let department = [];
+                let machinename = [];
+                let Waiting_Time = [];
+                let Fixing_Time = [];
+                let Total_DT = [];
+                for (let i = 0; i < data.length; i++) {
+                    department.push(data[i].department);
+                    machinename.push(data[i].machinename);
+                    Waiting_Time.push(data[i].Waiting_Time);
+                    Fixing_Time.push(data[i].Fixing_Time);
+                    Total_DT.push(data[i].Total_DT);
+                }
+                let ctx = document.getElementById('hourly_chart').getContext('2d');
                 let configuration = {
                     type: 'bar',
                     options: {
                         plugins: {
                             title: {
                                 display: true,
-                                text: 'Hourly Andon Count',
+                                text: 'DT / Delay / Andon',
                                 font: {
                                     size: 30,
                                     family: 'Montserrat',
@@ -65,6 +60,15 @@
                                     font: {
                                         size: 17
                                     },
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Minutes',
+                                    font: {
+                                        size: 15,
+                                        family: 'Montserrat',
+                                        weight: 'normal'
+                                    },
                                 }
                             },
                             x: {
@@ -74,6 +78,9 @@
                                     font: {
                                         size: 17
                                     },
+                                },
+                                grid: {
+                                    display: false,
                                 }
                             },
                         },
@@ -82,24 +89,33 @@
                         }
                     },
                     data: {
-                        labels: hour_starts, // Use hour starts as labels
+                        labels: machinename,
                         datasets: [{
-                            label: 'Total Andon Count',
+                            label: 'Waiting Time',
                             backgroundColor: 'rgba(1, 56, 99, 1)',
                             borderColor: 'rgba(1, 56, 99, 1)',
                             borderWidth: 2,
-                            data: total_counts, // Use total counts as data
+                            data: Waiting_Time,
+                            yAxisID: 'y',
+                        }, {
+                            label: 'Fixing Time',
+                            backgroundColor: 'rgba(23, 162, 184, 0.5)',
+                            borderColor: 'rgba(23, 162, 184, 1)',
+                            borderWidth: 1,
+                            data: Fixing_Time,
                             yAxisID: 'y',
                         }],
                     },
                 };
 
+                // Set department labels as sub-labels for each machine
+                configuration.data.labels = machinename.map((machine, index) => [machine, department[index]]);
                 // Destroy previous chart instance before creating a new one
                 if (chart) {
                     chart.destroy();
                 }
                 chart = new Chart(ctx, configuration);
-            }
+            },
         });
     }
 </script>

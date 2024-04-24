@@ -547,9 +547,8 @@ include 'process/pcs/index.php';
                     <div class="row mt-3">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <!-- <div id="chart-container" style="width: 100%; height: 100%;"> -->
+                                <!-- <canvas id="hourly_chart" height="55"></canvas> -->
                                 <canvas id="hourly_chart" height="90"></canvas>
-                                <!-- </div> -->
                             </div>
                         </div>
                     </div>
@@ -591,9 +590,8 @@ include 'process/pcs/index.php';
                     <div class="row mt-3">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <!-- <div id="chart-container" style="width: 100%; height: 100%;"> -->
+                                <!-- <canvas id="andon_hourly_chart" height="55"></canvas> -->
                                 <canvas id="andon_hourly_chart" height="90"></canvas>
-                                <!-- </div> -->
                             </div>
                         </div>
                     </div>
@@ -635,9 +633,8 @@ include 'process/pcs/index.php';
                     <div class="row mt-3">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <!-- <div id="chart-container" style="width: 100%; height: 100%;"> -->
+                                <!-- <canvas id="hourly_output_summary_chart" height="55"></canvas> -->
                                 <canvas id="hourly_output_summary_chart" height="90"></canvas>
-                                <!-- </div> -->
                             </div>
                         </div>
                     </div>
@@ -679,14 +676,8 @@ include 'process/pcs/index.php';
                     <div class="row mt-3">
                         <div class="col-sm-12 col-md-12 col-lg-12">
                             <div class="card">
-                                <!-- <div id="chart-container" style="width: 100%; height: 100%;"> -->
+                                <!-- <canvas id="ng_summary_chart" height="55""></canvas> -->
                                 <canvas id="ng_summary_chart" height="90""></canvas>
-
-                                <!-- <canvas id=" ng_summary_chart" class="chartjs-render-monitor" height="100"
-                                    style="width: 100px; height: 50px;"></canvas> -->
-                                <!-- <canvas id="ng_summary_chart" width="800" height="400"></canvas> -->
-
-                                <!-- </div> -->
                             </div>
                         </div>
                     </div>

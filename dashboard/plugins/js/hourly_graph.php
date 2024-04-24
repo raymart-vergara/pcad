@@ -44,7 +44,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'Count',
+                                    text: 'count',
                                     font: {
                                         size: 10,
                                         family: 'Poppins',
@@ -73,7 +73,7 @@
                     data: {
                         labels: hour_starts, // Use hour starts as labels
                         datasets: [{
-                            label: 'Andon Hourly Count',
+                            label: 'Hourly Andon Count',
                             backgroundColor: 'rgba(1, 56, 99, 0.8)',
                             borderColor: 'rgba(1, 56, 99, 1)',
                             borderWidth: 2,
@@ -128,7 +128,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'Count',
+                                    text: 'pcs per hour',
                                     font: {
                                         size: 10,
                                         family: 'Poppins',
@@ -248,7 +248,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'Count',
+                                    text: 'pcs per hour',
                                     font: {
                                         size: 10,
                                         family: 'Poppins',
