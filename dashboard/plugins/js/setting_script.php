@@ -14,7 +14,6 @@
 			});
 		}
 
-
 		$(document).on('change', '#ircs_line', function () {
 			localStorage.setItem("registlinename", $("#ircs_line").val());
 			var registlinename = localStorage.getItem("registlinename");
@@ -27,7 +26,6 @@
 				$("#line_no").val(response.trim());
 				$("#registlinenameplan").val(registlinename);
 				// After receiving the response, check if plans are running
-		
 			});
 		});
 	});

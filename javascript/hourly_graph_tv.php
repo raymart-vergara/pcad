@@ -184,7 +184,7 @@
                             },
                             title: {
                                 display: true,
-                                text: 'Hourly Output',
+                                text: 'Hourly Inspection Output',
                                 font: {
                                     size: 30,
                                     family: 'Montserrat',
@@ -197,7 +197,7 @@
                     data: {
                         labels: hour_label, // Use machine names as the primary labels
                         datasets: [{
-                            label: 'Hourly Output',
+                            label: 'Hourly Inspection Output',
                             // backgroundColor: 'rgba(23, 162, 184, 0.5)',
                             // borderColor: 'rgba(23, 162, 184, 1)',
                             backgroundColor: 'rgba(11, 143, 80, 0.5)',
@@ -237,7 +237,7 @@
                 let barChartData = {
                     labels: hour_label,
                     datasets: [{
-                        label: 'Defect Hourly Output',
+                        label: 'Defect Hourly',
                         backgroundColor: 'rgba(202, 63, 63, 0.5)',
                         borderColor: 'rgba(202, 63, 63)',
                         borderWidth: 1,
@@ -289,7 +289,7 @@
                         plugins: {
                             title: {
                                 display: true,
-                                text: 'Defect Hourly Output',
+                                text: 'Defect Hourly',
                                 font: {
                                     size: 30,
                                     family: 'Montserrat',
