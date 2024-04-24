@@ -37,14 +37,14 @@ if ($result) {
                 </div>
                 <div class="col-7" style="">
                     <div class="row">
-                        <div class="col-12 text-right p-5" style="color: #0069B0; font-size: 22px;">
+                        <div class="col-12 text-right p-5 mt-3" style="color: #0069B0; font-size: 22px;">
                             Setting
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 px-5">
+                        <div class="col-12 px-5 mt-3">
                             Select Line No. <br>
-                            <select name="registlinename" id="ircs_line" class="form-control" style="width: 100%;">
+                            <select name="registlinename" id="ircs_line" class="form-control" style="width: 100%;" required>
                                 <option value="">
                                     - - - -
                                 </option>
@@ -58,16 +58,16 @@ if ($result) {
                             </select>
                         </div>
                     </div>
-                    <div class="row mt-4">
+                    <!-- <div class="row mt-4">
                         <div class="col-12 px-5">
                             Selected Line No. <br>
                             <input type="text" readonly class="form-control" style="width: 100%;" id="line_no" value="">
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row mt-4">
                         <div class="col-12 px-5">
                             Group <br>
-                            <select name="group" id="group" class="form-control" style="width: 100%;">
+                            <select name="group" id="group" class="form-control" style="width: 100%;" required>
                                 <option value="" disabled selected>Select Group </option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
@@ -81,9 +81,9 @@ if ($result) {
                                 onmouseover="this.style.backgroundColor='#00538B'; this.style.color='#fff';"
                                 onmouseout="this.style.backgroundColor='#0069B0'; this.style.color='#fff';"
                                 class="btn btn-hover" id="runcounterbtn" name="request" value="addTarget">
-                                <a  class="small-box-footer monitor"
-                                    style="color: #FFF;">Proceed
-                                    &ensp;<i class="fas fa-arrow-right"></i></a>
+                                <a class="small-box-footer monitor" style="color: #FFF;">Proceed &ensp;<i
+                                        class="fas fa-arrow-right"></i>
+                                </a>
                             </button>
                         </div>
                     </div>

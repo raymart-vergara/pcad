@@ -8,7 +8,7 @@ include 'dist/js/adminlte.miin.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PCAD | Dashboard - new layout</title>
+    <title>PCAD | Managerial Dashboard</title>
 
     <link rel="icon" href="dist/img/pcad_logo.ico" type="image/x-icon" />
     <!-- Google Font: Source Sans Pro -->
@@ -85,8 +85,6 @@ include 'dist/js/adminlte.miin.php';
         /* for inspection output scroll */
         table.scrolldown {
             width: 100%;
-
-            /* border-collapse: collapse; */
             border-spacing: 0;
             border: 2px solid black;
         }
@@ -540,31 +538,6 @@ include 'dist/js/adminlte.miin.php';
 </head>
 
 <body>
-    <!-- ===================== LIGHT/DARK MODE TOGGLE AND RETURN TO SETTING-->
-    <div class="row">
-        <div class="col-6">
-            <div class="float-left mt-3 ml-2">
-                <a href="../pcad/dashboard/setting.php">
-                    <button class="btn btn-secondary return-btn" style="background: #f4f4f4; border: none; color: #000;"
-                        onmouseover="this.style.backgroundColor='#383B46'; this.style.color='#FFF';"
-                        onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';"><i
-                            class="fas fa-angle-left" style="width"></i>&ensp;&ensp;Return to Setting</button>
-                </a>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="float-right mt-3 mr-2">
-                <input type="checkbox" class="checkbox" id="checkbox" onclick="toggle_light_mode()">
-                <label for="checkbox" class="checkbox-label">
-                    <i class="fas fa-moon"></i>
-                    <i class="fas fa-sun"></i>
-                    <span class="ball"></span>
-                </label>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===================== -->
     <input type="hidden" id="shift" value="<?= $shift ?>">
     <input type="hidden" id="shift_group" value="<?= $shift_group ?>">
     <input type="hidden" id="dept_pd" value="<?= $dept_pd ?>">
@@ -625,7 +598,39 @@ include 'dist/js/adminlte.miin.php';
             <?php
         }
         ?>
-        <!-- <h2 class="text-center m-4">Production Conveyor Analysis Dashboard</h2> -->
+
+        <!-- ===================== LIGHT/DARK MODE TOGGLE AND RETURN TO SETTING-->
+        <div class="row">
+            <div class="col-6">
+                <div class="float-left mb-3 ml-2">
+                    <a href="../pcad/dashboard/setting.php">
+                        <button class="btn btn-secondary return-btn"
+                            style="background: #f4f4f4; border: none; color: #000;"
+                            onmouseover="this.style.backgroundColor='#383B46'; this.style.color='#FFF';"
+                            onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';"><i
+                                class="fas fa-arrow-left" style="width"></i>&ensp;&ensp;Return to Setting</button>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="float-right mb-3 mr-2">
+                    <input type="checkbox" class="checkbox" id="checkbox" onclick="toggle_light_mode()">
+                    <label for="checkbox" class="checkbox-label">
+                        <i class="fas fa-moon"></i>
+                        <i class="fas fa-sun"></i>
+                        <span class="ball"></span>
+                    </label>
+                </div>
+                <div class="float-right mb-3 mr-2">
+                    <button class="btn btn-secondary" style="background: #f4f4f4; border: none; color: #000;"
+                        onmouseover="this.style.backgroundColor='#383B46'; this.style.color='#FFF';"
+                        onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';"
+                        onclick="window.location.reload();">
+                        <i class="fas fa-sync"></i>&ensp;&ensp;Refresh</button>
+                </div>
+            </div>
+        </div>
+
         <div class="card">
             <!-- ==========HEADER CONTENT -->
             <table class="col-12">
@@ -1001,10 +1006,10 @@ include 'dist/js/adminlte.miin.php';
                             <td class="manpower-content">Conveyor Speed:</td>
                             <td class="manpower-content-2 pl-5" id="taktset"></td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td class="manpower-content">Takt Time:</td>
                             <td class="takt-value manpower-content-2 pl-5"></td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td class="manpower-content">Working Time Plan:</td>
                             <td class="manpower-content-2 pl-5">
@@ -1012,7 +1017,8 @@ include 'dist/js/adminlte.miin.php';
                             </td>
                         </tr>
                         <tr>
-                            <td class="manpower-content">Working Time Actual:</td>
+                            <!-- <td class="manpower-content">Working Time Actual:</td> -->
+                            <td class="manpower-content"></td>
                             <td class="manpower-content-2 pl-5"></td>
                         </tr>
                     </tbody>
@@ -1022,11 +1028,11 @@ include 'dist/js/adminlte.miin.php';
 
         <div class="process-design-div">
             <!-- ========== PROCESS DESIGN, HOURLY GRAPHS -->
-            <div class="card process-container">
+            <div class="card process-container table-responsive m-0 p-0" style="max-height: 500px; overflow-y: auto;">
                 <!-- process design -->
-                <table>
-                    <thead>
-                        <tr style="height: 40px;">
+                <table class="m-0 p-0 table-head-fixed text-nowrap">
+                    <thead style="position: sticky; top: 0; z-index: 1; height: 40px;">
+                        <tr>
                             <td class="process-title" colspan="2">Process Design</td>
                             <td class="process-title">Actual</td>
                         </tr>
@@ -1039,21 +1045,21 @@ include 'dist/js/adminlte.miin.php';
                 <!-- andon count graph -->
                 <div id="chart-container1">
                     <a target="_blank" href="../pcad/viewer/andon_details/andon_details.php">
-                        <canvas id="andon_hourly_chart" height="60"></canvas>
+                        <canvas id="andon_hourly_chart" height="70"></canvas>
                     </a>
                 </div>
 
                 <!-- good hourly count graph -->
                 <div id="chart-container2">
                     <a target="_blank" href="../pcad/viewer/hourly_output/hourly_output.php">
-                        <canvas id="hourly_output_summary_chart" height="60"></canvas>
+                        <canvas id="hourly_output_summary_chart" height="70"></canvas>
                     </a>
                 </div>
 
                 <!-- ng hourly count graph -->
                 <div id="chart-container3">
                     <a target="_blank" href="../pcad/viewer/ng_inspection_details/inspection_details_ng.php">
-                        <canvas id="ng_summary_chart" height="60"></canvas>
+                        <canvas id="ng_summary_chart" height="70"></canvas>
                     </a>
                 </div>
 
@@ -1062,22 +1068,21 @@ include 'dist/js/adminlte.miin.php';
                         <a target="_blank" href="../pcad/viewer/andon_details/andon_details.php">
                             <button class="btn btn-secondary ml-1 for-btn"
                                 onmouseover="this.style.backgroundColor='#005BA3'; this.style.color='#FFF';"
-                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly
-                                Andon Details</button>
+                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly Andon Details
+                            </button>
                         </a>
                         &ensp;&ensp;&ensp;
                         <a target="_blank" href="../pcad/viewer/hourly_output/hourly_output.php">
                             <button class="btn btn-secondary ml-1 for-btn"
                                 onmouseover="this.style.backgroundColor='#10BA68'; this.style.color='#FFF';"
-                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly
-                                Output Details</button>
+                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly Inspection Output Details
+                            </button>
                         </a>
                         &ensp;&ensp;&ensp;
                         <a target="_blank" href="../pcad/viewer/ng_inspection_details/inspection_details_ng.php">
                             <button class="btn btn-secondary ml-1 for-btn"
                                 onmouseover="this.style.backgroundColor='#E14747'; this.style.color='#FFF';"
-                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View NG
-                                Hourly Details</button>
+                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly Defect Count Details</button>
                         </a>
                     </div>
                 </div>
@@ -1113,44 +1118,22 @@ include 'dist/js/adminlte.miin.php';
 
     $(document).ready(function () {
         // Call these functions initially to load the data from PCAD and other Systems
-        // Set interval to refresh data every 30 seconds
-        // 30000 milliseconds = 30 seconds
+        // 1000 milliseconds = 1 second
         get_accounting_efficiency();
-        setInterval(get_accounting_efficiency, 30000);
         get_hourly_output();
-        setInterval(get_hourly_output, 30000);
         get_yield();
-        setInterval(get_yield, 30000);
         get_ppm();
-        setInterval(get_ppm, 30000);
 
         // INSPECTION
         get_inspection_list_copy();
-        setInterval(get_inspection_list_copy, 10000);
         get_overall_inspection();
-        setInterval(get_overall_inspection, 10000);
-
-        // Call count_emp initially to load the data from employee management system
         count_emp();
-        // Set interval to refresh data every 15 seconds
-        setInterval(count_emp, 15000); // 15000 milliseconds = 15 seconds
 
         // =====hourly graphs=====
         andon_hourly_graph();
-        setInterval(andon_hourly_graph, 30000);
-
         get_hourly_output_chart();
-        setInterval(get_hourly_output_chart, 30000);
-
         ng_graph();
-        setInterval(ng_graph, 30000);
-
-        setInterval(refreshGraphs, 30000);
-
-        // Call get_process_design initially to load the process design data from employee management system and pcad
         get_process_design();
-        // Set interval to refresh data every 15 seconds
-        setInterval(get_process_design, 30000); // 15000 milliseconds = 15 seconds
     });
 
     // return to top button
@@ -1200,14 +1183,6 @@ include 'dist/js/adminlte.miin.php';
                 button.style.color = '#000';
             }
         });
-    }
-
-    function refreshGraphs() {
-        // Add code to refresh your graphs here
-
-        // After refreshing, reapply dark mode styles to graphs
-        var isDarkMode = localStorage.lightMode === 'dark'; // Assuming you store dark mode state in localStorage
-        updateChartColors(isDarkMode);
     }
 
     // for chart dark mode
@@ -1289,29 +1264,6 @@ include 'dist/js/adminlte.miin.php';
     }
     // ==========================================================================================
 
-    // Apply gradient styles for specific cell with ID 'total_pd_mp'
-    function applyGradientStyles(selector, color, dataAttribute) {
-        document.querySelectorAll(selector).forEach(function (cell) {
-            var value = parseInt(cell.dataset[dataAttribute]);
-            var gradientValue = value + '%';
-            cell.style.background = 'linear-gradient(to right, ' + color + ' ' + gradientValue + ', #f6f6f6 ' + gradientValue + ')';
-        });
-    }
-
-    // Example usage:
-    applyGradientStyles('.numeric-cell', '#abd2fa', 'value');
-    applyGradientStyles('.numeric-cell-acct', '#ffe89c', 'value');
-    applyGradientStyles('.numeric-cell-hourly', '#95d5b2', 'value');
-
-    // Apply gradient styles for specific cell with ID 'total_pd_mp'
-    var specificCell = document.getElementById('total_pd_mp');
-    if (specificCell) {
-        var specificValue = parseInt(specificCell.dataset.value);
-        var specificGradientValue = specificValue + '%';
-        specificCell.style.background = 'linear-gradient(to right, #your_specific_color ' + specificGradientValue + ', #f6f6f6 ' + specificGradientValue + ')';
-    }
-    // ==========================================================================================
-
     // Handle click event for GOOD cell
     $('#insp_overall_g').on('click', function () {
         var specificUrl = '../pcad/viewer/good_inspection_details/inspection_details.php?card=good';
@@ -1326,12 +1278,12 @@ include 'dist/js/adminlte.miin.php';
 </script>
 
 <?php
-include 'javascript/pcs.php';
-include 'javascript/dashboard.php';
-include 'javascript/emp_mgt.php';
-include 'javascript/andon.php';
-include 'javascript/inspection_output.php';
-include 'javascript/hourly_graph.php';
+include 'dashboard/plugins/js/andon.php';
+include 'dashboard/plugins/js/emp_mgt.php';
+include 'dashboard/plugins/js/hourly_graph.php';
+include 'dashboard/plugins/js/inspection_output.php';
+include 'dashboard/plugins/js/pcad.php';
+include 'dashboard/plugins/js/pcs.php';
 ?>
 
 </html>
