@@ -625,7 +625,7 @@ include 'dist/js/adminlte.miin.php';
                     <button class="btn btn-secondary" style="background: #f4f4f4; border: none; color: #000;"
                         onmouseover="this.style.backgroundColor='#383B46'; this.style.color='#FFF';"
                         onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';"
-                        onclick="window.location.reload();">
+                        onclick="refreshFunctions();">
                         <i class="fas fa-sync"></i>&ensp;&ensp;Refresh</button>
                 </div>
             </div>
@@ -1068,21 +1068,24 @@ include 'dist/js/adminlte.miin.php';
                         <a target="_blank" href="../pcad/viewer/andon_details/andon_details.php">
                             <button class="btn btn-secondary ml-1 for-btn"
                                 onmouseover="this.style.backgroundColor='#005BA3'; this.style.color='#FFF';"
-                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly Andon Details
+                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly
+                                Andon Details
                             </button>
                         </a>
                         &ensp;&ensp;&ensp;
                         <a target="_blank" href="../pcad/viewer/hourly_output/hourly_output.php">
                             <button class="btn btn-secondary ml-1 for-btn"
                                 onmouseover="this.style.backgroundColor='#10BA68'; this.style.color='#FFF';"
-                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly Inspection Output Details
+                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly
+                                Inspection Output Details
                             </button>
                         </a>
                         &ensp;&ensp;&ensp;
                         <a target="_blank" href="../pcad/viewer/ng_inspection_details/inspection_details_ng.php">
                             <button class="btn btn-secondary ml-1 for-btn"
                                 onmouseover="this.style.backgroundColor='#E14747'; this.style.color='#FFF';"
-                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly Defect Count Details</button>
+                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly
+                                Defect Count Details</button>
                         </a>
                     </div>
                 </div>
@@ -1135,6 +1138,20 @@ include 'dist/js/adminlte.miin.php';
         ng_graph();
         get_process_design();
     });
+
+    function refreshFunctions() {
+        get_accounting_efficiency();
+        get_hourly_output();
+        get_yield();
+        get_ppm();
+        get_inspection_list_copy();
+        get_overall_inspection();
+        count_emp();
+        andon_hourly_graph();
+        get_hourly_output_chart();
+        ng_graph();
+        get_process_design();
+    }
 
     // return to top button
     (function ($) {
