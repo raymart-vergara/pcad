@@ -16,6 +16,7 @@
             },
             success: function (response) {
                 document.getElementById('actual_accounting_efficiency').innerHTML = `${response}%`;
+                document.getElementById('acc_eff_actual').value = response;
 
                 var actual_accounting_efficiency = parseFloat(response);
                 var gap_accounting_efficiency = (((target_accounting_efficiency / 100) - (actual_accounting_efficiency / 100)) * 100)
@@ -73,6 +74,7 @@
             },
             success: function (response) {
                 document.getElementById('actual_yield').innerHTML = `${response}%`;
+                document.getElementById('yield_actual').value = response;
             }
         });
     }
@@ -90,7 +92,13 @@
                 registlinename: registlinename
             },
             success: function (response) {
-                document.getElementById('actual_ppm').innerHTML = response;
+                try {
+                    let response_array = JSON.parse(response);
+                    document.getElementById('actual_ppm').innerHTML = response_array.ppm_formatted;
+                    document.getElementById('ppm_actual').value = response_array.ppm;
+                } catch (e) {
+                    console.log(response);
+                }
             }
         });
     }

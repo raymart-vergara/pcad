@@ -21,6 +21,17 @@
                     type: 'bar',
                     options: {
                         plugins: {
+                            annotation: {
+                                annotations: {
+                                    line1: {
+                                        type: 'line',
+                                        xMin: "17",
+                                        xMax: "17",
+                                        borderColor: 'rgb(255, 193, 7)',
+                                        borderWidth: 2,
+                                    }
+                                }
+                            },
                             title: {
                                 display: true,
                                 text: 'Hourly Andon Count',
@@ -74,7 +85,7 @@
                         labels: hour_starts, // Use hour starts as labels
                         datasets: [{
                             label: 'Andon Hourly Count',
-                            backgroundColor: 'rgba(1, 56, 99, 0.8)',
+                            backgroundColor: 'rgba(1, 56, 99, 1)',
                             borderColor: 'rgba(1, 56, 99, 1)',
                             borderWidth: 2,
                             data: total_counts, // Use total counts as data
@@ -163,6 +174,13 @@
                                         yMax: target_output,
                                         borderColor: 'rgb(255, 99, 132)',
                                         borderWidth: 2,
+                                    },
+                                    line2: {
+                                        type: 'line',
+                                        xMin: "17",
+                                        xMax: "17",
+                                        borderColor: 'rgb(255, 193, 7)',
+                                        borderWidth: 2,
                                     }
                                 }
                             },
@@ -185,7 +203,7 @@
                             label: 'Hourly Inspection Output',
                             // backgroundColor: 'rgba(23, 162, 184, 0.5)',
                             // borderColor: 'rgba(23, 162, 184, 1)',
-                            backgroundColor: 'rgba(11, 143, 80, 0.5)',
+                            backgroundColor: 'rgba(11, 143, 80, 1)',
                             borderColor: 'rgba(11, 143, 80, 1)',
                             borderWidth: 1,
                             data: hourly_output_summary,
@@ -273,6 +291,17 @@
                             padding: 20
                         },
                         plugins: {
+                            annotation: {
+                                annotations: {
+                                    line1: {
+                                        type: 'line',
+                                        xMin: "17",
+                                        xMax: "17",
+                                        borderColor: 'rgb(255, 193, 7)',
+                                        borderWidth: 2,
+                                    }
+                                }
+                            },
                             title: {
                                 display: true,
                                 text: 'Hourly Defect Count',

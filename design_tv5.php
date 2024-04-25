@@ -273,6 +273,11 @@ include 'process/pcs/index.php';
     <input type="hidden" id="start_bal_delay" name="start_bal_delay" value="<?= $start_bal_delay; ?>">
     <input type="hidden" id="work_time_plan" name="work_time_plan" value="<?= $work_time_plan; ?>">
 
+    <!-- Actual (Needed on updateTakt function) -->
+    <input type="hidden" id="yield_actual" name="yield_actual" value="">
+    <input type="hidden" id="ppm_actual" name="ppm_actual" value="">
+    <input type="hidden" id="acc_eff_actual" name="acc_eff_actual" value="">
+
     <div class="container-fluid">
         <?php
         if ($processing) {
@@ -969,7 +974,7 @@ include 'process/pcs/index.php';
 
         switch (slide_number) {
             case 1:
-                clearTimeout(recursive_realtime_count_emp);
+                clearTimeout(realtime_count_emp);
                 clearTimeout(realtime_get_accounting_efficiency);
                 clearTimeout(realtime_get_hourly_output);
                 recursive_realtime_get_yield();
@@ -1008,7 +1013,7 @@ include 'process/pcs/index.php';
                 break;
             case 7:
                 clearTimeout(realtime_get_hourly_output_chart);
-                clearTimeout(recursive_realtime_count_emp);
+                clearTimeout(realtime_count_emp);
                 recursive_realtime_ng_graph();
                 break;
             case 8:
@@ -1039,48 +1044,10 @@ include 'process/pcs/index.php';
     }
 
     $(document).ready(function () {
-        // Call these functions initially to load the data from PCAD and other Systems
-        // Set interval to refresh data every 30 seconds
-        // 30000 milliseconds = 30 seconds
-        // get_accounting_efficiency();
-        // setInterval(get_accounting_efficiency, 30000);
-        // get_hourly_output();
-        // setInterval(get_hourly_output, 30000);
-        // get_yield();
-        // setInterval(get_yield, 30000);
-        // get_ppm();
-        // setInterval(get_ppm, 30000);
-
-        // INSPECTION
-        // get_inspection_list();
-        // setInterval(get_inspection_list, 10000);
-        // get_overall_inspection();
-        // setInterval(get_overall_inspection, 10000);
-
-        // Call count_emp initially to load the data from employee management system
-        // count_emp();
-        // Set interval to refresh data every 15 seconds
-        // setInterval(count_emp, 15000); // 15000 milliseconds = 15 seconds
-
-        // Call andon_d_sum initially to load the chart
-        // Initialize chart for carousel item 4
-        // andon_d_sum();
-        // setInterval(andon_d_sum, 30000);
-
-        // Initialize chart for carousel item 5
-        // andon_hourly_graph();
-        // setInterval(andon_hourly_graph, 30000);
-
-        // Initialize chart for carousel item 6
-        // get_hourly_output_chart();
-        // setInterval(get_hourly_output_chart, 30000);
-
-        // Initialize chart for carousel item 7
-        // ng_graph();
-        // setInterval(ng_graph, 30000);
-
+        // Load data for first slide
         recursive_realtime_get_yield();
         recursive_realtime_get_ppm();
+        get_accounting_efficiency(); // added due to updateTakt functionality
 
         init_charts();
     });

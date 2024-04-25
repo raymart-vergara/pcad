@@ -160,7 +160,7 @@ if ($result) {
 										<td class="text-right font-weight-bold" style="font-size: 17px;">Yield (%)</td>
 
 										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;" name="yeild_target" id="yeild_target" value="98">										</td>
+											<input type="text" class="ml-4 form-control" style="width: 250px;" name="yield_target" id="yield_target" value="98">										</td>
 										</td>
 									</tr>
 									<tr>
