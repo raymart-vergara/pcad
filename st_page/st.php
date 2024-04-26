@@ -86,13 +86,16 @@
                       <th><input type="checkbox" name="check_all" id="check_all" onclick="select_all_func()"></th>
                       <th>#</th>
                       <th>Parts Name</th>
+                      <th>Sub Assy ST</th>
+                      <th>Final Assy ST</th>
+                      <th>Inspection ST</th>
                       <th>ST</th>
                       <th>Date Updated</th>
                     </tr>
                   </thead>
                   <tbody id="list_of_st" style="text-align: center;">
                     <tr>
-                      <td colspan="5" style="text-align:center;">
+                      <td colspan="8" style="text-align:center;">
                         <div class="spinner-border text-dark" role="status">
                           <span class="sr-only">Loading...</span>
                         </div>

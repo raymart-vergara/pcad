@@ -12,7 +12,7 @@
       </div>
       <form id="new_st_form">
         <div class="modal-body">
-          <div class="row">
+          <div class="row mb-2">
             <div class="col-8">
               <label>Parts Name</label><label style="color: red;">*</label>
               <input type="text" id="parts_name_master" class="form-control" maxlength="255" autocomplete="off" required>
@@ -20,6 +20,20 @@
             <div class="col-4">
               <label>ST</label><label style="color: red;">*</label>
               <input type="number" id="st_master" class="form-control" step="0.0001" autocomplete="off" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <label>Sub Assy ST</label><label style="color: red;">*</label>
+              <input type="number" id="sub_assy_master" class="form-control" step="0.0001" autocomplete="off" required>
+            </div>
+            <div class="col-4">
+              <label>Final Assy ST</label><label style="color: red;">*</label>
+              <input type="number" id="final_assy_master" class="form-control" step="0.0001" autocomplete="off" required>
+            </div>
+            <div class="col-4">
+              <label>Inspection ST</label><label style="color: red;">*</label>
+              <input type="number" id="inspection_master" class="form-control" step="0.0001" autocomplete="off" required>
             </div>
           </div>
         </div>
