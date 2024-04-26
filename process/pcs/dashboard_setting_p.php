@@ -82,7 +82,7 @@ if (isset($_POST['request'])) {
         $stmt_get_line->bindParam(':group', $group);
     
         if ($stmt_get_line->execute()) {
-            header("location: ../../index_IV.php?registlinename=" . $registlinename);
+            header("location: ../../index_exec.php?registlinename=" . $registlinename);
         } else {
             echo "Failed to execute the query.";
         }

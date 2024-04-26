@@ -301,7 +301,7 @@ if (isset($_POST['request'])) {
                 $stmt = $conn_pcad->prepare($sql);
 
                 if ($stmt->execute()) {
-                    header("location: ../../design_tv5.php?registlinename=" . $registlinename);
+                    header("location: ../../index_prod.php?registlinename=" . $registlinename);
                     // header("location: ../../index.php?registlinename=" . $registlinename);
                 } else {
                     echo "Failed to update existing data into t_plan.";
@@ -328,7 +328,7 @@ if (isset($_POST['request'])) {
                 $stmt_insert_plan->bindParam(':daily_plan', $daily_plan);
 
                 if ($stmt_insert_plan->execute()) {
-                    header("location: ../../design_tv5.php?registlinename=" . $registlinename);
+                    header("location: ../../index_prod.php?registlinename=" . $registlinename);
                     // header("location: ../../index.php?registlinename=" . $registlinename);
                 } else {
                     echo "Failed to insert data into t_plan.";
