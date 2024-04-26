@@ -38,7 +38,7 @@
 
     if (processing == 1) {
         getValues();
-        setInterval(function() {
+        setInterval(function () {
             if (timerOn == true && isPause == false) {
                 var loadingWidth = $('.loading').width();
                 if (loadingWidth >= (barWidth - 200)) {
@@ -57,41 +57,84 @@
             }
         }, interval);
 
+        // function getValues() {
+        //     var registlinename = $("#registlinename").val();
+        //     var last_takt = $("#last_takt").val();
+        //     var added_takt_plan = $("#added_takt_plan").val();
+        //     // console.log(registlinename);
+        //     $.post('process/pcs/setting_p.php', {
+        //         request: 'getPlanLine',
+        //         registlinename: registlinename,
+        //         last_takt: last_takt
+        //     }, function (response) {
+        //         fetch_digit();
+        //         console.log(response);
+
+        //         if ($('.plan_target_value').text() != response.plan) {
+        //             $('.plan_target_value').addClass('reloadedLine');
+        //             $('.plan_target_value').css('margin-top', '-100px');
+        //         }
+
+        //         if ($('.plan_actual_value').text() != response.actual) {
+        //             $('.plan_actual_value').addClass('reloadedLine');
+        //             $('.plan_actual_value').css('margin-top', '-100px');
+        //         }
+
+        //         if ($('.plan_gap_value').text() != response.remaining) { //plan gap
+        //             $('.plan_gap_value').addClass('reloadedLine');
+        //             $('.plan_gap_value').css('margin-top', '-100px');
+        //         }
+
+        //         $('.plan_target_value').text(parseInt(response.plan));
+        //         $('.plan_actual_value').text(parseInt(response.actual));
+        //         $('.plan_gap_value').text(response.remaining);
+        //     });
+        // }
+
         function getValues() {
             var registlinename = $("#registlinename").val();
             var last_takt = $("#last_takt").val();
             var added_takt_plan = $("#added_takt_plan").val();
-            // console.log(registlinename);
+
             $.post('process/pcs/setting_p.php', {
                 request: 'getPlanLine',
                 registlinename: registlinename,
                 last_takt: last_takt
-            }, function(response) {
+            }, function (response) {
                 fetch_digit();
                 console.log(response);
 
-                if ($('.plan_target_value').text() != response.plan) {
-                    $('.plan_target_value').addClass('reloadedLine');
-                    $('.plan_target_value').css('margin-top', '-100px');
+                var plan_target_value = $('.plan_target_value');
+                plan_target_value.text(parseInt(response.plan));
+                if (parseInt(plan_target_value.text()) != response.plan) {
+                    plan_target_value.addClass('reloadedLine');
                 }
 
-                if ($('.plan_actual_value').text() != response.actual) {
-                    $('.plan_actual_value').addClass('reloadedLine');
-                    $('.plan_actual_value').css('margin-top', '-100px');
+                var plan_actual_value = $('.plan_actual_value');
+                plan_actual_value.text(parseInt(response.actual));
+                if (parseInt(plan_actual_value.text()) != response.actual) {
+                    plan_actual_value.addClass('reloadedLine');
                 }
 
-                if ($('.plan_gap_value').text() != response.remaining) {
-                    $('.plan_gap_value').addClass('reloadedLine');
-                    $('.plan_gap_value').css('margin-top', '-100px');
+                var plan_gap_value = $('.plan_gap_value');
+                plan_gap_value.text(response.remaining);
+                if (parseInt(plan_gap_value.text()) < 0) {
+                    plan_gap_value.css('background-color', '#FD5A46');
+                    plan_gap_value.css('color', '#000');
+                } else if (parseInt(plan_gap_value.text()) > 0) {
+                    plan_gap_value.css('background-color', '#ABD2FA');
+                    plan_gap_value.css('color', '#000');
+                } else {
+                    plan_gap_value.css('background-color', '#ABD2FA');
+                    plan_gap_value.css('color', '#000');
                 }
-
-                $('.plan_target_value').text(parseInt(response.plan));
-                $('.plan_actual_value').text(parseInt(response.actual));
-                $('.plan_gap_value').text(response.remaining);
+                if (parseInt(plan_gap_value.text()) != response.remaining) {
+                    plan_gap_value.addClass('reloadedLine');
+                }
             });
         }
 
-        setInterval(function() {
+        setInterval(function () {
             if (timerOn == true) {
                 if (isPause == false) {
 
@@ -120,12 +163,12 @@
             }
         }, 1000);
     } else {
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#plannotset').modal('show');
         });
     }
 
-    setInterval(function() {
+    setInterval(function () {
         getDT();
     }, 1000);
 
@@ -140,14 +183,14 @@
             request: 'updateTakt',
             registlinename: $('#registlinename').val(),
             added_takt_plan: added_takt_plan
-        }, function(response) {
+        }, function (response) {
             if (response.trim() == "true") {
                 getValues();
             }
         });
     }
 
-    $(document).on('click', '.btn-target', function(e) {
+    $(document).on('click', '.btn-target', function (e) {
         e.preventDefault();
 
         $('.btn-resume').addClass('d-none');
@@ -157,7 +200,7 @@
         $.post('process/pcs/setting_p.php', {
             request: 'endTarget',
             registlinename: registlinename
-        }, function(response) {
+        }, function (response) {
             console.log(response);
 
             if (response.trim() == 'true') {
@@ -169,21 +212,21 @@
         });
     });
 
-    $(document).on('click', '.btn-pause', function(e) {
+    $(document).on('click', '.btn-pause', function (e) {
         e.preventDefault();
         var el = $(this);
         $.post('process/pcs/setting_p.php', {
             request: 'setPaused',
             registlinename: $("#registlinename").val(),
             is_paused: 'YES'
-        }, function(response) {
+        }, function (response) {
             console.log(response);
             el.addClass('d-none');
             $('.btn-resume').removeClass('d-none');
             isPause = true;
         });
     });
-    $(document).on('click', '.btn-resume', function(e) {
+    $(document).on('click', '.btn-resume', function (e) {
         e.preventDefault();
         var el = $(this);
 
@@ -191,7 +234,7 @@
             request: 'setPaused',
             registlinename: $("#registlinename").val(),
             is_paused: 'NO'
-        }, function(response) {
+        }, function (response) {
             console.log(response);
             el.addClass('d-none');
             $('.btn-pause').removeClass('d-none');
@@ -199,7 +242,7 @@
         });
     });
     // ---EVENT LISTENER -----------------------------------------------------------------//
-    document.addEventListener("keypress", function(x) {
+    document.addEventListener("keypress", function (x) {
         // PAUSE USING KEY NUMBER 1
         if (x.keyCode == 49 || x.keyCode == 97) {
             var el = $(this);
@@ -207,7 +250,7 @@
                 request: 'setPaused',
                 registlinename: $("#registlinename").val(),
                 is_paused: 'YES'
-            }, function(response) {
+            }, function (response) {
                 console.log(response);
                 el.addClass('d-none');
                 $('.btn-pause').addClass('d-none');
@@ -226,7 +269,7 @@
                 $.post('process/pcs/setting_p.php', {
                     request: 'endTarget',
                     registlinename: registlinename
-                }, function(response) {
+                }, function (response) {
                     console.log(response);
                     if (response.trim() == 'true') {
                         timerOn = false;
@@ -246,7 +289,7 @@
                 request: 'setPaused',
                 registlinename: $("#registlinename").val(),
                 is_paused: 'NO'
-            }, function(response) {
+            }, function (response) {
                 console.log(response);
                 el.addClass('d-none');
                 $('.btn-resume').addClass('d-none');
@@ -296,6 +339,6 @@
         //     $('#fit_style').html('.bar{zoom:65%;}');
         // }
     }
-    
+
 
 </script>

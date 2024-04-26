@@ -38,15 +38,16 @@ if ($result) {
                 <div class="col-7" style="">
                     <div class="row">
                         <div class="col-12 text-right p-5 mt-3" style="color: #0069B0; font-size: 22px;">
-                            Setting
+                            Settings
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 px-5 mt-3">
                             Select Line No. <br>
-                            <select name="registlinename" id="ircs_line" class="form-control" style="width: 100%;" required>
+                            <select name="registlinename" id="ircs_line" class="form-control" style="width: 100%;"
+                                required>
                                 <option value="">
-                                    - - - -
+                                    Select Line No.
                                 </option>
                                 <?php
                                 if ($ircs_lines) {
@@ -58,12 +59,6 @@ if ($result) {
                             </select>
                         </div>
                     </div>
-                    <!-- <div class="row mt-4">
-                        <div class="col-12 px-5">
-                            Selected Line No. <br>
-                            <input type="text" readonly class="form-control" style="width: 100%;" id="line_no" value="">
-                        </div>
-                    </div> -->
                     <div class="row mt-4">
                         <div class="col-12 px-5">
                             Group <br>

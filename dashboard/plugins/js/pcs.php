@@ -14,38 +14,81 @@
     if (processing == 1) {
         getValues();
         
+        // function getValues() {
+        //     var registlinename = $("#registlinename").val();
+        //     var last_takt = $("#last_takt").val();
+        //     var added_takt_plan = $("#added_takt_plan").val();
+        //     // console.log(registlinename);
+        //     $.post('process/pcs/setting_p.php', {
+        //         request: 'getPlanLine',
+        //         registlinename: registlinename,
+        //         last_takt: last_takt
+        //     }, function(response) {
+        //         fetch_digit();
+        //         console.log(response);
+
+        //         if ($('.plan_target_value').text() != response.plan) {
+        //             $('.plan_target_value').addClass('reloadedLine');
+        //             $('.plan_target_value').css('margin-top', '-100px');
+        //         }
+
+        //         if ($('.plan_actual_value').text() != response.actual) {
+        //             $('.plan_actual_value').addClass('reloadedLine');
+        //             $('.plan_actual_value').css('margin-top', '-100px');
+        //         }
+
+        //         if ($('.plan_gap_value').text() != response.remaining) {
+        //             $('.plan_gap_value').addClass('reloadedLine');
+        //             $('.plan_gap_value').css('margin-top', '-100px');
+        //         }
+        //         $('.plan_target_value').text(parseInt(response.plan));
+        //         $('.plan_actual_value').text(parseInt(response.actual));
+        //         $('.plan_gap_value').text(response.remaining);
+        //     });
+
+        // }
+
         function getValues() {
             var registlinename = $("#registlinename").val();
             var last_takt = $("#last_takt").val();
             var added_takt_plan = $("#added_takt_plan").val();
-            // console.log(registlinename);
+
             $.post('process/pcs/setting_p.php', {
                 request: 'getPlanLine',
                 registlinename: registlinename,
                 last_takt: last_takt
-            }, function(response) {
+            }, function (response) {
                 fetch_digit();
                 console.log(response);
 
-                if ($('.plan_target_value').text() != response.plan) {
-                    $('.plan_target_value').addClass('reloadedLine');
-                    $('.plan_target_value').css('margin-top', '-100px');
+                var plan_target_value = $('.plan_target_value');
+                plan_target_value.text(parseInt(response.plan));
+                if (parseInt(plan_target_value.text()) != response.plan) {
+                    plan_target_value.addClass('reloadedLine');
                 }
 
-                if ($('.plan_actual_value').text() != response.actual) {
-                    $('.plan_actual_value').addClass('reloadedLine');
-                    $('.plan_actual_value').css('margin-top', '-100px');
+                var plan_actual_value = $('.plan_actual_value');
+                plan_actual_value.text(parseInt(response.actual));
+                if (parseInt(plan_actual_value.text()) != response.actual) {
+                    plan_actual_value.addClass('reloadedLine');
                 }
 
-                if ($('.plan_gap_value').text() != response.remaining) {
-                    $('.plan_gap_value').addClass('reloadedLine');
-                    $('.plan_gap_value').css('margin-top', '-100px');
+                var plan_gap_value = $('.plan_gap_value');
+                plan_gap_value.text(response.remaining);
+                if (parseInt(plan_gap_value.text()) < 0) {
+                    plan_gap_value.css('background-color', '#FD5A46');
+                    plan_gap_value.css('color', '#000');
+                } else if (parseInt(plan_gap_value.text()) > 0) {
+                    plan_gap_value.css('background-color', '#ABD2FA');
+                    plan_gap_value.css('color', '#000');
+                } else {
+                    plan_gap_value.css('background-color', '#ABD2FA');
+                    plan_gap_value.css('color', '#000');
                 }
-                $('.plan_target_value').text(parseInt(response.plan));
-                $('.plan_actual_value').text(parseInt(response.actual));
-                $('.plan_gap_value').text(response.remaining);
+                if (parseInt(plan_gap_value.text()) != response.remaining) {
+                    plan_gap_value.addClass('reloadedLine');
+                }
             });
-
         }
 
     } else {

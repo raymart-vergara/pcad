@@ -99,7 +99,7 @@
                             yAxisID: 'y',
                         }, {
                             label: 'Fixing Time',
-                            backgroundColor: 'rgba(23, 162, 184, 0.5)',
+                            backgroundColor: 'rgba(23, 162, 184, 1)',
                             borderColor: 'rgba(23, 162, 184, 1)',
                             borderWidth: 1,
                             data: Fixing_Time,
