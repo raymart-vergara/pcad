@@ -22,18 +22,17 @@ if (isset($_POST['request'])) {
         $IRCS_Line = $_POST['registlinename'];
 
         $last_takt = $_POST['last_takt'];
-        $sql = " 
-        SELECT *
-        FROM t_plan 
-        WHERE IRCS_Line = '" . $IRCS_Line . "' 
-        AND Status = 'Pending' 
-    ";
+
+        $sql = "SELECT *
+                FROM t_plan 
+                WHERE IRCS_Line = '" . $IRCS_Line . "' 
+                AND Status = 'Pending'";
+
         $stmt = $conn_pcad->prepare($sql);
         $stmt->bindParam(':IRCS_Line', $IRCS_Line);
         $stmt->execute();
         $line = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $lot_no = explode(',', $line['lot_no']);
         $Target = $line['Target'];
         $IRCS_IP = $line['IP_address'];
         $takt = $line['takt_secs_DB'];
@@ -58,55 +57,20 @@ if (isset($_POST['request'])) {
             $Target = 0;
         }
 
-        $lots = array();
-        $q = "SELECT DISTINCT LOT
-        FROM IRCS.T_PACKINGWK 
-        WHERE (REGISTLINENAME LIKE '" . $IRCS_Line . "' OR IPADDRESS = '" . $IRCS_IP . "') AND REGISTDATETIME >= TO_DATE('" . $started . "', 'yyyy-MM-dd HH24:MI:SS') AND PACKINGBOXCARDJUDGMENT = '1'";
-
-        $stid = oci_parse($conn_ircs, $q);
-        oci_execute($stid);
-        while ($row = oci_fetch_object($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
-            $lots[] = $row->LOT;
-        }
-
-        $lot_nos = implode(',', array_unique(array_merge($lots, $lot_no)));
-
         $p = array(
             "plan" => $Target,
             "actual" => $Actual_Target,
             "remaining" => $Remaining_Target,
             "takt" => $takt,
-            "started" => $started,
-            "lot" => $lot_nos
+            "started" => $started
         );
-        //UPDATE PLAN
-        $added_target_formula = "FLOOR(TIME_TO_SEC(TIMEDIFF(NOW(), last_update_DB)) / takt_secs_DB)";
-        $sql = "UPDATE t_plan SET Target = Target + $added_target_formula, Actual_Target = :Actual_Target, Remaining_Target = :Remaining_Target, last_takt_DB = :last_takt, last_update_DB = NOW(), lot_no = :lot_nos WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending' AND is_paused = 'NO'";
-
-        $stmt = $conn_pcad->prepare($sql);
-        $stmt->bindParam(':Actual_Target', $Actual_Target);
-        $stmt->bindParam(':Remaining_Target', $Remaining_Target);
-        $stmt->bindParam(':last_takt', $last_takt);
-        $stmt->bindParam(':lot_nos', $lot_nos);
-        $stmt->bindParam(':IRCS_Line', $IRCS_Line);
-
+        
         if ($stmt->execute()) {
             header("content-type: application/json");
             echo json_encode($p);
         } else {
             // Handle the case when the query fails
-            echo "Failed to update plan.";
-        }
-    } else if ($request == "updateTakt") {
-        $IRCS_Line = $_POST['registlinename'];
-        $added_takt_plan = $_POST['added_takt_plan'];
-        $sql = "UPDATE t_plan SET Target = (Target + 1) WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
-        $stmt = $conn_pcad->prepare($sql);
-        $stmt->bindParam(':IRCS_Line', $IRCS_Line);
-        if ($stmt->execute()) {
-            echo 'true';
-        } else {
-            echo 'false';
+            echo "Failed to get plan.";
         }
     } else if ($request == "addTarget") {
         $registlinename = $_POST['registlinename'];

@@ -82,8 +82,7 @@ if ($result) {
 										<div class="col-lg-3">
 											<div class="form-group">
 												<label>PLAN</label>
-												<input type="text" class="form-control form-control-lg" id="plan"
-													autofocus="on" min="1">
+												<input type="text" name="daily_plan" class="form-control form-control-lg" id="plan" autofocus="on" min="1">
 											</div>
 										</div>
 										<div class="col-lg-3">
@@ -171,9 +170,7 @@ if ($result) {
 									<tr>
 										<td class="text-right font-weight-bold" style="font-size: 17px;">Yield (%)</td>
 										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;"
-												name="yeild_target" id="yeild_target" value="98">
-										</td>
+											<input type="text" class="ml-4 form-control" style="width: 250px;" name="yield_target" id="yield_target" value="98">
 										</td>
 									</tr>
 									<tr>

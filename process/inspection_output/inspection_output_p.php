@@ -1470,7 +1470,7 @@ if ($method == 'ng_graph') {
     $hour_4_array = array();
     $hour_5_array = array();
 
-    $hourly_output_hour_ds_array = array("06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17");
+    $hourly_output_hour_ds_array = array("06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "|");
     $hourly_output_hour_ns_array = array("18", "19", "20", "21", "22", "23", "00", "01", "02", "03", "04", "05");
     $hourly_output_hour_array = array_merge($hourly_output_hour_ds_array, $hourly_output_hour_ns_array);
 

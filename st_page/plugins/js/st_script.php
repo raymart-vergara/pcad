@@ -190,6 +190,9 @@
 
     $("#new_st").on('hidden.bs.modal', e => {
         document.getElementById('parts_name_master').value = '';
+        document.getElementById('sub_assy_master').value = '';
+        document.getElementById('final_assy_master').value = '';
+        document.getElementById('inspection_master').value = '';
         document.getElementById('st_master').value = '';
     });
 
@@ -200,6 +203,9 @@
 
     const add_st = () => {
         var parts_name = document.getElementById('parts_name_master').value;
+        var sub_assy = document.getElementById('sub_assy_master').value;
+        var final_assy = document.getElementById('final_assy_master').value;
+        var inspection = document.getElementById('inspection_master').value;
         var st = document.getElementById('st_master').value;
 
         $.ajax({
@@ -209,6 +215,9 @@
             data: {
                 method: 'add_st',
                 parts_name: parts_name,
+                sub_assy: sub_assy,
+                final_assy: final_assy,
+                inspection: inspection,
                 st: st
             }, success: function (response) {
                 if (response == 'success') {
@@ -248,10 +257,16 @@
         var string = param.split('~!~');
         var id = string[0];
         var parts_name = string[1];
-        var st = string[2];
+        var sub_assy = string[2];
+        var final_assy = string[3];
+        var inspection = string[4];
+        var st = string[5];
 
         document.getElementById('id_st_master_update').value = id;
         document.getElementById('parts_name_master_update').value = parts_name;
+        document.getElementById('sub_assy_master_update').value = sub_assy;
+        document.getElementById('final_assy_master_update').value = final_assy;
+        document.getElementById('inspection_master_update').value = inspection;
         document.getElementById('st_master_update').value = st;
     }
 
@@ -278,6 +293,9 @@
     const update_st = () => {
         var id = document.getElementById('id_st_master_update').value;
         var parts_name = document.getElementById('parts_name_master_update').value;
+        var sub_assy = document.getElementById('sub_assy_master_update').value;
+        var final_assy = document.getElementById('final_assy_master_update').value;
+        var inspection = document.getElementById('inspection_master_update').value;
         var st = document.getElementById('st_master_update').value;
 
         $.ajax({
@@ -288,6 +306,9 @@
                 method: 'update_st',
                 id: id,
                 parts_name: parts_name,
+                sub_assy: sub_assy,
+                final_assy: final_assy,
+                inspection: inspection,
                 st: st
             }, success: function (response) {
                 if (response == 'success') {
@@ -300,6 +321,9 @@
                     });
                     document.getElementById('id_st_master_update').value = '';
                     document.getElementById('parts_name_master_update').value = '';
+                    document.getElementById('sub_assy_master_update').value = '';
+                    document.getElementById('final_assy_master_update').value = '';
+                    document.getElementById('inspection_master_update').value = '';
                     document.getElementById('st_master_update').value = '';
                     load_st(1);
                     $('#update_st').modal('hide');
@@ -344,6 +368,9 @@
                     });
                     document.getElementById('id_st_master_update').value = '';
                     document.getElementById('parts_name_master_update').value = '';
+                    document.getElementById('sub_assy_master_update').value = '';
+                    document.getElementById('final_assy_master_update').value = '';
+                    document.getElementById('inspection_master_update').value = '';
                     document.getElementById('st_master_update').value = '';
                     load_st(1);
                     $('#update_st').modal('hide');

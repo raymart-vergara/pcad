@@ -118,7 +118,12 @@ if ($method == 'get_ppm') {
     $ng = count_overall_ng($search_arr, $conn_ircs, $conn_pcad);
     $ppm = compute_ppm($ng, $output);
 
-    echo number_format($ppm);
+    $response_arr = array(
+        'ppm_formatted' => number_format($ppm),
+        'ppm' => $ppm
+    );
+
+    echo json_encode($response_arr, JSON_FORCE_OBJECT);
 }
 
 // Hourly Output
@@ -166,7 +171,7 @@ if ($method == 'get_hourly_output') {
 	echo json_encode($response_arr, JSON_FORCE_OBJECT);
 }
 
-// Conveyor Speed
+// Conveyor Speed (Unused)
 
 if ($method == 'get_conveyor_speed') {
     $taktime = 27000;
