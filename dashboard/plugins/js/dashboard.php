@@ -117,9 +117,7 @@
                     }
                 }
             }
-
         }, 1000);
-
     } else {
         $(document).ready(function () {
             $('#plannotset').modal('show');

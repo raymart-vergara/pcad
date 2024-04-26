@@ -8,7 +8,7 @@ include 'dist/js/adminlte.miin.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PCAD | Managerial Dashboard</title>
+    <title>PCAD | Executive Dashboard</title>
 
     <link rel="icon" href="dist/img/pcad_logo.ico" type="image/x-icon" />
     <!-- Google Font: Source Sans Pro -->
@@ -38,7 +38,7 @@ include 'dist/js/adminlte.miin.php';
 
         /* Handle */
         ::-webkit-scrollbar-thumb {
-            background: #383B46;
+            background: #2F323C;
             border-radius: 10px;
         }
 
@@ -363,7 +363,7 @@ include 'dist/js/adminlte.miin.php';
         }
 
         .red-bg {
-            background: #DD6A5B;
+            background: #FD5A46;
         }
 
         .grey-bg {
@@ -626,7 +626,7 @@ include 'dist/js/adminlte.miin.php';
                     <button class="btn btn-secondary" style="background: #f4f4f4; border: none; color: #000;"
                         onmouseover="this.style.backgroundColor='#383B46'; this.style.color='#FFF';"
                         onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';"
-                        onclick="window.location.reload();">
+                        onclick="refreshFunctions();">
                         <i class="fas fa-sync"></i>&ensp;&ensp;Refresh</button>
                 </div>
             </div>
@@ -709,7 +709,6 @@ include 'dist/js/adminlte.miin.php';
                     <input type="hidden" id="processing" value="1">
                     <thead>
                         <tr>
-
                             <td colspan="3" class="plan-title">Plan</td>
                         </tr>
                         <tr>
@@ -722,7 +721,7 @@ include 'dist/js/adminlte.miin.php';
                         <tr>
                             <td class="plan-content plan_target_value blue-bg" id="plan_target"></td>
                             <td class="plan-content plan_actual_value blue-bg" id="plan_actual"></td>
-                            <td class="plan-content plan_gap_value blue-bg" id="plan_gap"></td>
+                            <td class="plan-content plan_gap_value" id="plan_gap"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -747,7 +746,7 @@ include 'dist/js/adminlte.miin.php';
                                 <?= $acc_eff; ?>%
                             </td>
                             <td class="plan-content yellow-bg" id="actual_accounting_efficiency"></td>
-                            <td class="plan-content yellow-bg" id="gap_accounting_efficiency"></td>
+                            <td class="plan-content" id="gap_accounting_efficiency"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -1018,7 +1017,7 @@ include 'dist/js/adminlte.miin.php';
                             </td>
                         </tr>
                         <tr>
-                            <!-- <td class="manpower-content">Working Time Actual:</td> -->
+                            <td class="manpower-content">Daily Plan:</td>
                             <td class="manpower-content"></td>
                             <td class="manpower-content-2 pl-5"></td>
                         </tr>
@@ -1029,7 +1028,7 @@ include 'dist/js/adminlte.miin.php';
 
         <div class="process-design-div">
             <!-- ========== PROCESS DESIGN, HOURLY GRAPHS -->
-            <div class="card process-container table-responsive m-0 p-0" style="max-height: 500px; overflow-y: auto;">
+            <div class="card process-container table-responsive m-0 p-0" style="max-height: 700px; overflow-y: auto;">
                 <!-- process design -->
                 <table class="m-0 p-0 table-head-fixed text-nowrap">
                     <thead style="position: sticky; top: 0; z-index: 1; height: 40px;">
@@ -1069,21 +1068,24 @@ include 'dist/js/adminlte.miin.php';
                         <a target="_blank" href="../pcad/viewer/andon_details/andon_details.php">
                             <button class="btn btn-secondary ml-1 for-btn"
                                 onmouseover="this.style.backgroundColor='#005BA3'; this.style.color='#FFF';"
-                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly Andon Details
+                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly
+                                Andon Details
                             </button>
                         </a>
                         &ensp;&ensp;&ensp;
                         <a target="_blank" href="../pcad/viewer/hourly_output/hourly_output.php">
                             <button class="btn btn-secondary ml-1 for-btn"
                                 onmouseover="this.style.backgroundColor='#10BA68'; this.style.color='#FFF';"
-                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly Inspection Output Details
+                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly
+                                Inspection Output Details
                             </button>
                         </a>
                         &ensp;&ensp;&ensp;
                         <a target="_blank" href="../pcad/viewer/ng_inspection_details/inspection_details_ng.php">
                             <button class="btn btn-secondary ml-1 for-btn"
                                 onmouseover="this.style.backgroundColor='#E14747'; this.style.color='#FFF';"
-                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly Defect Count Details</button>
+                                onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly
+                                Defect Count Details</button>
                         </a>
                     </div>
                 </div>
@@ -1136,6 +1138,20 @@ include 'dist/js/adminlte.miin.php';
         ng_graph();
         get_process_design();
     });
+
+    function refreshFunctions() {
+        get_accounting_efficiency();
+        get_hourly_output();
+        get_yield();
+        get_ppm();
+        get_inspection_list_copy();
+        get_overall_inspection();
+        count_emp();
+        andon_hourly_graph();
+        get_hourly_output_chart();
+        ng_graph();
+        get_process_design();
+    };
 
     // return to top button
     (function ($) {

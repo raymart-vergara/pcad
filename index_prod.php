@@ -7,7 +7,7 @@ include 'process/pcs/index.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PCAD | REVISED 2 DASHBOARD IMG</title>
+    <title>PCAD | TV Dashboard</title>
 
     <!-- mdb -->
     <!-- <link rel="stylesheet" href="plugins/mdb/css/mdb.min.css"> -->
@@ -40,7 +40,7 @@ include 'process/pcs/index.php';
 
         /* Handle */
         ::-webkit-scrollbar-thumb {
-            background: #383B46;
+            background: #2F323C;
             border-radius: 10px;
         }
 
@@ -383,7 +383,7 @@ include 'process/pcs/index.php';
                                 <td scope="col" style="vertical-align: middle; font-size: 40px;">
                                     ACTUAL</td>
                                 <td scope="col" class="value-size1" id="actual_ppm"
-                                    style="background: #F87261; color: #000;">
+                                    style="background: #FD5A46; color: #000;">
                                 </td>
                             </tr>
                         </tbody>
@@ -415,8 +415,7 @@ include 'process/pcs/index.php';
                                     class="plan_actual_value value-size2 equal-plan-acct-hr"
                                     style="background: #ABD2FA; color: #000;">
                                 </td>
-                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr"
-                                    style="background: #F87261; color: #000;">
+                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr">
                                 </td>
                             </tr>
                             <tr style="border-bottom: 1px solid #E6E6E6">
@@ -438,8 +437,7 @@ include 'process/pcs/index.php';
                                     style="background: #50A363; color: #000;"></td>
                                 <td scope="col" id="actual_hourly_output" class="value-size2 equal-plan-acct-hr"
                                     style="background: #50A363; color: #000;"></td>
-                                <td scope="col" id="gap_hourly_output" class="value-size2 equal-plan-acct-hr"
-                                    style="background: #50A363; color: #000;"></td>
+                                <td scope="col" id="gap_hourly_output" class="value-size2 equal-plan-acct-hr"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -471,8 +469,7 @@ include 'process/pcs/index.php';
                                     class="plan_actual_value value-size2 equal-plan-acct-hr"
                                     style="background: #ABD2FA; color: #000;">
                                 </td>
-                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr"
-                                    style="background: #F87261; color: #000;">
+                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr">
                                 </td>
                             </tr>
                         </tbody>
@@ -495,7 +492,7 @@ include 'process/pcs/index.php';
                                     style="background: #50A363; color: #000; font-size: 60px;">
                                 </td>
                                 <td scope="col" id="insp_overall_ng" class=""
-                                    style="background: #F87261; color: #000; font-size: 60px;">
+                                    style="background: #FD5A46; color: #000; font-size: 60px;">
                                 </td>
                                 <th scope="col" class="equal-insp th-normal" style="font-size: 30px;">NG
                                 </th>
@@ -543,8 +540,7 @@ include 'process/pcs/index.php';
                                     class="plan_actual_value value-size2 equal-plan-acct-hr"
                                     style="background: #ABD2FA; color: #000;">
                                 </td>
-                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr"
-                                    style="background: #F87261; color: #000;">
+                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr">
                                 </td>
                             </tr>
                         </tbody>
@@ -586,8 +582,7 @@ include 'process/pcs/index.php';
                                     class="plan_actual_value value-size2 equal-plan-acct-hr"
                                     style="background: #ABD2FA; color: #000;">
                                 </td>
-                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr"
-                                    style="background: #F87261; color: #000;">
+                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr">
                                 </td>
                             </tr>
                         </tbody>
@@ -629,8 +624,7 @@ include 'process/pcs/index.php';
                                     class="plan_actual_value value-size2 equal-plan-acct-hr"
                                     style="background: #ABD2FA; color: #000;">
                                 </td>
-                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr"
-                                    style="background: #F87261; color: #000;">
+                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr">
                                 </td>
                             </tr>
                         </tbody>
@@ -672,8 +666,7 @@ include 'process/pcs/index.php';
                                     class="plan_actual_value value-size2 equal-plan-acct-hr"
                                     style="background: #ABD2FA; color: #000;">
                                 </td>
-                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr"
-                                    style="background: #F87261; color: #000;">
+                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr">
                                 </td>
                             </tr>
                         </tbody>
@@ -715,8 +708,7 @@ include 'process/pcs/index.php';
                                     class="plan_actual_value value-size2 equal-plan-acct-hr"
                                     style="background: #ABD2FA; color: #000;">
                                 </td>
-                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr"
-                                    style="background: #F87261; color: #000;">
+                                <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr">
                                 </td>
                             </tr>
                         </tbody>
@@ -811,8 +803,7 @@ include 'process/pcs/index.php';
                                 <td id="absent_ratio_qa_mp" class="text-left font-others-value"
                                     style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
                                 </td>
-                                <!-- <th class="th-normal text-left font-others">Working Time Actual:</th> -->
-                                <th class="th-normal text-left font-others"></th>
+                                <th class="th-normal text-left font-others">Daily Plan:</th>
                                 <td class="text-left font-others-value" style="background: #CFCFCF; color: #000;"></td>
                             </tr>
                         </tbody>

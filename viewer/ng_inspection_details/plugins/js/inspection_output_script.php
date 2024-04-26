@@ -79,8 +79,7 @@
                     labels: hour_label,
                     datasets: [{
                         label: 'NG Output per Hour',
-                        backgroundColor: 'rgba(202, 63, 63, 0.5)',
-                        borderColor: 'rgba(202, 63, 63)',
+                        backgroundColor: 'rgba(202, 63, 63, 1)',
                         borderWidth: 1,
                         data: hourly_ng_summary
                     }]

@@ -41,10 +41,6 @@ include 'plugins/head.php';
 									id="runcounterbtn"
 									class="small-box-footer monitor" style="font-size: 18px;">Proceed
 									&ensp;<i class="fas fa-arrow-right"></i></a>
-								<!-- <a href="../index.php?registlinename=registlinename"
-									id="runcounterbtn"
-									class="small-box-footer monitor" style="font-size: 18px;">Proceed
-									&ensp;<i class="fas fa-arrow-right"></i></a> -->
 							</div>
 						</div>
 					</div>

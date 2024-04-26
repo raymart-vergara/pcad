@@ -93,7 +93,6 @@
                         datasets: [{
                             label: 'Andon Hourly Count',
                             backgroundColor: 'rgba(1, 56, 99, 1)',
-                            borderColor: 'rgba(1, 56, 99, 1)',
                             borderWidth: 2,
                             data: total_counts, // Use total counts as data
                             yAxisID: 'y',
@@ -216,10 +215,7 @@
                         labels: hour_label, // Use machine names as the primary labels
                         datasets: [{
                             label: 'Hourly Inspection Output',
-                            // backgroundColor: 'rgba(23, 162, 184, 0.5)',
-                            // borderColor: 'rgba(23, 162, 184, 1)',
                             backgroundColor: 'rgba(11, 143, 80, 1)',
-                            borderColor: 'rgba(11, 143, 80, 1)',
                             borderWidth: 1,
                             data: hourly_output_summary,
                             yAxisID: 'y',
@@ -257,7 +253,6 @@
                     datasets: [{
                         label: 'Defect Hourly',
                         backgroundColor: 'rgba(202, 63, 63, 1)',
-                        borderColor: 'rgba(202, 63, 63)',
                         borderWidth: 1,
                         data: hourly_ng_summary
                     }]

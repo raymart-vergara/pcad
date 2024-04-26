@@ -19,7 +19,21 @@
 
                 var actual_accounting_efficiency = parseFloat(response);
                 var gap_accounting_efficiency = (((target_accounting_efficiency / 100) - (actual_accounting_efficiency / 100)) * 100)
-                document.getElementById('gap_accounting_efficiency').innerHTML = `${gap_accounting_efficiency.toFixed(2)}%`;
+                // document.getElementById('gap_accounting_efficiency').innerHTML = `${gap_accounting_efficiency.toFixed(2)}%`;
+
+                var gapCell = document.getElementById('gap_accounting_efficiency');
+                gapCell.innerHTML = `${gap_accounting_efficiency.toFixed(2)}%`;
+
+                if (gap_accounting_efficiency < 0) {
+                    gapCell.style.backgroundColor = '#DD6A5B'; //red if negative
+                    gapCell.style.color = 'black';
+                } else if (gap_accounting_efficiency > 0) {
+                    gapCell.style.backgroundColor = '#F6DB7F'; //yellow color if positive
+                    gapCell.style.color = 'black';
+                } else {
+                    gapCell.style.backgroundColor = '#F6DB7F'; //yellow color if 0
+                    gapCell.style.color = 'black';
+                }
             }
         });
     }
@@ -43,17 +57,31 @@
             success: function (response) {
                 try {
                     let response_array = JSON.parse(response);
+                    console.log('Response:', response_array);
                     if (response_array.message == 'success') {
                         document.getElementById('target_hourly_output').innerHTML = response_array.target_hourly_output;
                         document.getElementById('actual_hourly_output').innerHTML = response_array.actual_hourly_output;
-                        document.getElementById('gap_hourly_output').innerHTML = response_array.gap_hourly_output;
-                        // Set LocalStorage for these variables
-                        localStorage.setItem("target_hourly_output", response_array.target_hourly_output);
+
+                        let gap_hourly_output_cell = document.getElementById('gap_hourly_output');
+                        let gap_hourly_output = parseInt(response_array.gap_hourly_output);
+
+                        gap_hourly_output_cell.innerHTML = response_array.gap_hourly_output;
+
+                        if (gap_hourly_output < 0) {
+                            gap_hourly_output_cell.style.backgroundColor = '#DD6A5B'; //red if negative
+                        } else if (gap_hourly_output > 0) {
+                            gap_hourly_output_cell.style.backgroundColor = '#38C578'; //green color if positive
+                            gap_hourly_output_cell.style.color = 'black';
+                        } else {
+                            gap_hourly_output_cell.style.backgroundColor = '#38C578'; //green color if 0
+                            gap_hourly_output_cell.style.color = 'black';
+                        }
                     } else {
                         console.log(response);
                     }
                 } catch (e) {
-                    console.log(response);
+                    console.log('Error parsing response:', e);
+                    console.log('Response:', response);
                 }
             }
         });

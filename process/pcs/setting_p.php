@@ -302,7 +302,6 @@ if (isset($_POST['request'])) {
 
                 if ($stmt->execute()) {
                     header("location: ../../index_prod.php?registlinename=" . $registlinename);
-                    // header("location: ../../index.php?registlinename=" . $registlinename);
                 } else {
                     echo "Failed to update existing data into t_plan.";
                 }
@@ -329,7 +328,6 @@ if (isset($_POST['request'])) {
 
                 if ($stmt_insert_plan->execute()) {
                     header("location: ../../index_prod.php?registlinename=" . $registlinename);
-                    // header("location: ../../index.php?registlinename=" . $registlinename);
                 } else {
                     echo "Failed to insert data into t_plan.";
                 }
