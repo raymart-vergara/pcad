@@ -9,13 +9,14 @@ include '../lib/inspection_output.php';
 function TimeToSec($time)
 {
     $sec = 0;
-    foreach (array_reverse(explode(':', $time)) as $k => $v) $sec += pow(60, $k) * $v;
+    foreach (array_reverse(explode(':', $time)) as $k => $v)
+        $sec += pow(60, $k) * $v;
     return $sec;
 }
 
 if (isset($_POST['request'])) {
     $request = $_POST['request'];
-   if ($request == "getPlanLine") {
+    if ($request == "getPlanLine") {
         $shift = get_shift($server_time);
 
         $IRCS_Line = $_POST['registlinename'];
@@ -110,21 +111,20 @@ if (isset($_POST['request'])) {
     } else if ($request == "addTarget") {
         $registlinename = $_POST['registlinename'];
         $group = $_POST['group'];
-    
-        $sql_get_line = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND `group` = :group";
+
+        $sql_get_line = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND `group` = :group AND Status = 'Pending'";
 
         $stmt_get_line = $conn_pcad->prepare($sql_get_line);
         $stmt_get_line->bindParam(':registlinename', $registlinename);
         $stmt_get_line->bindParam(':group', $group);
-    
+
         if ($stmt_get_line->execute()) {
-            header("location: ../../index_IV.php?registlinename=" . $registlinename);
+            header("location: ../../index_exec.php?registlinename=" . $registlinename);
         } else {
-            echo "Failed to execute the query.";
+            // echo "Failed to execute the query.";
+            echo "<script>alert('There is no plan set for the selected line.');</script>";
         }
-    }
-    
-     else if ($request == "getLineNo") {
+    } else if ($request == "getLineNo") {
         $registlinename = $_POST['registlinename'];
         $q = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename ";
         $stmt = $conn_pcad->prepare($q);
@@ -136,7 +136,7 @@ if (isset($_POST['request'])) {
         } else {
             echo "Line not found";
         }
-    } 
+    }
 }
 
 

@@ -88,7 +88,8 @@ if ($result) {
                 <div class="col-sm-12">
                     <div class="card" style="border-top: 3px solid #ca3f3f;">
                         <div class="card-header">
-                            <h3 class="card-title"><img src="../../dist/img/alert.png" style="height:28px;">&ensp;Hourly Defect Count Per Process</h3>
+                            <h3 class="card-title"><img src="../../dist/img/alert.png" style="height:28px;">&ensp;Hourly
+                                Defect Count Per Process</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
@@ -105,7 +106,7 @@ if ($result) {
                                     <label>Line No.</label>
                                     <select id="line_no_search" class="form-control">
                                         <option value="">
-                                            - - - -
+                                            - - - - 
                                         </option>
                                         <?php
                                         if ($ircs_lines) {
@@ -158,7 +159,8 @@ if ($result) {
                 <div class="col-sm-12">
                     <div class="card" style="border-top: 3px solid #ca3f3f;">
                         <div class="card-header">
-                            <h3 class="card-title"><img src="../../dist/img/bar.png" style="height:28px;">&ensp;Hourly Defect Count Graph</h3>
+                            <h3 class="card-title"><img src="../../dist/img/bar.png" style="height:28px;">&ensp;Hourly
+                                Defect Count Graph</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>
