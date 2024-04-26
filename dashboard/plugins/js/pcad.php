@@ -90,7 +90,13 @@
                 registlinename: registlinename
             },
             success: function (response) {
-                document.getElementById('actual_ppm').innerHTML = response;
+                try {
+                    let response_array = JSON.parse(response);
+                    document.getElementById('actual_ppm').innerHTML = response_array.ppm_formatted;
+                    document.getElementById('ppm_actual').value = response_array.ppm;
+                } catch (e) {
+                    console.log(response);
+                }
             }
         });
     }

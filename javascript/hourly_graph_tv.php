@@ -25,8 +25,8 @@
                                 annotations: {
                                     line1: {
                                         type: 'line',
-                                        xMin: "17",
-                                        xMax: "17",
+                                        xMin: "|",
+                                        xMax: "|",
                                         borderColor: 'rgb(255, 193, 7)',
                                         borderWidth: 2,
                                     }
@@ -193,8 +193,8 @@
                                     },
                                     line2: {
                                         type: 'line',
-                                        xMin: "17",
-                                        xMax: "17",
+                                        xMin: "|",
+                                        xMax: "|",
                                         borderColor: 'rgb(255, 193, 7)',
                                         borderWidth: 2,
                                     }
@@ -309,8 +309,8 @@
                                 annotations: {
                                     line1: {
                                         type: 'line',
-                                        xMin: "17",
-                                        xMax: "17",
+                                        xMin: "|",
+                                        xMax: "|",
                                         borderColor: 'rgb(255, 193, 7)',
                                         borderWidth: 2,
                                     }

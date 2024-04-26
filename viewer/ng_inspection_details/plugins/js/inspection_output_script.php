@@ -105,6 +105,19 @@
                                     autoSkip: false,
                                 }
                             },
+                        },
+                        plugins: {
+                            annotation: {
+                                annotations: {
+                                    line1: {
+                                        type: 'line',
+                                        xMin: "|",
+                                        xMax: "|",
+                                        borderColor: 'rgb(255, 193, 7)',
+                                        borderWidth: 2,
+                                    }
+                                }
+                            }
                         }
                     }
                 };
