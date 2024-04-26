@@ -13,40 +13,6 @@
 
     if (processing == 1) {
         getValues();
-        
-        // function getValues() {
-        //     var registlinename = $("#registlinename").val();
-        //     var last_takt = $("#last_takt").val();
-        //     var added_takt_plan = $("#added_takt_plan").val();
-        //     // console.log(registlinename);
-        //     $.post('process/pcs/setting_p.php', {
-        //         request: 'getPlanLine',
-        //         registlinename: registlinename,
-        //         last_takt: last_takt
-        //     }, function(response) {
-        //         fetch_digit();
-        //         console.log(response);
-
-        //         if ($('.plan_target_value').text() != response.plan) {
-        //             $('.plan_target_value').addClass('reloadedLine');
-        //             $('.plan_target_value').css('margin-top', '-100px');
-        //         }
-
-        //         if ($('.plan_actual_value').text() != response.actual) {
-        //             $('.plan_actual_value').addClass('reloadedLine');
-        //             $('.plan_actual_value').css('margin-top', '-100px');
-        //         }
-
-        //         if ($('.plan_gap_value').text() != response.remaining) {
-        //             $('.plan_gap_value').addClass('reloadedLine');
-        //             $('.plan_gap_value').css('margin-top', '-100px');
-        //         }
-        //         $('.plan_target_value').text(parseInt(response.plan));
-        //         $('.plan_actual_value').text(parseInt(response.actual));
-        //         $('.plan_gap_value').text(response.remaining);
-        //     });
-
-        // }
 
         function getValues() {
             var registlinename = $("#registlinename").val();
@@ -115,21 +81,5 @@
         console.log(plan_length);
         console.log(actual_length);
         console.log(diff_length);
-
-        // if (plan_length >= 3 && actual_length >= 3 && diff_length >= 3) {
-        //     $('#fit_style').html('.bar{zoom:50%;}');
-        // } else if (plan_length >= 3 && actual_length >= 1 && diff_length >= 3) {
-        //     $('#fit_style').html('.bar{zoom:55%;}');
-        // } else if (plan_length >= 3 && actual_length >= 3 && diff_length >= 1) {
-        //     $('#fit_style').html('.bar{zoom:55%;}');
-        // } else if (plan_length >= 3 && actual_length >= 2 && diff_length >= 2) {
-        //     $('#fit_style').html('.bar{zoom:55%;}');
-        // } else if (plan_length >= 3 && actual_length >= 2 && diff_length >= 3) {
-        //     $('#fit_style').html('.bar{zoom:55%;}');
-        // } else if (plan_length >= 2 && actual_length >= 2 && diff_length >= 3) {
-        //     $('#fit_style').html('.bar{zoom:65%;}');
-        // } else {
-        //     $('#fit_style').html('.bar{zoom:65%;}');
-        // }
     }
 </script>

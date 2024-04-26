@@ -318,7 +318,6 @@
                 }
                 chartNGhourly = new Chart(ctx, configuration);
             }
-
         });
     }
 </script>
