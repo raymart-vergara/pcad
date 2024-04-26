@@ -1,3 +1,11 @@
+Live Access:
+- TV Settings
+172.25.116.188:3000/pcad/pcs_page/index.php
+
+- Executive Settings
+172.25.116.188:3000/pcad/dashboard/setting.php
+
+
 About Production Conveyor Analysis Dashboard
 
 A web application for dashboard and data visualization of manpower count per line, accounting efficiency, production plan, production output, conveyor speed, 

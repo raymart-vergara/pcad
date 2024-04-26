@@ -708,7 +708,6 @@ include 'dist/js/adminlte.miin.php';
                     <input type="hidden" id="processing" value="1">
                     <thead>
                         <tr>
-
                             <td colspan="3" class="plan-title">Plan</td>
                         </tr>
                         <tr>
