@@ -272,6 +272,7 @@ include 'process/pcs/index.php';
     <input type="hidden" id="acc_eff" name="acc_eff" value="<?= $acc_eff; ?>">
     <input type="hidden" id="start_bal_delay" name="start_bal_delay" value="<?= $start_bal_delay; ?>">
     <input type="hidden" id="work_time_plan" name="work_time_plan" value="<?= $work_time_plan; ?>">
+    <input type="hidden" id="daily_plan" name="daily_plan" value="<?= $daily_plan; ?>">
 
     <!-- Actual (Needed on updateTakt function) -->
     <input type="hidden" id="yield_actual" name="yield_actual" value="">

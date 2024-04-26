@@ -258,6 +258,7 @@ if (isset($_POST['request'])) {
                 $date_actual_start = date('Y-m-d') . ' ' . $_POST['time_start'];
                 $date_only_actual_start = date('Y-m-d');
             }
+            $daily_plan = $_POST['daily_plan'];
             $plan = $_POST['plan'];
             $hrs = str_pad($_POST['hrs'], 2, '0', STR_PAD_LEFT);
             $mins = str_pad($_POST['mins'], 2, '0', STR_PAD_LEFT);
@@ -296,7 +297,7 @@ if (isset($_POST['request'])) {
                 $sql = "UPDATE t_plan SET Carmodel = '$car_maker', Line = '$line_no', Target = '$plan', Status = '$status', IRCS_Line = '$registlinename', 
                         datetime_DB = NOW(), ended_DB = null, takt_secs_DB = '$takt_secs', actual_start_DB = '$date_actual_start', last_update_DB = NOW(), 
                         IP_address = '$IP_address', `group` = '$group',  yield_target = '$yield_target', ppm_target = '$ppm_target', acc_eff = '$acc_eff', 
-                        start_bal_delay = '$start_bal_delay', work_time_plan = '$work_time_plan' WHERE id = '$id'";
+                        start_bal_delay = '$start_bal_delay', work_time_plan = '$work_time_plan', daily_plan = '$daily_plan' WHERE id = '$id'";
                 $stmt = $conn_pcad->prepare($sql);
 
                 if ($stmt->execute()) {
@@ -306,8 +307,8 @@ if (isset($_POST['request'])) {
                     echo "Failed to update existing data into t_plan.";
                 }
             } else {
-                $sql_insert_plan = "INSERT INTO t_plan (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address, `group`, `yield_target`, `ppm_target`, `acc_eff`, `start_bal_delay`, `work_time_plan`) 
-                VALUES (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address, :group, :yield_target, :ppm_target, :acc_eff, :start_bal_delay, :work_time_plan)";
+                $sql_insert_plan = "INSERT INTO t_plan (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address, `group`, yield_target, ppm_target, acc_eff, start_bal_delay, work_time_plan, daily_plan) 
+                VALUES (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address, :group, :yield_target, :ppm_target, :acc_eff, :start_bal_delay, :work_time_plan, :daily_plan)";
 
                 $stmt_insert_plan = $conn_pcad->prepare($sql_insert_plan);
                 $stmt_insert_plan->bindParam(':car_maker', $car_maker);
@@ -324,6 +325,7 @@ if (isset($_POST['request'])) {
                 $stmt_insert_plan->bindParam(':acc_eff', $acc_eff);
                 $stmt_insert_plan->bindParam(':start_bal_delay', $start_bal_delay);
                 $stmt_insert_plan->bindParam(':work_time_plan', $work_time_plan);
+                $stmt_insert_plan->bindParam(':daily_plan', $daily_plan);
 
                 if ($stmt_insert_plan->execute()) {
                     header("location: ../../design_tv5.php?registlinename=" . $registlinename);

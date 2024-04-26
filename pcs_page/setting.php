@@ -77,7 +77,7 @@ if ($result) {
 										<div class="col-lg-3">
 											<div class="form-group">
 												<label>PLAN</label>
-												<input type="text" class="form-control form-control-lg" id="plan" autofocus="on" min="1">
+												<input type="text" name="daily_plan" class="form-control form-control-lg" id="plan" autofocus="on" min="1">
 											</div>
 										</div>
 										<div class="col-lg-3">

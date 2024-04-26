@@ -33,6 +33,7 @@ if (isset($_GET['registlinename'])) {
         $acc_eff = $res['acc_eff'];
         $start_bal_delay = $res['start_bal_delay'];
         $work_time_plan = $res['work_time_plan'];
+        $daily_plan = $res['daily_plan'];
 
 
         $sql = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename";
