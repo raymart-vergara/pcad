@@ -21,6 +21,17 @@
                     type: 'bar',
                     options: {
                         plugins: {
+                            annotation: {
+                                annotations: {
+                                    line1: {
+                                        type: 'line',
+                                        xMin: "|",
+                                        xMax: "|",
+                                        borderColor: 'rgb(255, 193, 7)',
+                                        borderWidth: 2,
+                                    }
+                                }
+                            },
                             title: {
                                 display: true,
                                 text: 'Hourly Andon Count',
@@ -162,6 +173,13 @@
                                         yMax: target_output,
                                         borderColor: 'rgb(255, 99, 132)',
                                         borderWidth: 2,
+                                    },
+                                    line2: {
+                                        type: 'line',
+                                        xMin: "|",
+                                        xMax: "|",
+                                        borderColor: 'rgb(255, 193, 7)',
+                                        borderWidth: 2,
                                     }
                                 }
                             },
@@ -268,6 +286,17 @@
                             padding: 20
                         },
                         plugins: {
+                            annotation: {
+                                annotations: {
+                                    line1: {
+                                        type: 'line',
+                                        xMin: "|",
+                                        xMax: "|",
+                                        borderColor: 'rgb(255, 193, 7)',
+                                        borderWidth: 2,
+                                    }
+                                }
+                            },
                             title: {
                                 display: true,
                                 text: 'Hourly Defect Count',
@@ -289,7 +318,6 @@
                 }
                 chartNGhourly = new Chart(ctx, configuration);
             }
-
         });
     }
 </script>

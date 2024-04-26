@@ -35,8 +35,11 @@ function check_csv ($file, $conn_pcad) {
     $isDuplicateOnCsvArr = array();
     $dup_temp_arr = array();
 
-    $row_valid_arr = array(0);
+    $row_valid_arr = array(0,0,0,0);
 
+    $negativeSubAssyStArr = array();
+    $negativeFinalAssyStArr = array();
+    $negativeInspectionStArr = array();
     $negativeStArr = array();
 
     $message = "";
@@ -51,9 +54,12 @@ function check_csv ($file, $conn_pcad) {
         $check_csv_row++;
         
         $parts_name = $line[4];
-        $st = custom_trim($line[14]);
+        $sub_assy = custom_trim($line[12]);
+        $final_assy = custom_trim($line[13]);
+        $inspection = custom_trim($line[14]);
+        $st = custom_trim($line[15]);
 
-        if ($parts_name == '' || $st == '') {
+        if ($parts_name == '' || $sub_assy == '' || $final_assy == '' || $inspection == '' || $st == '') {
             // IF BLANK DETECTED ERROR += 1
             $hasBlankError++;
             $hasError = 1;
@@ -61,11 +67,35 @@ function check_csv ($file, $conn_pcad) {
         }
 
         // CHECK ROW VALIDATION
+        if (!empty($sub_assy)) {
+            $sub_assy_int = intval($sub_assy);
+            if ($sub_assy_int < 0) {
+                $hasError = 1;
+                $row_valid_arr[0] = 1;
+                array_push($negativeSubAssyStArr, $check_csv_row);
+            }
+        }
+        if (!empty($final_assy)) {
+            $final_assy_int = intval($final_assy);
+            if ($final_assy_int < 0) {
+                $hasError = 1;
+                $row_valid_arr[1] = 1;
+                array_push($negativeFinalAssyStArr, $check_csv_row);
+            }
+        }
+        if (!empty($inspection)) {
+            $inspection_int = intval($inspection);
+            if ($inspection_int < 0) {
+                $hasError = 1;
+                $row_valid_arr[2] = 1;
+                array_push($negativeInspectionStArr, $check_csv_row);
+            }
+        }
         if (!empty($st)) {
             $st_int = intval($st);
             if ($st_int < 0) {
                 $hasError = 1;
-                $row_valid_arr[0] = 1;
+                $row_valid_arr[3] = 1;
                 array_push($negativeStArr, $check_csv_row);
             }
         }
@@ -87,6 +117,15 @@ function check_csv ($file, $conn_pcad) {
 
     if ($hasError == 1) {
         if ($row_valid_arr[0] == 1) {
+            $message = $message . 'Negative Value Initial ST on row/s ' . implode(", ", $negativeSubAssyStArr) . '. ';
+        }
+        if ($row_valid_arr[1] == 1) {
+            $message = $message . 'Negative Value Final ST on row/s ' . implode(", ", $negativeFinalAssyStArr) . '. ';
+        }
+        if ($row_valid_arr[2] == 1) {
+            $message = $message . 'Negative Value ST on row/s ' . implode(", ", $negativeInspectionStArr) . '. ';
+        }
+        if ($row_valid_arr[3] == 1) {
             $message = $message . 'Negative Value ST on row/s ' . implode(", ", $negativeStArr) . '. ';
         }
 
@@ -125,7 +164,10 @@ if (!empty($_FILES['file']['name']) && in_array($_FILES['file']['type'],$csvMime
                 }
 
                 $parts_name = addslashes($line[4]);
-                $st = addslashes(custom_trim($line[14]));
+                $sub_assy = addslashes($line[12]);
+                $final_assy = addslashes($line[13]);
+                $inspection = addslashes($line[14]);
+                $st = addslashes(custom_trim($line[15]));
 
                 $conn_pcad->beginTransaction();
 
@@ -137,14 +179,18 @@ if (!empty($_FILES['file']['name']) && in_array($_FILES['file']['type'],$csvMime
                     foreach($stmt->fetchALL() as $x){
                         $id = $x['id'];
                     }
-                    $sql = "UPDATE m_st SET parts_name='$parts_name',st='$st',updated_by_no='".$_SESSION['emp_no']."',updated_by='".$_SESSION['full_name']."' WHERE id = '$id'";
+                    $sql = "UPDATE m_st SET parts_name='$parts_name',sub_assy='$sub_assy',
+                            final_assy='$final_assy',inspection='$inspection',st='$st',
+                            updated_by_no='".$_SESSION['emp_no']."',updated_by='".$_SESSION['full_name']."' 
+                            WHERE id = '$id'";
 
                     $stmt = $conn_pcad->prepare($sql);
                     if (!$stmt->execute()) {
                         $error++;
                     }
                 } else {
-                    $sql = "INSERT INTO `m_st`(`parts_name`, `st`, `updated_by_no`, `updated_by`) VALUES ('$parts_name','$st','".$_SESSION['emp_no']."','".$_SESSION['full_name']."')";
+                    $sql = "INSERT INTO m_st (parts_name, sub_assy, final_assy, inspection, st, updated_by_no, updated_by) 
+                            VALUES ('$parts_name','$sub_assy','$final_assy','$inspection','$st','".$_SESSION['emp_no']."','".$_SESSION['full_name']."')";
 
                     $stmt = $conn_pcad->prepare($sql);
                     if (!$stmt->execute()) {

@@ -182,6 +182,9 @@
         $.post('process/pcs/setting_p.php', {
             request: 'updateTakt',
             registlinename: $('#registlinename').val(),
+            yield_actual: $('#yield_actual').val(),
+            ppm_actual: $('#ppm_actual').val(),
+            acc_eff_actual: $('#acc_eff_actual').val(),
             added_takt_plan: added_takt_plan
         }, function (response) {
             if (response.trim() == "true") {
@@ -197,17 +200,37 @@
         $('.btn-pause').addClass('d-none');
 
         var registlinename = $("#registlinename").val();
+        var shift_group = $("#shift_group").val();
+        var line_no = $("#line_no").val();
+        var work_time_plan = $("#work_time_plan").val();
+
         $.post('process/pcs/setting_p.php', {
             request: 'endTarget',
-            registlinename: registlinename
-        }, function (response) {
+            registlinename: registlinename,
+            shift_group: shift_group,
+            line_no: line_no,
+            work_time_plan: work_time_plan
+        }, function(response) {
             console.log(response);
 
             if (response.trim() == 'true') {
                 timerOn = false;
+
                 $('.btn-set').removeClass('d-none');
                 $('.btn-target').addClass('d-none');
                 $('.btn-menu').addClass('d-none');
+
+                clearTimeout(realtime_get_accounting_efficiency);
+                clearTimeout(realtime_get_hourly_output);
+                clearTimeout(realtime_get_yield);
+                clearTimeout(realtime_get_ppm);
+                clearTimeout(realtime_get_inspection_list);
+                clearTimeout(realtime_get_overall_inspection);
+                clearTimeout(realtime_count_emp);
+                clearTimeout(realtime_andon_d_sum);
+                clearTimeout(realtime_andon_hourly_graph);
+                clearTimeout(realtime_get_hourly_output_chart);
+                clearTimeout(realtime_ng_graph);
             }
         });
     });

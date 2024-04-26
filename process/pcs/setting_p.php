@@ -2,9 +2,11 @@
 include '../server_date_time.php';
 include '../conn/pcad.php';
 include '../conn/ircs.php';
+include '../conn/emp_mgt.php';
 include '../lib/emp_mgt.php';
 include '../lib/main.php';
 include '../lib/inspection_output.php';
+include '../lib/st.php';
 
 function TimeToSec($time)
 {
@@ -82,18 +84,16 @@ if (isset($_POST['request'])) {
         $IRCS_Line = $_POST['registlinename'];
 
         $last_takt = $_POST['last_takt'];
-        $sql = " 
-        SELECT *
-        FROM t_plan 
-        WHERE IRCS_Line = '" . $IRCS_Line . "' 
-        AND Status = 'Pending' 
-    ";
+
+        $sql = "SELECT *
+                FROM t_plan 
+                WHERE IRCS_Line = '" . $IRCS_Line . "' 
+                AND Status = 'Pending'";
         $stmt = $conn_pcad->prepare($sql);
         $stmt->bindParam(':IRCS_Line', $IRCS_Line);
         $stmt->execute();
         $line = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $lot_no = explode(',', $line['lot_no']);
         $Target = $line['Target'];
         $IRCS_IP = $line['IP_address'];
         $takt = $line['takt_secs_DB'];
@@ -129,36 +129,21 @@ if (isset($_POST['request'])) {
             $Target = 0;
         }
 
-        $lots = array();
-        $q = "SELECT DISTINCT LOT
-        FROM IRCS.T_PACKINGWK 
-        WHERE (REGISTLINENAME LIKE '" . $IRCS_Line . "' OR IPADDRESS = '" . $IRCS_IP . "') AND REGISTDATETIME >= TO_DATE('" . $started . "', 'yyyy-MM-dd HH24:MI:SS') AND PACKINGBOXCARDJUDGMENT = '1'";
-
-        $stid = oci_parse($conn_ircs, $q);
-        oci_execute($stid);
-        while ($row = oci_fetch_object($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
-            $lots[] = $row->LOT;
-        }
-
-        $lot_nos = implode(',', array_unique(array_merge($lots, $lot_no)));
-
         $p = array(
             "plan" => $Target,
             "actual" => $Actual_Target,
             "remaining" => $Remaining_Target,
             "takt" => $takt,
-            "started" => $started,
-            "lot" => $lot_nos
+            "started" => $started
         );
         //UPDATE PLAN
         $added_target_formula = "FLOOR(TIME_TO_SEC(TIMEDIFF(NOW(), last_update_DB)) / takt_secs_DB)";
-        $sql = "UPDATE t_plan SET Target = Target + $added_target_formula, Actual_Target = :Actual_Target, Remaining_Target = :Remaining_Target, last_takt_DB = :last_takt, last_update_DB = NOW(), lot_no = :lot_nos WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending' AND is_paused = 'NO'";
+        $sql = "UPDATE t_plan SET Target = Target + $added_target_formula, Actual_Target = :Actual_Target, Remaining_Target = :Remaining_Target, last_takt_DB = :last_takt, last_update_DB = NOW() WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending' AND is_paused = 'NO'";
 
         $stmt = $conn_pcad->prepare($sql);
         $stmt->bindParam(':Actual_Target', $Actual_Target);
         $stmt->bindParam(':Remaining_Target', $Remaining_Target);
         $stmt->bindParam(':last_takt', $last_takt);
-        $stmt->bindParam(':lot_nos', $lot_nos);
         $stmt->bindParam(':IRCS_Line', $IRCS_Line);
 
         if ($stmt->execute()) {
@@ -171,8 +156,19 @@ if (isset($_POST['request'])) {
     } else if ($request == "updateTakt") {
         $IRCS_Line = $_POST['registlinename'];
         $added_takt_plan = $_POST['added_takt_plan'];
-        $sql = "UPDATE t_plan SET Target = (Target + 1) WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
+
+        // Actual Variables
+        $yield_actual = floatval($_POST['yield_actual']);
+        $ppm_actual = intval($_POST['ppm_actual']);
+        $acc_eff_actual = floatval($_POST['acc_eff_actual']);
+
+        $sql = "UPDATE t_plan SET Target = (Target + 1), yield_actual = :yield_actual, 
+                ppm_actual = :ppm_actual, acc_eff_actual = :acc_eff_actual 
+                WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
         $stmt = $conn_pcad->prepare($sql);
+        $stmt->bindParam(':yield_actual', $yield_actual);
+        $stmt->bindParam(':ppm_actual', $ppm_actual);
+        $stmt->bindParam(':acc_eff_actual', $acc_eff_actual);
         $stmt->bindParam(':IRCS_Line', $IRCS_Line);
         if ($stmt->execute()) {
             echo 'true';
@@ -180,10 +176,60 @@ if (isset($_POST['request'])) {
             echo 'false';
         }
     } else if ($request == "endTarget") {
-        $IRCS_Line = $_POST['registlinename'];
-        $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = NOW() WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
+        $registlinename = $_POST['registlinename'];
+
+        $line_no = $_POST['line_no'];
+        $shift_group = $_POST['shift_group'];
+        $shift = get_shift($server_time);
+        $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+        $work_time_plan = $_POST['work_time_plan'];
+
+        $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+
+        $search_arr = array(
+            'day' => $day,
+            'shift' => $shift,
+            'shift_group' => $shift_group,
+            'dept' => "",
+            'section' => "",
+            'line_no' => $line_no,
+            'registlinename' => $registlinename,
+            'ircs_line_data_arr' => $ircs_line_data_arr,
+            'server_date_only' => $server_date_only,
+            'server_date_only_yesterday' => $server_date_only_yesterday,
+            'server_date_only_tomorrow' => $server_date_only_tomorrow,
+            'server_time' => $server_time
+        );
+
+        // Variables for accounting efficiency
+        $wtpcad_x_mp_arr = get_wtpcad_x_mp_arr($search_arr, $server_time, $work_time_plan, $conn_emp_mgt);
+        $wt_x_mp = $wtpcad_x_mp_arr['wt_x_mp'];
+        $total_st_per_line = get_total_st_per_line($search_arr, $conn_ircs, $conn_pcad);
+
+        // Variables for yield and ppm
+        $output = count_overall_g($search_arr, $conn_ircs);
+        $ng = count_overall_ng($search_arr, $conn_ircs, $conn_pcad);
+
+        // Get Final Actual Varibles
+
+        // Yield
+        $yield_actual = compute_yield($output, $ng);
+
+        // PPM
+        $ppm_actual = compute_ppm($ng, $output);
+
+        // Accounting Efficiency
+        $acc_eff_actual = compute_accounting_efficiency($total_st_per_line, $wt_x_mp);
+
+        // Update t_plan
+        $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = NOW(), 
+                yield_actual = :yield_actual, ppm_actual = :ppm_actual, acc_eff_actual = :acc_eff_actual 
+                WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
         $stmt = $conn_pcad->prepare($sql);
-        $stmt->bindParam(':IRCS_Line', $IRCS_Line);
+        $stmt->bindParam(':yield_actual', $yield_actual);
+        $stmt->bindParam(':ppm_actual', $ppm_actual);
+        $stmt->bindParam(':acc_eff_actual', $acc_eff_actual);
+        $stmt->bindParam(':IRCS_Line', $registlinename);
         if ($stmt->execute()) {
             echo 'true';
         } else {
@@ -194,7 +240,7 @@ if (isset($_POST['request'])) {
         $registlinename = $_POST['registlinenameplan'];
         $time_start = date('Y-m-d') . ' ' . $_POST['time_start'];
         $group = $_POST['group'];
-        $yeild_target = $_POST['yeild_target'];
+        $yield_target = $_POST['yield_target'];
         $ppm_target = $_POST['ppm_target'];
         $acc_eff = $_POST['acc_eff'];
         // $hrs_output = $_POST['hrs_output'];
@@ -207,9 +253,12 @@ if (isset($_POST['request'])) {
                 $new_date_to->modify("-1 day");
                 $to = $new_date_to->format("Y-m-d");
                 $date_actual_start = $to . ' ' . $_POST['time_start'];
+                $date_only_actual_start = $to;
             } else {
                 $date_actual_start = date('Y-m-d') . ' ' . $_POST['time_start'];
+                $date_only_actual_start = date('Y-m-d');
             }
+            $daily_plan = $_POST['daily_plan'];
             $plan = $_POST['plan'];
             $hrs = str_pad($_POST['hrs'], 2, '0', STR_PAD_LEFT);
             $mins = str_pad($_POST['mins'], 2, '0', STR_PAD_LEFT);
@@ -234,28 +283,54 @@ if (isset($_POST['request'])) {
             $car_maker = $car_maker_name[0];
             $takt_secs = TimeToSec($takt_time);
             $status = "Pending";
-            $sql_insert_plan = "INSERT INTO t_plan (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address, `group`, `yeild_target`, `ppm_target`, `acc_eff`, `start_bal_delay`, `work_time_plan`) 
-            VALUES (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address, :group, :yeild_target, :ppm_target, :acc_eff, :start_bal_delay, :work_time_plan)";
-            $stmt_insert_plan = $conn_pcad->prepare($sql_insert_plan);
-            $stmt_insert_plan->bindParam(':car_maker', $car_maker);
-            $stmt_insert_plan->bindParam(':line_no', $line_no);
-            $stmt_insert_plan->bindParam(':plan', $plan);
-            $stmt_insert_plan->bindParam(':status', $status);
-            $stmt_insert_plan->bindParam(':registlinename', $registlinename);
-            $stmt_insert_plan->bindParam(':takt_secs', $takt_secs);
-            $stmt_insert_plan->bindParam(':date_actual_start', $date_actual_start);
-            $stmt_insert_plan->bindParam(':IP_address', $IP_address);
-            $stmt_insert_plan->bindParam(':group', $group);
-            $stmt_insert_plan->bindParam(':yeild_target', $yeild_target);
-            $stmt_insert_plan->bindParam(':ppm_target', $ppm_target);
-            $stmt_insert_plan->bindParam(':acc_eff', $acc_eff);
-            $stmt_insert_plan->bindParam(':start_bal_delay', $start_bal_delay);
-            $stmt_insert_plan->bindParam(':work_time_plan', $work_time_plan);
 
-            if ($stmt_insert_plan->execute()) {
-                header("location: ../../index_prod.php?registlinename=" . $registlinename);
+            // Check existing done or pending plan
+            $sql = "SELECT id FROM t_plan WHERE datetime_DB LIKE '$date_only_actual_start%' 
+                    AND IRCS_Line='$registlinename' ORDER BY id DESC LIMIT 1";
+            $stmt = $conn_pcad->prepare($sql);
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
+                foreach($stmt->fetchALL() as $row){
+                    $id = $row['id'];
+                }
+
+                $sql = "UPDATE t_plan SET Carmodel = '$car_maker', Line = '$line_no', Target = '$plan', Status = '$status', IRCS_Line = '$registlinename', 
+                        datetime_DB = NOW(), ended_DB = null, takt_secs_DB = '$takt_secs', actual_start_DB = '$date_actual_start', last_update_DB = NOW(), 
+                        IP_address = '$IP_address', `group` = '$group',  yield_target = '$yield_target', ppm_target = '$ppm_target', acc_eff = '$acc_eff', 
+                        start_bal_delay = '$start_bal_delay', work_time_plan = '$work_time_plan', daily_plan = '$daily_plan' WHERE id = '$id'";
+                $stmt = $conn_pcad->prepare($sql);
+
+                if ($stmt->execute()) {
+                    header("location: ../../index_prod.php?registlinename=" . $registlinename);
+                } else {
+                    echo "Failed to update existing data into t_plan.";
+                }
             } else {
-                echo "Failed to insert data into t_plan.";
+                $sql_insert_plan = "INSERT INTO t_plan (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address, `group`, yield_target, ppm_target, acc_eff, start_bal_delay, work_time_plan, daily_plan) 
+                VALUES (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address, :group, :yield_target, :ppm_target, :acc_eff, :start_bal_delay, :work_time_plan, :daily_plan)";
+
+                $stmt_insert_plan = $conn_pcad->prepare($sql_insert_plan);
+                $stmt_insert_plan->bindParam(':car_maker', $car_maker);
+                $stmt_insert_plan->bindParam(':line_no', $line_no);
+                $stmt_insert_plan->bindParam(':plan', $plan);
+                $stmt_insert_plan->bindParam(':status', $status);
+                $stmt_insert_plan->bindParam(':registlinename', $registlinename);
+                $stmt_insert_plan->bindParam(':takt_secs', $takt_secs);
+                $stmt_insert_plan->bindParam(':date_actual_start', $date_actual_start);
+                $stmt_insert_plan->bindParam(':IP_address', $IP_address);
+                $stmt_insert_plan->bindParam(':group', $group);
+                $stmt_insert_plan->bindParam(':yield_target', $yield_target);
+                $stmt_insert_plan->bindParam(':ppm_target', $ppm_target);
+                $stmt_insert_plan->bindParam(':acc_eff', $acc_eff);
+                $stmt_insert_plan->bindParam(':start_bal_delay', $start_bal_delay);
+                $stmt_insert_plan->bindParam(':work_time_plan', $work_time_plan);
+                $stmt_insert_plan->bindParam(':daily_plan', $daily_plan);
+
+                if ($stmt_insert_plan->execute()) {
+                    header("location: ../../index_prod.php?registlinename=" . $registlinename);
+                } else {
+                    echo "Failed to insert data into t_plan.";
+                }
             }
          }
         elseif ($_POST['request'] == "mainMenu") {

@@ -31,10 +31,10 @@ $f = fopen('php://memory', 'w');
 fputs($f, "\xEF\xBB\xBF");
 
 // Set column headers 
-$fields = array('Parts Name', 'ST'); 
+$fields = array('Parts Name', 'Sub Assy ST', 'Final Assy ST', 'Inspection ST', 'ST'); 
 fputcsv($f, $fields, $delimiter); 
 
-$query = "SELECT parts_name, st FROM m_st WHERE";
+$query = "SELECT parts_name, sub_assy, final_assy, inspection, st FROM m_st WHERE";
 if (!empty($parts_name)) {
   $query = $query . " parts_name LIKE '".$parts_name."%'";
 } else {
@@ -53,7 +53,7 @@ if ($stmt -> rowCount() > 0) {
     // Output each row of the data, format line as csv and write to file pointer 
     while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) { 
 
-        $lineData = array($row['parts_name'], $row['st']); 
+        $lineData = array($row['parts_name'], $row['sub_assy'], $row['final_assy'], $row['inspection'], $row['st']); 
         fputcsv($f, $lineData, $delimiter); 
 	    
     }
