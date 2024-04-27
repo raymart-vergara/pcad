@@ -26,7 +26,7 @@
                 gapCell.innerHTML = `${gap_accounting_efficiency.toFixed(2)}%`;
 
                 if (gap_accounting_efficiency < 0) {
-                    gapCell.style.backgroundColor = '#DD6A5B'; //red if negative
+                    gapCell.style.backgroundColor = '#FD5A46'; //red if negative
                     gapCell.style.color = 'black';
                 } else if (gap_accounting_efficiency > 0) {
                     gapCell.style.backgroundColor = '#FFD445'; //yellow color if positive
@@ -69,7 +69,8 @@
                         gap_hourly_output_cell.innerHTML = response_array.gap_hourly_output;
 
                         if (gap_hourly_output < 0) {
-                            gap_hourly_output_cell.style.backgroundColor = '#DD6A5B'; //red if negative
+                            gap_hourly_output_cell.style.backgroundColor = '#FD5A46'; //red if negative
+                            gap_hourly_output_cell.style.color = 'black';
                         } else if (gap_hourly_output > 0) {
                             gap_hourly_output_cell.style.backgroundColor = '#50A363'; //green color if positive
                             gap_hourly_output_cell.style.color = 'black';
