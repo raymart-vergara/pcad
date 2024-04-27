@@ -119,7 +119,7 @@
                 var plan_gap_value = $('.plan_gap_value');
                 plan_gap_value.text(response.remaining);
                 if (parseInt(plan_gap_value.text()) < 0) {
-                    plan_gap_value.css('background-color', '#FD5A46');
+                    plan_gap_value.css('background-color', '#FD5A46'); //red if negative
                     plan_gap_value.css('color', '#000');
                 } else if (parseInt(plan_gap_value.text()) > 0) {
                     plan_gap_value.css('background-color', '#ABD2FA');

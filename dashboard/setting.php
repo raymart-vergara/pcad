@@ -15,44 +15,26 @@ if ($result) {
 ?>
 
 <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="card col-6" style="border-radius: 10px;">
+    <div class="col-6" style="border-radius: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.15);">
         <form method="post" action="../process/pcs/dashboard_setting_p.php">
             <input type="hidden" name="request" value="addTarget">
             <div class="row">
-                <div class="col-7 m-0 p-0">
-                    <img src="../dist/img/tech.png" alt="pcad_cover"
-                        style="width: 100%; height: auto; border-radius: 10px 0px 0px 10px;">
+                <div class="col-lg-6 col-md-12 m-0 p-0">
+                    <img src="../dist/img/tech.png" alt="pcad_cover" class="img-fluid"
+                        style="border-radius: 10px 0px 0px 10px;">
                 </div>
-                <!-- <div class="col-5 m-0 p-0 d-flex justify-content-center align-items-center"
-                    style="background: #0D2D5E; color: #FFF; border-radius: 10px 0px 0px 10px;">
-                    <div class="d-flex flex-column justify-content-center align-items-left"
-                        style="margin: 0; padding: 0;">
-                        <div class="row">
-                            <div class="col-12">
-                                <p class="mb-0 pcad-title">
-                                    Production <br>
-                                    Conveyor <br>
-                                    Analysis <br>
-                                    Dashboard
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-                <div class="col-5" style="">
-                    <div class="row mt-3">
-                        <div class="col-12 text-right p-5 mt-4" style="color: #003D9E; font-size: 22px;">
+                <div class="col-lg-6 col-md-12">
+                    <div class="row mb-3">
+                        <div class="col-12 text-right pr-lg-5 pr-md-4 pr-sm-3 pt-lg-4 pt-md-3 pt-sm-2"
+                            style="color: #003D9E; font-size: 22px;">
                             Settings
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12 px-5 mt-3">
+                    <div class="row mb-2">
+                        <div class="col-12 px-lg-5 px-md-4 px-sm-3">
                             Select Line No. <br>
-                            <select name="registlinename" id="ircs_line" class="form-control" style="width: 100%;"
-                                required>
-                                <option value="">
-                                    Select Line No.
-                                </option>
+                            <select name="registlinename" id="ircs_line" class="form-control" required>
+                                <option value="">Select Line No.</option>
                                 <?php
                                 if ($ircs_lines) {
                                     foreach ($ircs_lines as $i => $ircs) {
@@ -63,19 +45,18 @@ if ($result) {
                             </select>
                         </div>
                     </div>
-                    <div class="row mt-4">
-                        <div class="col-12 px-5">
+                    <div class="row mb-4">
+                        <div class="col-12 px-lg-5 px-md-4 px-sm-3">
                             Group <br>
-                            <select name="group" id="group" class="form-control" style="width: 100%;" required>
+                            <select name="group" id="group" class="form-control" required>
                                 <option value="" disabled selected>Select Group </option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                             </select>
                         </div>
                     </div>
-                    <div class="row mt-3"></div>
-                    <div class="row mt-5">
-                        <div class="col-12 px-5 d-flex justify-content-center align-items-center">
+                    <div class="row mb-2">
+                        <div class="col-12 px-lg-5 px-md-4 px-sm-3 d-flex justify-content-center">
                             <button type="submit"
                                 style="width: 75%; border-radius: 20px; background-color: #003D9E; color: #FFF"
                                 onmouseover="this.style.backgroundColor='#021253'; this.style.color='#fff';"
