@@ -231,6 +231,10 @@
                 clearTimeout(realtime_andon_hourly_graph);
                 clearTimeout(realtime_get_hourly_output_chart);
                 clearTimeout(realtime_ng_graph);
+
+                $('.carousel').carousel({
+                    interval: false
+                });
             }
         });
     });
