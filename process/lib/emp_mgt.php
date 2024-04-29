@@ -110,31 +110,34 @@ function count_emp_line_support_to($search_arr, $conn_emp_mgt) {
 	$shift = addslashes($search_arr['shift']);
 	$line_no = addslashes($search_arr['line_no']);
 
-	/*$query = "SELECT count(ls.id) AS total FROM t_line_support_history ls
-			LEFT JOIN m_employees emp
-			ON ls.emp_no = emp.emp_no";
+	$query = "SELECT count(lsh.emp_no) AS total 
+		FROM t_line_support_history lsh
+		LEFT JOIN m_employees emp ON emp.emp_no = lsh.emp_no
+		WHERE lsh.day = '$day' AND lsh.shift = '$shift' AND lsh.line_no_to LIKE '$line_no%' AND lsh.status = 'accepted'";
 
 	if (!empty($search_arr['dept'])) {
 		$query = $query . " AND emp.dept = '$dept'";
-	}*/
-
-	$query = "SELECT count(emp.id) AS total FROM m_employees emp
-			LEFT JOIN t_line_support_history ls
-			ON emp.emp_no = ls.emp_no";
-
-	$query = $query . " WHERE ls.day = '$day' AND ls.shift = '$shift'";
-
-	if (!empty($search_arr['line_no'])) {
-		$query = $query . " AND ls.line_no_to LIKE '$line_no%'";
 	} else {
-		$query = $query . " AND ls.line_no_to IS NULL OR ls.line_no_to = ''";
+		$query = $query . " AND emp.dept != ''";
 	}
 
-	$query = $query . " AND ls.status = 'accepted'";
+	// $query = "SELECT count(emp.id) AS total FROM m_employees emp
+	// 		LEFT JOIN t_line_support_history ls
+	// 		ON emp.emp_no = ls.emp_no";
 
-	if (!empty($search_arr['dept'])) {
-		$query = $query . " AND emp.dept = '$dept'";
-	}
+	// $query = $query . " WHERE ls.day = '$day' AND ls.shift = '$shift'";
+
+	// if (!empty($search_arr['line_no'])) {
+	// 	$query = $query . " AND ls.line_no_to LIKE '$line_no%'";
+	// } else {
+	// 	$query = $query . " AND ls.line_no_to IS NULL OR ls.line_no_to = ''";
+	// }
+
+	// $query = $query . " AND ls.status = 'accepted'";
+
+	// if (!empty($search_arr['dept'])) {
+	// 	$query = $query . " AND emp.dept = '$dept'";
+	// }
 
 	$stmt = $conn_emp_mgt->prepare($query);
 	$stmt->execute();
@@ -155,31 +158,82 @@ function count_emp_line_support_from($search_arr, $conn_emp_mgt) {
 	$shift = addslashes($search_arr['shift']);
 	$line_no = addslashes($search_arr['line_no']);
 
-	/*$query = "SELECT count(ls.id) AS total FROM t_line_support_history ls
-			LEFT JOIN m_employees emp
-			ON ls.emp_no = emp.emp_no";
+	$query = "SELECT count(lsh.emp_no) AS total 
+		FROM t_line_support_history lsh
+		LEFT JOIN m_employees emp ON emp.emp_no = lsh.emp_no
+		WHERE lsh.day = '$day' AND lsh.shift = '$shift' AND lsh.line_no_from LIKE '$line_no%' AND lsh.status = 'accepted'";
 
 	if (!empty($search_arr['dept'])) {
-		$query = $query . " AND emp.dept = '$dept'";
-	}*/
-
-	$query = "SELECT count(emp.id) AS total FROM m_employees emp
-			LEFT JOIN t_line_support_history ls
-			ON emp.emp_no = ls.emp_no";
-
-	$query = $query . " WHERE ls.day = '$day' AND ls.shift = '$shift'";
-
-	if (!empty($search_arr['line_no'])) {
-		$query = $query . " AND ls.line_no_from LIKE '$line_no%'";
+		$query = $query . " AND emp.dept = '".$dept."'";
 	} else {
-		$query = $query . " AND ls.line_no_from IS NULL OR ls.line_no_from = ''";
+		$query = $query . " AND emp.dept != ''";
 	}
 
-	$query = $query . " AND ls.status = 'accepted'";
+	// $query = "SELECT count(emp.id) AS total FROM m_employees emp
+	// 		LEFT JOIN t_line_support_history ls
+	// 		ON emp.emp_no = ls.emp_no";
+
+	// $query = $query . " WHERE ls.day = '$day' AND ls.shift = '$shift'";
+
+	// if (!empty($search_arr['line_no'])) {
+	// 	$query = $query . " AND ls.line_no_from LIKE '$line_no%'";
+	// } else {
+	// 	$query = $query . " AND ls.line_no_from IS NULL OR ls.line_no_from = ''";
+	// }
+
+	// $query = $query . " AND ls.status = 'accepted'";
+
+	// if (!empty($search_arr['dept'])) {
+	// 	$query = $query . " AND emp.dept = '$dept'";
+	// }
+
+	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt->execute();
+	if ($stmt->rowCount() > 0) {
+		foreach($stmt->fetchALL() as $row){
+			$total = intval($row['total']);
+		}
+	}else{
+		$total = 0;
+	}
+	return $total;
+}
+
+// Total Employee Line Support Count (Resigned Not Included, Unregistered Employee Included)
+function count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt) {
+	$dept = addslashes($search_arr['dept']);
+	$day = addslashes($search_arr['day']);
+	$shift = addslashes($search_arr['shift']);
+	$line_no = addslashes($search_arr['line_no']);
+
+	$query = "SELECT count(lsh.emp_no) AS total 
+		FROM t_line_support_history lsh
+		LEFT JOIN m_employees emp ON emp.emp_no = lsh.emp_no
+		WHERE lsh.day = '$day' AND lsh.shift = '$shift' AND lsh.line_no_from LIKE '$line_no%' AND lsh.status = 'rejected'";
 
 	if (!empty($search_arr['dept'])) {
-		$query = $query . " AND emp.dept = '$dept'";
+		$query = $query . " AND emp.dept = '".$dept."'";
+	} else {
+		$query = $query . " AND emp.dept != ''";
 	}
+
+	// $query = "SELECT count(emp.id) AS total FROM m_employees emp
+	// 		LEFT JOIN t_line_support_history ls
+	// 		ON emp.emp_no = ls.emp_no";
+
+	// $query = $query . " WHERE ls.day = '$day' AND ls.shift = '$shift'";
+
+	// if (!empty($search_arr['line_no'])) {
+	// 	$query = $query . " AND ls.line_no_from LIKE '$line_no%'";
+	// } else {
+	// 	$query = $query . " AND ls.line_no_from IS NULL OR ls.line_no_from = ''";
+	// }
+
+	// $query = $query . " AND ls.status = 'accepted'";
+
+	// if (!empty($search_arr['dept'])) {
+	// 	$query = $query . " AND emp.dept = '$dept'";
+	// }
 
 	$stmt = $conn_emp_mgt->prepare($query);
 	$stmt->execute();
