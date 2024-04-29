@@ -50,9 +50,15 @@ if ($method == 'count_emp') {
 		$total_present_pd_mp += $total_present_pd_ads_mp;
 	}
 	
-	$total_pd_mp_line_support_from = count_emp_line_support_from($search_arr, $conn_emp_mgt);
-	$total_present_pd_mp -= $total_pd_mp_line_support_from;
 	$total_pd_mp_line_support_to = count_emp_line_support_to($search_arr, $conn_emp_mgt);
+	$total_pd_mp += $total_pd_mp_line_support_to;
+	$total_present_pd_mp += $total_pd_mp_line_support_to;
+	$total_pd_mp_line_support_from_rejected = count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
+	$total_pd_mp += $total_pd_mp_line_support_from_rejected;
+	$total_present_pd_mp += $total_pd_mp_line_support_from_rejected;
+	$total_pd_mp_line_support_from = count_emp_line_support_from($search_arr, $conn_emp_mgt);
+	$total_pd_mp -= $total_pd_mp_line_support_from;
+	$total_present_pd_mp -= $total_pd_mp_line_support_from;
 	$total_absent_pd_mp = $total_pd_mp - $total_present_pd_mp;
 	$absent_ratio_pd_mp = compute_absent_ratio($total_absent_pd_mp, $total_pd_mp);
 
@@ -85,9 +91,15 @@ if ($method == 'count_emp') {
 		$total_present_qa_mp += $total_present_qa_ads_mp;
 	}
 
-	$total_qa_mp_line_support_from = count_emp_line_support_from($search_arr, $conn_emp_mgt);
-	$total_present_qa_mp -= $total_qa_mp_line_support_from;
 	$total_qa_mp_line_support_to = count_emp_line_support_to($search_arr, $conn_emp_mgt);
+	$total_qa_mp += $total_qa_mp_line_support_to;
+	$total_present_qa_mp += $total_qa_mp_line_support_to;
+	$total_qa_mp_line_support_from_rejected = count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
+	$total_qa_mp += $total_qa_mp_line_support_from_rejected;
+	$total_present_qa_mp += $total_qa_mp_line_support_from_rejected;
+	$total_qa_mp_line_support_from = count_emp_line_support_from($search_arr, $conn_emp_mgt);
+	$total_qa_mp -= $total_qa_mp_line_support_from;
+	$total_present_qa_mp -= $total_qa_mp_line_support_from;
 	$total_absent_qa_mp = $total_qa_mp - $total_present_qa_mp;
 	$absent_ratio_qa_mp = compute_absent_ratio($total_absent_qa_mp, $total_qa_mp);
 
