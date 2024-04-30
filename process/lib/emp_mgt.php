@@ -247,6 +247,108 @@ function count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt) {
 	return $total;
 }
 
+// Total Employee Time Out Line Support Count (Resigned Not Included, Unregistered Employee Included)
+function count_emp_out_line_support_to($search_arr, $time_out_range, $is_null, $conn_emp_mgt) {
+	$day = addslashes($search_arr['day']);
+	$shift = addslashes($search_arr['shift']);
+	$line_no = addslashes($search_arr['line_no']);
+	
+	$query = "SELECT count(tio.emp_no) AS total 
+		FROM t_time_in_out tio
+		LEFT JOIN t_line_support_history lsh ON lsh.emp_no = tio.emp_no AND lsh.day = '$day' 
+		WHERE tio.day = '$day'";
+
+	if ($is_null == false) {
+		$time_out_from = addslashes($time_out_range['time_out_from']);
+		$time_out_to = addslashes($time_out_range['time_out_to']);
+
+		$query = $query . " AND tio.time_out BETWEEN '$day $time_out_from' AND '$day $time_out_to'";
+	} else {
+		$query = $query . " AND tio.time_out IS NULL";
+	}
+
+	$query = $query . " AND lsh.shift = '$shift' AND lsh.line_no_to LIKE '$line_no%' AND lsh.status = 'accepted'";
+
+	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt->execute();
+	if ($stmt->rowCount() > 0) {
+		foreach($stmt->fetchALL() as $row){
+			$total = intval($row['total']);
+		}
+	}else{
+		$total = 0;
+	}
+	return $total;
+}
+
+// Total Employee Time Out Line Support Count (Resigned Not Included, Unregistered Employee Included)
+function count_emp_out_line_support_from($search_arr, $time_out_range, $is_null, $conn_emp_mgt) {
+	$day = addslashes($search_arr['day']);
+	$shift = addslashes($search_arr['shift']);
+	$line_no = addslashes($search_arr['line_no']);
+	
+	$query = "SELECT count(tio.emp_no) AS total 
+		FROM t_time_in_out tio
+		LEFT JOIN t_line_support_history lsh ON lsh.emp_no = tio.emp_no AND lsh.day = '$day' 
+		WHERE tio.day = '$day'";
+
+	if ($is_null == false) {
+		$time_out_from = addslashes($time_out_range['time_out_from']);
+		$time_out_to = addslashes($time_out_range['time_out_to']);
+
+		$query = $query . " AND tio.time_out BETWEEN '$day $time_out_from' AND '$day $time_out_to'";
+	} else {
+		$query = $query . " AND tio.time_out IS NULL";
+	}
+
+	$query = $query . " AND lsh.shift = '$shift' AND lsh.line_no_from LIKE '$line_no%' AND lsh.status = 'accepted'";
+
+	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt->execute();
+	if ($stmt->rowCount() > 0) {
+		foreach($stmt->fetchALL() as $row){
+			$total = intval($row['total']);
+		}
+	}else{
+		$total = 0;
+	}
+	return $total;
+}
+
+// Total Employee Time Out Line Support Count (Resigned Not Included, Unregistered Employee Included)
+function count_emp_out_line_support_from_rejected($search_arr, $time_out_range, $is_null, $conn_emp_mgt) {
+	$day = addslashes($search_arr['day']);
+	$shift = addslashes($search_arr['shift']);
+	$line_no = addslashes($search_arr['line_no']);
+	
+	$query = "SELECT count(tio.emp_no) AS total 
+		FROM t_time_in_out tio
+		LEFT JOIN t_line_support_history lsh ON lsh.emp_no = tio.emp_no AND lsh.day = '$day' 
+		WHERE tio.day = '$day'";
+	
+	if ($is_null == false) {
+		$time_out_from = addslashes($time_out_range['time_out_from']);
+		$time_out_to = addslashes($time_out_range['time_out_to']);
+
+		$query = $query . " AND tio.time_out BETWEEN '$day $time_out_from' AND '$day $time_out_to'";
+	} else {
+		$query = $query . " AND tio.time_out IS NULL";
+	}
+
+	$query = $query . " AND lsh.shift = '$shift' AND lsh.line_no_from LIKE '$line_no%' AND lsh.status = 'rejected'";
+
+	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt->execute();
+	if ($stmt->rowCount() > 0) {
+		foreach($stmt->fetchALL() as $row){
+			$total = intval($row['total']);
+		}
+	}else{
+		$total = 0;
+	}
+	return $total;
+}
+
 // Working Time X Manpower (Needed for Accounting Efficiency)
 function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 	$day = addslashes($search_arr['day']);
@@ -278,6 +380,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 	// If based on time out
 
 	if ($server_time >= '03:30:00' && $server_time < '07:30:00') {
+
 		// OUT 3
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
@@ -294,6 +397,15 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 				$total_mp_3 = intval($row['total']);
 			}
 		}
+
+		// Update Manpower Count 3 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "03:00:00",
+			"time_out_to" => "03:29:59"
+		);
+		$total_mp_3 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_3 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_3 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 4
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
@@ -312,6 +424,15 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			}
 		}
 
+		// Update Manpower Count 4 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "03:30:00",
+			"time_out_to" => "04:29:59"
+		);
+		$total_mp_4 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_4 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_4 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
+
 		// OUT 5
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
@@ -329,6 +450,15 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			}
 		}
 
+		// Update Manpower Count 5 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "04:30:00",
+			"time_out_to" => "05:29:59"
+		);
+		$total_mp_5 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_5 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_5 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
+
 		// OUT 6
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
@@ -345,7 +475,18 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 				$total_mp_6 = intval($row['total']);
 			}
 		}
+
+		// Update Manpower Count 6 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "05:30:00",
+			"time_out_to" => "06:29:59"
+		);
+		$total_mp_6 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_6 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_6 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
+
 	} else if ($server_time >= '15:30:00' && $server_time < '19:30:00') {
+
 		// OUT 3
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
@@ -362,6 +503,15 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 				$total_mp_3 = intval($row['total']);
 			}
 		}
+
+		// Update Manpower Count 3 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "15:00:00",
+			"time_out_to" => "15:29:59"
+		);
+		$total_mp_3 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_3 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_3 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 4
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
@@ -380,6 +530,15 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			}
 		}
 
+		// Update Manpower Count 4 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "15:30:00",
+			"time_out_to" => "16:29:59"
+		);
+		$total_mp_4 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_4 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_4 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
+
 		// OUT 5
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
@@ -397,6 +556,15 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			}
 		}
 
+		// Update Manpower Count 5 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "16:30:00",
+			"time_out_to" => "17:29:59"
+		);
+		$total_mp_5 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_5 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_5 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
+
 		// OUT 6
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
@@ -413,6 +581,16 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 				$total_mp_6 = intval($row['total']);
 			}
 		}
+
+		// Update Manpower Count 6 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "17:30:00",
+			"time_out_to" => "18:29:59"
+		);
+		$total_mp_6 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_6 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_6 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
+
 	}
 
 	// If based on shuttle allocation
@@ -453,6 +631,11 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$total_present_ads_mp = count_emp_tio($search_ads_arr, $conn_emp_mgt);
 			$total_present_mp += $total_present_ads_mp;
 		}
+
+		// Update Present Count Based on Line Support From and To Counts
+		$total_present_mp += count_emp_line_support_to($search_arr, $conn_emp_mgt);
+		$total_present_mp += count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
+		$total_present_mp -= count_emp_line_support_from($search_arr, $conn_emp_mgt);
 
 		// Working Time based on minutes of work
 		$working_time_initial_pcad = 0;
@@ -558,6 +741,11 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$total_present_mp += $total_present_ads_mp;
 		}
 
+		// Update Present Count Based on Line Support From and To Counts
+		$total_present_mp += count_emp_line_support_to($search_arr, $conn_emp_mgt);
+		$total_present_mp += count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
+		$total_present_mp -= count_emp_line_support_from($search_arr, $conn_emp_mgt);
+
 		// Working Time based on minutes of work
 		$working_time_initial_pcad = 450;
 
@@ -585,6 +773,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$total_present_mp -= $total_mp_6;
 		}
 
+		// If No Time Out (NULL value time_out)
 		if ($total_present_mp > 0) {
 			if ($server_time >= '03:30:00' && $server_time < '07:30:00') {
 				if ($server_time >= '04:00:00') {
@@ -601,6 +790,16 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 					$working_time_initial_pcad += 60;
 				}
 			}
+
+			// Update Total Present (time_out IS NULL) based on Time Out Count from Line Support
+			// $time_out_range = array(
+			// 	"time_out_from" => "",
+			// 	"time_out_to" => ""
+			// );
+			// $total_present_mp += count_emp_out_line_support_to($search_arr, $time_out_range, true, $conn_emp_mgt);
+			// $total_present_mp += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, true, $conn_emp_mgt);
+			// $total_present_mp -= count_emp_out_line_support_from($search_arr, $time_out_range, true, $conn_emp_mgt);
+
 			$wt_x_mp_left = $working_time_initial_pcad * $total_present_mp;
 			if (!empty($total_mp_3) || !empty($total_mp_4) || !empty($total_mp_5) || !empty($total_mp_6)) {
 				$wt_x_mp += $wt_x_mp_left;
@@ -655,6 +854,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 	// If based on time out
 
 	if ($server_time >= '03:30:00' && $server_time < '07:30:00') {
+
 		// OUT 3
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
@@ -675,6 +875,15 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 				$total_mp_3 = intval($row['total']);
 			}
 		}
+
+		// Update Manpower Count 3 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "03:00:00",
+			"time_out_to" => "03:29:59"
+		);
+		$total_mp_3 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_3 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_3 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 4
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
@@ -697,6 +906,15 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			}
 		}
 
+		// Update Manpower Count 4 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "03:30:00",
+			"time_out_to" => "04:29:59"
+		);
+		$total_mp_4 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_4 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_4 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
+
 		// OUT 5
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
@@ -718,6 +936,15 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			}
 		}
 
+		// Update Manpower Count 5 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "04:30:00",
+			"time_out_to" => "05:29:59"
+		);
+		$total_mp_5 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_5 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_5 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
+
 		// OUT 6
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
@@ -738,7 +965,18 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 				$total_mp_6 = intval($row['total']);
 			}
 		}
+
+		// Update Manpower Count 6 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "05:30:00",
+			"time_out_to" => "06:29:59"
+		);
+		$total_mp_6 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_6 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_6 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
+
 	} else if ($server_time >= '15:30:00' && $server_time < '19:30:00') {
+
 		// OUT 3
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
@@ -759,6 +997,15 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 				$total_mp_3 = intval($row['total']);
 			}
 		}
+
+		// Update Manpower Count 3 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "15:00:00",
+			"time_out_to" => "15:29:59"
+		);
+		$total_mp_3 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_3 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_3 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 4
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
@@ -781,6 +1028,15 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			}
 		}
 
+		// Update Manpower Count 4 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "15:30:00",
+			"time_out_to" => "16:29:59"
+		);
+		$total_mp_4 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_4 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_4 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
+
 		// OUT 5
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
@@ -802,6 +1058,15 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			}
 		}
 
+		// Update Manpower Count 5 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "16:30:00",
+			"time_out_to" => "17:29:59"
+		);
+		$total_mp_5 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_5 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_5 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
+
 		// OUT 6
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
@@ -822,6 +1087,15 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 				$total_mp_6 = intval($row['total']);
 			}
 		}
+
+		// Update Manpower Count 6 based on Time Out Count from Line Support
+		$time_out_range = array(
+			"time_out_from" => "17:30:00",
+			"time_out_to" => "18:29:59"
+		);
+		$total_mp_6 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_6 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		$total_mp_6 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 	}
 
 	// If based on shuttle allocation
@@ -865,6 +1139,11 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$total_present_mp += $total_present_ads_mp;
 		}
 
+		// Update Present Count Based on Line Support From and To Counts
+		$total_present_mp += count_emp_line_support_to($search_arr, $conn_emp_mgt);
+		$total_present_mp += count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
+		$total_present_mp -= count_emp_line_support_from($search_arr, $conn_emp_mgt);
+
 		if ($working_time_pcad < $working_time_3) {
 			$wt_x_mp = $working_time_pcad * $total_present_mp;
 		} else if ($working_time_pcad < $working_time_4) {
@@ -896,6 +1175,11 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$total_present_mp += $total_present_ads_mp;
 		}
 
+		// Update Present Count Based on Line Support From and To Counts
+		$total_present_mp += count_emp_line_support_to($search_arr, $conn_emp_mgt);
+		$total_present_mp += count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
+		$total_present_mp -= count_emp_line_support_from($search_arr, $conn_emp_mgt);
+
 		if (!empty($total_mp_3)) {
 			$wt_x_mp_3 = $working_time_3 * $total_mp_3;
 			$wt_x_mp = $wt_x_mp_3;
@@ -920,7 +1204,17 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$total_present_mp -= $total_mp_6;
 		}
 
+		// If No Time Out (NULL value time_out)
 		if ($total_present_mp > 0) {
+			// Update Total Present (time_out IS NULL) based on Time Out Count from Line Support
+			// $time_out_range = array(
+			// 	"time_out_from" => "",
+			// 	"time_out_to" => ""
+			// );
+			// $total_present_mp += count_emp_out_line_support_to($search_arr, $time_out_range, true, $conn_emp_mgt);
+			// $total_present_mp += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, true, $conn_emp_mgt);
+			// $total_present_mp -= count_emp_out_line_support_from($search_arr, $time_out_range, true, $conn_emp_mgt);
+
 			$wt_x_mp_left = $working_time_pcad * $total_present_mp;
 			if (!empty($total_mp_3) || !empty($total_mp_4) || !empty($total_mp_5) || !empty($total_mp_6)) {
 				$wt_x_mp += $wt_x_mp_left;
