@@ -1121,9 +1121,12 @@ include 'dist/js/adminlte.miin.php';
       count_emp();
 
       // =====hourly graphs=====
-      andon_hourly_graph();
-      get_hourly_output_chart();
-      ng_graph();
+      setTimeout(() => {
+         andon_hourly_graph();
+         get_hourly_output_chart();
+         ng_graph();
+      }, 500);
+      
       get_process_design();
    });
 
@@ -1135,9 +1138,13 @@ include 'dist/js/adminlte.miin.php';
       get_inspection_list_copy();
       get_overall_inspection();
       count_emp();
-      andon_hourly_graph();
-      get_hourly_output_chart();
-      ng_graph();
+
+      setTimeout(() => {
+         andon_hourly_graph();
+         get_hourly_output_chart();
+         ng_graph();
+      }, 500);
+
       get_process_design();
    };
 
