@@ -1235,6 +1235,35 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 	return $response_arr;
 }
 
+function sum_process_design_plan($search_arr, $conn_pcad) {
+	$registlinename = $search_arr['registlinename'];
+	$shift_group = addslashes($search_arr['shift_group']);
+
+	// Sum total process_design (process) and registlinename on m_process_design
+	$sql = "";
+
+	if ($shift_group == 'A') {
+		$sql = $sql . "SELECT SUM(mp_count_a) AS total ";
+	} else if ($shift_group == 'B') {
+		$sql = $sql . "SELECT SUM(mp_count_b) AS total ";
+	} else {
+		$sql = $sql . "SELECT SUM(mp_count_a) AS total ";
+	}
+
+	$sql = $sql . "FROM m_process_design WHERE ircs_line = '$registlinename'";
+
+	$stmt = $conn_pcad->prepare($sql);
+	$stmt->execute();
+	if ($stmt->rowCount() > 0) {
+		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
+			$total = intval($row['total']);
+		}
+	}else{
+		$total = 0;
+	}
+	return $total;
+}
+
 function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 	$results = array();
 
