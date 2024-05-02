@@ -404,7 +404,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			"time_out_to" => "03:29:59"
 		);
 		$total_mp_3 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_3 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_3 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_3 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 4
@@ -430,7 +430,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			"time_out_to" => "04:29:59"
 		);
 		$total_mp_4 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_4 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_4 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_4 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 5
@@ -456,7 +456,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			"time_out_to" => "05:29:59"
 		);
 		$total_mp_5 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_5 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_5 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_5 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 6
@@ -482,7 +482,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			"time_out_to" => "06:29:59"
 		);
 		$total_mp_6 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_6 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_6 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_6 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 	} else if ($server_time >= '15:30:00' && $server_time < '19:30:00') {
@@ -510,7 +510,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			"time_out_to" => "15:29:59"
 		);
 		$total_mp_3 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_3 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_3 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_3 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 4
@@ -536,7 +536,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			"time_out_to" => "16:29:59"
 		);
 		$total_mp_4 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_4 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_4 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_4 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 5
@@ -562,7 +562,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			"time_out_to" => "17:29:59"
 		);
 		$total_mp_5 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_5 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_5 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_5 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 6
@@ -588,7 +588,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			"time_out_to" => "18:29:59"
 		);
 		$total_mp_6 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_6 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_6 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_6 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 	}
@@ -634,7 +634,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 
 		// Update Present Count Based on Line Support From and To Counts
 		$total_present_mp += count_emp_line_support_to($search_arr, $conn_emp_mgt);
-		$total_present_mp += count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
+		// $total_present_mp += count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
 		$total_present_mp -= count_emp_line_support_from($search_arr, $conn_emp_mgt);
 
 		// Working Time based on minutes of work
@@ -743,7 +743,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 
 		// Update Present Count Based on Line Support From and To Counts
 		$total_present_mp += count_emp_line_support_to($search_arr, $conn_emp_mgt);
-		$total_present_mp += count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
+		// $total_present_mp += count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
 		$total_present_mp -= count_emp_line_support_from($search_arr, $conn_emp_mgt);
 
 		// Working Time based on minutes of work
@@ -882,7 +882,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			"time_out_to" => "03:29:59"
 		);
 		$total_mp_3 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_3 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_3 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_3 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 4
@@ -912,7 +912,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			"time_out_to" => "04:29:59"
 		);
 		$total_mp_4 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_4 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_4 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_4 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 5
@@ -942,7 +942,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			"time_out_to" => "05:29:59"
 		);
 		$total_mp_5 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_5 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_5 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_5 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 6
@@ -972,7 +972,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			"time_out_to" => "06:29:59"
 		);
 		$total_mp_6 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_6 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_6 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_6 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 	} else if ($server_time >= '15:30:00' && $server_time < '19:30:00') {
@@ -1004,7 +1004,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			"time_out_to" => "15:29:59"
 		);
 		$total_mp_3 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_3 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_3 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_3 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 4
@@ -1034,7 +1034,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			"time_out_to" => "16:29:59"
 		);
 		$total_mp_4 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_4 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_4 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_4 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 5
@@ -1064,7 +1064,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			"time_out_to" => "17:29:59"
 		);
 		$total_mp_5 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_5 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_5 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_5 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 
 		// OUT 6
@@ -1094,7 +1094,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			"time_out_to" => "18:29:59"
 		);
 		$total_mp_6 += count_emp_out_line_support_to($search_arr, $time_out_range, false, $conn_emp_mgt);
-		$total_mp_6 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
+		// $total_mp_6 += count_emp_out_line_support_from_rejected($search_arr, $time_out_range, false, $conn_emp_mgt);
 		$total_mp_6 -= count_emp_out_line_support_from($search_arr, $time_out_range, false, $conn_emp_mgt);
 	}
 
@@ -1141,7 +1141,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 
 		// Update Present Count Based on Line Support From and To Counts
 		$total_present_mp += count_emp_line_support_to($search_arr, $conn_emp_mgt);
-		$total_present_mp += count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
+		// $total_present_mp += count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
 		$total_present_mp -= count_emp_line_support_from($search_arr, $conn_emp_mgt);
 
 		if ($working_time_pcad < $working_time_3) {
@@ -1177,7 +1177,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 
 		// Update Present Count Based on Line Support From and To Counts
 		$total_present_mp += count_emp_line_support_to($search_arr, $conn_emp_mgt);
-		$total_present_mp += count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
+		// $total_present_mp += count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
 		$total_present_mp -= count_emp_line_support_from($search_arr, $conn_emp_mgt);
 
 		if (!empty($total_mp_3)) {
@@ -1233,6 +1233,35 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 	);
 
 	return $response_arr;
+}
+
+function sum_process_design_plan($search_arr, $conn_pcad) {
+	$registlinename = $search_arr['registlinename'];
+	$shift_group = addslashes($search_arr['shift_group']);
+
+	// Sum total process_design (process) and registlinename on m_process_design
+	$sql = "";
+
+	if ($shift_group == 'A') {
+		$sql = $sql . "SELECT SUM(mp_count_a) AS total ";
+	} else if ($shift_group == 'B') {
+		$sql = $sql . "SELECT SUM(mp_count_b) AS total ";
+	} else {
+		$sql = $sql . "SELECT SUM(mp_count_a) AS total ";
+	}
+
+	$sql = $sql . "FROM m_process_design WHERE ircs_line = '$registlinename'";
+
+	$stmt = $conn_pcad->prepare($sql);
+	$stmt->execute();
+	if ($stmt->rowCount() > 0) {
+		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
+			$total = intval($row['total']);
+		}
+	}else{
+		$total = 0;
+	}
+	return $total;
 }
 
 function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
