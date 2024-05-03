@@ -51,7 +51,7 @@ $search_arr = array(
 
 $count_st = count_st_list($search_arr, $conn_pcad);
 
-$query = "SELECT id, parts_name, st, date_updated FROM m_st WHERE";
+$query = "SELECT id, parts_name, sub_assy, final_assy, inspection, st, date_updated FROM m_st WHERE";
 if (!empty($parts_name)) {
   $query = $query . " parts_name LIKE '".$parts_name."%'";
 } else {
@@ -105,6 +105,9 @@ $stmt->execute();
                     <tr>
                       <th>#</th>
                       <th>Parts Name</th>
+                      <th>Sub Assy ST</th>
+                      <th>Final Assy ST</th>
+                      <th>Inspection ST</th>
                       <th>ST</th>
                       <th>Date Updated</th>
                     </tr>
@@ -112,24 +115,30 @@ $stmt->execute();
                   <tbody id="list_of_st" style="text-align: center;">
                     <?php
                       if ($stmt->rowCount() > 0) {
-                        foreach($stmt->fetchALL() as $j){
+                        foreach($stmt->fetchALL() as $row){
                           $c++;
                           echo '<tr>';
                             echo '<td>'.$c.'</td>';
-                            echo '<td>'.$j['parts_name'].'</td>';
-                            echo '<td>'.$j['st'].'</td>';
-                            echo '<td>'.$j['date_updated'].'</td>';
+                            echo '<td>'.$row['parts_name'].'</td>';
+                            echo '<td>'.$row['sub_assy'].'</td>';
+                            echo '<td>'.$row['final_assy'].'</td>';
+                            echo '<td>'.$row['inspection'].'</td>';
+                            echo '<td>'.$row['st'].'</td>';
+                            echo '<td>'.$row['date_updated'].'</td>';
                           echo '</tr>';
                         }
                       }else{
                         echo '<tr>';
-                          echo '<td colspan="4" style="text-align:center; color:red;">No Result !!!</td>';
+                          echo '<td colspan="7" style="text-align:center; color:red;">No Result !!!</td>';
                         echo '</tr>';
                       }
                     ?>
                   </tbody>
                   <tfoot style="text-align: center;">
                     <tr>
+                      <th></th>
+                      <th></th>
+                      <th></th>
                       <th></th>
                       <th></th>
                       <th></th>
