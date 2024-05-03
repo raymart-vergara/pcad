@@ -1024,6 +1024,7 @@ include 'process/pcs/index.php';
       recursive_realtime_get_yield();
       recursive_realtime_get_ppm();
       get_accounting_efficiency(); // added due to updateTakt functionality
+      get_hourly_output(); // added to set target_hourly_output
 
       init_charts();
    });
