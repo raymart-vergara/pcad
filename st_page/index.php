@@ -45,6 +45,9 @@ if (isset($_SESSION['emp_no'])) {
           <div class="input-group mb-3">
             <button type="submit" class="btn btn-primary btn-block" name="login_btn" value="login">Sign In</button>
           </div>
+          <div class="input-group mb-3">
+            <a type="button" href="../wi/PCAD-ST WI.pdf" target="_blank" class="btn bg-danger btn-block" id="wi">Work Instruction</a>
+          </div>
           <!-- /.col -->
         </form>
       </div>
