@@ -26,6 +26,8 @@ include 'process/pcs/index.php';
    <!-- Sweet Alert -->
    <link rel="stylesheet" href="plugins/sweetalert2/dist/sweetalert2.min.css">
 
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.css">
+
    <style>
       ::-webkit-scrollbar {
          width: 8px;
@@ -845,8 +847,20 @@ include 'process/pcs/index.php';
 <!-- <script src="plugins/mdb/js/mdb.js"></script> -->
 <!-- Chart JS -->
 <!-- <script src="node_modules/chart.js/dist/chart.umd.js"></script> -->
-<script src="plugins/chart.js/3.9.1/chart.umd.js"></script>
-<script src="plugins/chart.js/annotation/chartjs-plugin-annotation-1.0.2.js"></script>
+
+<!-- v-2.9.4 -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+<script
+   src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
+
+<!-- data labels -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script> -->
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> -->
+
+
+<!-- <script src="plugins/chart.js/3.9.1/chart.umd.js"></script> -->
+<!-- <script src="plugins/chart.js/annotation/chartjs-plugin-annotation-1.0.2.js"></script> -->
 
 <!--Moment JS -->
 <script src="plugins/moment-js/moment.min.js"></script>
