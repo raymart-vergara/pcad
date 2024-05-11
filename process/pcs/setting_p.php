@@ -239,6 +239,7 @@ if (isset($_POST['request'])) {
         $takt_time = $_POST['takt_time'];
         $registlinename = $_POST['registlinenameplan'];
         $time_start = date('Y-m-d') . ' ' . $_POST['time_start'];
+        $shift = get_shift($server_time);
         $group = $_POST['group'];
         $yield_target = $_POST['yield_target'];
         $ppm_target = $_POST['ppm_target'];
@@ -284,9 +285,25 @@ if (isset($_POST['request'])) {
             $takt_secs = TimeToSec($takt_time);
             $status = "Pending";
 
+            if ($shift == 'DS') {
+                $time_only_actual_start = '06:00:00';
+                $time_only_actual_end = '17:59:59';
+                $date_only_actual_end = $date_only_actual_start;
+            } else if ($shift == 'NS') {
+                $time_only_actual_start = '18:00:00';
+                $time_only_actual_end = '05:59:59';
+                if ($server_time >= '18:00:00' && $server_time <= '23:59:59') {
+                    $date_only_actual_end = $server_date_only_tomorrow;
+                } else if ($server_time >= '00:00:00' && $server_time < '06:00:00') {
+                    $date_only_actual_end = $server_date_only;
+                }
+            }
+
             // Check existing done or pending plan
-            $sql = "SELECT id FROM t_plan WHERE datetime_DB LIKE '$date_only_actual_start%' 
+            $sql = "SELECT id FROM t_plan WHERE 
+                    (datetime_DB >= '$date_only_actual_start $time_only_actual_start' AND datetime_DB <= '$date_only_actual_end $time_only_actual_end') 
                     AND IRCS_Line='$registlinename' ORDER BY id DESC LIMIT 1";
+            
             $stmt = $conn_pcad->prepare($sql);
             $stmt->execute();
             if ($stmt->rowCount() > 0) {
