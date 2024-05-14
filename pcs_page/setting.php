@@ -54,7 +54,7 @@ if ($result) {
 												SELECTED LINE NO. </td>
 											<td>
 												<input type="text" readonly class="ml-4 form-control"
-													style="width: 250px;" id="line_no" value="">
+													style="width: 250px;" id="line_no" value="" required>
 											</td>
 										</tr>
 									</tbody>
@@ -82,7 +82,7 @@ if ($result) {
 										<div class="col-lg-3">
 											<div class="form-group">
 												<label>PLAN</label>
-												<input type="text" name="daily_plan" class="form-control form-control-lg" id="plan" autofocus="on" min="1">
+												<input type="text" name="daily_plan" class="form-control form-control-lg" id="plan" autofocus="on" min="1" required>
 											</div>
 										</div>
 										<div class="col-lg-3">
@@ -157,7 +157,7 @@ if ($result) {
 										<td class="text-right font-weight-bold" style="font-size: 17px;">GROUP</td>
 										<td>
 											<select name="group" id="group" class="form-control ml-4"
-												style="width: 250px;">
+												style="width: 250px;" required>
 												<option value="" disabled selected>Select Group </option>
 												<option value="A">A</option>
 												<option value="B">B</option>
@@ -170,7 +170,7 @@ if ($result) {
 									<tr>
 										<td class="text-right font-weight-bold" style="font-size: 17px;">Yield (%)</td>
 										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;" name="yield_target" id="yield_target" value="98">
+											<input type="text" class="ml-4 form-control" style="width: 250px;" name="yield_target" id="yield_target" value="98" required>
 										</td>
 									</tr>
 									<tr>
@@ -181,7 +181,7 @@ if ($result) {
 											(PPM)</td>
 										<td>
 											<input type="text" class="ml-4 form-control" style="width: 250px;"
-												name="ppm_target" id="ppm_target" value="9000">
+												name="ppm_target" id="ppm_target" value="9000" required>
 										</td>
 										</td>
 									</tr>
@@ -193,7 +193,7 @@ if ($result) {
 											Efficiency (%)</td>
 										<td>
 											<input type="text" class="ml-4 form-control" style="width: 250px;"
-												name="acc_eff" id="acc_eff">
+												name="acc_eff" id="acc_eff" required>
 										</td>
 										</td>
 									</tr>
@@ -230,7 +230,7 @@ if ($result) {
 
 										<td>
 											<select name="work_time_plan" id="work_time_plan" class="form-control ml-4"
-												style="width: 250px;">
+												style="width: 250px;" required>
 												<option value="450">450</option>
 												<option value="510">510</option>
 												<option value="570">570</option>
@@ -257,8 +257,8 @@ if ($result) {
 								</div>
 							</div>
 							<div class="col-md-6">
-								<button type="submit" style="width: 100%;" class="btn btn-secondary" id="menuBtn"
-									name="request" value="mainMenu">MAIN MENU <b>[BACK]</b></button>
+								<a type="button" style="width: 100%;" class="btn btn-secondary" id="menuBtn"
+									name="request" value="mainMenu" href="index.php">MAIN MENU <b>[BACK]</b></a>
 							</div>
 						</div>
 					</div>
