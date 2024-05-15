@@ -1,5 +1,6 @@
 <?php
 // error_reporting(0);
+set_time_limit(0);
 
 session_name("pcad");
 session_start();
