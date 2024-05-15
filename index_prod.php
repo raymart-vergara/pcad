@@ -849,9 +849,8 @@ include 'process/pcs/index.php';
 <!-- <script src="node_modules/chart.js/dist/chart.umd.js"></script> -->
 
 <!-- v-2.9.4 -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-<script
-   src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script> -->
 
 <!-- data labels -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script> -->
@@ -859,8 +858,8 @@ include 'process/pcs/index.php';
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> -->
 
 
-<!-- <script src="plugins/chart.js/3.9.1/chart.umd.js"></script> -->
-<!-- <script src="plugins/chart.js/annotation/chartjs-plugin-annotation-1.0.2.js"></script> -->
+<script src="plugins/chart.js/3.9.1/chart.umd.js"></script>
+<script src="plugins/chart.js/annotation/chartjs-plugin-annotation-1.0.2.js"></script>
 
 <!--Moment JS -->
 <script src="plugins/moment-js/moment.min.js"></script>
@@ -945,7 +944,7 @@ include 'process/pcs/index.php';
 
    // Fire Event on Carousel
    $('.carousel').bind('slide.bs.carousel', e => {
-      console.log(`slide number:${slide_number}`);
+      // console.log(`slide number:${slide_number}`);
 
       if (e.direction == 'left') {
          if (slide_number == 8) {
@@ -959,8 +958,8 @@ include 'process/pcs/index.php';
          slide_number--;
       }
 
-      console.log(`slide number:${slide_number}`);
-      console.log(e.direction);
+      // console.log(`slide number:${slide_number}`);
+      // console.log(e.direction);
 
       switch (slide_number) {
          case 1:
