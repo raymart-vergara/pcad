@@ -79,7 +79,7 @@ function get_ircs_line_data($registlinename, $conn_pcad)
 				FROM m_ircs_line i
 				LEFT JOIN m_inspection_ip insp
 				ON i.ircs_line = insp.ircs_line AND i.final_process = insp.finishdatetime
-				WHERE i.ircs_line = '$registlinename' LIMIT 1";
+				WHERE i.ircs_line = '$registlinename'";
 		$stmt = $conn_pcad->prepare($query);
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {

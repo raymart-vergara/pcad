@@ -1,4 +1,6 @@
 <?php
+set_time_limit(0);
+
 include '../server_date_time.php';
 include '../conn/pcad.php';
 include '../conn/ircs.php';
@@ -393,3 +395,7 @@ if (isset($_POST['request'])) {
         }
     }
 }
+
+oci_close($conn_ircs);
+$conn_emp_mgt = NULL;
+$conn_pcad = NULL;
