@@ -10,6 +10,24 @@ include '../lib/main.php';
 include '../lib/inspection_output.php';
 include '../lib/st.php';
 
+function get_shift_end_plan($server_time) {
+	if ($server_time >= '07:00:00' && $server_time < '19:00:00') {
+		return 'DS';
+	} else if ($server_time >= '19:00:00' && $server_time <= '23:59:59') {
+		return 'NS';
+	} else if ($server_time >= '00:00:00' && $server_time < '07:00:00') {
+		return 'NS';
+	}
+}
+
+function get_day_end_plan($server_time, $server_date_only, $server_date_only_yesterday) {
+	if ($server_time >= '07:00:00' && $server_time <= '23:59:59') {
+		return $server_date_only;
+	} else if ($server_time >= '00:00:00' && $server_time < '07:00:00') {
+		return $server_date_only_yesterday;
+	}
+}
+
 function TimeToSec($time)
 {
     $sec = 0;
@@ -182,8 +200,8 @@ if (isset($_POST['request'])) {
 
         $line_no = $_POST['line_no'];
         $shift_group = $_POST['shift_group'];
-        $shift = get_shift($server_time);
-        $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+        $shift = get_shift_end_plan($server_time);
+        $day = get_day_end_plan($server_time, $server_date_only, $server_date_only_yesterday);
         $work_time_plan = $_POST['work_time_plan'];
 
         $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
