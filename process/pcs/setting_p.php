@@ -10,21 +10,13 @@ include '../lib/main.php';
 include '../lib/inspection_output.php';
 include '../lib/st.php';
 
-function get_shift_end_plan($server_time) {
-	if ($server_time >= '07:00:00' && $server_time < '19:00:00') {
+function get_shift_end_plan($start_plan_time) {
+	if ($start_plan_time >= '06:00:00' && $start_plan_time < '18:00:00') {
 		return 'DS';
-	} else if ($server_time >= '19:00:00' && $server_time <= '23:59:59') {
+	} else if ($start_plan_time >= '18:00:00' && $start_plan_time <= '23:59:59') {
 		return 'NS';
-	} else if ($server_time >= '00:00:00' && $server_time < '07:00:00') {
+	} else if ($start_plan_time >= '00:00:00' && $start_plan_time < '06:00:00') {
 		return 'NS';
-	}
-}
-
-function get_day_end_plan($server_time, $server_date_only, $server_date_only_yesterday) {
-	if ($server_time >= '07:00:00' && $server_time <= '23:59:59') {
-		return $server_date_only;
-	} else if ($server_time >= '00:00:00' && $server_time < '07:00:00') {
-		return $server_date_only_yesterday;
 	}
 }
 
@@ -182,78 +174,113 @@ if (isset($_POST['request'])) {
         $ppm_actual = intval($_POST['ppm_actual']);
         $acc_eff_actual = floatval($_POST['acc_eff_actual']);
 
-        $sql = "UPDATE t_plan SET Target = (Target + 1), yield_actual = :yield_actual, 
+        $shift = get_shift($server_time);
+
+        $sql = "SELECT datetime_DB FROM t_plan 
+                WHERE IRCS_Line = '$IRCS_Line' AND Status = 'Pending'";
+        $stmt = $conn_pcad->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $start_plan_time = date('H:i:s', strtotime($result['datetime_DB']));
+        $shift_pending = get_shift_end_plan($start_plan_time);
+
+        if ($shift == $shift_pending) {
+            $sql = "UPDATE t_plan SET Target = (Target + 1), yield_actual = :yield_actual, 
                 ppm_actual = :ppm_actual, acc_eff_actual = :acc_eff_actual 
                 WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
-        $stmt = $conn_pcad->prepare($sql);
-        $stmt->bindParam(':yield_actual', $yield_actual);
-        $stmt->bindParam(':ppm_actual', $ppm_actual);
-        $stmt->bindParam(':acc_eff_actual', $acc_eff_actual);
-        $stmt->bindParam(':IRCS_Line', $IRCS_Line);
-        if ($stmt->execute()) {
-            echo 'true';
+            $stmt = $conn_pcad->prepare($sql);
+            $stmt->bindParam(':yield_actual', $yield_actual);
+            $stmt->bindParam(':ppm_actual', $ppm_actual);
+            $stmt->bindParam(':acc_eff_actual', $acc_eff_actual);
+            $stmt->bindParam(':IRCS_Line', $IRCS_Line);
+            if ($stmt->execute()) {
+                echo 'true';
+            } else {
+                echo 'false';
+            }
         } else {
-            echo 'false';
+            echo 'true';
         }
     } else if ($request == "endTarget") {
         $registlinename = $_POST['registlinename'];
 
         $line_no = $_POST['line_no'];
         $shift_group = $_POST['shift_group'];
-        $shift = get_shift_end_plan($server_time);
-        $day = get_day_end_plan($server_time, $server_date_only, $server_date_only_yesterday);
+        $shift = get_shift($server_time);
+        $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
         $work_time_plan = $_POST['work_time_plan'];
 
-        $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
-
-        $search_arr = array(
-            'day' => $day,
-            'shift' => $shift,
-            'shift_group' => $shift_group,
-            'dept' => "",
-            'section' => "",
-            'line_no' => $line_no,
-            'registlinename' => $registlinename,
-            'ircs_line_data_arr' => $ircs_line_data_arr,
-            'server_date_only' => $server_date_only,
-            'server_date_only_yesterday' => $server_date_only_yesterday,
-            'server_date_only_tomorrow' => $server_date_only_tomorrow,
-            'server_time' => $server_time
-        );
-
-        // Variables for accounting efficiency
-        $wtpcad_x_mp_arr = get_wtpcad_x_mp_arr($search_arr, $server_time, $work_time_plan, $conn_emp_mgt);
-        $wt_x_mp = $wtpcad_x_mp_arr['wt_x_mp'];
-        $total_st_per_line = get_total_st_per_line($search_arr, $conn_ircs, $conn_pcad);
-
-        // Variables for yield and ppm
-        $output = count_overall_g($search_arr, $conn_ircs);
-        $ng = count_overall_ng($search_arr, $conn_ircs, $conn_pcad);
-
-        // Get Final Actual Varibles
-
-        // Yield
-        $yield_actual = compute_yield($output, $ng);
-
-        // PPM
-        $ppm_actual = compute_ppm($ng, $output);
-
-        // Accounting Efficiency
-        $acc_eff_actual = compute_accounting_efficiency($total_st_per_line, $wt_x_mp);
-
-        // Update t_plan
-        $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = NOW(), 
-                yield_actual = :yield_actual, ppm_actual = :ppm_actual, acc_eff_actual = :acc_eff_actual 
-                WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
+        $sql = "SELECT datetime_DB FROM t_plan 
+                WHERE IRCS_Line = '$registlinename' AND `group` = '$shift_group' AND Status = 'Pending'";
         $stmt = $conn_pcad->prepare($sql);
-        $stmt->bindParam(':yield_actual', $yield_actual);
-        $stmt->bindParam(':ppm_actual', $ppm_actual);
-        $stmt->bindParam(':acc_eff_actual', $acc_eff_actual);
-        $stmt->bindParam(':IRCS_Line', $registlinename);
-        if ($stmt->execute()) {
-            echo 'true';
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $start_plan_time = date('H:i:s', strtotime($result['datetime_DB']));
+        $shift_pending = get_shift_end_plan($start_plan_time);
+
+        if ($shift == $shift_pending) {
+            $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+
+            $search_arr = array(
+                'day' => $day,
+                'shift' => $shift,
+                'shift_group' => $shift_group,
+                'dept' => "",
+                'section' => "",
+                'line_no' => $line_no,
+                'registlinename' => $registlinename,
+                'ircs_line_data_arr' => $ircs_line_data_arr,
+                'server_date_only' => $server_date_only,
+                'server_date_only_yesterday' => $server_date_only_yesterday,
+                'server_date_only_tomorrow' => $server_date_only_tomorrow,
+                'server_time' => $server_time
+            );
+
+            // Variables for accounting efficiency
+            $wtpcad_x_mp_arr = get_wtpcad_x_mp_arr($search_arr, $server_time, $work_time_plan, $conn_emp_mgt);
+            $wt_x_mp = $wtpcad_x_mp_arr['wt_x_mp'];
+            $total_st_per_line = get_total_st_per_line($search_arr, $conn_ircs, $conn_pcad);
+
+            // Variables for yield and ppm
+            $output = count_overall_g($search_arr, $conn_ircs);
+            $ng = count_overall_ng($search_arr, $conn_ircs, $conn_pcad);
+
+            // Get Final Actual Varibles
+
+            // Yield
+            $yield_actual = compute_yield($output, $ng);
+
+            // PPM
+            $ppm_actual = compute_ppm($ng, $output);
+
+            // Accounting Efficiency
+            $acc_eff_actual = compute_accounting_efficiency($total_st_per_line, $wt_x_mp);
+
+            // Update t_plan
+            $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = NOW(), 
+                    yield_actual = :yield_actual, ppm_actual = :ppm_actual, acc_eff_actual = :acc_eff_actual 
+                    WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
+            $stmt = $conn_pcad->prepare($sql);
+            $stmt->bindParam(':yield_actual', $yield_actual);
+            $stmt->bindParam(':ppm_actual', $ppm_actual);
+            $stmt->bindParam(':acc_eff_actual', $acc_eff_actual);
+            $stmt->bindParam(':IRCS_Line', $registlinename);
+            if ($stmt->execute()) {
+                echo 'true';
+            } else {
+                echo 'false';
+            }
         } else {
-            echo 'false';
+            // Update t_plan
+            $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = NOW()
+                    WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
+            $stmt = $conn_pcad->prepare($sql);
+            $stmt->bindParam(':IRCS_Line', $registlinename);
+            if ($stmt->execute()) {
+                echo 'true';
+            } else {
+                echo 'false';
+            }
         }
     } else if ($request == "addTarget") {
         $takt_time = $_POST['takt_time'];
