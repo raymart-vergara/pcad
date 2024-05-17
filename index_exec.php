@@ -1146,6 +1146,7 @@ include 'dist/js/adminlte.miin.php';
       }, 500);
 
       get_process_design();
+      getValues();
    };
 
    // return to top button
