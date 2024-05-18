@@ -23,7 +23,11 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a href="st.php" class="nav-link active">
+          <?php if ($_SERVER['REQUEST_URI'] == "/pcad/st_page/st.php") { ?>
+          <a href="home.php" class="nav-link active">
+          <?php } else { ?>
+          <a href="home.php" class="nav-link">
+          <?php } ?>
             <i class="nav-icon fas fa-file-alt"></i>
             <p>
               ST Masterlist

@@ -23,7 +23,11 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
+          <?php if ($_SERVER['REQUEST_URI'] == "/pcad/pcs_page/admin/pcs.php") { ?>
           <a href="pcs.php" class="nav-link active">
+          <?php } else { ?>
+          <a href="pcs.php" class="nav-link">
+          <?php } ?>
             <i class="nav-icon fas fa-file-alt"></i>
             <p>
               PCS Masterlist
@@ -31,7 +35,11 @@
           </a>
         </li>
         <li class="nav-item">
+          <?php if ($_SERVER['REQUEST_URI'] == "/pcad/pcs_page/admin/inspection.php") { ?>
+          <a href="inspection.php" class="nav-link active">
+          <?php } else { ?>
           <a href="inspection.php" class="nav-link">
+          <?php } ?>
             <i class="nav-icon fas fa-file-alt"></i>
             <p>
               Inspection Masterlist

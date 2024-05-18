@@ -1,5 +1,9 @@
 <script type="text/javascript">
-    $(document).ready(function () {
+    // AJAX IN PROGRESS GLOBAL VARS
+    var load_insp_ajax_in_process = false;
+
+    // DOMContentLoaded function
+    document.addEventListener("DOMContentLoaded", () => {
         load_insp(1);
         fetch_process();
         fetch_ip_address_column();
@@ -7,13 +11,36 @@
         fetch_judgement();
     });
 
-    document.getElementById("ircs_line_insp_search").addEventListener("keyup", e => {
-        load_insp(1);
+    var typingTimerIrcsLineInspSearch; // Timer identifier IrcsLineInsp Search
+    var typingTimerProcessInspSearch; // Timer identifier ProcessInsp Search
+    var doneTypingInterval = 250; // Time in ms
+
+    // On keyup, start the countdown
+    document.getElementById("ircs_line_insp_search").addEventListener('keyup', e => {
+        clearTimeout(typingTimerIrcsLineInspSearch);
+        typingTimerIrcsLineInspSearch = setTimeout(doneTypingLoadInsp, doneTypingInterval);
     });
 
-    document.getElementById("process_insp_search").addEventListener("keyup", e => {
-        load_insp(1);
+    // On keydown, clear the countdown
+    document.getElementById("ircs_line_insp_search").addEventListener('keydown', e => {
+        clearTimeout(typingTimerIrcsLineInspSearch);
     });
+
+    // On keyup, start the countdown
+    document.getElementById("process_insp_search").addEventListener('keyup', e => {
+        clearTimeout(typingTimerProcessInspSearch);
+        typingTimerProcessInspSearch = setTimeout(doneTypingLoadInsp, doneTypingInterval);
+    });
+
+    // On keydown, clear the countdown
+    document.getElementById("process_insp_search").addEventListener('keydown', e => {
+        clearTimeout(typingTimerProcessInspSearch);
+    });
+
+    // User is "finished typing," do something
+    const doneTypingLoadInsp = () => {
+        load_insp(1);
+    }
 
     function fetch_process() {
         $.ajax({
@@ -170,6 +197,11 @@
     }
 
     const load_insp = current_page => {
+        // If an AJAX call is already in progress, return immediately
+        if (load_insp_ajax_in_process) {
+            return;
+        }
+
         var ircs_line = document.getElementById('ircs_line_insp_search').value;
         var process = document.getElementById('process_insp_search').value;
 
@@ -190,6 +222,9 @@
             sessionStorage.setItem('process_insp_search', process);
         }
 
+        // Set the flag to true as we're starting an AJAX call
+        load_insp_ajax_in_process = true;
+
         $.ajax({
             url: '../../process/pcs/inspection_p.php',
             type: 'POST',
@@ -201,6 +236,7 @@
                 current_page: current_page
             },
             beforeSend: () => {
+                document.getElementById("btnNextPage").setAttribute('disabled', true);
                 var loading = `<tr id="loading"><td colspan="8" style="text-align:center;"><div class="spinner-border text-dark" role="status"><span class="sr-only">Loading...</span></div></td></tr>`;
                 if (current_page == 1) {
                     document.getElementById("list_of_insp").innerHTML = loading;
@@ -210,6 +246,7 @@
             },
             success: function (response) {
                 $('#loading').remove();
+                document.getElementById("btnNextPage").removeAttribute('disabled');
                 if (current_page == 1) {
                     $('#list_of_insp_table tbody').html(response);
                 } else {
@@ -217,6 +254,8 @@
                 }
                 sessionStorage.setItem('list_of_insp_table_pagination', current_page);
                 count_insp_list();
+                // Set the flag back to false as the AJAX call has completed
+                load_insp_ajax_in_process = false;
             }
         });
     }
