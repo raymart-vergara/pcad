@@ -1,19 +1,54 @@
 <script type="text/javascript">
-    $(document).ready(function () {
+    // AJAX IN PROGRESS GLOBAL VARS
+    var load_pcs_ajax_in_process = false;
+
+    // DOMContentLoaded function
+    document.addEventListener("DOMContentLoaded", () => {
         load_pcs(1);
     });
 
-    document.getElementById("line_no_search").addEventListener("keyup", e => {
-        load_pcs(1);
+    var typingTimerLineNoSearch; // Timer identifier LineNo Search
+    var typingTimerIrcsSearch; // Timer identifier Ircs Search
+    var typingTimerAndonSearch; // Timer identifier Andon Search
+    var doneTypingInterval = 250; // Time in ms
+
+    // On keyup, start the countdown
+    document.getElementById("line_no_search").addEventListener('keyup', e => {
+        clearTimeout(typingTimerLineNoSearch);
+        typingTimerLineNoSearch = setTimeout(doneTypingLoadPcs, doneTypingInterval);
     });
 
-    document.getElementById("ircs_search").addEventListener("keyup", e => {
-        load_pcs(1);
+    // On keydown, clear the countdown
+    document.getElementById("line_no_search").addEventListener('keydown', e => {
+        clearTimeout(typingTimerLineNoSearch);
     });
 
-    document.getElementById("andon_search").addEventListener("keyup", e => {
-        load_pcs(1);
+    // On keyup, start the countdown
+    document.getElementById("ircs_search").addEventListener('keyup', e => {
+        clearTimeout(typingTimerIrcsSearch);
+        typingTimerIrcsSearch = setTimeout(doneTypingLoadPcs, doneTypingInterval);
     });
+
+    // On keydown, clear the countdown
+    document.getElementById("ircs_search").addEventListener('keydown', e => {
+        clearTimeout(typingTimerIrcsSearch);
+    });
+
+    // On keyup, start the countdown
+    document.getElementById("andon_search").addEventListener('keyup', e => {
+        clearTimeout(typingTimerAndonSearch);
+        typingTimerAndonSearch = setTimeout(doneTypingLoadPcs, doneTypingInterval);
+    });
+
+    // On keydown, clear the countdown
+    document.getElementById("andon_search").addEventListener('keydown', e => {
+        clearTimeout(typingTimerAndonSearch);
+    });
+
+    // User is "finished typing," do something
+    const doneTypingLoadPcs = () => {
+        load_pcs(1);
+    }
 
     // Table Responsive Scroll Event for Load More
     document.getElementById("list_of_pcs_res").addEventListener("scroll", function () {
@@ -98,6 +133,11 @@
     }
 
     const load_pcs = current_page => {
+        // If an AJAX call is already in progress, return immediately
+        if (load_pcs_ajax_in_process) {
+            return;
+        }
+
         var line_no = document.getElementById('line_no_search').value;
         var ircs_line = document.getElementById('ircs_search').value;
         var andon_line = document.getElementById('andon_search').value;
@@ -123,6 +163,9 @@
             sessionStorage.setItem('andon_search', andon_line);
         }
 
+        // Set the flag to true as we're starting an AJAX call
+        load_pcs_ajax_in_process = true;
+
         $.ajax({
             url: '../../process/pcs/pcs_p.php',
             type: 'POST',
@@ -135,6 +178,7 @@
                 current_page: current_page
             },
             beforeSend: () => {
+                document.getElementById("btnNextPage").setAttribute('disabled', true);
                 var loading = `<tr id="loading"><td colspan="8" style="text-align:center;"><div class="spinner-border text-dark" role="status"><span class="sr-only">Loading...</span></div></td></tr>`;
                 if (current_page == 1) {
                     document.getElementById("list_of_pcs").innerHTML = loading;
@@ -144,6 +188,7 @@
             },
             success: function (response) {
                 $('#loading').remove();
+                document.getElementById("btnNextPage").removeAttribute('disabled');
                 if (current_page == 1) {
                     $('#list_of_pcs_table tbody').html(response);
                 } else {
@@ -151,6 +196,8 @@
                 }
                 sessionStorage.setItem('list_of_pcs_table_pagination', current_page);
                 count_pcs_list();
+                // Set the flag back to false as the AJAX call has completed
+                load_pcs_ajax_in_process = false;
             }
         });
     }
