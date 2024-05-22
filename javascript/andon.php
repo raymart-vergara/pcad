@@ -38,83 +38,119 @@
                     Fixing_Time.push(data[i].Fixing_Time);
                     Total_DT.push(data[i].Total_DT);
                 }
-                let ctx = document.getElementById('hourly_chart').getContext('2d');
-                let configuration = {
-                    type: 'bar',
-                    options: {
-                        plugins: {
-                            title: {
-                                display: true,
-                                text: 'DT / Delay / Andon',
-                                font: {
-                                    size: 30,
-                                    family: 'Montserrat',
-                                },
-                            }
+                let ctx = document.querySelector("#hourly_chart");
+
+                let options = {
+                    series: [{
+                        name: 'Waiting Time',
+                        data: Waiting_Time
+                    }, {
+                        name: 'Fixing Time',
+                        data: Fixing_Time
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 350,
+                        stacked: true,
+                        toolbar: {
+                            show: true
                         },
-                        scales: {
-                            y: {
-                                stacked: true,
-                                ticks: {
-                                    autoSkip: false,
-                                    font: {
-                                        size: 17
-                                    },
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'Minutes',
-                                    font: {
-                                        size: 15,
-                                        family: 'Montserrat',
-                                        weight: 'normal'
-                                    },
-                                }
-                            },
-                            x: {
-                                stacked: true,
-                                ticks: {
-                                    autoSkip: false,
-                                    font: {
-                                        size: 17
-                                    },
-                                },
-                                grid: {
-                                    display: false,
-                                }
-                            },
-                        },
-                        layout: {
-                            padding: 15
+                        zoom: {
+                            enabled: true
                         }
                     },
-                    data: {
-                        labels: machinename,
-                        datasets: [{
-                            label: 'Waiting Time',
-                            backgroundColor: 'rgba(1, 56, 99, 1)',
-                            borderColor: 'rgba(1, 56, 99, 1)',
-                            borderWidth: 2,
-                            data: Waiting_Time,
-                            yAxisID: 'y',
-                        }, {
-                            label: 'Fixing Time',
-                            backgroundColor: 'rgba(23, 162, 184, 1)',
-                            borderColor: 'rgba(23, 162, 184, 1)',
-                            borderWidth: 1,
-                            data: Fixing_Time,
-                            yAxisID: 'y',
-                        }],
+                    colors:['rgba(1, 56, 99, 1)', 'rgba(23, 162, 184, 1)'],
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            legend: {
+                                position: 'bottom',
+                                offsetX: -10,
+                                offsetY: 0
+                            }
+                        }
+                    }],
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            borderRadius: 10,
+                            borderRadiusApplication: 'end', // 'around', 'end'
+                            borderRadiusWhenStacked: 'last', // 'all', 'last'
+                            dataLabels: {
+                                total: {
+                                    enabled: true,
+                                    style: {
+                                        fontSize: '15px',
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: 'normal',
+                                        colors: ['rgba(0, 0, 0, 1)']
+                                    }
+                                }
+                            }
+                        },
                     },
+                    xaxis: {
+                        type: 'string',
+                        categories: machinename,
+                        title: {
+                            text: 'Machine - Department',
+                            align: 'center',
+                            margin: 50,
+                            offsetX: 0,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize:  '15px',
+                                fontWeight:  'normal',
+                                fontFamily:  'Montserrat'
+                            }
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Minutes',
+                            align: 'center',
+                            margin: 50,
+                            offsetX: 0,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize:  '15px',
+                                fontWeight:  'normal',
+                                fontFamily:  'Montserrat'
+                            }
+                        }
+                    },
+                    legend: {
+                        position: 'top'
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    title: {
+                        text: 'DT / Delay / Andon',
+                        align: 'center',
+                        margin: 30,
+                        offsetX: 0,
+                        offsetY: 0,
+                        floating: false,
+                        style: {
+                            fontSize:  '25px',
+                            fontWeight:  'bold',
+                            fontFamily:  'Montserrat'
+                        }
+                    }
                 };
 
                 // Set department labels as sub-labels for each machine
-                configuration.data.labels = machinename.map((machine, index) => [machine, department[index]]);
+                options.xaxis.categories = machinename.map((machine, index) => [machine, department[index]]);
+        
                 // Destroy previous chart instance before creating a new one
                 if (chart) {
                     chart.destroy();
                 }
-                chart = new Chart(ctx, configuration);
+                chart = new ApexCharts(ctx, options);
+                chart.render();
             },
         });
     }

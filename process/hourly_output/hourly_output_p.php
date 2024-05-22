@@ -326,7 +326,13 @@ if ($method == 'get_hourly_output_graph') {
         // $hourly_output_hour_array[] = $row['HOUR'];
     }
 
-    $data[] = $hourly_output_summary_array;
+    $hourly_output_summary_array2 = array();
+
+    foreach ($hourly_output_summary_array as $row) {
+        $hourly_output_summary_array2[] = $row;
+    }
+
+    $data[] = $hourly_output_summary_array2;
     $data[] = $hourly_output_hour_array;
 
     echo json_encode($data);

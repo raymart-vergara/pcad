@@ -15,96 +15,119 @@
                 let total_counts = data[0];
                 let hour_starts = data[1];
 
-                let ctx = document.getElementById('andon_hourly_chart').getContext('2d');
+                let ctx = document.querySelector("#andon_hourly_chart");
 
-                let configuration = {
-                    type: 'bar',
-                    options: {
-                        plugins: {
-                            annotation: {
-                                annotations: {
-                                    line1: {
-                                        type: 'line',
-                                        xMin: "|",
-                                        xMax: "|",
-                                        borderColor: 'rgb(255, 193, 7)',
-                                        borderWidth: 2,
-                                    }
-                                }
-                            },
-                            title: {
-                                display: true,
-                                text: 'Hourly Andon Count',
-                                font: {
-                                    size: 30,
-                                    family: 'Montserrat',
-                                },
-                                align: 'center',
-                            }
+                let options = {
+                    series: [{
+                        name: 'Andon Hourly Count',
+                        data: total_counts
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 350,
+                        stacked: true,
+                        toolbar: {
+                            show: true
                         },
-                        scales: {
-                            y: {
-                                stacked: true,
-                                ticks: {
-                                    autoSkip: false,
-                                    font: {
-                                        size: 17
-                                    },
-                                    callback: function (value, index, values) {
-                                        // Check if the value is a whole number
-                                        if (value % 1 === 0) {
-                                            // Return the whole number without decimal point
-                                            return value;
-                                        } else {
-                                            // Return an empty string for non-whole numbers
-                                            return '';
-                                        }
-                                    },
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'pcs per hour',
-                                    font: {
-                                        size: 15,
-                                        family: 'Montserrat',
-                                        weight: 'normal'
-                                    },
-                                }
-                            },
-                            x: {
-                                stacked: true,
-                                ticks: {
-                                    autoSkip: false,
-                                    font: {
-                                        size: 17
-                                    },
-                                },
-                                grid: {
-                                    display: false,
-                                },
-                            },
-                        },
-                        layout: {
-                            padding: 20
+                        zoom: {
+                            enabled: true
                         }
                     },
-                    data: {
-                        labels: hour_starts, // Use hour starts as labels
-                        datasets: [{
-                            label: 'Andon Hourly Count',
-                            backgroundColor: 'rgba(1, 56, 99, 1)',
-                            borderWidth: 2,
-                            data: total_counts, // Use total counts as data
-                            yAxisID: 'y',
-                        }],
+                    colors:['rgba(1, 56, 99, 1)'],
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            legend: {
+                                position: 'bottom',
+                                offsetX: -10,
+                                offsetY: 0
+                            }
+                        }
+                    }],
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            borderRadius: 10,
+                            borderRadiusApplication: 'end', // 'around', 'end'
+                            borderRadiusWhenStacked: 'last', // 'all', 'last'
+                            dataLabels: {
+                                total: {
+                                    enabled: true,
+                                    style: {
+                                        fontSize: '15px',
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: 400
+                                    }
+                                }
+                            }
+                        },
                     },
+                    xaxis: {
+                        categories: hour_starts,
+                        title: {
+                            text: 'Hour',
+                            align: 'center',
+                            margin: 50,
+                            offsetX: 0,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize:  '15px',
+                                fontWeight:  'normal',
+                                fontFamily:  'Montserrat'
+                            }
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'pcs per hour',
+                            align: 'center',
+                            margin: 50,
+                            offsetX: 0,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize:  '15px',
+                                fontWeight:  'normal',
+                                fontFamily:  'Montserrat'
+                            }
+                        }
+                    },
+                    legend: {
+                        position: 'top'
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    title: {
+                        text: 'Hourly Andon Count',
+                        align: 'center',
+                        margin: 30,
+                        offsetX: 0,
+                        offsetY: 0,
+                        floating: false,
+                        style: {
+                            fontSize:  '25px',
+                            fontWeight:  'bold',
+                            fontFamily:  'Montserrat'
+                        }
+                    },
+                    annotations: {
+                        xaxis: [
+                            {
+                                x: '|',
+                                borderColor: 'rgb(0, 0, 0)'
+                            }
+                        ]
+                    }
                 };
 
                 // Destroy previous chart instance before creating a new one
                 if (chartAndonHourly) {
                     chartAndonHourly.destroy();
                 }
-                chartAndonHourly = new Chart(ctx, configuration);
+                chartAndonHourly = new ApexCharts(ctx, options);
+                chartAndonHourly.render();
             }
         });
     }
@@ -129,105 +152,125 @@
                 let hourly_output_summary = data[0];
                 let hour_label = data[1];
 
-                let ctx = document.getElementById('hourly_output_summary_chart').getContext('2d');
+                let ctx = document.querySelector("#hourly_output_summary_chart");
 
-                let configuration = {
-                    type: 'bar',
-                    options: {
-                        scales: {
-                            y: {
-                                stacked: true,
-                                ticks: {
-                                    autoSkip: false,
-                                    font: {
-                                        size: 17
-                                    },
-                                    callback: function (value, index, values) {
-                                        // Check if the value is a whole number
-                                        if (value % 1 === 0) {
-                                            // Return the whole number without decimal point
-                                            return value;
-                                        } else {
-                                            // Return an empty string for non-whole numbers
-                                            return '';
-                                        }
-                                    },
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'pcs per hour',
-                                    font: {
-                                        size: 15,
-                                        family: 'Montserrat',
-                                        weight: 'normal'
-                                    },
-                                }
-                            },
-                            x: {
-                                stacked: true,
-                                ticks: {
-                                    autoSkip: false,
-                                    font: {
-                                        size: 17
-                                    },
-                                },
-                                grid: {
-                                    display: false,
-                                },
-                            },
+                let options = {
+                    series: [{
+                        name: 'Hourly Inspection Output',
+                        data: hourly_output_summary
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 350,
+                        stacked: true,
+                        toolbar: {
+                            show: true
                         },
-                        layout: {
-                            padding: 20
-                        },
-                        // Add annotation here
-                        plugins: {
-                            annotation: {
-                                annotations: {
-                                    line1: {
-                                        type: 'line',
-                                        yMin: target_output,
-                                        yMax: target_output,
-                                        borderColor: 'rgb(255, 99, 132)',
-                                        borderWidth: 2,
-                                    },
-                                    line2: {
-                                        type: 'line',
-                                        xMin: "|",
-                                        xMax: "|",
-                                        borderColor: 'rgb(255, 193, 7)',
-                                        borderWidth: 2,
-                                    }
-                                }
-                            },
-                            title: {
-                                display: true,
-                                text: 'Hourly Inspection Output',
-                                font: {
-                                    size: 30,
-                                    family: 'Montserrat',
-                                    weight: 'normal'
-                                },
-                                align: 'center',
-                            },
+                        zoom: {
+                            enabled: true
                         }
                     },
-                    data: {
-                        labels: hour_label, // Use machine names as the primary labels
-                        datasets: [{
-                            label: 'Hourly Inspection Output',
-                            backgroundColor: 'rgba(11, 143, 80, 1)',
-                            borderWidth: 1,
-                            data: hourly_output_summary,
-                            yAxisID: 'y',
-                        }],
+                    colors:['rgba(11, 143, 80, 1)'],
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            legend: {
+                                position: 'bottom',
+                                offsetX: -10,
+                                offsetY: 0
+                            }
+                        }
+                    }],
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            borderRadius: 10,
+                            borderRadiusApplication: 'end', // 'around', 'end'
+                            borderRadiusWhenStacked: 'last', // 'all', 'last'
+                            dataLabels: {
+                                total: {
+                                    enabled: true,
+                                    style: {
+                                        fontSize: '15px',
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: 400
+                                    }
+                                }
+                            }
+                        },
                     },
+                    xaxis: {
+                        categories: hour_label,
+                        title: {
+                            text: 'Hour',
+                            align: 'center',
+                            margin: 50,
+                            offsetX: 0,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize:  '15px',
+                                fontWeight:  'normal',
+                                fontFamily:  'Montserrat'
+                            }
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'pcs per hour',
+                            align: 'center',
+                            margin: 50,
+                            offsetX: 0,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize:  '15px',
+                                fontWeight:  'normal',
+                                fontFamily:  'Montserrat'
+                            }
+                        }
+                    },
+                    legend: {
+                        position: 'top'
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    title: {
+                        text: 'Hourly Inspection Output',
+                        align: 'center',
+                        margin: 30,
+                        offsetX: 0,
+                        offsetY: 0,
+                        floating: false,
+                        style: {
+                            fontSize:  '25px',
+                            fontWeight:  'bold',
+                            fontFamily:  'Montserrat'
+                        }
+                    },
+                    annotations: {
+                        xaxis: [
+                            {
+                                x: '|',
+                                borderColor: 'rgb(0, 0, 0)'
+                            }
+                        ],
+                        yaxis: [
+                            {
+                                y: target_output,
+                                borderColor: 'rgb(0, 0, 0)'
+                            }
+                        ]
+                    }
                 };
 
                 // Destroy previous chart instance before creating a new one
                 if (chartHourlyOutput) {
                     chartHourlyOutput.destroy();
                 }
-                chartHourlyOutput = new Chart(ctx, configuration);
+                chartHourlyOutput = new ApexCharts(ctx, options);
+                chartHourlyOutput.render();
             },
         });
     }
@@ -248,80 +291,110 @@
                 let hourly_ng_summary = data[0];
                 let hour_label = data[1];
 
-                let barChartData = {
-                    labels: hour_label,
-                    datasets: [{
-                        label: 'Defect Hourly',
-                        backgroundColor: 'rgba(202, 63, 63, 1)',
-                        borderWidth: 1,
+                let ctx = document.querySelector("#ng_summary_chart");
+
+                let options = {
+                    series: [{
+                        name: 'Defect Hourly',
                         data: hourly_ng_summary
-                    }]
-                };
-
-                // Get the canvas element
-                let ctx = document.getElementById('ng_summary_chart').getContext('2d');
-
-                // Create the bar chart
-                let configuration = {
-                    type: 'bar',
-                    data: barChartData,
-                    options: {
-                        scales: {
-                            y: {
-                                ticks: {
-                                    autoSkip: false,
-                                    font: {
-                                        size: 17
-                                    },
-                                },
-                                title: {
-                                    display: true,
-                                    text: 'pcs per hour',
-                                    font: {
-                                        size: 15,
-                                        family: 'Montserrat',
-                                        weight: 'normal'
-                                    },
-                                }
-                            },
-                            x: {
-                                ticks: {
-                                    autoSkip: false,
-                                    font: {
-                                        size: 17
-                                    },
-                                },
-                                grid: {
-                                    display: false,
-                                },
-                            },
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 350,
+                        stacked: true,
+                        toolbar: {
+                            show: true
                         },
-                        layout: {
-                            padding: 20
-                        },
-                        plugins: {
-                            annotation: {
-                                annotations: {
-                                    line1: {
-                                        type: 'line',
-                                        xMin: "|",
-                                        xMax: "|",
-                                        borderColor: 'rgb(255, 193, 7)',
-                                        borderWidth: 2,
+                        zoom: {
+                            enabled: true
+                        }
+                    },
+                    colors:['rgba(202, 63, 63, 1)'],
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            legend: {
+                                position: 'bottom',
+                                offsetX: -10,
+                                offsetY: 0
+                            }
+                        }
+                    }],
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            borderRadius: 10,
+                            borderRadiusApplication: 'end', // 'around', 'end'
+                            borderRadiusWhenStacked: 'last', // 'all', 'last'
+                            dataLabels: {
+                                total: {
+                                    enabled: true,
+                                    style: {
+                                        fontSize: '15px',
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: 400
                                     }
                                 }
-                            },
-                            title: {
-                                display: true,
-                                text: 'Defect Hourly',
-                                font: {
-                                    size: 30,
-                                    family: 'Montserrat',
-                                    weight: 'normal'
-                                },
-                                align: 'center',
-                            },
+                            }
+                        },
+                    },
+                    xaxis: {
+                        categories: hour_label,
+                        title: {
+                            text: 'Hour',
+                            align: 'center',
+                            margin: 50,
+                            offsetX: 0,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize:  '15px',
+                                fontWeight:  'normal',
+                                fontFamily:  'Montserrat'
+                            }
                         }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'pcs per hour',
+                            align: 'center',
+                            margin: 50,
+                            offsetX: 0,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize:  '15px',
+                                fontWeight:  'normal',
+                                fontFamily:  'Montserrat'
+                            }
+                        }
+                    },
+                    legend: {
+                        position: 'top'
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    title: {
+                        text: 'Defect Hourly',
+                        align: 'center',
+                        margin: 30,
+                        offsetX: 0,
+                        offsetY: 0,
+                        floating: false,
+                        style: {
+                            fontSize:  '25px',
+                            fontWeight:  'bold',
+                            fontFamily:  'Montserrat'
+                        }
+                    },
+                    annotations: {
+                        xaxis: [
+                            {
+                                x: '|',
+                                borderColor: 'rgb(0, 0, 0)'
+                            }
+                        ]
                     }
                 };
 
@@ -329,7 +402,8 @@
                 if (chartNGhourly) {
                     chartNGhourly.destroy();
                 }
-                chartNGhourly = new Chart(ctx, configuration);
+                chartNGhourly = new ApexCharts(ctx, options);
+                chartNGhourly.render();
             }
 
         });
