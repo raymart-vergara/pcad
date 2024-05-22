@@ -25,8 +25,6 @@ include 'process/pcs/index.php';
    <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
    <!-- Sweet Alert -->
    <link rel="stylesheet" href="plugins/sweetalert2/dist/sweetalert2.min.css">
-   <!-- ApexCharts -->
-   <link rel="stylesheet" href="plugins/apexcharts/3.22.2/css/apexcharts.min.css">
 
    <style>
       ::-webkit-scrollbar {
@@ -248,14 +246,6 @@ include 'process/pcs/index.php';
       .table-bg {
          background-color: rgba(0, 0, 0, 0.50);
          border-radius: 3px;
-      }
-
-      /* ApexChart Custom Color (Black) */
-      .apexcharts-tooltip {
-         color: rgba(0, 0, 0, 1);
-      }
-      .apexcharts-menu-item {
-         color: rgba(0, 0, 0, 1);
       }
    </style>
 </head>
@@ -552,8 +542,7 @@ include 'process/pcs/index.php';
                   <div class="col-sm-12 col-md-12 col-lg-12">
                      <div class="card">
                         <!-- <canvas id="hourly_chart" height="55"></canvas> -->
-                        <!-- <canvas id="hourly_chart" height="90"></canvas> -->
-                        <div id="hourly_chart"></div>
+                        <canvas id="hourly_chart" height="90"></canvas>
                      </div>
                   </div>
                </div>
@@ -593,8 +582,7 @@ include 'process/pcs/index.php';
                   <div class="col-sm-12 col-md-12 col-lg-12">
                      <div class="card">
                         <!-- <canvas id="andon_hourly_chart" height="55"></canvas> -->
-                        <!-- <canvas id="andon_hourly_chart" height="90"></canvas> -->
-                        <div id="andon_hourly_chart"></div>
+                        <canvas id="andon_hourly_chart" height="90"></canvas>
                      </div>
                   </div>
                </div>
@@ -634,8 +622,7 @@ include 'process/pcs/index.php';
                   <div class="col-sm-12 col-md-12 col-lg-12">
                      <div class="card">
                         <!-- <canvas id="hourly_output_summary_chart" height="55"></canvas> -->
-                        <!-- <canvas id="hourly_output_summary_chart" height="90"></canvas> -->
-                        <div id="hourly_output_summary_chart"></div>
+                        <canvas id="hourly_output_summary_chart" height="90"></canvas>
                      </div>
                   </div>
                </div>
@@ -675,8 +662,7 @@ include 'process/pcs/index.php';
                   <div class="col-sm-12 col-md-12 col-lg-12">
                      <div class="card">
                         <!-- <canvas id="ng_summary_chart" height="55""></canvas> -->
-                        <!-- <canvas id="ng_summary_chart" height="90""></canvas> -->
-                        <div id="ng_summary_chart"></div>
+                        <canvas id="ng_summary_chart" height="90""></canvas>
                             </div>
                         </div>
                     </div>
@@ -859,10 +845,8 @@ include 'process/pcs/index.php';
 <!-- <script src="plugins/mdb/js/mdb.js"></script> -->
 <!-- Chart JS -->
 <!-- <script src="node_modules/chart.js/dist/chart.umd.js"></script> -->
-<!-- <script src="plugins/chart.js/3.9.1/chart.umd.js"></script> -->
-<!-- <script src="plugins/chart.js/annotation/chartjs-plugin-annotation-1.0.2.js"></script> -->
-<!-- ApexCharts -->
-<script src="plugins/apexcharts/3.22.2/js/apexcharts.min.js"></script>
+<script src="plugins/chart.js/3.9.1/chart.umd.js"></script>
+<script src="plugins/chart.js/annotation/chartjs-plugin-annotation-1.0.2.js"></script>
 
 <!--Moment JS -->
 <script src="plugins/moment-js/moment.min.js"></script>
@@ -1035,23 +1019,6 @@ include 'process/pcs/index.php';
       chartNGhourly = new Chart(ctx, configuration);
    }
 
-   // Initialization for Charts (Included due to Recursive SetInterval Functions)
-   const init_charts2 = () => {
-      var options = {};
-      // Andon
-      var ctx = document.querySelector("#hourly_chart");
-      chart = new ApexCharts(ctx, options);
-      // Andon Hourly
-      var ctx = document.getElementById('andon_hourly_chart');
-      chartAndonHourly = new ApexCharts(ctx, options);
-      // Hourly Output
-      var ctx = document.getElementById('hourly_output_summary_chart');
-      chartHourlyOutput = new ApexCharts(ctx, options);
-      // NG Summary
-      var ctx = document.getElementById('ng_summary_chart');
-      chartNGhourly = new ApexCharts(ctx, options);
-   }
-
    $(document).ready(function () {
       // Load data for first slide
       recursive_realtime_get_yield();
@@ -1059,8 +1026,7 @@ include 'process/pcs/index.php';
       get_accounting_efficiency(); // added due to updateTakt functionality
       get_hourly_output(); // added to set target_hourly_output
 
-      // init_charts();
-      // init_charts2();
+      init_charts();
    });
 </script>
 
@@ -1068,8 +1034,8 @@ include 'process/pcs/index.php';
 include 'javascript/pcs.php';
 include 'javascript/pcad.php';
 include 'javascript/emp_mgt.php';
-include 'javascript/andon.php';
-include 'javascript/hourly_graph_tv.php';
+include 'javascript/andon2.php';
+include 'javascript/hourly_graph_tv2.php';
 include 'javascript/inspection_output.php';
 ?>
 
