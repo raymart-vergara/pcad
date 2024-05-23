@@ -45,10 +45,10 @@
                     plan_gap_value.css('background-color', '#FD5A46'); //red if negative
                     plan_gap_value.css('color', '#000');
                 } else if (parseInt(plan_gap_value.text()) > 0) {
-                    plan_gap_value.css('background-color', '#ABD2FA');
+                    plan_gap_value.css('background-color', '#569BE2');
                     plan_gap_value.css('color', '#000');
                 } else {
-                    plan_gap_value.css('background-color', '#ABD2FA');
+                    plan_gap_value.css('background-color', '#569BE2');
                     plan_gap_value.css('color', '#000');
                 }
                 if (parseInt(plan_gap_value.text()) != response.remaining) {

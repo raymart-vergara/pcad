@@ -845,6 +845,7 @@ include 'process/pcs/index.php';
 <!-- <script src="plugins/mdb/js/mdb.js"></script> -->
 <!-- Chart JS -->
 <!-- <script src="node_modules/chart.js/dist/chart.umd.js"></script> -->
+
 <script src="plugins/chart.js/3.9.1/chart.umd.js"></script>
 <script src="plugins/chart.js/annotation/chartjs-plugin-annotation-1.0.2.js"></script>
 
@@ -933,6 +934,7 @@ include 'process/pcs/index.php';
    $('.carousel').bind('slide.bs.carousel', e => {
       console.log(`slide number:${slide_number}`);
 
+
       if (e.direction == 'left') {
          if (slide_number == 8) {
             slide_number = 0;
@@ -947,6 +949,7 @@ include 'process/pcs/index.php';
 
       console.log(`slide number:${slide_number}`);
       console.log(e.direction);
+
 
       switch (slide_number) {
          case 1:
@@ -1036,6 +1039,7 @@ include 'javascript/pcad.php';
 include 'javascript/emp_mgt.php';
 include 'javascript/andon2.php';
 include 'javascript/hourly_graph_tv2.php';
+
 include 'javascript/inspection_output.php';
 ?>
 
