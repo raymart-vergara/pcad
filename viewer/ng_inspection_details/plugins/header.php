@@ -20,6 +20,9 @@
     <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
+    <!-- ApexCharts -->
+   <link rel="stylesheet" href="../../plugins/apexcharts/3.22.2/css/apexcharts.min.css">
+
     <style>
         .loader {
             border: 16px solid #f3f3f3;

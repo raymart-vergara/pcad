@@ -115,7 +115,8 @@ include 'plugins/navbar/andon_details_navbar.php';
                             <div class="row">
                                 <div class="col-12">
                                     <div id="chart-container">
-                                        <canvas id="andon_hourly_chart" height="70"></canvas>
+                                        <!-- <canvas id="andon_hourly_chart" height="70"></canvas> -->
+                                        <div id="andon_hourly_chart" height="70"></div>
                                     </div>
                                 </div>
                             </div>

@@ -23,6 +23,8 @@ include 'dist/js/adminlte.miin.php';
    <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
    <!-- Sweet Alert -->
    <link rel="stylesheet" href="plugins/sweetalert2/dist/sweetalert2.min.css">
+   <!-- ApexCharts -->
+   <link rel="stylesheet" href="plugins/apexcharts/3.22.2/css/apexcharts.min.css">
 
    <style>
       ::-webkit-scrollbar {
@@ -1033,21 +1035,24 @@ include 'dist/js/adminlte.miin.php';
             <!-- andon count graph -->
             <div id="chart-container1">
                <a target="_blank" href="../pcad/viewer/andon_details/andon_details.php">
-                  <canvas id="andon_hourly_chart" height="70"></canvas>
+                  <!-- <canvas id="andon_hourly_chart" height="70"></canvas> -->
+                  <div id="andon_hourly_chart" height="70"></div>
                </a>
             </div>
 
             <!-- good hourly count graph -->
             <div id="chart-container2">
                <a target="_blank" href="../pcad/viewer/hourly_output/hourly_output.php">
-                  <canvas id="hourly_output_summary_chart" height="70"></canvas>
+                  <!-- <canvas id="hourly_output_summary_chart" height="70"></canvas> -->
+                  <div id="hourly_output_summary_chart" height="70"></div>
                </a>
             </div>
 
             <!-- ng hourly count graph -->
             <div id="chart-container3">
                <a target="_blank" href="../pcad/viewer/ng_inspection_details/inspection_details_ng.php">
-                  <canvas id="ng_summary_chart" height="70"></canvas>
+                  <!-- <canvas id="ng_summary_chart" height="70"></canvas> -->
+                  <div id="ng_summary_chart" height="70"></div>
                </a>
             </div>
 
@@ -1092,8 +1097,12 @@ include 'dist/js/adminlte.miin.php';
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Chart JS -->
-<script src="node_modules/chart.js/dist/chart.umd.js"></script>
-<script src="plugins/chart.js/annotation/chartjs-plugin-annotation-1.0.2.js"></script>
+<!-- <script src="node_modules/chart.js/dist/chart.umd.js"></script>
+<script src="plugins/chart.js/annotation/chartjs-plugin-annotation-1.0.2.js"></script> -->
+
+<!-- ApexCharts -->
+<script src="plugins/apexcharts/3.22.2/js/apexcharts.min.js"></script>
+
 <!--Moment JS -->
 <script src="plugins/moment-js/moment.min.js"></script>
 <script src="plugins/moment-js/moment-duration-format.min.js"></script>
