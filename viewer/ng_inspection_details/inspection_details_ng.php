@@ -175,7 +175,8 @@ if ($result) {
                             <div class="row">
                                 <div class="col-12">
                                     <div id="chart-container">
-                                        <canvas id="ng_summary_chart" height="70"></canvas>
+                                        <!-- <canvas id="ng_summary_chart" height="70"></canvas> -->
+                                        <div id="ng_summary_chart" height="70"></div>
                                     </div>
                                 </div>
                             </div>

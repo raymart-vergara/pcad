@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    let chart; // Declare chart variable globally
+    let chartAndonHourly; // Declare chart variable globally
 
     $(document).ready(function () {
         andon_detail();
@@ -26,7 +26,6 @@
     }
 
     const andon_hourly = () => {
-        // let andon_line = document.getElementById('andon_line').value;
         let andon_line = localStorage.getItem("andon_line");
 
         $.ajax({
@@ -42,74 +41,132 @@
                 let total_counts = data[0];
                 let hour_starts = data[1];
 
-                let ctx = document.getElementById('andon_hourly_chart').getContext('2d');
+                let ctx = document.querySelector("#andon_hourly_chart");
 
-                let configuration = {
-                    type: 'bar',
-                    options: {
-                        plugins: {
-                            annotation: {
-                                annotations: {
-                                    line1: {
-                                        type: 'line',
-                                        xMin: "|",
-                                        xMax: "|",
-                                        borderColor: 'rgb(255, 193, 7)',
-                                        borderWidth: 2,
-                                    }
-                                }
-                            },
-                            title: {
-                                display: true,
-                                text: 'Hourly Andon Count',
-                                font: {
-                                    size: 30,
-                                    family: 'Montserrat',
-                                },
-                            }
+                let options = {
+                    series: [{
+                        name: 'Andon Hourly Count',
+                        data: total_counts
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 400,
+                        stacked: true,
+                        toolbar: {
+                            show: true
                         },
-                        scales: {
-                            y: {
-                                stacked: true,
-                                ticks: {
-                                    autoSkip: false,
-                                    font: {
-                                        size: 17
-                                    },
-                                }
-                            },
-                            x: {
-                                stacked: true,
-                                ticks: {
-                                    autoSkip: false,
-                                    font: {
-                                        size: 17
-                                    },
-                                }
-                            },
-                        },
-                        layout: {
-                            padding: 15
+                        zoom: {
+                            enabled: true
                         }
                     },
-                    data: {
-                        labels: hour_starts, // Use hour starts as labels
-                        datasets: [{
-                            label: 'Total Andon Count',
-                            backgroundColor: 'rgba(1, 56, 99, 1)',
-                            borderColor: 'rgba(1, 56, 99, 1)',
-                            borderWidth: 2,
-                            data: total_counts, // Use total counts as data
-                            yAxisID: 'y',
-                        }],
+                    colors: ['rgba(1, 56, 99, 1)'],
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            legend: {
+                                position: 'bottom',
+                                offsetX: -10,
+                                offsetY: 0
+                            }
+                        }
+                    }],
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            borderRadius: 10,
+                            borderRadiusApplication: 'end', // 'around', 'end'
+                            borderRadiusWhenStacked: 'last', // 'all', 'last'
+                            dataLabels: {
+                                total: {
+                                    enabled: true,
+                                    style: {
+                                        fontSize: '15px',
+                                        fontFamily: 'Poppins',
+                                        fontWeight: 400
+                                    }
+                                }
+                            }
+                        },
                     },
+                    xaxis: {
+                        categories: hour_starts,
+                        title: {
+                            text: 'Hour',
+                            align: 'center',
+                            margin: 15,
+                            offsetX: 0,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize: '15px',
+                                fontWeight: 'normal',
+                                fontFamily: 'Poppins'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '15px',
+                                fontFamily: 'Poppins',
+                                fontWeight: 'normal'
+                            }
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'pcs per hour',
+                            align: 'center',
+                            margin: 15,
+                            offsetX: 0,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize: '15px',
+                                fontWeight: 'normal',
+                                fontFamily: 'Poppins'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '15px',
+                                fontFamily: 'Poppins',
+                                fontWeight: 'normal'
+                            }
+                        }
+                    },
+                    legend: {
+                        position: 'top'
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    title: {
+                        text: 'Hourly Andon Count',
+                        align: 'center',
+                        margin: 20,
+                        offsetX: 0,
+                        offsetY: 0,
+                        floating: false,
+                        style: {
+                            fontSize: '25px',
+                            fontFamily: 'Poppins'
+                        }
+                    },
+                    annotations: {
+                        xaxis: [
+                            {
+                                x: '|',
+                                borderColor: 'rgb(0, 0, 0)'
+                            }
+                        ]
+                    }
                 };
 
                 // Destroy previous chart instance before creating a new one
-                if (chart) {
-                    chart.destroy();
+                if (chartAndonHourly) {
+                    chartAndonHourly.destroy();
                 }
-                chart = new Chart(ctx, configuration);
+                chartAndonHourly = new ApexCharts(ctx, options);
+                chartAndonHourly.render();
             }
         });
     }
