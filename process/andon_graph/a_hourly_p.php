@@ -36,7 +36,13 @@ if ($method == 'andon_hourly') {
         $andon_summary_array[$row['hour_start']] = intval($row['total_count']);
     }
 
-    $data[] = $andon_summary_array;
+    $andon_summary_array2 = array();
+
+    foreach ($andon_summary_array as $row) {
+        $andon_summary_array2[] = $row;
+    }
+
+    $data[] = $andon_summary_array2;
     $data[] = $andon_hour_array;
 
     echo json_encode($data);
