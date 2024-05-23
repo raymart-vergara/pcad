@@ -203,7 +203,8 @@ if ($result) {
                             <div class="row">
                                 <div class="col-12">
                                     <div id="chart-container">
-                                        <canvas id="hourly_output_summary_chart" height="100"></canvas>
+                                        <!-- <canvas id="hourly_output_summary_chart" height="100"></canvas> -->
+                                        <div id="hourly_output_summary_chart" height="100"></div>
                                     </div>
                                 </div>
                             </div>

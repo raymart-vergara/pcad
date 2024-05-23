@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    let chart; //declare chart variable globally
+    let chartNGhourly; //declare chart variable globally
 
     document.addEventListener("DOMContentLoaded", () => {
         get_inspection_details_no_good();
@@ -75,57 +75,132 @@
                 let hourly_ng_summary = data[0];
                 let hour_label = data[1];
 
-                let barChartData = {
-                    labels: hour_label,
-                    datasets: [{
-                        label: 'NG Output per Hour',
-                        backgroundColor: 'rgba(202, 63, 63, 1)',
-                        borderWidth: 1,
+                let ctx = document.querySelector("#ng_summary_chart");
+
+                let options = {
+                    series: [{
+                        name: 'Defect Hourly',
                         data: hourly_ng_summary
-                    }]
-                };
-
-                // Get the canvas element
-                let ctx = document.getElementById('ng_summary_chart').getContext('2d');
-
-                // Create the bar chart
-                let configuration = {
-                    type: 'bar',
-                    data: barChartData,
-                    options: {
-                        scales: {
-                            y: {
-                                ticks: {
-                                    autoSkip: false,
-                                }
-                            },
-                            x: {
-                                ticks: {
-                                    autoSkip: false,
-                                }
-                            },
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 400,
+                        stacked: true,
+                        toolbar: {
+                            show: true
                         },
-                        plugins: {
-                            annotation: {
-                                annotations: {
-                                    line1: {
-                                        type: 'line',
-                                        xMin: "|",
-                                        xMax: "|",
-                                        borderColor: 'rgb(255, 193, 7)',
-                                        borderWidth: 2,
+                        zoom: {
+                            enabled: true
+                        }
+                    },
+                    colors: ['rgba(202, 63, 63, 1)'],
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            legend: {
+                                position: 'bottom',
+                                offsetX: -10,
+                                offsetY: 0
+                            }
+                        }
+                    }],
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            borderRadius: 10,
+                            borderRadiusApplication: 'end', // 'around', 'end'
+                            borderRadiusWhenStacked: 'last', // 'all', 'last'
+                            dataLabels: {
+                                total: {
+                                    enabled: true,
+                                    style: {
+                                        fontSize: '15px',
+                                        fontFamily: 'Poppins',
+                                        fontWeight: 400
                                     }
                                 }
                             }
+                        },
+                    },
+                    xaxis: {
+                        categories: hour_label,
+                        title: {
+                            text: 'Hour',
+                            align: 'center',
+                            margin: 15,
+                            offsetX: 0,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize: '15px',
+                                fontWeight: 'normal',
+                                fontFamily: 'Poppins'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '15px',
+                                fontFamily: 'Poppins',
+                                fontWeight: 'normal'
+                            }
                         }
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'pcs per hour',
+                            align: 'center',
+                            margin: 15,
+                            offsetX: 0,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize: '15px',
+                                fontWeight: 'normal',
+                                fontFamily: 'Poppins'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '15px',
+                                fontFamily: 'Poppins',
+                                fontWeight: 'normal'
+                            }
+                        }
+                    },
+                    legend: {
+                        position: 'top'
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    title: {
+                        text: 'Defect Hourly',
+                        align: 'center',
+                        margin: 15,
+                        offsetX: 0,
+                        offsetY: 0,
+                        floating: false,
+                        style: {
+                            fontSize: '25px',
+                            fontFamily: 'Poppins'
+                        }
+                    },
+                    annotations: {
+                        xaxis: [
+                            {
+                                x: '|',
+                                borderColor: 'rgb(0, 0, 0)'
+                            }
+                        ]
                     }
                 };
 
                 // Destroy previous chart instance before creating a new one
-                if (chart) {
-                    chart.destroy();
+                if (chartNGhourly) {
+                    chartNGhourly.destroy();
                 }
-                chart = new Chart(ctx, configuration);
+                chartNGhourly = new ApexCharts(ctx, options);
+                chartNGhourly.render();
             }
 
         });

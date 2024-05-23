@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    let chart; // Declare chart variable globally
+    let chartHourlyOutput; // Declare chart variable globally
 
     // DOMContentLoaded function
     document.addEventListener("DOMContentLoaded", () => {
@@ -12,9 +12,9 @@
     });
 
     const get_hourly_output_chart = () => {
-        let registlinename = sessionStorage.getItem('line_no_search');
-        let hourly_output_date = sessionStorage.getItem('hourly_output_date_search');
-        let target_output = parseInt(sessionStorage.getItem('target_output_search'));
+        let registlinename = localStorage.getItem("registlinename");
+        let hourly_output_date = '<?= $server_date_only ?>';
+        let target_output = parseInt(localStorage.getItem('target_hourly_output'));
 
         $.ajax({
             url: '../../process/hourly_output/hourly_output_p.php',
@@ -30,64 +30,138 @@
                 let hourly_output_summary = data[0];
                 let hour_label = data[1];
 
-                let ctx = document.getElementById('hourly_output_summary_chart').getContext('2d');
+                let ctx = document.querySelector("#hourly_output_summary_chart");
 
-                let configuration = {
-                    type: 'bar',
-                    options: {
-                        scales: {
-                            y: {
-                                stacked: true,
-                                ticks: {
-                                    autoSkip: false,
-                                }
-                            },
-                            x: {
-                                stacked: true,
-                                ticks: {
-                                    autoSkip: false,
-                                }
-                            },
+                let options = {
+                    series: [{
+                        name: 'Hourly Inspection Output',
+                        data: hourly_output_summary
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 400,
+                        stacked: true,
+                        toolbar: {
+                            show: true
                         },
-                        // Add annotation here
-                        plugins: {
-                            annotation: {
-                                annotations: {
-                                    line1: {
-                                        type: 'line',
-                                        yMin: target_output,
-                                        yMax: target_output,
-                                        borderColor: 'rgb(255, 99, 132)',
-                                        borderWidth: 2,
-                                    },
-                                    line2: {
-                                        type: 'line',
-                                        xMin: "|",
-                                        xMax: "|",
-                                        borderColor: 'rgb(255, 193, 7)',
-                                        borderWidth: 2,
+                        zoom: {
+                            enabled: true
+                        }
+                    },
+                    colors: ['rgba(11, 143, 80, 1)'],
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            legend: {
+                                position: 'bottom',
+                                offsetX: -10,
+                                offsetY: 0
+                            }
+                        }
+                    }],
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            borderRadius: 10,
+                            borderRadiusApplication: 'end', // 'around', 'end'
+                            borderRadiusWhenStacked: 'last', // 'all', 'last'
+                            dataLabels: {
+                                total: {
+                                    enabled: true,
+                                    style: {
+                                        fontSize: '15px',
+                                        fontFamily: 'Poppins',
+                                        fontWeight: 400
                                     }
                                 }
                             }
+                        },
+                    },
+                    xaxis: {
+                        categories: hour_label,
+                        title: {
+                            text: 'Hour',
+                            align: 'center',
+                            margin: 15,
+                            offsetX: 0,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize: '15px',
+                                fontWeight: 'normal',
+                                fontFamily: 'Poppins'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '15px',
+                                fontFamily: 'Poppins',
+                                fontWeight: 'normal'
+                            }
                         }
                     },
-                    data: {
-                        labels: hour_label, // Use machine names as the primary labels
-                        datasets: [{
-                            label: 'Hourly Output',
-                            backgroundColor: 'rgba(11, 143, 80, 1)',
-                            borderWidth: 1,
-                            data: hourly_output_summary,
-                            yAxisID: 'y',
-                        }],
+                    yaxis: {
+                        title: {
+                            text: 'pcs per hour',
+                            align: 'center',
+                            margin: 15,
+                            offsetX: 0,
+                            offsetY: 0,
+                            floating: false,
+                            style: {
+                                fontSize: '15px',
+                                fontWeight: 'normal',
+                                fontFamily: 'Poppins'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                fontSize: '15px',
+                                fontFamily: 'Poppins',
+                                fontWeight: 'normal'
+                            }
+                        }
                     },
+                    legend: {
+                        position: 'top'
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    title: {
+                        text: 'Hourly Inspection Output',
+                        align: 'center',
+                        margin: 20,
+                        offsetX: 0,
+                        offsetY: 0,
+                        floating: false,
+                        style: {
+                            fontSize: '25px',
+                            fontFamily: 'Poppins'
+                        }
+                    },
+                    annotations: {
+                        xaxis: [
+                            {
+                                x: '|',
+                                borderColor: 'rgb(0, 0, 0)'
+                            }
+                        ],
+                        yaxis: [
+                            {
+                                y: target_output,
+                                borderColor: 'rgb(0, 0, 0)'
+                            }
+                        ]
+                    }
                 };
-                
+
                 // Destroy previous chart instance before creating a new one
-                if (chart) {
-                    chart.destroy();
+                if (chartHourlyOutput) {
+                    chartHourlyOutput.destroy();
                 }
-                chart = new Chart(ctx, configuration);
+                chartHourlyOutput = new ApexCharts(ctx, options);
+                chartHourlyOutput.render();
             },
         });
     }
