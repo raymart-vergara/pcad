@@ -249,7 +249,14 @@
                             fontFamily:  'Montserrat'
                         }
                     },
-                    annotations: {
+                    annotations: {}
+                };
+
+                // Get Max Value from an array
+                let max = hourly_output_summary.reduce((a, b) => Math.max(a, b), -Infinity);
+
+                if (max >= target_output) {
+                    options.annotations = {
                         xaxis: [
                             {
                                 x: '|',
@@ -262,8 +269,17 @@
                                 borderColor: 'rgb(0, 0, 0)'
                             }
                         ]
-                    }
-                };
+                    };
+                } else {
+                    options.annotations = {
+                        xaxis: [
+                            {
+                                x: '|',
+                                borderColor: 'rgb(0, 0, 0)'
+                            }
+                        ]
+                    };
+                }
 
                 // Destroy previous chart instance before creating a new one
                 if (chartHourlyOutput) {
