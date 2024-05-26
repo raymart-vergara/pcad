@@ -111,59 +111,83 @@ if (isset($_POST['request'])) {
         $takt = $line['takt_secs_DB'];
         $started = $line['actual_start_DB'];
 
-        $ircs_line_data_arr = get_ircs_line_data($IRCS_Line, $conn_pcad);
+        $Actual_Target2 = $line['Actual_Target'];
 
-        $search_arr = array(
-            'shift' => $shift,
-            'registlinename' => $IRCS_Line,
-            'ircs_line_data_arr' => $ircs_line_data_arr,
-            'server_date_only' => $server_date_only,
-            'server_date_only_yesterday' => $server_date_only_yesterday,
-            'server_date_only_tomorrow' => $server_date_only_tomorrow,
-            'server_time' => $server_time
-        );
+        $start_plan_time = date('H:i:s', strtotime($line['datetime_DB']));
+        $shift_pending = get_shift_end_plan($start_plan_time);
 
-        $Actual_Target = count_overall_g($search_arr, $conn_ircs);
+        if ($shift == $shift_pending) {
+            $ircs_line_data_arr = get_ircs_line_data($IRCS_Line, $conn_pcad);
 
-        // $q = "SELECT COUNT(*) AS c
-        // FROM IRCS.T_PACKINGWK 
-        // WHERE (REGISTLINENAME LIKE '" . $IRCS_Line . "' OR IPADDRESS = '" . $IRCS_IP . "') AND REGISTDATETIME >= TO_DATE('" . $started . "', 'yyyy-MM-dd HH24:MI:SS') AND PACKINGBOXCARDJUDGMENT = '1'";
+            $search_arr = array(
+                'shift' => $shift,
+                'registlinename' => $IRCS_Line,
+                'ircs_line_data_arr' => $ircs_line_data_arr,
+                'server_date_only' => $server_date_only,
+                'server_date_only_yesterday' => $server_date_only_yesterday,
+                'server_date_only_tomorrow' => $server_date_only_tomorrow,
+                'server_time' => $server_time
+            );
 
-        // $stid = oci_parse($conn_ircs, $q);
-        // oci_execute($stid);
-        // while ($row = oci_fetch_object($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
-        //     $Actual_Target = $row->C;
-        // }
+            $Actual_Target = count_overall_g($search_arr, $conn_ircs);
 
-        $Remaining_Target = $Actual_Target - $Target;
+            // $q = "SELECT COUNT(*) AS c
+            // FROM IRCS.T_PACKINGWK 
+            // WHERE (REGISTLINENAME LIKE '" . $IRCS_Line . "' OR IPADDRESS = '" . $IRCS_IP . "') AND REGISTDATETIME >= TO_DATE('" . $started . "', 'yyyy-MM-dd HH24:MI:SS') AND PACKINGBOXCARDJUDGMENT = '1'";
 
-        if (!$Target) {
-            $Target = 0;
-        }
+            // $stid = oci_parse($conn_ircs, $q);
+            // oci_execute($stid);
+            // while ($row = oci_fetch_object($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
+            //     $Actual_Target = $row->C;
+            // }
 
-        $p = array(
-            "plan" => $Target,
-            "actual" => $Actual_Target,
-            "remaining" => $Remaining_Target,
-            "takt" => $takt,
-            "started" => $started
-        );
-        //UPDATE PLAN
-        $added_target_formula = "FLOOR(TIME_TO_SEC(TIMEDIFF(NOW(), last_update_DB)) / takt_secs_DB)";
-        $sql = "UPDATE t_plan SET Target = Target + $added_target_formula, Actual_Target = :Actual_Target, Remaining_Target = :Remaining_Target, last_takt_DB = :last_takt, last_update_DB = NOW() WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending' AND is_paused = 'NO'";
+            $Remaining_Target = $Actual_Target - $Target;
 
-        $stmt = $conn_pcad->prepare($sql);
-        $stmt->bindParam(':Actual_Target', $Actual_Target);
-        $stmt->bindParam(':Remaining_Target', $Remaining_Target);
-        $stmt->bindParam(':last_takt', $last_takt);
-        $stmt->bindParam(':IRCS_Line', $IRCS_Line);
+            if (!$Target) {
+                $Target = 0;
+            }
 
-        if ($stmt->execute()) {
+            $p = array(
+                "plan" => $Target,
+                "actual" => $Actual_Target,
+                "remaining" => $Remaining_Target,
+                "takt" => $takt,
+                "started" => $started
+            );
+            //UPDATE PLAN
+            $added_target_formula = "FLOOR(TIME_TO_SEC(TIMEDIFF(NOW(), last_update_DB)) / takt_secs_DB)";
+            $sql = "UPDATE t_plan SET Target = Target + $added_target_formula, Actual_Target = :Actual_Target, Remaining_Target = :Remaining_Target, last_takt_DB = :last_takt, last_update_DB = NOW() WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending' AND is_paused = 'NO'";
+
+            $stmt = $conn_pcad->prepare($sql);
+            $stmt->bindParam(':Actual_Target', $Actual_Target);
+            $stmt->bindParam(':Remaining_Target', $Remaining_Target);
+            $stmt->bindParam(':last_takt', $last_takt);
+            $stmt->bindParam(':IRCS_Line', $IRCS_Line);
+
+            if ($stmt->execute()) {
+                header("content-type: application/json");
+                echo json_encode($p);
+            } else {
+                // Handle the case when the query fails
+                echo "Failed to update plan.";
+            }
+        } else {
+            $Remaining_Target = $Actual_Target2 - $Target;
+
+            if (!$Target) {
+                $Target = 0;
+            }
+
+            $p = array(
+                "plan" => $Target,
+                "actual" => $Actual_Target2,
+                "remaining" => $Remaining_Target,
+                "takt" => $takt,
+                "started" => $started
+            );
+
             header("content-type: application/json");
             echo json_encode($p);
-        } else {
-            // Handle the case when the query fails
-            echo "Failed to update plan.";
         }
     } else if ($request == "updateTakt") {
         $IRCS_Line = $_POST['registlinename'];
