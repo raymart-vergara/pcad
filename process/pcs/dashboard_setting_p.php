@@ -64,7 +64,7 @@ if (isset($_POST['request'])) {
             "takt" => $takt,
             "started" => $started
         );
-        
+
         if ($stmt->execute()) {
             header("content-type: application/json");
             echo json_encode($p);
@@ -83,10 +83,19 @@ if (isset($_POST['request'])) {
         $stmt_get_line->bindParam(':group', $group);
 
         if ($stmt_get_line->execute()) {
-            header("location: ../../index_exec.php?registlinename=" . $registlinename);
+            if ($stmt_get_line->rowCount() > 0) {
+                header("location: ../../index_exec.php?registlinename=" . $registlinename);
+            } else {
+                echo "<script>
+                        alert('There is no plan set for the selected line.');
+                        window.location.href = '../../dashboard/setting.php';
+                      </script>";
+            }
         } else {
-            // echo "Failed to execute the query.";
-            echo "<script>alert('There is no plan set for the selected line.');</script>";
+            echo "<script>
+                    alert('Failed to execute the query.');
+                    window.location.href = '../../dashboard/setting.php';
+                  </script>";
         }
     } else if ($request == "getLineNo") {
         $registlinename = $_POST['registlinename'];
