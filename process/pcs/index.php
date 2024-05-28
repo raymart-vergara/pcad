@@ -55,6 +55,25 @@ if (isset($_GET['registlinename'])) {
         } else {
             $added_takt_plan = 0;
         }
+    } else {
+        $started = '';
+        $takt = 270;
+        $last_takt = '';
+        $last_update_DB = '';
+        $is_paused = 'YES';
+        $line_no = '';
+        $shift_group = '';
+        $Carmodel = '';
+        $yield_target = 90;
+        $ppm_target = 9000;
+        $acc_eff = 70;
+        $start_bal_delay = 0;
+        $work_time_plan = 450;
+        $daily_plan = 100;
+
+        $added_takt_plan = 0;
+        $andon_line = '';
+        $final_process = '';
     }
 }
 
