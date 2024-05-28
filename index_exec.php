@@ -564,49 +564,11 @@ include 'dist/js/adminlte.miin.php';
    <input type="hidden" id="daily_plan" name="daily_plan" value="<?= $daily_plan; ?>">
 
    <div class="container-fluid mt-3">
-      <?php
-      if ($processing) {
-         ?>
-         <?php
-      } else {
-         ?>
-         <input type="hidden" id="processing" value="0">
-         <div class="modal fade darkest-modal" id="plannotset" tabindex="-1" aria-labelledby="plannotsetLabel"
-            aria-hidden="true" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static"
-            data-keyboard="false">
-            <div class="modal-dialog modal-xl"
-               style="border-radius: 7px; border: 2px solid #CA3F3F; box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.25)">
-               <div class="modal-content" style="background-color: white;">
-                  <div class="modal-body">
-                     <h2 class="modal-title display-4 text-center pb-3" id="plannotsetLabel" style="color: #000;">
-                        <b>Plan not set</b>
-                     </h2>
-                     <div class="row justify-content-center text-center mb-3">
-                        <div class="col-3">
-                           <a href="pcs_page/setting.php" class="btn btn-lg btn-success text-white btn-close"
-                              id="setplanBtn">SET
-                              PLAN<b>[ 4 ]</b></a>
-                        </div>
-                        <div class="col-3">
-                           <a href="pcs_page/index.php" class="btn btn-lg btn-secondary text-white btn-close">MAIN
-                              MENU
-                              <b>[ 0 ]</b></a>
-                        </div>
-                     </div>
-                  </div>
-
-               </div>
-            </div>
-         </div>
-         <?php
-      }
-      ?>
-
       <!-- ===================== LIGHT/DARK MODE TOGGLE AND RETURN TO SETTING-->
       <div class="row">
          <div class="col-6">
             <div class="float-left mb-3 ml-2">
-               <a href="../pcad/dashboard/setting.php">
+               <a href="dashboard/setting.php">
                   <button class="btn btn-secondary return-btn" style="background: #f4f4f4; border: none; color: #000;"
                      onmouseover="this.style.backgroundColor='#383B46'; this.style.color='#FFF';"
                      onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';"><i
@@ -1207,83 +1169,87 @@ include 'dist/js/adminlte.miin.php';
       });
    }
 
-   // for chart dark mode
-   function updateChartColors(mode) {
-      var chart1 = document.getElementById('andon_hourly_chart');
-      if (chart1) {
-         var chartInstance1 = Chart.getChart(chart1);
-         if (chartInstance1) {
-            if (mode === 'dark') {
-               // Set dark mode colors for chart elements
-               chartInstance1.options.scales.y.ticks.color = '#DDD';
-               chartInstance1.options.scales.y.grid.color = '#555';
-               chartInstance1.options.scales.x.ticks.color = '#DDD';
-               chartInstance1.options.scales.x.grid.color = '#555';
-               chartInstance1.options.plugins.title.color = '#FFF';
-               chartInstance1.options.scales.y.title.color = '#FFF';
-            } else {
-               // Set light mode colors for chart elements
-               chartInstance1.options.scales.y.ticks.color = '#000';
-               chartInstance1.options.scales.y.grid.color = '#ddd';
-               chartInstance1.options.scales.x.ticks.color = '#000';
-               chartInstance1.options.scales.x.grid.color = '#ddd';
-               chartInstance1.options.plugins.title.color = '#000';
-               chartInstance1.options.scales.y.title.color = '#000';
-            }
-            chartInstance1.update();
-         }
-      }
+   // for chart dark mode (apexchart)
 
-      var chart2 = document.getElementById('hourly_output_summary_chart');
-      if (chart2) {
-         var chartInstance2 = Chart.getChart(chart2);
-         if (chartInstance2) {
-            if (mode === 'dark') {
-               // Set dark mode colors for chart elements
-               chartInstance2.options.scales.y.ticks.color = '#DDD';
-               chartInstance2.options.scales.y.grid.color = '#555';
-               chartInstance2.options.scales.x.ticks.color = '#DDD';
-               chartInstance2.options.scales.x.grid.color = '#555';
-               chartInstance2.options.plugins.title.color = '#FFF';
-               chartInstance2.options.scales.y.title.color = '#FFF';
-            } else {
-               // Set light mode colors for chart elements
-               chartInstance2.options.scales.y.ticks.color = '#000';
-               chartInstance2.options.scales.y.grid.color = '#ddd';
-               chartInstance2.options.scales.x.ticks.color = '#000';
-               chartInstance2.options.scales.x.grid.color = '#ddd';
-               chartInstance2.options.plugins.title.color = '#000';
-               chartInstance2.options.scales.y.title.color = '#000';
-            }
-            chartInstance2.update();
-         }
-      }
 
-      var chart3 = document.getElementById('ng_summary_chart');
-      if (chart3) {
-         var chartInstance3 = Chart.getChart(chart3);
-         if (chartInstance3) {
-            if (mode === 'dark') {
-               // Set dark mode colors for chart elements
-               chartInstance3.options.scales.y.ticks.color = '#DDD';
-               chartInstance3.options.scales.y.grid.color = '#555';
-               chartInstance3.options.scales.x.ticks.color = '#DDD';
-               chartInstance3.options.scales.x.grid.color = '#555';
-               chartInstance3.options.plugins.title.color = '#FFF';
-               chartInstance3.options.scales.y.title.color = '#FFF';
-            } else {
-               // Set light mode colors for chart elements
-               chartInstance3.options.scales.y.ticks.color = '#000';
-               chartInstance3.options.scales.y.grid.color = '#ddd';
-               chartInstance3.options.scales.x.ticks.color = '#000';
-               chartInstance3.options.scales.x.grid.color = '#ddd';
-               chartInstance3.options.plugins.title.color = '#000';
-               chartInstance3.options.scales.y.title.color = '#000';
-            }
-            chartInstance3.update();
-         }
-      }
-   }
+
+   // for chart dark mode (chartjs)
+   // function updateChartColors(mode) {
+   //    var chart1 = document.getElementById('andon_hourly_chart');
+   //    if (chart1) {
+   //       var chartInstance1 = Chart.getChart(chart1);
+   //       if (chartInstance1) {
+   //          if (mode === 'dark') {
+   //             // Set dark mode colors for chart elements
+   //             chartInstance1.options.scales.y.ticks.color = '#DDD';
+   //             chartInstance1.options.scales.y.grid.color = '#555';
+   //             chartInstance1.options.scales.x.ticks.color = '#DDD';
+   //             chartInstance1.options.scales.x.grid.color = '#555';
+   //             chartInstance1.options.plugins.title.color = '#FFF';
+   //             chartInstance1.options.scales.y.title.color = '#FFF';
+   //          } else {
+   //             // Set light mode colors for chart elements
+   //             chartInstance1.options.scales.y.ticks.color = '#000';
+   //             chartInstance1.options.scales.y.grid.color = '#ddd';
+   //             chartInstance1.options.scales.x.ticks.color = '#000';
+   //             chartInstance1.options.scales.x.grid.color = '#ddd';
+   //             chartInstance1.options.plugins.title.color = '#000';
+   //             chartInstance1.options.scales.y.title.color = '#000';
+   //          }
+   //          chartInstance1.update();
+   //       }
+   //    }
+
+   //    var chart2 = document.getElementById('hourly_output_summary_chart');
+   //    if (chart2) {
+   //       var chartInstance2 = Chart.getChart(chart2);
+   //       if (chartInstance2) {
+   //          if (mode === 'dark') {
+   //             // Set dark mode colors for chart elements
+   //             chartInstance2.options.scales.y.ticks.color = '#DDD';
+   //             chartInstance2.options.scales.y.grid.color = '#555';
+   //             chartInstance2.options.scales.x.ticks.color = '#DDD';
+   //             chartInstance2.options.scales.x.grid.color = '#555';
+   //             chartInstance2.options.plugins.title.color = '#FFF';
+   //             chartInstance2.options.scales.y.title.color = '#FFF';
+   //          } else {
+   //             // Set light mode colors for chart elements
+   //             chartInstance2.options.scales.y.ticks.color = '#000';
+   //             chartInstance2.options.scales.y.grid.color = '#ddd';
+   //             chartInstance2.options.scales.x.ticks.color = '#000';
+   //             chartInstance2.options.scales.x.grid.color = '#ddd';
+   //             chartInstance2.options.plugins.title.color = '#000';
+   //             chartInstance2.options.scales.y.title.color = '#000';
+   //          }
+   //          chartInstance2.update();
+   //       }
+   //    }
+
+   //    var chart3 = document.getElementById('ng_summary_chart');
+   //    if (chart3) {
+   //       var chartInstance3 = Chart.getChart(chart3);
+   //       if (chartInstance3) {
+   //          if (mode === 'dark') {
+   //             // Set dark mode colors for chart elements
+   //             chartInstance3.options.scales.y.ticks.color = '#DDD';
+   //             chartInstance3.options.scales.y.grid.color = '#555';
+   //             chartInstance3.options.scales.x.ticks.color = '#DDD';
+   //             chartInstance3.options.scales.x.grid.color = '#555';
+   //             chartInstance3.options.plugins.title.color = '#FFF';
+   //             chartInstance3.options.scales.y.title.color = '#FFF';
+   //          } else {
+   //             // Set light mode colors for chart elements
+   //             chartInstance3.options.scales.y.ticks.color = '#000';
+   //             chartInstance3.options.scales.y.grid.color = '#ddd';
+   //             chartInstance3.options.scales.x.ticks.color = '#000';
+   //             chartInstance3.options.scales.x.grid.color = '#ddd';
+   //             chartInstance3.options.plugins.title.color = '#000';
+   //             chartInstance3.options.scales.y.title.color = '#000';
+   //          }
+   //          chartInstance3.update();
+   //       }
+   //    }
+   // }
    // ==========================================================================================
 
    // Handle click event for GOOD cell
