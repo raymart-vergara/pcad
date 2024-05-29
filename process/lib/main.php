@@ -68,14 +68,16 @@ function compute_absent_ratio($actual_absent, $total_active_mp)
 // IRCS Line Data
 function get_ircs_line_data($registlinename, $conn_pcad)
 {
+	$line_no = '';
 	$registlinename = addslashes($registlinename);
+	$andon_line = '';
 	$final_process = '';
 	$ipaddresscolumn = 'INSPECTION4IPADDRESS';
 	$ipAddresses = array();
 	$response_arr = array();
 	
 	if (!empty($registlinename)) {
-		$query = "SELECT i.ircs_line, i.final_process, insp.ip_address, insp.ip_address2, insp.ipaddresscolumn, insp.finishdatetime, insp.judgement 
+		$query = "SELECT i.line_no, i.ircs_line, i.andon_line, i.final_process, insp.ip_address, insp.ip_address2, insp.ipaddresscolumn, insp.finishdatetime, insp.judgement 
 				FROM m_ircs_line i
 				LEFT JOIN m_inspection_ip insp
 				ON i.ircs_line = insp.ircs_line AND i.final_process = insp.finishdatetime
@@ -84,7 +86,9 @@ function get_ircs_line_data($registlinename, $conn_pcad)
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach ($stmt->fetchALL() as $row) {
+				$line_no = $row['line_no'];
 				$registlinename = $row['ircs_line'];
+				$andon_line = $row['andon_line'];
 				$final_process = $row['final_process'];
 				$ipaddresscolumn = $row['ipaddresscolumn'];
 				$finishdatetime = $row['finishdatetime'];
@@ -104,7 +108,9 @@ function get_ircs_line_data($registlinename, $conn_pcad)
 	$ipAddresses = array_unique($ipAddresses);
 
 	$response_arr = array(
+		'ircs_line_no' => $line_no,
 		'registlinename' => $registlinename,
+		'andon_line' => $andon_line,
 		'final_process' => $final_process,
 		'ipaddresscolumn' => $ipaddresscolumn,
 		"ipAddresses" => $ipAddresses,
@@ -198,5 +204,78 @@ function getIpAddressesFromDatabase($registlinename, $conn_pcad)
     }
 
     return $response_arr;
+}
+
+// Get t_plan Data Pending
+function get_plan_data_pending($registlinename, $conn_pcad)
+{
+	$response_arr = array();
+
+    $sql = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
+    $stmt = $conn_pcad->prepare($sql);
+    $stmt->bindParam(':registlinename', $registlinename);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+	if ($result) {
+        // Accounting Efficiency
+        $acc_eff = $result['acc_eff'];
+        $acc_eff_actual = $result['acc_eff_actual'];
+		if (empty($acc_eff_actual)) {
+            $acc_eff_actual = 0;
+        }
+        $acc_eff_gap = ((floatval($acc_eff_actual) / 100) - (intval($acc_eff) / 100)) * 100;
+
+		// Yield
+        $yield_actual = $result['yield_actual'];
+        if (empty($yield_actual)) {
+            $yield_actual = 0;
+        }
+
+        // PPM
+        $ppm_actual = $result['ppm_actual'];
+        if (empty($ppm_actual)) {
+            $ppm_actual = 0;
+        }
+
+		// Added takt plan
+		$takt = $result['takt_secs_DB'];
+		$last_update_DB = $result['last_update_DB'];
+		$secs_diff = strtotime(date('Y-m-d H:i:s')) - strtotime($last_update_DB);
+        if ($takt > 0) {
+            $added_takt_plan = floor($secs_diff / $takt);
+        } else {
+            $added_takt_plan = 0;
+        }
+
+		$response_arr = array(
+			"started" => $result['actual_start_DB'],
+			"takt" => $result['takt_secs_DB'],
+			"last_takt" => $result['last_takt_DB'],
+			"last_update_DB" => $result['last_update_DB'],
+			"added_takt_plan" => $added_takt_plan,
+			"is_paused" => $result['is_paused'],
+			"line_no" => $result['Line'],
+			"shift_group" => $result['group'],
+			"carmodel" => $result['Carmodel'],
+			"start_bal_delay" => $result['start_bal_delay'],
+			"work_time_plan" => $result['work_time_plan'],
+			"daily_plan" => $result['daily_plan'],
+			"plan_target" => $result['Target'],
+			"plan_actual" => $result['Actual_Target'],
+			"plan_gap" => $result['Remaining_Target'],
+			"acc_eff" => $result['acc_eff'],
+			"acc_eff_actual" => $acc_eff_actual,
+			"acc_eff_gap" => $acc_eff_gap,
+			"yield_target" => $result['yield_target'],
+			"yield_actual" => $yield_actual,
+			"ppm_target" => $result['ppm_target'],
+			"ppm_target_formatted" => number_format($result['ppm_target']),
+			"ppm_actual" => $ppm_actual,
+			"ppm_actual_formatted" => number_format($ppm_actual)
+		);
+	}
+
+	return $response_arr;
 }
 ?>

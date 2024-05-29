@@ -1,6 +1,5 @@
 <?php
-include 'process/pcs/index.php';
-include 'dist/js/adminlte.miin.php';
+include 'process/pcad/dashboard_p.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -554,7 +553,6 @@ include 'dist/js/adminlte.miin.php';
    <input type="hidden" id="added_takt_plan" value="<?= $added_takt_plan; ?>">
    <input type="hidden" id="is_paused" value="<?= $is_paused; ?>">
    <input type="hidden" id="andon_line" name="andon_line" value="<?= $andon_line; ?>">
-   <input type="hidden" id="final_process" name="final_process" value="<?= $final_process; ?>">
 
    <input type="hidden" id="yield_target" name="yield_target" value="<?= $yield_target; ?>">
    <input type="hidden" id="ppm_target" name="ppm_target" value="<?= $ppm_target; ?>">
@@ -608,7 +606,7 @@ include 'dist/js/adminlte.miin.php';
                         </div>
                         <div class="header-div-3">
                            <p class="header-title">Car Maker / Car Model</p>
-                           <p class="header-content">
+                           <p class="header-content" id="carmodel_label">
                               <?= $Carmodel ?>
                            </p>
                         </div>
@@ -622,7 +620,7 @@ include 'dist/js/adminlte.miin.php';
                         </div>
                         <div class="header-div-3">
                            <p class="header-title">Line No.</p>
-                           <p class="header-content">
+                           <p class="header-content" id="line_no_label">
                               <?= $line_no ?>
                            </p>
                         </div>
@@ -636,7 +634,7 @@ include 'dist/js/adminlte.miin.php';
                         </div>
                         <div class="header-div-3">
                            <p class="header-title">Shift</p>
-                           <p class="header-content">
+                           <p class="header-content" id="shift_label">
                               <?= $shift ?>
                            </p>
                         </div>
@@ -650,7 +648,7 @@ include 'dist/js/adminlte.miin.php';
                         </div>
                         <div class="header-div-3">
                            <p class="header-title">Date</p>
-                           <p class="header-content">
+                           <p class="header-content" id="date_label">
                               <?= $server_date_only ?>
                            </p>
                         </div>
@@ -679,9 +677,9 @@ include 'dist/js/adminlte.miin.php';
                </thead>
                <tbody>
                   <tr>
-                     <td class="plan-content plan_target_value blue-bg" id="plan_target"></td>
-                     <td class="plan-content plan_actual_value blue-bg" id="plan_actual"></td>
-                     <td class="plan-content plan_gap_value" id="plan_gap"></td>
+                     <td class="plan-content plan_target_value blue-bg" id="plan_target"><?=$plan_target?></td>
+                     <td class="plan-content plan_actual_value blue-bg" id="plan_actual"><?=$plan_actual?></td>
+                     <td class="plan-content plan_gap_value" id="plan_gap"><?=$plan_gap?></td>
                   </tr>
                </tbody>
             </table>
@@ -705,8 +703,8 @@ include 'dist/js/adminlte.miin.php';
                      <td class="plan-content yellow-bg" id="target_accounting_efficiency">
                         <?= $acc_eff; ?>%
                      </td>
-                     <td class="plan-content yellow-bg" id="actual_accounting_efficiency"></td>
-                     <td class="plan-content" id="gap_accounting_efficiency"></td>
+                     <td class="plan-content yellow-bg" id="actual_accounting_efficiency"><?=$acc_eff_actual?>%</td>
+                     <td class="plan-content" id="gap_accounting_efficiency"><?=$acc_eff_gap?>%</td>
                   </tr>
                </tbody>
             </table>
@@ -778,18 +776,18 @@ include 'dist/js/adminlte.miin.php';
             <table>
                <tbody>
                   <tr>
-                     <td class="grey-bg yield-content">
+                     <td class="grey-bg yield-content" id="yield_target_label">
                         <?= $yield_target; ?>%
                      </td>
                      <td class="yield-sub-title">Target</td>
-                     <td class="yield-content grey-bg">
+                     <td class="yield-content grey-bg" id="ppm_target_label">
                         <?= number_format($ppm_target); ?>
                      </td>
                   </tr>
                   <tr>
-                     <td class="yield-content yellow-bg" id="actual_yield"></td>
+                     <td class="yield-content yellow-bg" id="actual_yield"><?= $yield_actual; ?>%</td>
                      <td class="yield-sub-title">Actual</td>
-                     <td class="yield-content red-bg" id="actual_ppm"></td>
+                     <td class="yield-content red-bg" id="actual_ppm"><?= number_format($ppm_actual); ?></td>
                   </tr>
                </tbody>
             </table>
@@ -950,7 +948,7 @@ include 'dist/js/adminlte.miin.php';
                <tbody>
                   <tr>
                      <td class="manpower-content">Starting Balance Delay:</td>
-                     <td class="manpower-content-2 pl-5">
+                     <td class="manpower-content-2 pl-5" id="start_bal_delay_label">
                         <?= $start_bal_delay; ?>
                      </td>
                   </tr>
@@ -964,14 +962,14 @@ include 'dist/js/adminlte.miin.php';
                         </tr> -->
                   <tr>
                      <td class="manpower-content">Working Time Plan:</td>
-                     <td class="manpower-content-2 pl-5">
+                     <td class="manpower-content-2 pl-5" id="work_time_plan_label">
                         <?= $work_time_plan; ?>
                      </td>
                   </tr>
                   <tr>
                      <td class="manpower-content">Daily Plan:</td>
                      <!-- <td class="manpower-content"></td> -->
-                     <td class="manpower-content-2 pl-5"><?= $daily_plan; ?></td>
+                     <td class="manpower-content-2 pl-5" id="daily_plan_label"><?= $daily_plan; ?></td>
                   </tr>
                </tbody>
             </table>
@@ -1081,10 +1079,8 @@ include 'dist/js/adminlte.miin.php';
    $(document).ready(function () {
       // Call these functions initially to load the data from PCAD and other Systems
       // 1000 milliseconds = 1 second
-      get_accounting_efficiency();
+      set_plan_data_format();
       get_hourly_output();
-      get_yield();
-      get_ppm();
 
       // INSPECTION
       get_inspection_list_copy();
@@ -1102,10 +1098,9 @@ include 'dist/js/adminlte.miin.php';
    });
 
    function refreshFunctions() {
-      get_accounting_efficiency();
+      get_plan_data_pending();
       get_hourly_output();
-      get_yield();
-      get_ppm();
+     
       get_inspection_list_copy();
       get_overall_inspection();
       count_emp();
@@ -1117,7 +1112,6 @@ include 'dist/js/adminlte.miin.php';
       }, 500);
 
       get_process_design();
-      getValues();
    };
 
    // return to top button
@@ -1271,7 +1265,6 @@ include 'dashboard/plugins/js/emp_mgt.php';
 include 'dashboard/plugins/js/hourly_graph.php';
 include 'dashboard/plugins/js/inspection_output.php';
 include 'dashboard/plugins/js/pcad.php';
-include 'dashboard/plugins/js/pcs.php';
 ?>
 
 </html>

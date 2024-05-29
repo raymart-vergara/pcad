@@ -181,6 +181,22 @@ if ($method == 'get_conveyor_speed') {
     echo $conveyor_speed;
 }
 
+// Dashboard Data (index_exec.php) Get All t_plan Data Pending
+
+if ($method == 'get_plan_data_pending') {
+    $registlinename = $_GET['registlinename'];
+
+    $shift = array(
+        "shift" => get_shift($server_time)
+    );
+    $plan_data_pending_arr = get_plan_data_pending($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+
+    $response_arr = array_merge($shift, $plan_data_pending_arr, $ircs_line_data_arr);
+
+    echo json_encode($response_arr, JSON_FORCE_OBJECT);
+}
+
 oci_close($conn_ircs);
 $conn_emp_mgt = NULL;
 $conn_pcad = NULL;
