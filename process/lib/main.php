@@ -30,10 +30,18 @@ function compute_ppm($ng, $output)
 	}
 }
 
-function compute_hourly_output($plan, $working_time)
+function compute_target_hourly_output($takt, $working_time)
 {
+    if ($takt != 0) {
+        $plan = 27000 / $takt;
+    } else {
+        $plan = 0;
+    }
+
+    $working_time_hr = $working_time / 60;
+
 	if ($working_time != 0) {
-		return round($plan / $working_time, 0);
+		return round($plan / $working_time_hr, 0);
 	} else {
 		return 0;
 	}

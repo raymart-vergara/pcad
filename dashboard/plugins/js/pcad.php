@@ -149,7 +149,7 @@
     }
 
     const set_plan_data_format = () => {
-        
+
         // Plan
 
         var plan_gap_value = $('.plan_gap_value');
@@ -179,5 +179,10 @@
             gapCell.style.backgroundColor = '#F6DB7F'; //yellow color if 0
             gapCell.style.color = 'black';
         }
+    }
+
+    const export_plan_data_pending = () => {
+        let registlinename = document.getElementById('registlinename').value;
+        window.open('process/export/exp_plan_data_pending.php?registlinename=' + registlinename, '_blank');
     }
 </script>

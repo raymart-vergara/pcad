@@ -1235,6 +1235,107 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 	return $response_arr;
 }
 
+// Get Overall Manpower Count (PD2 & QA) (Plan, Actual, Absent, Support, Absent Rate)
+function get_manpower_count_per_line($search_arr, $conn_emp_mgt) {
+	$search_mp_arr = array(
+		'day' => $search_arr['day'],
+		'shift' => $search_arr['shift'],
+		'shift_group' => $search_arr['shift_group'],
+		'dept' => $search_arr['dept_pd'],
+		'section' => $search_arr['section_pd'],
+		'line_no' => $search_arr['line_no']
+	);
+
+	$total_pd_mp = count_emp($search_mp_arr, $conn_emp_mgt);
+	$total_present_pd_mp = count_emp_tio($search_mp_arr, $conn_emp_mgt);
+
+	// For PD shift group ADS
+	if ($search_arr['shift'] == 'DS') {
+		$search_pd_ads_arr = array(
+			'day' => $search_arr['day'],
+			'shift' => $search_arr['shift'],
+			'shift_group' => "ADS",
+			'dept' => $search_arr['dept_pd'],
+			'section' => $search_arr['section_pd'],
+			'line_no' => $search_arr['line_no']
+		);
+
+		$total_pd_ads_mp = count_emp($search_pd_ads_arr, $conn_emp_mgt);
+		$total_present_pd_ads_mp = count_emp_tio($search_pd_ads_arr, $conn_emp_mgt);
+		$total_pd_mp += $total_pd_ads_mp;
+		$total_present_pd_mp += $total_present_pd_ads_mp;
+	}
+	
+	$total_pd_mp_line_support_to = count_emp_line_support_to($search_mp_arr, $conn_emp_mgt);
+	// $total_pd_mp += $total_pd_mp_line_support_to;
+	// $total_present_pd_mp += $total_pd_mp_line_support_to;
+	// $total_pd_mp_line_support_from_rejected = count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
+	// $total_pd_mp += $total_pd_mp_line_support_from_rejected;
+	// $total_present_pd_mp += $total_pd_mp_line_support_from_rejected;
+	// $total_pd_mp_line_support_from = count_emp_line_support_from($search_arr, $conn_emp_mgt);
+	// $total_pd_mp -= $total_pd_mp_line_support_from;
+	// $total_present_pd_mp -= $total_pd_mp_line_support_from;
+	$total_absent_pd_mp = $total_pd_mp - $total_present_pd_mp;
+	$absent_ratio_pd_mp = compute_absent_ratio($total_absent_pd_mp, $total_pd_mp);
+
+	$search_mp_arr = array(
+		'day' => $search_arr['day'],
+		'shift' => $search_arr['shift'],
+		'shift_group' => $search_arr['shift_group'],
+		'dept' => $search_arr['dept_qa'],
+		'section' => $search_arr['section_qa'],
+		'line_no' => $search_arr['line_no']
+	);
+
+	$total_qa_mp = count_emp($search_mp_arr, $conn_emp_mgt);
+	$total_present_qa_mp = count_emp_tio($search_mp_arr, $conn_emp_mgt);
+
+	// For QA shift group ADS
+	if ($search_arr['shift'] == 'DS') {
+		$search_qa_ads_arr = array(
+			'day' => $search_arr['day'],
+			'shift' => $search_arr['shift'],
+			'shift_group' => "ADS",
+			'dept' => $search_arr['dept_qa'],
+			'section' => $search_arr['section_qa'],
+			'line_no' => $search_arr['line_no']
+		);
+	
+		$total_qa_ads_mp = count_emp($search_qa_ads_arr, $conn_emp_mgt);
+		$total_present_qa_ads_mp = count_emp_tio($search_qa_ads_arr, $conn_emp_mgt);
+		$total_qa_mp += $total_qa_ads_mp;
+		$total_present_qa_mp += $total_present_qa_ads_mp;
+	}
+
+	$total_qa_mp_line_support_to = count_emp_line_support_to($search_mp_arr, $conn_emp_mgt);
+	// $total_qa_mp += $total_qa_mp_line_support_to;
+	// $total_present_qa_mp += $total_qa_mp_line_support_to;
+	// $total_qa_mp_line_support_from_rejected = count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt);
+	// $total_qa_mp += $total_qa_mp_line_support_from_rejected;
+	// $total_present_qa_mp += $total_qa_mp_line_support_from_rejected;
+	// $total_qa_mp_line_support_from = count_emp_line_support_from($search_arr, $conn_emp_mgt);
+	// $total_qa_mp -= $total_qa_mp_line_support_from;
+	// $total_present_qa_mp -= $total_qa_mp_line_support_from;
+	$total_absent_qa_mp = $total_qa_mp - $total_present_qa_mp;
+	$absent_ratio_qa_mp = compute_absent_ratio($total_absent_qa_mp, $total_qa_mp);
+
+	$response_arr = array(
+		'total_pd_mp' => $total_pd_mp,
+		'total_present_pd_mp' => $total_present_pd_mp,
+		'total_absent_pd_mp' => $total_absent_pd_mp,
+		'total_pd_mp_line_support_to' => $total_pd_mp_line_support_to,
+		'absent_ratio_pd_mp' => $absent_ratio_pd_mp,
+		'total_qa_mp' => $total_qa_mp,
+		'total_present_qa_mp' => $total_present_qa_mp,
+		'total_absent_qa_mp' => $total_absent_qa_mp,
+		'total_qa_mp_line_support_to' => $total_qa_mp_line_support_to,
+		'absent_ratio_qa_mp' => $absent_ratio_qa_mp,
+		'message' => 'success'
+	);
+
+	return $response_arr;
+}
+
 function sum_process_design_plan($search_arr, $conn_pcad) {
 	$registlinename = $search_arr['registlinename'];
 	$shift_group = addslashes($search_arr['shift_group']);
