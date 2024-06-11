@@ -201,91 +201,27 @@ if ($method == 'get_inspection_list') {
     $shift = get_shift($server_time);
     $registlinename = $_GET['registlinename'];
 
-    // Fetch processes and their corresponding IP addresses
-    $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
+    $search_arr = array(
+        'shift' => $shift,
+        'registlinename' => $registlinename,
+        'server_date_only' => $server_date_only,
+        'server_date_only_yesterday' => $server_date_only_yesterday,
+        'server_date_only_tomorrow' => $server_date_only_tomorrow,
+        'server_time' => $server_time
+    );
 
-    if (empty($processesAndIpAddresses)) {
+    $overall_inspection_list_arr = get_overall_inspection_list($search_arr, $conn_ircs, $conn_pcad);
+
+    if (empty($overall_inspection_list_arr)) {
         echo '<tr>';
         echo '<td colspan="10" style="text-align:center; color:red;">No Record Found</td>';
         echo '</tr>';
     } else {
-        foreach ($processesAndIpAddresses as $processData) {
-            $process = $processData['process'];
-            $ipaddresscolumn = $processData['ipaddresscolumn'];
-            $ipAddresses = $processData['ipAddresses'];
-            // $finishdatetime = $processData['finishdatetime'];
-            $date_column = $processData['finishdatetime'];
-            // $judgement = $processData['judgement'];
-            $judgmentColumnNG2 = $processData['judgement'];
-
-            // $judgmentColumnGood = "";
-            // $judgmentColumnNG2 = "";
-
-            // $date_column = "";
-
-            $search_arr = array(
-                'shift' => $shift,
-                'registlinename' => $registlinename,
-                'server_date_only' => $server_date_only,
-                'server_date_only_yesterday' => $server_date_only_yesterday,
-                'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                'server_time' => $server_time
-            );
-
-            // $date_column = $finishdatetime;
-            // $judgmentColumnNG2 = $judgement;
-                      
-            // switch ($process) {
-            //     case "Dimension":
-            //         $date_column = "INSPECTION1FINISHDATETIME";
-            //         $judgmentColumnNG2 = "INSPECTION1JUDGMENT";
-            //         break;
-            //     case "Electric":
-            //         $date_column = "INSPECTION2FINISHDATETIME";
-            //         $judgmentColumnNG2 = "INSPECTION2JUDGMENT";
-            //         break;
-            //     case "Visual":
-            //         $date_column = "INSPECTION3FINISHDATETIME";
-            //         $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
-            //         break;
-            //     case "Assurance":
-            //         $date_column = "INSPECTION4FINISHDATETIME";
-            //         $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
-            //         break;
-            //     case "Components":
-            //         $date_column = "INSPECTION3FINISHDATETIME";
-            //         $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
-            //         break;
-            //     case "Fuse Checking":
-            //         $date_column = "INSPECTION4FINISHDATETIME";
-            //         $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
-            //         break;
-            //     default:
-            //         break;
-            // }
-
-            $processDetailsGood = array(
-                'process' => $process,
-                'date_column' => $date_column,
-                'ipAddressColumn' => $ipaddresscolumn,
-                'ipAddresses' => $ipAddresses,
-            );
-
-            $processDetailsNG = array(
-                'process' => $process,
-                'date_column' => $date_column,
-                'ipAddressColumn' => $ipaddresscolumn,
-                'judgmentColumn' => $judgmentColumnNG2,
-                'ipAddresses' => $ipAddresses
-            );
-
-            $p_good = countProcessGood($search_arr, $conn_ircs, $processDetailsGood);
-            $p_ng = countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad);
-
+        foreach ($overall_inspection_list_arr as $inspection_list) {
             echo '<tr style="cursor:pointer;">';
-            echo '<td style="text-align:center; font-size: 22px;">' . $p_good . '</td>';
-            echo '<td style="text-align:center; font-size: 22px;">' . $process . '</td>';
-            echo '<td style="text-align:center; font-size: 22px;">' . $p_ng . '</td>';
+            echo '<td style="text-align:center; font-size: 22px;">' . $inspection_list['p_good'] . '</td>';
+            echo '<td style="text-align:center; font-size: 22px;">' . $inspection_list['process'] . '</td>';
+            echo '<td style="text-align:center; font-size: 22px;">' . $inspection_list['p_ng'] . '</td>';
             echo '</tr>';
         }
     }
@@ -295,83 +231,27 @@ if ($method == 'get_inspection_list_copy') {
     $shift = get_shift($server_time);
     $registlinename = $_GET['registlinename'];
 
-    // Fetch processes and their corresponding IP addresses
-    $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
+    $search_arr = array(
+        'shift' => $shift,
+        'registlinename' => $registlinename,
+        'server_date_only' => $server_date_only,
+        'server_date_only_yesterday' => $server_date_only_yesterday,
+        'server_date_only_tomorrow' => $server_date_only_tomorrow,
+        'server_time' => $server_time
+    );
 
-    if (empty($processesAndIpAddresses)) {
+    $overall_inspection_list_arr = get_overall_inspection_list($search_arr, $conn_ircs, $conn_pcad);
+
+    if (empty($overall_inspection_list_arr)) {
         echo '<tr>';
         echo '<td colspan="10" style="text-align:center; color:red;">No Record Found</td>';
         echo '</tr>';
     } else {
-        foreach ($processesAndIpAddresses as $processData) {
-            $process = $processData['process'];
-            $ipaddresscolumn = $processData['ipaddresscolumn'];
-            $ipAddresses = $processData['ipAddresses'];
-
-            $judgmentColumnGood = "";
-            $judgmentColumnNG2 = $processData['judgement'];
-            $date_column = $processData['finishdatetime'];
-
-            $search_arr = array(
-                'shift' => $shift,
-                'registlinename' => $registlinename,
-                'server_date_only' => $server_date_only,
-                'server_date_only_yesterday' => $server_date_only_yesterday,
-                'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                'server_time' => $server_time
-            );
-
-            // switch ($process) {
-            //     case "Dimension":
-            //         $date_column = "INSPECTION1FINISHDATETIME";
-            //         $judgmentColumnNG2 = "INSPECTION1JUDGMENT";
-            //         break;
-            //     case "Electric":
-            //         $date_column = "INSPECTION2FINISHDATETIME";
-            //         $judgmentColumnNG2 = "INSPECTION2JUDGMENT";
-            //         break;
-            //     case "Visual":
-            //         $date_column = "INSPECTION3FINISHDATETIME";
-            //         $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
-            //         break;
-            //     case "Assurance":
-            //         $date_column = "INSPECTION4FINISHDATETIME";
-            //         $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
-            //         break;
-            //     case "Components":
-            //         $date_column = "INSPECTION3FINISHDATETIME";
-            //         $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
-            //         break;
-            //     case "Fuse Checking":
-            //         $date_column = "INSPECTION4FINISHDATETIME";
-            //         $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
-            //         break;
-            //     default:
-            //         break;
-            // }
-
-            $processDetailsGood = array(
-                'process' => $process,
-                'date_column' => $date_column,
-                'ipAddressColumn' => $ipaddresscolumn,
-                'ipAddresses' => $ipAddresses
-            );
-
-            $processDetailsNG = array(
-                'process' => $process,
-                'date_column' => $date_column,
-                'ipAddressColumn' => $ipaddresscolumn,
-                'judgmentColumn' => $judgmentColumnNG2,
-                'ipAddresses' => $ipAddresses
-            );
-
-            $p_good = countProcessGood($search_arr, $conn_ircs, $processDetailsGood);
-            $p_ng = countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad);
-
+        foreach ($overall_inspection_list_arr as $inspection_list) {
             echo '<tr style="cursor:pointer;">';
-            echo '<td style="text-align:center; font-size: 16px;">' . $p_good . '</td>';
-            echo '<td style="text-align:center; font-size: 16px;">' . $process . '</td>';
-            echo '<td style="text-align:center; font-size: 16px;">' . $p_ng . '</td>';
+            echo '<td style="text-align:center; font-size: 16px;">' . $inspection_list['p_good'] . '</td>';
+            echo '<td style="text-align:center; font-size: 16px;">' . $inspection_list['process'] . '</td>';
+            echo '<td style="text-align:center; font-size: 16px;">' . $inspection_list['p_ng'] . '</td>';
             echo '</tr>';
         }
     }

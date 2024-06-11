@@ -590,6 +590,13 @@ include 'process/pcad/dashboard_p.php';
                   onclick="refreshFunctions();">
                   <i class="fas fa-sync"></i>&ensp;&ensp;Refresh</button>
             </div>
+            <div class="float-right mb-3 mr-2">
+               <button class="btn btn-secondary" style="background: #f4f4f4; border: none; color: #000;"
+                  onmouseover="this.style.backgroundColor='#383B46'; this.style.color='#FFF';"
+                  onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';"
+                  onclick="export_plan_data_pending();">
+                  <i class="fas fa-download"></i>&ensp;&ensp;Export</button>
+            </div>
          </div>
       </div>
 

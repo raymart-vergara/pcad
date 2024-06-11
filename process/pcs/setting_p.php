@@ -20,6 +20,20 @@ function get_shift_end_plan($start_plan_time) {
 	}
 }
 
+function get_day_end_plan($start_plan_date, $start_plan_time, $server_date_only, $server_date_only_yesterday) {
+    if ($start_plan_time >= '06:00:00' && $start_plan_time < '18:00:00') {
+		return $server_date_only;
+	} else if ($start_plan_time >= '18:00:00' && $start_plan_time <= '23:59:59') {
+		return $server_date_only;
+	} else if ($start_plan_time >= '00:00:00' && $start_plan_time < '06:00:00') {
+        if ($start_plan_date == $server_date_only_yesterday) {
+            return $server_date_only_yesterday;
+        } else {
+            return $server_date_only;
+        }
+	}
+}
+
 function TimeToSec($time)
 {
     $sec = 0;
@@ -113,10 +127,12 @@ if (isset($_POST['request'])) {
 
         $Actual_Target2 = $line['Actual_Target'];
 
+        $start_plan_date = date('Y-m-d', strtotime($line['datetime_DB']));
         $start_plan_time = date('H:i:s', strtotime($line['datetime_DB']));
         $shift_pending = get_shift_end_plan($start_plan_time);
+        $start_plan_date_pending = get_day_end_plan($start_plan_date, $start_plan_time, $server_date_only, $server_date_only_yesterday);
 
-        if ($shift == $shift_pending) {
+        if ($start_plan_date == $start_plan_date_pending && $shift == $shift_pending) {
             $ircs_line_data_arr = get_ircs_line_data($IRCS_Line, $conn_pcad);
 
             $search_arr = array(
@@ -205,10 +221,12 @@ if (isset($_POST['request'])) {
         $stmt = $conn_pcad->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $start_plan_date = date('Y-m-d', strtotime($result['datetime_DB']));
         $start_plan_time = date('H:i:s', strtotime($result['datetime_DB']));
         $shift_pending = get_shift_end_plan($start_plan_time);
+        $start_plan_date_pending = get_day_end_plan($start_plan_date, $start_plan_time, $server_date_only, $server_date_only_yesterday);
 
-        if ($shift == $shift_pending) {
+        if ($start_plan_date == $start_plan_date_pending && $shift == $shift_pending) {
             $sql = "UPDATE t_plan SET Target = (Target + 1), yield_actual = :yield_actual, 
                 ppm_actual = :ppm_actual, acc_eff_actual = :acc_eff_actual 
                 WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
@@ -239,10 +257,12 @@ if (isset($_POST['request'])) {
         $stmt = $conn_pcad->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $start_plan_date = date('Y-m-d', strtotime($result['datetime_DB']));
         $start_plan_time = date('H:i:s', strtotime($result['datetime_DB']));
         $shift_pending = get_shift_end_plan($start_plan_time);
+        $start_plan_date_pending = get_day_end_plan($start_plan_date, $start_plan_time, $server_date_only, $server_date_only_yesterday);
 
-        if ($shift == $shift_pending) {
+        if ($start_plan_date == $start_plan_date_pending && $shift == $shift_pending) {
             $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
             $search_arr = array(
