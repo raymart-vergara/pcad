@@ -147,17 +147,9 @@ if ($method == 'get_hourly_output') {
     );
 
     $takt = intval($_GET['takt']);
-    
-    if ($takt != 0) {
-        $plan = 27000 / $takt;
-    } else {
-        $plan = 0;
-    }
-
     $working_time = intval($_GET['working_time']);
-    $working_time_hr = $working_time / 60;
 
-    $target_hourly_output = compute_hourly_output($plan, $working_time_hr);
+    $target_hourly_output = compute_target_hourly_output($takt, $working_time);
     $actual_hourly_output = count_actual_hourly_output($search_arr, $conn_ircs, $conn_pcad);
     $gap_hourly_output = $actual_hourly_output - $target_hourly_output;
 
@@ -179,6 +171,22 @@ if ($method == 'get_conveyor_speed') {
 
     $conveyor_speed = compute_conveyor_speed($taktime);
     echo $conveyor_speed;
+}
+
+// Dashboard Data (index_exec.php) Get All t_plan Data Pending
+
+if ($method == 'get_plan_data_pending') {
+    $registlinename = $_GET['registlinename'];
+
+    $shift = array(
+        "shift" => get_shift($server_time)
+    );
+    $plan_data_pending_arr = get_plan_data_pending($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+
+    $response_arr = array_merge($shift, $plan_data_pending_arr, $ircs_line_data_arr);
+
+    echo json_encode($response_arr, JSON_FORCE_OBJECT);
 }
 
 oci_close($conn_ircs);
