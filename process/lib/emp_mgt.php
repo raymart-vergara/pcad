@@ -24,7 +24,10 @@ function get_day($server_time, $server_date_only, $server_date_only_yesterday) {
 function get_section($line_no, $conn_emp_mgt) {
 	$line_no = addslashes($line_no);
 	$section = "";
+	// MySQL
 	$query = "SELECT section FROM m_access_locations WHERE line_no = '$line_no' LIMIT 1";
+	// MS SQL Server
+	// $query = "SELECT TOP 1 section FROM m_access_locations WHERE line_no = '$line_no'";
 	$stmt = $conn_emp_mgt->prepare($query);
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
@@ -1374,10 +1377,16 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 	$line_no = addslashes($search_arr['line_no']);
 
 	// Get Process by m_employees
+	// MySQL
 	$sql = "SELECT IFNULL(process, 'No Process') AS process1, 
 			COUNT(emp_no) AS total 
-		FROM `m_employees` 
+		FROM m_employees 
 		WHERE shift_group = '$shift_group' AND dept != ''";
+	// MS SQL Server
+	// $sql = "SELECT ISNULL(process, 'No Process') AS process1, 
+	// 	COUNT(emp_no) AS total 
+	// FROM m_employees 
+	// WHERE shift_group = '$shift_group' AND dept != ''";
 
 	if ($line_no == 'No Line') {
 		$sql = $sql . " AND line_no IS NULL";
@@ -1387,8 +1396,11 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 		$sql = $sql . " AND (line_no = '' OR line_no IS NULL)";
 	}
 
+	// MySQL
 	$sql = $sql . " AND (resigned_date IS NULL OR resigned_date = '0000-00-00' OR resigned_date >= '$day')";
-	$sql = $sql . " GROUP BY process1";
+	// MS SQL Server
+	// $sql = $sql . " AND (resigned_date IS NULL OR resigned_date >= '$day')";
+	$sql = $sql . " GROUP BY process";
 
 	$stmt = $conn_emp_mgt->prepare($sql);
 	$stmt->execute();
@@ -1403,12 +1415,20 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 	}
 
 	// Get Total Present per Process by joining t_time_in_out on m_employees
+	// MySQL
 	$sql = "SELECT IFNULL(emp.process, 'No Process') AS process1, 
 			COUNT(tio.emp_no) AS total_present 
-		FROM `t_time_in_out` tio 
-		LEFT JOIN `m_employees` emp 
+		FROM t_time_in_out tio 
+		LEFT JOIN m_employees emp 
 		ON tio.emp_no = emp.emp_no 
 		WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND emp.dept != ''";
+	// MS SQL Server
+	// $sql = "SELECT ISNULL(emp.process, 'No Process') AS process1, 
+	// 		COUNT(tio.emp_no) AS total_present 
+	// 	FROM t_time_in_out tio 
+	// 	LEFT JOIN m_employees emp 
+	// 	ON tio.emp_no = emp.emp_no 
+	// 	WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND emp.dept != ''";
 
 	if ($line_no == 'No Line') {
 		$sql = $sql . " AND line_no IS NULL";
@@ -1417,8 +1437,11 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 	} else {
 		$sql = $sql . " AND (line_no = '' OR line_no IS NULL)";
 	}
+	// MySQL
 	$sql = $sql . " AND (emp.resigned_date IS NULL OR emp.resigned_date = '0000-00-00' OR emp.resigned_date >= '$day')";
-	$sql = $sql . " GROUP BY process1";
+	// MS SQL Server
+	// $sql = $sql . " AND (emp.resigned_date IS NULL OR emp.resigned_date >= '$day')";
+	$sql = $sql . " GROUP BY emp.process";
 
 	$stmt = $conn_emp_mgt->prepare($sql);
 	$stmt->execute();
