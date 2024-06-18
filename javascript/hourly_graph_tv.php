@@ -295,6 +295,7 @@
 
     const ng_graph = () => {
         let registlinename = localStorage.getItem("registlinename");
+        let server_date_only = '<?= $server_date_only ?>';
 
         $.ajax({
             url: 'process/inspection_output/inspection_output_p.php',
@@ -303,7 +304,9 @@
             dataType: 'json',
             data: {
                 method: 'ng_graph',
-                registlinename: registlinename
+                registlinename: registlinename,
+                server_date_only: server_date_only,
+                opt: 1
             },
             success: function (data) {
                 let hourly_ng_summary = data[0];

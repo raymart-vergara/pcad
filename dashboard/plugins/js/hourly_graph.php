@@ -324,6 +324,8 @@
 
     const ng_graph = () => {
         let registlinename = localStorage.getItem("registlinename");
+        let server_date_only = '<?= $server_date_only ?>';
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
 
         $.ajax({
             url: 'process/inspection_output/inspection_output_p.php',
@@ -332,7 +334,9 @@
             dataType: 'json',
             data: {
                 method: 'ng_graph',
-                registlinename: registlinename
+                registlinename: registlinename,
+                server_date_only: server_date_only,
+                opt: opt
             },
             success: function (data) {
                 let hourly_ng_summary = data[0];

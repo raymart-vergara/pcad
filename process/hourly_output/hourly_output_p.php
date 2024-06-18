@@ -299,7 +299,6 @@ if ($method == 'get_hourly_output_graph') {
 
     $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
-    // $hourly_output_date = $server_date_only;
     $hourly_output_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_output_date))));
 
     $start_date = '';

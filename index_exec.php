@@ -1085,6 +1085,7 @@ include 'process/pcad/dashboard_p.php';
    localStorage.setItem("andon_line", $("#andon_line").val());
    localStorage.setItem("shift", $("#shift").val());
    localStorage.setItem("pcad_exec_opt", $("#opt").val());
+   localStorage.setItem("pcad_exec_server_date_only", $("#date_label").html());
 
    $(document).ready(function () {
       // Call these functions initially to load the data from PCAD and other Systems
