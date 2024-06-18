@@ -29,7 +29,7 @@
           <div class="col-4">
             <label for="final_process_master">Final Process</label>
             <select id="final_process_master" class="form-control" maxlength="255" autocomplete="off">
-              <option value="">......</option>
+              <option value="" disabled selected>Select Final Process</option>
             </select>
           </div>
           <div class="col-4">

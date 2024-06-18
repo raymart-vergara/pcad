@@ -140,9 +140,10 @@ if ($method == 'add_pcs') {
 	$check = "SELECT id FROM m_ircs_line WHERE line_no = '$line_no' AND ircs_line = '$ircs_line' AND andon_line = '$andon_line' AND final_process = '$final_process' AND ip = '$ip'";
 	$stmt = $conn_pcad->prepare($check);
 	$stmt->execute();
-	if ($stmt->rowCount() > 0) {
-		echo 'Already Exist';
-	} else {
+	// if ($stmt->rowCount() > 0) {
+	// 	echo 'Already Exist';
+	// } 
+	// else {
 		$stmt = NULL;
 
 		$query = "INSERT INTO m_ircs_line (`line_no`, `ircs_line`, `andon_line`, `final_process`, `ip`) VALUES ('$line_no','$ircs_line','$andon_line','$final_process','$ip')";
@@ -153,7 +154,7 @@ if ($method == 'add_pcs') {
 		} else {
 			echo 'error';
 		}
-	}
+	// }
 }
 
 if ($method == 'update_pcs') {
@@ -221,7 +222,7 @@ if ($method == 'delete_pcs_selected') {
 
 if ($method == 'final_process') {
 	$final_process = array();
-	$query = "SELECT final_process FROM m_final_process ORDER BY final_process ASC";
+	$query = "SELECT DISTINCT finishdatetime FROM m_final_process";
 
 	$stmt = $conn_pcad->query($query);
 
@@ -229,7 +230,7 @@ if ($method == 'final_process') {
 
 	if ($final_process) {
 		foreach ($final_process as $i => $ircs) {
-			echo '<option value="' . $ircs['final_process'] . '">' . $ircs['final_process'] . '</option>';
+			echo '<option value="' . $ircs['finishdatetime'] . '">' . $ircs['finishdatetime'] . '</option>';
 		}
 	} else {
 		echo '<option> - - - </option>';
