@@ -266,6 +266,8 @@ if ($method == 'get_hourly_output_graph') {
     $registlinename = $_GET['registlinename'];
     $hourly_output_date = $_GET['hourly_output_date'];
 
+    $opt = $_GET['opt'];
+
     // $registlinename = 'DAIHATSU_30';
 
     $data = [];
@@ -300,6 +302,20 @@ if ($method == 'get_hourly_output_graph') {
     // $hourly_output_date = $server_date_only;
     $hourly_output_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_output_date))));
 
+    $start_date = '';
+    $end_date = '';
+
+    if ($opt == 2) {
+        $start_date = $hourly_output_date;
+        $end_date = $hourly_output_date_tomorrow;
+    } else if ($server_time >= '00:00:00' && $server_time < '06:00:00') {
+        $start_date = $server_date_only_yesterday;
+        $end_date = $server_date_only;
+    } else {
+        $start_date = $server_date_only;
+        $end_date = $server_date_only_tomorrow;
+    }
+
     $c = 0;
 
     $query = "SELECT DAY, HOUR, COUNT(*) AS TOTAL FROM (
@@ -313,8 +329,8 @@ if ($method == 'get_hourly_output_graph') {
         $query = $query . " AND $ipaddresscolumn IN ($ipAddressesString)";
     }
     
-    $query = $query . "AND T_PRODUCTWK.$date_column BETWEEN TO_DATE('$hourly_output_date 06:00:00', 'yyyy-MM-dd HH24:MI:SS') 
-                            AND TO_DATE('$hourly_output_date_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+    $query = $query . "AND T_PRODUCTWK.$date_column BETWEEN TO_DATE('$start_date 06:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                            AND TO_DATE('$end_date 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
 
     $query = $query . ") GROUP BY REGISTLINENAME, DAY, HOUR, DATE_TIME ORDER BY DATE_TIME";
 

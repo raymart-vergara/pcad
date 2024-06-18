@@ -147,7 +147,8 @@
             data: {
                 method: 'get_hourly_output_graph',
                 registlinename: registlinename,
-                hourly_output_date: hourly_output_date
+                hourly_output_date: hourly_output_date,
+                opt: 1
             },
             success: function (data) {
                 let hourly_output_summary = data[0];
