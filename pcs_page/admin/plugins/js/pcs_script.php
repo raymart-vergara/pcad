@@ -203,6 +203,8 @@
     }
 
     $("#new_pcs").on('hidden.bs.modal', e => {
+        document.getElementById('car_maker_master').value = '';
+        document.getElementById('car_model_master').value = '';
         document.getElementById('line_no_master').value = '';
         document.getElementById('ircs_line_master').value = '';
         document.getElementById('andon_line_master').value = '';
@@ -211,13 +213,31 @@
     });
 
     const add_pcs = () => {
+        var car_maker = document.getElementById('car_maker_master').value;
+        var car_model = document.getElementById('car_model_master').value;
         var line_no = document.getElementById('line_no_master').value;
         var ircs_line = document.getElementById('ircs_line_master').value;
         var andon_line = document.getElementById('andon_line_master').value;
         var final_process = document.getElementById('final_process_master').value;
         var ip = document.getElementById('ip_master').value;
 
-        if (line_no == '') {
+        if (car_maker == '') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Please Input Car Maker!!!',
+                text: 'Information',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        } else if (car_model == '') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Please Input Car Model!!!',
+                text: 'Information',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        } else if (line_no == '') {
             Swal.fire({
                 icon: 'info',
                 title: 'Please Input Line No.!!!',
@@ -264,6 +284,8 @@
                 cache: false,
                 data: {
                     method: 'add_pcs',
+                    car_maker: car_maker,
+                    car_model: car_model,
                     line_no: line_no,
                     ircs_line: ircs_line,
                     andon_line: andon_line,
@@ -279,6 +301,8 @@
                             showConfirmButton: false,
                             timer: 1000
                         });
+                        $('#car_maker_master').val('');
+                        $('#car_model_master').val('');
                         $('#line_no_master').val('');
                         $('#ircs_line_master').val('');
                         $('#andon_line_master').val('');
@@ -311,80 +335,80 @@
     const get_pcs_details = (param) => {
         var string = param.split('~!~');
         var id = string[0];
-        var line_no = string[1];
-        var ircs_line = string[2];
-        var andon_line = string[3];
-        var final_process = string[4];
-        var ip = string[5];
+        var car_maker = string[1];
+        var car_model = string[2];
+        var line_no = string[3];
+        var ircs_line = string[4];
+        var andon_line = string[5];
+        var final_process = string[6];
+        var ip = string[7];
 
         document.getElementById('id_update').value = id;
+        document.getElementById('car_maker_update').value = car_maker;
+        document.getElementById('car_model_update').value = car_model;
         document.getElementById('line_no_update').value = line_no;
         document.getElementById('ircs_line_update').value = ircs_line;
         document.getElementById('andon_line_update').value = andon_line;
         document.getElementById('final_process_update').value = final_process;
         document.getElementById('ip_update').value = ip;
-
     }
 
     const update_pcs = () => {
         var id = document.getElementById('id_update').value;
+        var car_maker = document.getElementById('car_maker_update').value;
+        var car_model = document.getElementById('car_model_update').value;
         var line_no = document.getElementById('line_no_update').value;
         var ircs_line = document.getElementById('ircs_line_update').value;
         var andon_line = document.getElementById('andon_line_update').value;
         var final_process = document.getElementById('final_process_update').value;
         var ip = document.getElementById('ip_update').value;
 
-            $.ajax({
-                url: '../../process/pcs/pcs_p.php',
-                type: 'POST',
-                cache: false,
-                data: {
-                    method: 'update_pcs',
-                    id: id,
-                    line_no: line_no,
-                    ircs_line: ircs_line,
-                    andon_line: andon_line,
-                    final_process: final_process,
-                    ip: ip
-                }, success: function (response) {
+        $.ajax({
+            url: '../../process/pcs/pcs_p.php',
+            type: 'POST',
+            cache: false,
+            data: {
+                method: 'update_pcs',
+                id: id,
+                car_maker: car_maker,
+                car_model: car_model,
+                line_no: line_no,
+                ircs_line: ircs_line,
+                andon_line: andon_line,
+                final_process: final_process,
+                ip: ip
+            }, success: function (response) {
+                console.log(response);
+                if (response == 'success') {
                     console.log(response);
-                    if (response == 'success') {
-                        console.log(response);
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Succesfully Recorded!!!',
-                            text: 'Success',
-                            showConfirmButton: false,
-                            timer: 1000
-                        });
-                        $('#id_update').val('');
-                        $('#line_no_update').val('');
-                        $('#ircs_line_update').val('');
-                        $('#andon_line_update').val('');
-                        $('#final_process_update').val('');
-                        $('#ip_update').val('');
-                        load_pcs(1);
-                        $('#updatepcs').modal('hide');
-                    } else if (response == 'Already Exist') {
-                        Swal.fire({
-                            icon: 'info',
-                            title: 'Duplicate Data !!!',
-                            text: 'Information',
-                            showConfirmButton: false,
-                            timer: 1000
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error !!!',
-                            text: 'Error',
-                            showConfirmButton: false,
-                            timer: 1000
-                        });
-                    }
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successfully Recorded!!!',
+                        text: 'Success',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+                    $('#id_update').val('');
+                    $('#car_maker_update').val('');
+                    $('#car_model_update').val('');
+                    $('#line_no_update').val('');
+                    $('#ircs_line_update').val('');
+                    $('#andon_line_update').val('');
+                    $('#final_process_update').val('');
+                    $('#ip_update').val('');
+                    load_pcs(1);
+                    $('#updatepcs').modal('hide');
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error !!!',
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
                 }
-            });
-        
+            }
+        });
+
     }
 
     const delete_pcs = () => {
@@ -508,7 +532,6 @@
             Swal.fire({
                 icon: 'info',
                 title: 'No Row Selected',
-                text: 'Information',
                 showConfirmButton: false,
                 timer: 1000
             });
