@@ -214,12 +214,37 @@ function getIpAddressesFromDatabase($registlinename, $conn_pcad)
     return $response_arr;
 }
 
-// Get t_plan Data Pending
-function get_plan_data_pending($registlinename, $conn_pcad)
+// Get t_plan Data
+function get_plan_data($registlinename, $day, $shift, $conn_pcad, $opt)
 {
 	$response_arr = array();
 
-    $sql = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
+    $sql = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename";
+
+	switch($opt) {
+		case 1:
+			$sql .= " AND Status = 'Pending'";
+			break;
+		case 2:
+			$start_date = '';
+			$end_date = '';
+
+			if ($shift == 'DS') {
+				$start_date = date('Y-m-d H:i:s',(strtotime("$day 06:00:00")));
+				$end_date = date('Y-m-d H:i:s',(strtotime("$day 17:59:59")));
+			} else if ($shift == 'NS') {
+				$day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+				$start_date = date('Y-m-d H:i:s',(strtotime("$day 18:00:00")));
+				$end_date = date('Y-m-d H:i:s',(strtotime("$day_tomorrow 05:59:59")));
+			}
+
+			$sql .= " AND Status = 'Done' AND (datetime_DB >= '$start_date' AND datetime_DB <= '$end_date')";
+			break;
+		default:
+			$sql .= " AND Status = 'Pending'";
+			break;
+	}
+
     $stmt = $conn_pcad->prepare($sql);
     $stmt->bindParam(':registlinename', $registlinename);
     $stmt->execute();
@@ -257,6 +282,7 @@ function get_plan_data_pending($registlinename, $conn_pcad)
         }
 
 		$response_arr = array(
+			"plan_datetime" => $result['datetime_DB'],
 			"started" => $result['actual_start_DB'],
 			"takt" => $result['takt_secs_DB'],
 			"last_takt" => $result['last_takt_DB'],
