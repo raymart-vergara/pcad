@@ -80,6 +80,8 @@
                     <tr>
                       <th><input type="checkbox" name="check_all" id="check_all" onclick="select_all_func()"></th>
                       <th>#</th>
+                      <th>Car Maker</th>
+                      <th>Car Model</th>
                       <th>Line No.</th>
                       <th>IRCS Line</th>
                       <th>Andon Line</th>
