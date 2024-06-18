@@ -143,7 +143,8 @@ if ($method == 'get_hourly_output') {
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time
+        'server_time' => $server_time,
+        'opt' => 1
     );
 
     $takt = intval($_GET['takt']);
@@ -178,13 +179,16 @@ if ($method == 'get_conveyor_speed') {
 if ($method == 'get_plan_data_pending') {
     $registlinename = $_GET['registlinename'];
 
-    $shift = array(
-        "shift" => get_shift($server_time)
+    $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+    $shift = get_shift($server_time);
+
+    $shift_arr = array(
+        "shift" => $shift
     );
-    $plan_data_pending_arr = get_plan_data_pending($registlinename, $conn_pcad);
+    $plan_data_pending_arr = get_plan_data($registlinename, $day, $shift, $conn_pcad, 1);
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
-    $response_arr = array_merge($shift, $plan_data_pending_arr, $ircs_line_data_arr);
+    $response_arr = array_merge($shift_arr, $plan_data_pending_arr, $ircs_line_data_arr);
 
     echo json_encode($response_arr, JSON_FORCE_OBJECT);
 }
