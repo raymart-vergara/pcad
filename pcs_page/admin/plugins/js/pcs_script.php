@@ -334,47 +334,6 @@
         var final_process = document.getElementById('final_process_update').value;
         var ip = document.getElementById('ip_update').value;
 
-        if (line_no == '') {
-            Swal.fire({
-                icon: 'info',
-                title: 'Please Input Line No. !!!',
-                text: 'Information',
-                showConfirmButton: false,
-                timer: 1000
-            });
-        } else if (ircs_line == '') {
-            Swal.fire({
-                icon: 'info',
-                title: 'Please Input IRCS Line !!!',
-                text: 'Information',
-                showConfirmButton: false,
-                timer: 1000
-            });
-        } else if (andon_line == '') {
-            Swal.fire({
-                icon: 'info',
-                title: 'Please Input Andon Line !!!',
-                text: 'Information',
-                showConfirmButton: false,
-                timer: 1000
-            });
-        } else if (final_process == '') {
-            Swal.fire({
-                icon: 'info',
-                title: 'Please Input Final Process !!!',
-                text: 'Information',
-                showConfirmButton: false,
-                timer: 1000
-            });
-        } else if (ip == '') {
-            Swal.fire({
-                icon: 'info',
-                title: 'Please Input IP Address !!!',
-                text: 'Information',
-                showConfirmButton: false,
-                timer: 1000
-            });
-        } else {
             $.ajax({
                 url: '../../process/pcs/pcs_p.php',
                 type: 'POST',
@@ -425,7 +384,7 @@
                     }
                 }
             });
-        }
+        
     }
 
     const delete_pcs = () => {

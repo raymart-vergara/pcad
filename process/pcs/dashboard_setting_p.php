@@ -87,7 +87,7 @@ if (isset($_POST['request'])) {
                 header("location: ../../index_exec.php?registlinename=" . $registlinename);
             } else {
                 echo "<script>
-                        alert('There is no plan set for the selected line.');
+                        alert('No plan has been set for the selected line. The dashboard for the selected line cannot be viewed.');
                         window.location.href = '../../dashboard/setting.php';
                       </script>";
             }

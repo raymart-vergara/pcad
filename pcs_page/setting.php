@@ -82,7 +82,9 @@ if ($result) {
 										<div class="col-lg-3">
 											<div class="form-group">
 												<label>PLAN</label>
-												<input type="text" name="daily_plan" class="form-control form-control-lg" id="plan" autofocus="on" min="1" required>
+												<input type="text" name="daily_plan"
+													class="form-control form-control-lg" id="plan" autofocus="on"
+													min="1" required>
 											</div>
 										</div>
 										<div class="col-lg-3">
@@ -170,7 +172,8 @@ if ($result) {
 									<tr>
 										<td class="text-right font-weight-bold" style="font-size: 17px;">Yield (%)</td>
 										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;" name="yield_target" id="yield_target" value="98" required>
+											<input type="text" class="ml-4 form-control" style="width: 250px;"
+												name="yield_target" id="yield_target" value="98" required>
 										</td>
 									</tr>
 									<tr>
@@ -200,17 +203,6 @@ if ($result) {
 									<tr>
 										<td style="height: 10px;"></td>
 									</tr>
-									<!-- <tr>
-										<td class="text-right font-weight-bold" style="font-size: 17px;">Hourly Output</td>
-
-										<td>
-											<input type="text" class="ml-4 form-control" style="width: 250px;" id="hrs_output">
-										</td>
-										</td>
-									</tr>
-									<tr>
-										<td style="height: 10px;"></td>
-									</tr> -->
 									<tr>
 										<td class="text-right font-weight-bold" style="font-size: 17px;">Starting
 											Balance Delay (Set)</td>
