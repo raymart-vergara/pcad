@@ -511,7 +511,23 @@ function count_actual_hourly_output($search_arr, $conn_ircs, $conn_pcad)
 
    $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
-   $server_hour = date('H');
+   $server_hour = '';
+
+   switch($search_arr['opt']) {
+		case 1:
+			$server_hour = date('H');
+			break;
+		case 2:
+			if ($search_arr['shift'] == 'DS') {
+				$server_hour = date('H',(strtotime("17")));
+			} else if ($search_arr['shift'] == 'NS') {
+            $server_hour = date('H',(strtotime("05")));
+			}
+			break;
+		default:
+         $server_hour = date('H');
+			break;
+	}
 
    // SELECT COUNT(PARTSNAME) AS HOURLY_OUTPUT FROM T_PRODUCTWK
    // WHERE INSPECTION4IPADDRESS IN ('172.25.161.166','172.25.166.83')

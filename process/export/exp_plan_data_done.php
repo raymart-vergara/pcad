@@ -9,50 +9,55 @@ include '../lib/main.php';
 
 switch (true) {
   case !isset($_GET['registlinename']):
+  case !isset($_GET['day']):
+  case !isset($_GET['shift']):
     echo 'Query Parameters Not Set';
     exit;
 }
 
 $registlinename = trim($_GET['registlinename']);
 
-$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
-$shift = get_shift($server_time);
+$day = $_GET['day'];
+$shift = $_GET['shift'];
+
+$day_yesterday = date('Y-m-d',(strtotime('-1 day',strtotime($day))));
+$day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
 
 // Plan Data (Yield, PPM, Accounting Efficiency, Production Plan)
 
-$plan_data_pending_arr = get_plan_data($registlinename, $day, $shift, $conn_pcad, 1);
+$plan_data_done_arr = get_plan_data($registlinename, $day, $shift, $conn_pcad, 2);
 $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
 // Employee Management System Data
 
 $dept_pd = 'PD2';
 $dept_qa = 'QA';
-$section_pd = get_section($plan_data_pending_arr['line_no'], $conn_emp_mgt);
-$section_qa = get_section($plan_data_pending_arr['line_no'], $conn_emp_mgt);
+$section_pd = get_section($plan_data_done_arr['line_no'], $conn_emp_mgt);
+$section_qa = get_section($plan_data_done_arr['line_no'], $conn_emp_mgt);
 // $section_qa = 'QA';
 
 $search_arr = array(
   'day' => $day,
   'shift' => $shift,
-  'shift_group' => $plan_data_pending_arr['shift_group'],
+  'shift_group' => $plan_data_done_arr['shift_group'],
   'dept_pd' => $dept_pd,
 	'dept_qa' => $dept_qa,
 	'section_pd' => $section_pd,
 	'section_qa' => $section_qa,
-  'line_no' => $plan_data_pending_arr['line_no'],
+  'line_no' => $plan_data_done_arr['line_no'],
   'registlinename' => $registlinename,
   'ircs_line_data_arr' => $ircs_line_data_arr,
-  'server_date_only' => $server_date_only,
-  'server_date_only_yesterday' => $server_date_only_yesterday,
-  'server_date_only_tomorrow' => $server_date_only_tomorrow,
-  'server_time' => $server_time,
-  'opt' => 1
+  'server_date_only' => $day,
+  'server_date_only_yesterday' => $day_yesterday,
+  'server_date_only_tomorrow' => $day_tomorrow,
+  'server_time' => $plan_data_done_arr['plan_datetime'],
+  'opt' => 2
 );
 
 // Hourly Output
 
-$takt = intval($plan_data_pending_arr['takt']);
-$working_time = intval($plan_data_pending_arr['work_time_plan']);
+$takt = intval($plan_data_done_arr['takt']);
+$working_time = intval($plan_data_done_arr['work_time_plan']);
 
 $target_hourly_output = compute_target_hourly_output($takt, $working_time);
 $actual_hourly_output = count_actual_hourly_output($search_arr, $conn_ircs, $conn_pcad);
@@ -78,7 +83,7 @@ $process_design_results = get_process_design($search_arr, $conn_emp_mgt, $conn_p
 
 $delimiter = ",";
 
-$filename = "PCAD_ExecPlanDataPending_" . $server_date_only . "_" . $server_time . ".csv";
+$filename = "PCAD_ExecPlanDataDone_" . $day . "_" . $shift . ".csv";
  
 // Create a file pointer 
 $f = fopen('php://memory', 'w'); 
@@ -92,7 +97,7 @@ $fields = array('Car Maker / Car Model', 'Line No.', 'Shift', 'Date');
 fputcsv($f, $fields, $delimiter); 
 
 // Line Information
-$lineData = array($plan_data_pending_arr['carmodel'], $plan_data_pending_arr['line_no'], $shift, $server_date_only); 
+$lineData = array($plan_data_done_arr['carmodel'], $plan_data_done_arr['line_no'], $shift, $day); 
 fputcsv($f, $lineData, $delimiter); 
 
 $fields = array(''); 
@@ -107,8 +112,8 @@ $fields = array('Target', 'Actual', 'Gap', '','Target','Actual','Gap','','Target
 fputcsv($f, $fields, $delimiter);
 
 // Production Plan, Accounting Efficiency, Hourly Output
-$fields = array($plan_data_pending_arr['plan_target'], $plan_data_pending_arr['plan_actual'], $plan_data_pending_arr['plan_gap'], '', 
-          $plan_data_pending_arr['acc_eff'], $plan_data_pending_arr['acc_eff_actual'], $plan_data_pending_arr['acc_eff_gap'], '', 
+$fields = array($plan_data_done_arr['plan_target'], $plan_data_done_arr['plan_actual'], $plan_data_done_arr['plan_gap'], '', 
+          $plan_data_done_arr['acc_eff'], $plan_data_done_arr['acc_eff_actual'], $plan_data_done_arr['acc_eff_gap'], '', 
           $target_hourly_output, $actual_hourly_output, $gap_hourly_output); 
 fputcsv($f, $fields, $delimiter);
 
@@ -124,8 +129,8 @@ $fields = array('Target', 'Actual', '', 'Target','Actual','','Good','NG');
 fputcsv($f, $fields, $delimiter);
 
 // Yield, PPM, Overall Inspection
-$fields = array($plan_data_pending_arr['yield_target'], $plan_data_pending_arr['yield_actual'], '', 
-          $plan_data_pending_arr['ppm_target'], $plan_data_pending_arr['ppm_actual'], '', 
+$fields = array($plan_data_done_arr['yield_target'], $plan_data_done_arr['yield_actual'], '', 
+          $plan_data_done_arr['ppm_target'], $plan_data_done_arr['ppm_actual'], '', 
           $insp_overall_g, $insp_overall_ng); 
 fputcsv($f, $fields, $delimiter);
 
@@ -157,16 +162,16 @@ $fields = array('PD Manpower', '','', 'QA Manpower', '', '', 'Other Details');
 fputcsv($f, $fields, $delimiter); 
 
 // Manpower Count, Other Details
-$fields = array('Plan', $manpower_count_arr['total_pd_mp'], '', 'Plan', $manpower_count_arr['total_qa_mp'], '', 'Starting Balance Delay', $plan_data_pending_arr['start_bal_delay']); 
+$fields = array('Plan', $manpower_count_arr['total_pd_mp'], '', 'Plan', $manpower_count_arr['total_qa_mp'], '', 'Starting Balance Delay', $plan_data_done_arr['start_bal_delay']); 
 fputcsv($f, $fields, $delimiter);
 
 $fields = array('Actual', $manpower_count_arr['total_present_pd_mp'], '', 'Actual', $manpower_count_arr['total_present_qa_mp'], '', 'Conveyor Speed', ''); 
 fputcsv($f, $fields, $delimiter);
 
-$fields = array('Absent', $manpower_count_arr['total_absent_pd_mp'], '', 'Absent', $manpower_count_arr['total_absent_qa_mp'], '', 'Working Time Plan', $plan_data_pending_arr['work_time_plan']); 
+$fields = array('Absent', $manpower_count_arr['total_absent_pd_mp'], '', 'Absent', $manpower_count_arr['total_absent_qa_mp'], '', 'Working Time Plan', $plan_data_done_arr['work_time_plan']); 
 fputcsv($f, $fields, $delimiter);
 
-$fields = array('Support', $manpower_count_arr['total_pd_mp_line_support_to'], '', 'Support', $manpower_count_arr['total_qa_mp_line_support_to'], '', 'Daily Plan', $plan_data_pending_arr['daily_plan']); 
+$fields = array('Support', $manpower_count_arr['total_pd_mp_line_support_to'], '', 'Support', $manpower_count_arr['total_qa_mp_line_support_to'], '', 'Daily Plan', $plan_data_done_arr['daily_plan']); 
 fputcsv($f, $fields, $delimiter);
 
 $fields = array('Absent Rate', $manpower_count_arr['absent_ratio_pd_mp'], '', 'Absent Rate', $manpower_count_arr['absent_ratio_qa_mp']); 
