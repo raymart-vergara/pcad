@@ -1,6 +1,8 @@
 <script type="text/javascript">
     const andon_hourly_graph = () => {
         let andon_line = localStorage.getItem("andon_line");
+        let opt = parseInt('<?= $opt ?>');
+        let server_date_only = '<?= $server_date_only ?>';
 
         $.ajax({
             url: 'process/andon_graph/a_hourly_p.php',
@@ -9,7 +11,9 @@
             cache: false,
             data: {
                 method: 'andon_hourly',
-                andon_line: andon_line
+                andon_line: andon_line,
+                opt: opt,
+                server_date_only: server_date_only
             },
             success: function (data) {
                 let total_counts = data[0];

@@ -82,6 +82,8 @@ if (isset($_GET['registlinename'])) {
         } else {
             $added_takt_plan = 0;
         }
+
+        $opt = 1;
     } else {
         $started = '';
         $takt = 270;
@@ -101,6 +103,8 @@ if (isset($_GET['registlinename'])) {
         $added_takt_plan = 0;
         $andon_line = '';
         $final_process = '';
+
+        $opt = 1;
     }
 }
 

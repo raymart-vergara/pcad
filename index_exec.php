@@ -561,6 +561,8 @@ include 'process/pcad/dashboard_p.php';
    <input type="hidden" id="work_time_plan" name="work_time_plan" value="<?= $work_time_plan; ?>">
    <input type="hidden" id="daily_plan" name="daily_plan" value="<?= $daily_plan; ?>">
 
+   <input type="hidden" id="opt" name="opt" value="<?= $opt; ?>">
+
    <div class="container-fluid mt-3">
       <!-- ===================== LIGHT/DARK MODE TOGGLE AND RETURN TO SETTING-->
       <div class="row">

@@ -9,7 +9,8 @@
             cache: false,
             data: {
                 method: 'andon_hourly',
-                andon_line: andon_line
+                andon_line: andon_line,
+                opt: 1
             },
             success: function (data) {
                 let total_counts = data[0];

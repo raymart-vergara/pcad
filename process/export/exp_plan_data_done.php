@@ -83,7 +83,7 @@ $process_design_results = get_process_design($search_arr, $conn_emp_mgt, $conn_p
 
 $delimiter = ",";
 
-$filename = "PCAD_ExecPlanDataDone_" . $day . "_" . $shift . ".csv";
+$filename = "PCAD_ExecPlanDataDone_" . $plan_data_done_arr['line_no'] . "_" . $day . "_" . $shift . ".csv";
  
 // Create a file pointer 
 $f = fopen('php://memory', 'w'); 
