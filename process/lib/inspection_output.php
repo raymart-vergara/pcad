@@ -249,6 +249,16 @@ function get_rows_overall_g($search_arr, $conn_ircs)
    $server_date_only_yesterday = $search_arr['server_date_only_yesterday'];
    $server_date_only_tomorrow = $search_arr['server_date_only_tomorrow'];
    $server_time = $search_arr['server_time'];
+   $hourly_output_date = $search_arr['hourly_output_date'];
+   $hourly_output_date_tomorrow = $search_arr['hourly_output_date_tomorrow'];
+   $opt = $search_arr['opt'];
+
+   $start_date = '';
+   $end_date = '';
+   $start_time_ds = ' 06:00:00';
+   $end_time_ds = ' 17:59:59';
+   $start_time_ns = ' 18:00:00';
+   $end_time_ns = ' 05:59:59';
 
    // $total = 0;
    $total = array();
@@ -270,18 +280,29 @@ function get_rows_overall_g($search_arr, $conn_ircs)
       $query .= " AND $ipaddresscolumn IN ($ipAddressesString)";
    }
 
-   if ($shift == 'DS') {
-      $query .= "AND $date_column BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') 
-                                AND TO_DATE('$server_date_only 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+   if ($opt == 2) {
+      if ($shift == 'DS') {
+         $start_date = $hourly_output_date . $start_time_ds;
+         $end_date = $hourly_output_date . $end_time_ds;
+      } else if ($shift == 'NS') {
+         $start_date = $hourly_output_date . $start_time_ns;
+         $end_date = $hourly_output_date_tomorrow . $end_time_ns;
+      }
+   } else if ($shift == 'DS') {
+      $start_date = $server_date_only . $start_time_ds;
+      $end_date = $server_date_only . $end_time_ds;
    } else if ($shift == 'NS') {
       if ($server_time >= '06:00:00' && $server_time <= '23:59:59') {
-         $query .= "AND $date_column BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
-                                        AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+         $start_date = $server_date_only . $start_time_ns;
+         $end_date = $server_date_only_tomorrow . $end_time_ns;
       } else if ($server_time >= '00:00:00' && $server_time < '06:00:00') {
-         $query .= "AND $date_column BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
-                                        AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+         $start_date = $server_date_only_yesterday . $start_time_ns;
+         $end_date = $server_date_only . $end_time_ns;
       }
    }
+
+   $query .= "AND $date_column BETWEEN TO_DATE('$start_date', 'yyyy-MM-dd HH24:MI:SS') 
+                                AND TO_DATE('$end_date', 'yyyy-MM-dd HH24:MI:SS')";
 
    $stmt = oci_parse($conn_ircs, $query);
    oci_execute($stmt);
