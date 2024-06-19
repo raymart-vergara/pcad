@@ -542,7 +542,8 @@ function count_actual_hourly_output($search_arr, $conn_ircs, $conn_pcad)
    $ipaddresscolumn = $ircs_line_data_arr['ipaddresscolumn'];
    $ipAddresses = $ircs_line_data_arr['ipAddresses'];
 
-   $server_date_only = $search_arr['server_date_only'];
+   $day = $search_arr['day'];
+   $day_tomorrow = $search_arr['day_tomorrow'];
 
    $date_column = $final_process;
 
@@ -556,23 +557,40 @@ function count_actual_hourly_output($search_arr, $conn_ircs, $conn_pcad)
 
    $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
+   $start_date = '';
+   $end_date = '';
+   $start_time = ':00:00';
+   $end_time = ':59:59';
    $server_hour = '';
 
-   switch($search_arr['opt']) {
-		case 1:
-			$server_hour = date('H');
-			break;
-		case 2:
-			if ($search_arr['shift'] == 'DS') {
-				$server_hour = date('H',(strtotime("17")));
-			} else if ($search_arr['shift'] == 'NS') {
-            $server_hour = date('H',(strtotime("05")));
-			}
-			break;
-		default:
-         $server_hour = date('H');
-			break;
-	}
+   if ($search_arr['opt'] == 2) {
+      if ($search_arr['shift'] == 'DS') {
+         $server_hour = " " . date('H',(strtotime("17")));
+
+         $start_date = $day . $server_hour . $start_time;
+         $end_date = $day . $server_hour . $end_time;
+      } else if ($search_arr['shift'] == 'NS') {
+         $server_hour = " " . date('H',(strtotime("05")));
+
+         $start_date = $day . $server_hour . $start_time;
+         $end_date = $day_tomorrow . $server_hour . $end_time;
+      }
+   } else {
+      $server_hour = " " . date('H');
+
+      if ($search_arr['shift'] == 'DS') {
+         $start_date = $search_arr['server_date_only'] . $server_hour . $start_time;
+         $end_date = $search_arr['server_date_only'] . $server_hour . $end_time;
+      } else if ($search_arr['shift'] == 'NS') {
+         if ($search_arr['server_time'] >= '06:00:00' && $search_arr['server_time'] <= '23:59:59') {
+            $start_date = $search_arr['server_date_only'] . $server_hour . $start_time;
+            $end_date = $search_arr['server_date_only_tomorrow'] . $server_hour . $end_time;
+         } else if ($search_arr['server_time'] >= '00:00:00' && $search_arr['server_time'] < '06:00:00') {
+            $start_date = $search_arr['server_date_only_yesterday'] . $server_hour . $start_time;
+            $end_date = $search_arr['server_date_only'] . $server_hour . $end_time;
+         }
+      }
+   }
 
    // SELECT COUNT(PARTSNAME) AS HOURLY_OUTPUT FROM T_PRODUCTWK
    // WHERE INSPECTION4IPADDRESS IN ('172.25.161.166','172.25.166.83')
@@ -586,8 +604,8 @@ function count_actual_hourly_output($search_arr, $conn_ircs, $conn_pcad)
       $query = $query . " AND $ipaddresscolumn IN ($ipAddressesString)";
    }
 
-   $query = $query . "AND $date_column BETWEEN TO_DATE('$server_date_only $server_hour:00:00', 'yyyy-MM-dd HH24:MI:SS') 
-                        AND TO_DATE('$server_date_only $server_hour:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+   $query = $query . "AND $date_column BETWEEN TO_DATE('$start_date', 'yyyy-MM-dd HH24:MI:SS') 
+                        AND TO_DATE('$end_date', 'yyyy-MM-dd HH24:MI:SS')";
 
    $stmt = oci_parse($conn_ircs, $query);
    oci_execute($stmt);

@@ -38,6 +38,7 @@ $section_qa = get_section($plan_data_done_arr['line_no'], $conn_emp_mgt);
 
 $search_arr = array(
   'day' => $day,
+  'day_tomorrow' => $day_tomorrow,
   'shift' => $shift,
   'shift_group' => $plan_data_done_arr['shift_group'],
   'dept_pd' => $dept_pd,

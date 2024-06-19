@@ -4,6 +4,10 @@
         let registlinename = document.getElementById('registlinename').value;
         let takt = document.getElementById('takt').value;
         let working_time = document.getElementById('work_time_plan').value;
+        let day = localStorage.getItem("pcad_exec_server_date_only");
+        let shift = localStorage.getItem("shift");
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
+
         $.ajax({
             url: 'process/pcad/pcad_p.php',
             type: 'GET',
@@ -13,7 +17,10 @@
                 shift_group: shift_group,
                 registlinename: registlinename,
                 takt: takt,
-                working_time: working_time
+                working_time: working_time,
+                day: day,
+                shift: shift,
+                opt: opt
             },
             success: function (response) {
                 try {
