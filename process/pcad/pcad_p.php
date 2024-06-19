@@ -176,19 +176,36 @@ if ($method == 'get_conveyor_speed') {
 
 // Dashboard Data (index_exec.php) Get All t_plan Data Pending
 
-if ($method == 'get_plan_data_pending') {
+if ($method == 'get_plan_data') {
     $registlinename = $_GET['registlinename'];
 
-    $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
-    $shift = get_shift($server_time);
+    $opt = $_POST['opt'];
+
+    $day = '';
+    $shift = '';
+
+    switch($opt) {
+		case 1:
+			$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $shift = get_shift($server_time);
+			break;
+		case 2:
+			$day = $_POST['day'];
+            $shift = $_POST['shift'];
+			break;
+		default:
+            $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $shift = get_shift($server_time);
+			break;
+	}
 
     $shift_arr = array(
         "shift" => $shift
     );
-    $plan_data_pending_arr = get_plan_data($registlinename, $day, $shift, $conn_pcad, 1);
+    $plan_data_arr = get_plan_data($registlinename, $day, $shift, $conn_pcad, $opt);
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
-    $response_arr = array_merge($shift_arr, $plan_data_pending_arr, $ircs_line_data_arr);
+    $response_arr = array_merge($shift_arr, $plan_data_arr, $ircs_line_data_arr);
 
     echo json_encode($response_arr, JSON_FORCE_OBJECT);
 }

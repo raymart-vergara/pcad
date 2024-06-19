@@ -2,7 +2,7 @@
     const andon_hourly_graph = () => {
         let andon_line = localStorage.getItem("andon_line");
         let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
-        let server_date_only = '<?= $server_date_only ?>';
+        let server_date_only = localStorage.getItem("pcad_exec_server_date_only");
 
         $.ajax({
             url: 'process/andon_graph/a_hourly_p.php',
@@ -151,7 +151,7 @@
 
     const get_hourly_output_chart = () => {
         let registlinename = localStorage.getItem("registlinename");
-        let hourly_output_date = '<?= $server_date_only ?>';
+        let hourly_output_date = localStorage.getItem("pcad_exec_server_date_only");
         let target_output = parseInt(localStorage.getItem('target_hourly_output'));
         let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
 
@@ -324,7 +324,7 @@
 
     const ng_graph = () => {
         let registlinename = localStorage.getItem("registlinename");
-        let server_date_only = '<?= $server_date_only ?>';
+        let server_date_only = localStorage.getItem("pcad_exec_server_date_only");
         let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
 
         $.ajax({

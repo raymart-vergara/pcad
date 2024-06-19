@@ -51,15 +51,22 @@
         });
     }
 
-    const get_plan_data_pending = () => {
+    const get_plan_data = () => {
         let registlinename = document.getElementById('registlinename').value;
+        let day = localStorage.getItem("pcad_exec_server_date_only");
+        let shift = localStorage.getItem("shift");
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
+
         $.ajax({
             url: 'process/pcad/pcad_p.php',
             type: 'GET',
             cache: false,
             data: {
-                method: 'get_plan_data_pending',
-                registlinename: registlinename
+                method: 'get_plan_data',
+                registlinename: registlinename,
+                day: day,
+                shift: shift,
+                opt: opt
             },
             success: function (response) {
                 try {

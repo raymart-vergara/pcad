@@ -1107,7 +1107,7 @@ include 'process/pcad/dashboard_p.php';
    });
 
    function refreshFunctions() {
-      get_plan_data_pending();
+      get_plan_data();
       get_hourly_output();
      
       get_inspection_list_copy();
