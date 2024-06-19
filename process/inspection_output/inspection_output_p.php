@@ -290,6 +290,11 @@ if ($method == 'get_inspection_details_no_good') {
     $registlinename = $_GET['registlinename'];
     // $shift_group = $_GET['shift_group'];
 
+    $opt = $_GET['opt'];
+
+    $hourly_ng_date = $_GET['server_date_only'];
+    $hourly_ng_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_ng_date))));
+
     // $shift = 'DS';
     // $registlinename = 'DAIHATSU_30';
     // $shift_group = 'B';
@@ -303,7 +308,10 @@ if ($method == 'get_inspection_details_no_good') {
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time
+        'server_time' => $server_time,
+        'hourly_ng_date' => $hourly_ng_date,
+        'hourly_ng_date_tomorrow' => $hourly_ng_date_tomorrow,
+        'opt' => $opt
     );
 
     $list_of_no_good_viewer = get_rows_overall_ng($search_arr, $conn_ircs, $conn_pcad);

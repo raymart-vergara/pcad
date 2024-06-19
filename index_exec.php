@@ -657,9 +657,7 @@ include 'process/pcad/dashboard_p.php';
                         </div>
                         <div class="header-div-3">
                            <p class="header-title">Date</p>
-                           <p class="header-content" id="date_label">
-                              <?= $server_date_only ?>
-                           </p>
+                           <p class="header-content" id="date_label"><?= $server_date_only ?></p>
                         </div>
                      </div>
                   </td>
