@@ -190,6 +190,14 @@
 
     const export_plan_data_pending = () => {
         let registlinename = document.getElementById('registlinename').value;
-        window.open('process/export/exp_plan_data_pending.php?registlinename=' + registlinename, '_blank');
+        let day = localStorage.getItem("pcad_exec_server_date_only");
+        let shift = localStorage.getItem("shift");
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
+
+        if (opt == 1) {
+            window.open('process/export/exp_plan_data_pending.php?registlinename=' + registlinename, '_blank');
+        } else if (opt == 2) {
+            window.open('process/export/exp_plan_data_done.php?registlinename=' + registlinename + '&day=' + day + '&shift=' + shift, '_blank');
+        }
     }
 </script>
