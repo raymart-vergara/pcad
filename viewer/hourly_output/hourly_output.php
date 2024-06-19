@@ -56,7 +56,7 @@ if ($result) {
                             <div class="row mb-4">
                                 <div class="col-sm-3">
                                     <label>Line No.</label>
-                                    <select id="line_no_search" class="form-control">
+                                    <select id="line_no_search" class="form-control" disabled>
                                         <option value="">
                                             - - - -
                                         </option>
@@ -71,11 +71,11 @@ if ($result) {
                                 </div>
                                 <div class="col-sm-3">
                                     <label>Date</label>
-                                    <input type="date" class="form-control" id="hourly_output_date_search">
+                                    <input type="date" class="form-control" id="hourly_output_date_search" disabled>
                                 </div>
                                 <div class="col-sm-3">
                                     <label>Shift</label>
-                                    <select class="form-control" id="shift_search" style="width: 100%;" required>
+                                    <select class="form-control" id="shift_search" style="width: 100%;" disabled>
                                         <option value="DS">DS</option>
                                         <option value="NS">NS</option>
                                         <option selected value="">All</option>
@@ -83,7 +83,7 @@ if ($result) {
                                 </div>
                                 <div class="col-sm-3">
                                     <label>Target Output</label>
-                                    <input type="number" class="form-control" id="target_output_search">
+                                    <input type="number" class="form-control" id="target_output_search" disabled>
                                 </div>
                             </div>
                             <div class="row mb-2">
@@ -94,7 +94,7 @@ if ($result) {
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="button" class="btn bg-primary btn-block"
-                                        onclick="get_hourly_output()"><i class="fas fa-search"></i> Search</button>
+                                        onclick="get_hourly_output()" disabled><i class="fas fa-search"></i> Search</button>
                                 </div>
                             </div>
                             <div id="accordion_hourly_output_legend">

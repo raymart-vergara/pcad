@@ -141,6 +141,10 @@ if ($method == 'get_hourly_output_per_process') {
     $hourly_output_date = $_GET['hourly_output_date'];
     $target_output = intval($_GET['target_output']);
 
+    $opt = $_GET['opt'];
+
+    $hourly_output_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_output_date))));
+
     // $registlinename = 'DAIHATSU_30';
     // $target_output = 13;
 
@@ -166,10 +170,13 @@ if ($method == 'get_hourly_output_per_process') {
 
             $search_arr = array(
                 'registlinename' => $registlinename,
-                'server_date_only' => $hourly_output_date,
+                'server_date_only' => $server_date_only,
                 'server_date_only_yesterday' => $server_date_only_yesterday,
                 'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                'server_time' => $server_time
+                'server_time' => $server_time,
+                'hourly_output_date' => $hourly_output_date,
+                'hourly_output_date_tomorrow' => $hourly_output_date_tomorrow,
+                'opt' => $opt
             );
 
             // switch ($process) {

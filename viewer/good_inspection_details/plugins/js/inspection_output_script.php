@@ -7,7 +7,7 @@
         let registlinename = localStorage.getItem("registlinename");
         let server_date_only = localStorage.getItem("pcad_exec_server_date_only");
         let shift = localStorage.getItem("shift");
-        let opt = localStorage.getItem("pcad_exec_opt");
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
         
         $.ajax({
             url: '../../process/inspection_output/inspection_output_p.php',
@@ -37,7 +37,7 @@
         let registlinename = localStorage.getItem("registlinename");
         let server_date_only = localStorage.getItem("pcad_exec_server_date_only");
         let shift = localStorage.getItem("shift");
-        let opt = localStorage.getItem("pcad_exec_opt");
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
         window.open('../../process/export/exp_good_insp.php?registlinename=' + registlinename + '&shift=' + shift + '&server_date_only=' + server_date_only + '&opt=' + opt, '_blank');
     }
 </script>

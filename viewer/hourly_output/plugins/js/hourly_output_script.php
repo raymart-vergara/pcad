@@ -3,7 +3,7 @@
 
     // DOMContentLoaded function
     document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById('hourly_output_date_search').value = '<?= $server_date_only ?>';
+        document.getElementById('hourly_output_date_search').value = localStorage.getItem("pcad_exec_server_date_only");
         get_hourly_output();
         // get_hourly_output_per_process();
         setInterval(get_hourly_output_per_process, 30000);
@@ -13,7 +13,7 @@
 
     const get_hourly_output_chart = () => {
         let registlinename = localStorage.getItem("registlinename");
-        let hourly_output_date = '<?= $server_date_only ?>';
+        let hourly_output_date = localStorage.getItem("pcad_exec_server_date_only");
         let target_output = parseInt(localStorage.getItem('target_hourly_output'));
         let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
 
@@ -188,6 +188,7 @@
         let registlinename = sessionStorage.getItem('line_no_search');
         let hourly_output_date = sessionStorage.getItem('hourly_output_date_search');
         let target_output = sessionStorage.getItem('target_output_search');
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
 
         $.ajax({
             url: '../../process/hourly_output/hourly_output_p.php',
@@ -197,7 +198,8 @@
                 method: 'get_hourly_output_per_process',
                 registlinename: registlinename,
                 hourly_output_date: hourly_output_date,
-                target_output: target_output
+                target_output: target_output,
+                opt: opt
             },
             success: function (response) {
                 document.getElementById("hourlyOutputProcessData").innerHTML = response;

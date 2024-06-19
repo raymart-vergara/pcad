@@ -607,10 +607,19 @@ function count_actual_hourly_output_process($search_arr, $conn_ircs, $conn_pcad,
    $date_column = $processDetailsGood['date_column'];
    $ipAddresses = $processDetailsGood['ipAddresses'];
 
-   $server_date_only = $search_arr['server_date_only'];
+   $start_date = '';
+   $end_date = '';
 
-   $hourly_output_date = $server_date_only;
-   $hourly_output_date_tomorrow = date('Y-m-d', (strtotime('+1 day', strtotime($hourly_output_date))));
+   if ($search_arr['opt'] == 2) {
+      $start_date = $search_arr['hourly_output_date'];
+      $end_date = $search_arr['hourly_output_date_tomorrow'];
+   } else if ($search_arr['server_time'] >= '00:00:00' && $search_arr['server_time'] < '06:00:00') {
+      $start_date = $search_arr['server_date_only_yesterday'];
+      $end_date = $search_arr['server_date_only'];
+   } else {
+      $start_date = $search_arr['server_date_only'];
+      $end_date = $search_arr['server_date_only_tomorrow'];
+   }
 
    // $total = 0;
    $total = array();
@@ -628,8 +637,8 @@ function count_actual_hourly_output_process($search_arr, $conn_ircs, $conn_pcad,
       $query = $query . " AND $ipAddressColumn IN ($ipAddressesString)";
    }
 
-   $query = $query . "AND T_PRODUCTWK.$date_column BETWEEN TO_DATE('$hourly_output_date 06:00:00', 'yyyy-MM-dd HH24:MI:SS') 
-                                AND TO_DATE('$hourly_output_date_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+   $query = $query . "AND T_PRODUCTWK.$date_column BETWEEN TO_DATE('$start_date 06:00:00', 'yyyy-MM-dd HH24:MI:SS') 
+                                AND TO_DATE('$end_date 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
 
    $query = $query . ") GROUP BY REGISTLINENAME, DAY, HOUR, DATE_TIME ORDER BY DATE_TIME";
 
@@ -658,8 +667,8 @@ function count_actual_ng_hourly_output_process($search_arr, $conn_ircs, $conn_pc
    $end_date = '';
 
    if ($search_arr['opt'] == 2) {
-      $start_date = $search_arr['hourly_output_date'];
-      $end_date = $search_arr['hourly_output_date_tomorrow'];
+      $start_date = $search_arr['hourly_ng_date'];
+      $end_date = $search_arr['hourly_ng_date_tomorrow'];
    } else if ($search_arr['server_time'] >= '00:00:00' && $search_arr['server_time'] < '06:00:00') {
       $start_date = $search_arr['server_date_only_yesterday'];
       $end_date = $search_arr['server_date_only'];
