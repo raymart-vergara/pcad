@@ -250,6 +250,7 @@ if (isset($_POST['request'])) {
         $shift_group = $_POST['shift_group'];
         $shift = get_shift($server_time);
         $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+        $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
         $work_time_plan = $_POST['work_time_plan'];
 
         $sql = "SELECT datetime_DB FROM t_plan 
@@ -267,6 +268,7 @@ if (isset($_POST['request'])) {
 
             $search_arr = array(
                 'day' => $day,
+                'day_tomorrow' => $day_tomorrow,
                 'shift' => $shift,
                 'shift_group' => $shift_group,
                 'dept' => "",

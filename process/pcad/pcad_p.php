@@ -20,6 +20,7 @@ if ($method == 'get_accounting_efficiency') {
     // $day = '2024-02-02';
 	$shift = get_shift($server_time);
     $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+    $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
 	// $line_no = '2132';
     // $day = $_GET['day'];
 	// $shift = $_GET['shift'];
@@ -35,6 +36,7 @@ if ($method == 'get_accounting_efficiency') {
 
     $search_arr = array(
         'day' => $day,
+        'day_tomorrow' => $day_tomorrow,
 		'shift' => $shift,
         'shift_group' => $shift_group,
         'dept' => "",
