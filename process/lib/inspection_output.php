@@ -14,6 +14,16 @@ function count_overall_g($search_arr, $conn_ircs)
    $server_date_only_yesterday = $search_arr['server_date_only_yesterday'];
    $server_date_only_tomorrow = $search_arr['server_date_only_tomorrow'];
    $server_time = $search_arr['server_time'];
+   $day = $search_arr['day'];
+   $day_tomorrow = $search_arr['day_tomorrow'];
+   $opt = $search_arr['opt'];
+
+   $start_date = '';
+   $end_date = '';
+   $start_time_ds = ' 06:00:00';
+   $end_time_ds = ' 17:59:59';
+   $start_time_ns = ' 18:00:00';
+   $end_time_ns = ' 05:59:59';
 
    $total = 0;
 
@@ -34,18 +44,29 @@ function count_overall_g($search_arr, $conn_ircs)
       $query .= " AND $ipaddresscolumn IN ($ipAddressesString)";
    }
 
-   if ($shift == 'DS') {
-      $query .= "AND $date_column BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') 
-                                AND TO_DATE('$server_date_only 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+   if ($opt == 2) {
+      if ($shift == 'DS') {
+         $start_date = $day . $start_time_ds;
+         $end_date = $day . $end_time_ds;
+      } else if ($shift == 'NS') {
+         $start_date = $day . $start_time_ns;
+         $end_date = $day_tomorrow . $end_time_ns;
+      }
+   } else if ($shift == 'DS') {
+      $start_date = $server_date_only . $start_time_ds;
+      $end_date = $server_date_only . $end_time_ds;
    } else if ($shift == 'NS') {
       if ($server_time >= '06:00:00' && $server_time <= '23:59:59') {
-         $query .= "AND $date_column BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
-                                        AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+         $start_date = $server_date_only . $start_time_ns;
+         $end_date = $server_date_only_tomorrow . $end_time_ns;
       } else if ($server_time >= '00:00:00' && $server_time < '06:00:00') {
-         $query .= "AND $date_column BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
-                                        AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+         $start_date = $server_date_only_yesterday . $start_time_ns;
+         $end_date = $server_date_only . $end_time_ns;
       }
    }
+
+   $query .= "AND $date_column BETWEEN TO_DATE('$start_date', 'yyyy-MM-dd HH24:MI:SS') 
+                                AND TO_DATE('$end_date', 'yyyy-MM-dd HH24:MI:SS')";
 
    $stmt = oci_parse($conn_ircs, $query);
    oci_execute($stmt);
@@ -126,6 +147,16 @@ function countProcessGood($search_arr, $conn_ircs, $processDetailsGood)
    $server_date_only_yesterday = $search_arr['server_date_only_yesterday'];
    $server_date_only_tomorrow = $search_arr['server_date_only_tomorrow'];
    $server_time = $search_arr['server_time'];
+   $day = $search_arr['day'];
+   $day_tomorrow = $search_arr['day_tomorrow'];
+   $opt = $search_arr['opt'];
+
+   $start_date = '';
+   $end_date = '';
+   $start_time_ds = ' 06:00:00';
+   $end_time_ds = ' 17:59:59';
+   $start_time_ns = ' 18:00:00';
+   $end_time_ns = ' 05:59:59';
 
    $total = 0;
 
@@ -149,18 +180,29 @@ function countProcessGood($search_arr, $conn_ircs, $processDetailsGood)
       $query .= " AND $ipAddressColumn IN ($ipAddressesString)";
    }
 
-   if ($shift == 'DS') {
-      $query .= " AND $date_column BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') 
-                                AND TO_DATE('$server_date_only 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
-   } elseif ($shift == 'NS') {
+   if ($opt == 2) {
+      if ($shift == 'DS') {
+         $start_date = $day . $start_time_ds;
+         $end_date = $day . $end_time_ds;
+      } else if ($shift == 'NS') {
+         $start_date = $day . $start_time_ns;
+         $end_date = $day_tomorrow . $end_time_ns;
+      }
+   } else if ($shift == 'DS') {
+      $start_date = $server_date_only . $start_time_ds;
+      $end_date = $server_date_only . $end_time_ds;
+   } else if ($shift == 'NS') {
       if ($server_time >= '06:00:00' && $server_time <= '23:59:59') {
-         $query .= " AND $date_column BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
-                                        AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
-      } elseif ($server_time >= '00:00:00' && $server_time < '06:00:00') {
-         $query .= " AND $date_column BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
-                                        AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+         $start_date = $server_date_only . $start_time_ns;
+         $end_date = $server_date_only_tomorrow . $end_time_ns;
+      } else if ($server_time >= '00:00:00' && $server_time < '06:00:00') {
+         $start_date = $server_date_only_yesterday . $start_time_ns;
+         $end_date = $server_date_only . $end_time_ns;
       }
    }
+
+   $query .= " AND $date_column BETWEEN TO_DATE('$start_date', 'yyyy-MM-dd HH24:MI:SS') 
+                                AND TO_DATE('$end_date', 'yyyy-MM-dd HH24:MI:SS')";
 
    $stmt = oci_parse($conn_ircs, $query);
    oci_execute($stmt);
@@ -182,6 +224,16 @@ function countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad)
    $server_date_only_yesterday = $search_arr['server_date_only_yesterday'];
    $server_date_only_tomorrow = $search_arr['server_date_only_tomorrow'];
    $server_time = $search_arr['server_time'];
+   $day = $search_arr['day'];
+   $day_tomorrow = $search_arr['day_tomorrow'];
+   $opt = $search_arr['opt'];
+
+   $start_date = '';
+   $end_date = '';
+   $start_time_ds = ' 06:00:00';
+   $end_time_ds = ' 17:59:59';
+   $start_time_ns = ' 18:00:00';
+   $end_time_ns = ' 05:59:59';
 
    $total = 0;
 
@@ -211,18 +263,29 @@ function countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad)
       $query .= " AND $ipAddressColumn IN ($ipAddressesString)";
    }
 
-   if ($shift == 'DS') {
-      $query .= " AND $date_column BETWEEN TO_DATE('$server_date_only 06:00:00', 'yyyy-MM-dd HH24:MI:SS') 
-                                AND TO_DATE('$server_date_only 17:59:59', 'yyyy-MM-dd HH24:MI:SS')";
-   } elseif ($shift == 'NS') {
+   if ($opt == 2) {
+      if ($shift == 'DS') {
+         $start_date = $day . $start_time_ds;
+         $end_date = $day . $end_time_ds;
+      } else if ($shift == 'NS') {
+         $start_date = $day . $start_time_ns;
+         $end_date = $day_tomorrow . $end_time_ns;
+      }
+   } else if ($shift == 'DS') {
+      $start_date = $server_date_only . $start_time_ds;
+      $end_date = $server_date_only . $end_time_ds;
+   } else if ($shift == 'NS') {
       if ($server_time >= '06:00:00' && $server_time <= '23:59:59') {
-         $query .= " AND $date_column BETWEEN TO_DATE('$server_date_only 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
-                                        AND TO_DATE('$server_date_only_tomorrow 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
-      } elseif ($server_time >= '00:00:00' && $server_time < '06:00:00') {
-         $query .= " AND $date_column BETWEEN TO_DATE('$server_date_only_yesterday 18:00:00', 'yyyy-MM-dd HH24:MI:SS') 
-                                        AND TO_DATE('$server_date_only 05:59:59', 'yyyy-MM-dd HH24:MI:SS')";
+         $start_date = $server_date_only . $start_time_ns;
+         $end_date = $server_date_only_tomorrow . $end_time_ns;
+      } else if ($server_time >= '00:00:00' && $server_time < '06:00:00') {
+         $start_date = $server_date_only_yesterday . $start_time_ns;
+         $end_date = $server_date_only . $end_time_ns;
       }
    }
+
+   $query .= " AND $date_column BETWEEN TO_DATE('$start_date', 'yyyy-MM-dd HH24:MI:SS') 
+                                AND TO_DATE('$end_date', 'yyyy-MM-dd HH24:MI:SS')";
 
    $stmt = oci_parse($conn_ircs, $query);
    oci_execute($stmt);
@@ -747,12 +810,15 @@ function get_overall_inspection_list($search_arr, $conn_ircs, $conn_pcad) {
          $date_column = $processData['finishdatetime'];
 
          $search_arr = array(
+            'day' => $search_arr['day'],
+            'day_tomorrow' => $search_arr['day_tomorrow'],
             'shift' => $search_arr['shift'],
             'registlinename' => $search_arr['registlinename'],
             'server_date_only' => $search_arr['server_date_only'],
             'server_date_only_yesterday' => $search_arr['server_date_only_yesterday'],
             'server_date_only_tomorrow' => $search_arr['server_date_only_tomorrow'],
-            'server_time' => $search_arr['server_time']
+            'server_time' => $search_arr['server_time'],
+            'opt' => $search_arr['opt']
          );
 
          // switch ($process) {

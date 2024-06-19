@@ -100,6 +100,9 @@
     const get_yield = () => {
         let shift_group = document.getElementById('shift_group').value;
         let registlinename = document.getElementById('registlinename').value;
+        let day = localStorage.getItem("pcad_prod_server_date_only");
+        let shift = localStorage.getItem("shift");
+
         $.ajax({
             url: 'process/pcad/pcad_p.php',
             type: 'GET',
@@ -107,7 +110,10 @@
             data: {
                 method: 'get_yield',
                 shift_group: shift_group,
-                registlinename: registlinename
+                registlinename: registlinename,
+                day: day,
+                shift: shift,
+                opt: 1
             },
             success: function (response) {
                 document.getElementById('actual_yield').innerHTML = `${response}%`;
@@ -119,6 +125,9 @@
     const get_ppm = () => {
         let shift_group = document.getElementById('shift_group').value;
         let registlinename = document.getElementById('registlinename').value;
+        let day = localStorage.getItem("pcad_prod_server_date_only");
+        let shift = localStorage.getItem("shift");
+
         $.ajax({
             url: 'process/pcad/pcad_p.php',
             type: 'GET',
@@ -126,7 +135,10 @@
             data: {
                 method: 'get_ppm',
                 shift_group: shift_group,
-                registlinename: registlinename
+                registlinename: registlinename,
+                day: day,
+                shift: shift,
+                opt: 1
             },
             success: function (response) {
                 try {

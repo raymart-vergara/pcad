@@ -198,16 +198,42 @@ $method = $_GET['method'];
 // }
 
 if ($method == 'get_inspection_list') {
-    $shift = get_shift($server_time);
     $registlinename = $_GET['registlinename'];
 
+    $opt = $_GET['opt'];
+
+    $day = '';
+    $day_tomorrow = '';
+    $shift = '';
+
+    switch($opt) {
+		case 1:
+			$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+		case 2:
+			$day = $_GET['day'];
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = $_GET['shift'];
+			break;
+		default:
+            $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+	}
+
     $search_arr = array(
+        'day' => $day,
+        'day_tomorrow' => $day_tomorrow,
         'shift' => $shift,
         'registlinename' => $registlinename,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time
+        'server_time' => $server_time,
+        'opt' => $opt
     );
 
     $overall_inspection_list_arr = get_overall_inspection_list($search_arr, $conn_ircs, $conn_pcad);
@@ -228,16 +254,42 @@ if ($method == 'get_inspection_list') {
 }
 
 if ($method == 'get_inspection_list_copy') {
-    $shift = get_shift($server_time);
     $registlinename = $_GET['registlinename'];
 
+    $opt = $_GET['opt'];
+
+    $day = '';
+    $day_tomorrow = '';
+    $shift = '';
+
+    switch($opt) {
+		case 1:
+			$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+		case 2:
+			$day = $_GET['day'];
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = $_GET['shift'];
+			break;
+		default:
+            $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+	}
+
     $search_arr = array(
+        'day' => $day,
+        'day_tomorrow' => $day_tomorrow,
         'shift' => $shift,
         'registlinename' => $registlinename,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time
+        'server_time' => $server_time,
+        'opt' => $opt
     );
 
     $overall_inspection_list_arr = get_overall_inspection_list($search_arr, $conn_ircs, $conn_pcad);
@@ -258,19 +310,45 @@ if ($method == 'get_inspection_list_copy') {
 }
 
 if ($method == 'get_overall_inspection') {
-    $shift = get_shift($server_time);
     $registlinename = $_GET['registlinename'];
+
+    $opt = $_GET['opt'];
+
+    $day = '';
+    $day_tomorrow = '';
+    $shift = '';
+
+    switch($opt) {
+		case 1:
+			$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+		case 2:
+			$day = $_GET['day'];
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = $_GET['shift'];
+			break;
+		default:
+            $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+	}
 
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
     $search_arr = array(
+        'day' => $day,
+        'day_tomorrow' => $day_tomorrow,
         'shift' => $shift,
         'registlinename' => $registlinename,
         'ircs_line_data_arr' => $ircs_line_data_arr,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time
+        'server_time' => $server_time,
+        'opt' => $opt
     );
 
     $insp_overall_g = count_overall_g($search_arr, $conn_ircs);

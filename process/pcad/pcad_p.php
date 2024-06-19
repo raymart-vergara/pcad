@@ -72,13 +72,38 @@ if ($method == 'get_accounting_efficiency') {
 // Yield
 // http://172.25.112.131/pcad/process/pcad/pcad_p.php?method=get_yield
 if ($method == 'get_yield') {
-    $shift = get_shift($server_time);
     $registlinename = $_GET['registlinename'];
     $shift_group = $_GET['shift_group'];
+
+    $opt = $_GET['opt'];
+
+    $day = '';
+    $day_tomorrow = '';
+    $shift = '';
+
+    switch($opt) {
+		case 1:
+			$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+		case 2:
+			$day = $_GET['day'];
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = $_GET['shift'];
+			break;
+		default:
+            $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+	}
 
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
     $search_arr = array(
+        'day' => $day,
+        'day_tomorrow' => $day_tomorrow,
 		'shift' => $shift,
         'shift_group' => $shift_group,
         'registlinename' => $registlinename,
@@ -86,7 +111,8 @@ if ($method == 'get_yield') {
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time
+        'server_time' => $server_time,
+        'opt' => $opt
     );
 
     $qa_output = count_overall_g($search_arr, $conn_ircs);
@@ -99,13 +125,38 @@ if ($method == 'get_yield') {
 // PPM
 // http://172.25.112.131/pcad/process/pcad/pcad_p.php?method=get_ppm
 if ($method == 'get_ppm') {
-    $shift = get_shift($server_time);
     $registlinename = $_GET['registlinename'];
     $shift_group = $_GET['shift_group'];
+
+    $opt = $_GET['opt'];
+
+    $day = '';
+    $day_tomorrow = '';
+    $shift = '';
+
+    switch($opt) {
+		case 1:
+			$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+		case 2:
+			$day = $_GET['day'];
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = $_GET['shift'];
+			break;
+		default:
+            $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+	}
 
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
     $search_arr = array(
+        'day' => $day,
+        'day_tomorrow' => $day_tomorrow,
 		'shift' => $shift,
         'shift_group' => $shift_group,
         'registlinename' => $registlinename,
@@ -113,7 +164,8 @@ if ($method == 'get_ppm') {
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time
+        'server_time' => $server_time,
+        'opt' => $opt
     );
 
     $output = count_overall_g($search_arr, $conn_ircs);
