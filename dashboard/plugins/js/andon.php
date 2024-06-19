@@ -1,19 +1,4 @@
 <script type="text/javascript">
-    const andon_detail = () => {
-        let andon_line = document.getElementById('andon_line').value
-        $.ajax({
-            url: '../process/andon_graph/a_graph_p.php',
-            type: 'POST',
-            cache: false,
-            data: {
-                method: 'andon_detail',
-                andon_line: andon_line
-            }, success: function (response) {
-                $('#andon_details').html(response);
-            }
-        });
-    }
-
     const andon_d_sum = () => {
         let andon_line = document.getElementById('andon_line').value
         $.ajax({
