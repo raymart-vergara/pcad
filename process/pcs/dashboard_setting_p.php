@@ -73,10 +73,43 @@ if (isset($_POST['request'])) {
             echo "Failed to get plan.";
         }
     } else if ($request == "addTarget") {
+        $opt = $_POST['opt'];
+        $day = $_POST['day'];
+        $shift = $_POST['shift'];
         $registlinename = $_POST['registlinename'];
         $group = $_POST['group'];
 
-        $sql_get_line = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND `group` = :group AND Status = 'Pending'";
+        $url = "location: ../../index_exec.php?registlinename=" . $registlinename . "&opt=" . $opt;
+        $message = "There is no plan set for the selected line.";
+
+        $sql_get_line = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND `group` = :group";
+
+        switch($opt) {
+            case 1:
+                $sql_get_line .= " AND Status = 'Pending'";
+                break;
+            case 2:
+                $url = "location: ../../index_exec.php?registlinename=" . $registlinename . "&day=" . $day . "&shift=" . $shift . "&opt=" . $opt;
+                $message = "There is no plan history set for the selected line.";
+
+                $start_date = '';
+                $end_date = '';
+    
+                if ($shift == 'DS') {
+                    $start_date = date('Y-m-d H:i:s',(strtotime("$day 06:00:00")));
+                    $end_date = date('Y-m-d H:i:s',(strtotime("$day 17:59:59")));
+                } else if ($shift == 'NS') {
+                    $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+                    $start_date = date('Y-m-d H:i:s',(strtotime("$day 18:00:00")));
+                    $end_date = date('Y-m-d H:i:s',(strtotime("$day_tomorrow 05:59:59")));
+                }
+    
+                $sql_get_line .= " AND Status = 'Done' AND (datetime_DB >= '$start_date' AND datetime_DB <= '$end_date')";
+                break;
+            default:
+                $sql_get_line .= " AND Status = 'Pending'";
+                break;
+        }
 
         $stmt_get_line = $conn_pcad->prepare($sql_get_line);
         $stmt_get_line->bindParam(':registlinename', $registlinename);
@@ -84,10 +117,10 @@ if (isset($_POST['request'])) {
 
         if ($stmt_get_line->execute()) {
             if ($stmt_get_line->rowCount() > 0) {
-                header("location: ../../index_exec.php?registlinename=" . $registlinename);
+                header($url);
             } else {
                 echo "<script>
-                        alert('There is no plan set for the selected line.');
+                        alert('".$message."');
                         window.location.href = '../../dashboard/setting.php';
                       </script>";
             }

@@ -49,7 +49,7 @@ if ($method == 'andon_hourly') {
             $end_date = $server_date_only_tomorrow;
         }
 
-        $query = "SELECT COUNT(id) AS total_count 
+        $query = "SELECT COUNT(*) AS total_count 
                 FROM tblhistory 
                 WHERE requestDateTime BETWEEN ('$start_date 06:00:00') AND ('$end_date 05:59:59')";
         

@@ -258,7 +258,7 @@ if ($method == 'get_conveyor_speed') {
 if ($method == 'get_plan_data') {
     $registlinename = $_GET['registlinename'];
 
-    $opt = $_POST['opt'];
+    $opt = $_GET['opt'];
 
     $day = '';
     $shift = '';
@@ -269,8 +269,8 @@ if ($method == 'get_plan_data') {
             $shift = get_shift($server_time);
 			break;
 		case 2:
-			$day = $_POST['day'];
-            $shift = $_POST['shift'];
+			$day = $_GET['day'];
+            $shift = $_GET['shift'];
 			break;
 		default:
             $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);

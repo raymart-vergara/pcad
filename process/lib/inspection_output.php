@@ -635,7 +635,7 @@ function count_actual_hourly_output($search_arr, $conn_ircs, $conn_pcad)
       } else if ($search_arr['shift'] == 'NS') {
          $server_hour = " " . date('H',(strtotime("05")));
 
-         $start_date = $day . $server_hour . $start_time;
+         $start_date = $day_tomorrow . $server_hour . $start_time;
          $end_date = $day_tomorrow . $server_hour . $end_time;
       }
    } else {
