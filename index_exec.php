@@ -561,6 +561,8 @@ include 'process/pcad/dashboard_p.php';
    <input type="hidden" id="work_time_plan" name="work_time_plan" value="<?= $work_time_plan; ?>">
    <input type="hidden" id="daily_plan" name="daily_plan" value="<?= $daily_plan; ?>">
 
+   <input type="hidden" id="opt" name="opt" value="<?= $opt; ?>">
+
    <div class="container-fluid mt-3">
       <!-- ===================== LIGHT/DARK MODE TOGGLE AND RETURN TO SETTING-->
       <div class="row">
@@ -655,9 +657,7 @@ include 'process/pcad/dashboard_p.php';
                         </div>
                         <div class="header-div-3">
                            <p class="header-title">Date</p>
-                           <p class="header-content" id="date_label">
-                              <?= $server_date_only ?>
-                           </p>
+                           <p class="header-content" id="date_label"><?= $server_date_only ?></p>
                         </div>
                      </div>
                   </td>
@@ -1082,6 +1082,8 @@ include 'process/pcad/dashboard_p.php';
    // Set LocalStorage for these variables
    localStorage.setItem("andon_line", $("#andon_line").val());
    localStorage.setItem("shift", $("#shift").val());
+   localStorage.setItem("pcad_exec_opt", $("#opt").val());
+   localStorage.setItem("pcad_exec_server_date_only", $("#date_label").html());
 
    $(document).ready(function () {
       // Call these functions initially to load the data from PCAD and other Systems
@@ -1105,7 +1107,7 @@ include 'process/pcad/dashboard_p.php';
    });
 
    function refreshFunctions() {
-      get_plan_data_pending();
+      get_plan_data();
       get_hourly_output();
      
       get_inspection_list_copy();

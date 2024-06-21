@@ -9,6 +9,15 @@ $method = $_GET['method'];
 if ($method == 'andon_hourly') {
     $andon_line = $_GET['andon_line'];
     // $andon_line = 'DAIHATSU D92-2132';
+    $opt = $_GET['opt'];
+
+    if ($opt == 2 && isset($_GET['server_date_only'])) {
+        if ($server_date_only != $_GET['server_date_only']) {
+            $server_date_only = $_GET['server_date_only'];
+            $server_date_only_yesterday = date('Y-m-d',(strtotime('-1 day',strtotime($server_date_only))));
+            $server_date_only_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($server_date_only))));
+        }
+    }
 
     $data = [];
 
@@ -22,13 +31,60 @@ if ($method == 'andon_hourly') {
         $andon_summary_array[$hour_row] = 0;
     }
 
+    $query_table = "tblhistory";
+    $backup = false;
+
+    $start_date = '';
+    $end_date = '';
+
+    if ($opt == 2) {
+        if (isset($_GET['server_date_only'])) {
+            $start_date = $server_date_only;
+            $end_date = $server_date_only_tomorrow;
+        } else if ($server_time >= '00:00:00' && $server_time < '06:00:00') {
+            $start_date = $server_date_only_yesterday;
+            $end_date = $server_date_only;
+        } else {
+            $start_date = $server_date_only;
+            $end_date = $server_date_only_tomorrow;
+        }
+
+        $query = "SELECT COUNT(*) AS total_count 
+                FROM tblhistory 
+                WHERE requestDateTime BETWEEN ('$start_date 06:00:00') AND ('$end_date 05:59:59')";
+        
+        $stmt = $conn_andon->prepare($query);
+        $stmt->execute();
+
+        foreach ($stmt->fetchAll() as $row) {
+            if (intval($row['total_count']) < 1) {
+                $backup = true;
+            }
+        }
+    }
+    
+    if ($backup) {
+        $query_table = "backupdatabase";
+    }
+
+    if ($opt == 2 && isset($_GET['server_date_only'])) {
+        $start_date = $server_date_only;
+        $end_date = $server_date_only_tomorrow;
+    } else if ($server_time >= '00:00:00' && $server_time < '06:00:00') {
+        $start_date = $server_date_only_yesterday;
+        $end_date = $server_date_only;
+    } else {
+        $start_date = $server_date_only;
+        $end_date = $server_date_only_tomorrow;
+    }
+
     $query = "SELECT DATE_FORMAT(requestDateTime, '%H') AS hour_start, 
                  COUNT(*) AS total_count
-                 FROM tblhistory
-                 WHERE line = '$andon_line' 
-                 AND requestDateTime BETWEEN ('$server_date_only 06:00:00') AND ('$server_date_only_tomorrow 05:59:59')
+                 FROM $query_table
+                 WHERE line = '$andon_line'
+                 AND requestDateTime BETWEEN ('$start_date 06:00:00') AND ('$end_date 05:59:59')
                  GROUP BY hour_start";
-
+    
     $stmt = $conn_andon->prepare($query);
     $stmt->execute();
 

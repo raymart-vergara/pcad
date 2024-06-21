@@ -12,10 +12,15 @@ switch (true) {
     exit;
 }
 
-$shift = get_shift($server_time);
+$shift = $_GET['shift'];
 
 $registlinename = $_GET['registlinename'];
 // $registlinename = 'DAIHATSU_30';
+
+$opt = $_GET['opt'];
+
+$hourly_ng_date = $_GET['server_date_only'];
+$hourly_ng_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_ng_date))));
 
 $delimiter = ","; 
 
@@ -71,7 +76,10 @@ $search_arr = array(
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time
+        'server_time' => $server_time,
+        'hourly_ng_date' => $hourly_ng_date,
+        'hourly_ng_date_tomorrow' => $hourly_ng_date_tomorrow,
+        'opt' => $opt
 );
 
 $list_of_no_good_viewer = get_rows_overall_ng($search_arr, $conn_ircs, $conn_pcad);

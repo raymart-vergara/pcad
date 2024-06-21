@@ -51,6 +51,8 @@ if (isset($_POST['request'])) {
         $stmt->execute();
         $plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if ($plans) {
+            $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
             $shift = get_shift($server_time);
 
             foreach ($plans as $i => $p) {
@@ -59,13 +61,16 @@ if (isset($_POST['request'])) {
                 $ircs_line_data_arr = get_ircs_line_data($IRCS_Line, $conn_pcad);
 
                 $search_arr = array(
+                    'day' => $day,
+                    'day_tomorrow' => $day_tomorrow,
                     'shift' => $shift,
                     'registlinename' => $IRCS_Line,
                     'ircs_line_data_arr' => $ircs_line_data_arr,
                     'server_date_only' => $server_date_only,
                     'server_date_only_yesterday' => $server_date_only_yesterday,
                     'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                    'server_time' => $server_time
+                    'server_time' => $server_time,
+                    'opt' => 1
                 );
 
                 $Actual_Target = count_overall_g($search_arr, $conn_ircs);
@@ -105,6 +110,8 @@ if (isset($_POST['request'])) {
             }
         }
     } else if ($request == "getPlanLine") {
+        $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+        $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
         $shift = get_shift($server_time);
 
         $IRCS_Line = $_POST['registlinename'];
@@ -136,13 +143,16 @@ if (isset($_POST['request'])) {
             $ircs_line_data_arr = get_ircs_line_data($IRCS_Line, $conn_pcad);
 
             $search_arr = array(
+                'day' => $day,
+                'day_tomorrow' => $day_tomorrow,
                 'shift' => $shift,
                 'registlinename' => $IRCS_Line,
                 'ircs_line_data_arr' => $ircs_line_data_arr,
                 'server_date_only' => $server_date_only,
                 'server_date_only_yesterday' => $server_date_only_yesterday,
                 'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                'server_time' => $server_time
+                'server_time' => $server_time,
+                'opt' => 1
             );
 
             $Actual_Target = count_overall_g($search_arr, $conn_ircs);
@@ -250,6 +260,7 @@ if (isset($_POST['request'])) {
         $shift_group = $_POST['shift_group'];
         $shift = get_shift($server_time);
         $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+        $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
         $work_time_plan = $_POST['work_time_plan'];
 
         $sql = "SELECT datetime_DB FROM t_plan 
@@ -267,6 +278,7 @@ if (isset($_POST['request'])) {
 
             $search_arr = array(
                 'day' => $day,
+                'day_tomorrow' => $day_tomorrow,
                 'shift' => $shift,
                 'shift_group' => $shift_group,
                 'dept' => "",
@@ -277,7 +289,8 @@ if (isset($_POST['request'])) {
                 'server_date_only' => $server_date_only,
                 'server_date_only_yesterday' => $server_date_only_yesterday,
                 'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                'server_time' => $server_time
+                'server_time' => $server_time,
+                'opt' => 1
             );
 
             // Variables for accounting efficiency

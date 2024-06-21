@@ -51,13 +51,20 @@
 
     const get_inspection_list_copy = () => {
         let registlinename = document.getElementById('registlinename').value;
+        let day = localStorage.getItem("pcad_exec_server_date_only");
+        let shift = localStorage.getItem("shift");
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
+
         $.ajax({
             url: 'process/inspection_output/inspection_output_p.php',
             type: 'GET',
             cache: false,
             data: {
                 method: 'get_inspection_list_copy',
-                registlinename: registlinename
+                registlinename: registlinename,
+                day: day,
+                shift: shift,
+                opt: opt
             },
             success: function (response) {
                 $('#inspection_process_list_copy').html(response);
@@ -67,13 +74,20 @@
 
     const get_overall_inspection = () => {
         let registlinename = document.getElementById('registlinename').value;
+        let day = localStorage.getItem("pcad_exec_server_date_only");
+        let shift = localStorage.getItem("shift");
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
+
         $.ajax({
             url: 'process/inspection_output/inspection_output_p.php',
             type: 'GET',
             cache: false,
             data: {
                 method: 'get_overall_inspection',
-                registlinename: registlinename
+                registlinename: registlinename,
+                day: day,
+                shift: shift,
+                opt: opt
             },
             success: function (response) {
                 try {

@@ -9,7 +9,8 @@
             cache: false,
             data: {
                 method: 'andon_hourly',
-                andon_line: andon_line
+                andon_line: andon_line,
+                opt: 1
             },
             success: function (data) {
                 let total_counts = data[0];
@@ -146,7 +147,8 @@
             data: {
                 method: 'get_hourly_output_graph',
                 registlinename: registlinename,
-                hourly_output_date: hourly_output_date
+                hourly_output_date: hourly_output_date,
+                opt: 1
             },
             success: function (data) {
                 let hourly_output_summary = data[0];
@@ -293,6 +295,7 @@
 
     const ng_graph = () => {
         let registlinename = localStorage.getItem("registlinename");
+        let server_date_only = '<?= $server_date_only ?>';
 
         $.ajax({
             url: 'process/inspection_output/inspection_output_p.php',
@@ -301,7 +304,9 @@
             dataType: 'json',
             data: {
                 method: 'ng_graph',
-                registlinename: registlinename
+                registlinename: registlinename,
+                server_date_only: server_date_only,
+                opt: 1
             },
             success: function (data) {
                 let hourly_ng_summary = data[0];
