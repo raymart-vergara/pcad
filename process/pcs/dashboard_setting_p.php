@@ -80,7 +80,7 @@ if (isset($_POST['request'])) {
         $group = $_POST['group'];
 
         $url = "location: ../../index_exec.php?registlinename=" . $registlinename . "&opt=" . $opt;
-        $message = "There is no plan set for the selected line.";
+        $message = "No plan has been set for the selected line. The dashboard for the selected line cannot be viewed.";
 
         $sql_get_line = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND `group` = :group";
 
@@ -90,7 +90,7 @@ if (isset($_POST['request'])) {
                 break;
             case 2:
                 $url = "location: ../../index_exec.php?registlinename=" . $registlinename . "&day=" . $day . "&shift=" . $shift . "&opt=" . $opt;
-                $message = "There is no plan history set for the selected line.";
+                $message = "No plan history has been set for the selected line. The dashboard for the selected line cannot be viewed.";
 
                 $start_date = '';
                 $end_date = '';
