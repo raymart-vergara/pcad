@@ -61,11 +61,25 @@ if ($method == 'count_emp') {
 }
 
 if ($method == 'get_process_design') {
-	$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
-
 	$registlinename = $_GET['registlinename'];
 	$line_no = $_GET['line_no'];
 	$shift_group = $_GET['shift_group'];
+	
+	$opt = $_GET['opt'];
+
+	$day = '';
+
+    switch($opt) {
+		case 1:
+			$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+			break;
+		case 2:
+			$day = $_GET['day'];
+			break;
+		default:
+            $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+			break;
+	}
 
 	$search_arr = array(
 		'registlinename' => $registlinename,
