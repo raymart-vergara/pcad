@@ -6,6 +6,9 @@
         let section_pd = document.getElementById('section_pd').value;
         let section_qa = document.getElementById('section_qa').value;
         let line_no = document.getElementById('line_no').value;
+        let day = localStorage.getItem("pcad_exec_server_date_only");
+        let shift = localStorage.getItem("shift");
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
         $.ajax({
             url: 'process/emp_mgt/emp_mgt_p.php',
             type: 'GET',
@@ -17,7 +20,10 @@
                 dept_qa: dept_qa,
                 section_pd: section_pd,
                 section_qa: section_qa,
-                line_no: line_no
+                line_no: line_no,
+                day: day,
+                shift: shift,
+                opt: opt
             },
             success: function (response) {
                 try {
