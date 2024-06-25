@@ -34,6 +34,8 @@
 
     const andon_hourly = () => {
         let andon_line = localStorage.getItem("andon_line");
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
+        let server_date_only = localStorage.getItem("pcad_exec_server_date_only");
 
         $.ajax({
             url: '../../process/andon_graph/a_hourly_p.php',
@@ -43,7 +45,8 @@
             data: {
                 method: 'andon_hourly',
                 andon_line: andon_line,
-                opt: 1
+                opt: opt,
+                server_date_only: server_date_only
             },
             success: function (data) {
                 let total_counts = data[0];
