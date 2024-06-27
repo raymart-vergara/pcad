@@ -28,7 +28,7 @@ function get_section($line_no, $conn_emp_mgt) {
 	$query = "SELECT section FROM m_access_locations WHERE line_no = '$line_no' LIMIT 1";
 	// MS SQL Server
 	// $query = "SELECT TOP 1 section FROM m_access_locations WHERE line_no = '$line_no'";
-	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -59,7 +59,7 @@ function count_emp($search_arr, $conn_emp_mgt) {
 	}
 	$query = $query . " AND shift_group = '$shift_group'";
 
-	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -94,7 +94,7 @@ function count_emp_tio($search_arr, $conn_emp_mgt) {
 		$sql = $sql . " AND emp.line_no = '$line_no'";
 	}
 
-	$stmt = $conn_emp_mgt->prepare($sql);
+	$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -142,7 +142,7 @@ function count_emp_line_support_to($search_arr, $conn_emp_mgt) {
 	// 	$query = $query . " AND emp.dept = '$dept'";
 	// }
 
-	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -190,7 +190,7 @@ function count_emp_line_support_from($search_arr, $conn_emp_mgt) {
 	// 	$query = $query . " AND emp.dept = '$dept'";
 	// }
 
-	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -238,7 +238,7 @@ function count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt) {
 	// 	$query = $query . " AND emp.dept = '$dept'";
 	// }
 
-	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -281,7 +281,7 @@ function count_emp_out_line_support_to($search_arr, $time_out_range, $is_null, $
 
 	$query = $query . " AND lsh.shift = '$shift' AND lsh.line_no_to LIKE '$line_no%' AND lsh.status = 'accepted'";
 
-	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -324,7 +324,7 @@ function count_emp_out_line_support_from($search_arr, $time_out_range, $is_null,
 
 	$query = $query . " AND lsh.shift = '$shift' AND lsh.line_no_from LIKE '$line_no%' AND lsh.status = 'accepted'";
 
-	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -367,7 +367,7 @@ function count_emp_out_line_support_from_rejected($search_arr, $time_out_range, 
 
 	$query = $query . " AND lsh.shift = '$shift' AND lsh.line_no_from LIKE '$line_no%' AND lsh.status = 'rejected'";
 
-	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -421,7 +421,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -447,7 +447,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -473,7 +473,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -499,7 +499,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -527,7 +527,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -553,7 +553,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -579,7 +579,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -605,7 +605,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -632,7 +632,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$sql = $sql . " AND line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -900,7 +900,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -930,7 +930,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -960,7 +960,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -990,7 +990,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -1022,7 +1022,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -1052,7 +1052,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -1082,7 +1082,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -1112,7 +1112,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -1140,7 +1140,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -1431,7 +1431,7 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 	// $sql = $sql . " AND (resigned_date IS NULL OR resigned_date >= '$day')";
 	$sql = $sql . " GROUP BY process";
 
-	$stmt = $conn_emp_mgt->prepare($sql);
+	$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
@@ -1472,7 +1472,7 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 	// $sql = $sql . " AND (emp.resigned_date IS NULL OR emp.resigned_date >= '$day')";
 	$sql = $sql . " GROUP BY emp.process";
 
-	$stmt = $conn_emp_mgt->prepare($sql);
+	$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
