@@ -641,18 +641,8 @@ function count_actual_hourly_output($search_arr, $conn_ircs, $conn_pcad)
    } else {
       $server_hour = " " . date('H');
 
-      if ($search_arr['shift'] == 'DS') {
-         $start_date = $search_arr['server_date_only'] . $server_hour . $start_time;
-         $end_date = $search_arr['server_date_only'] . $server_hour . $end_time;
-      } else if ($search_arr['shift'] == 'NS') {
-         if ($search_arr['server_time'] >= '06:00:00' && $search_arr['server_time'] <= '23:59:59') {
-            $start_date = $search_arr['server_date_only'] . $server_hour . $start_time;
-            $end_date = $search_arr['server_date_only_tomorrow'] . $server_hour . $end_time;
-         } else if ($search_arr['server_time'] >= '00:00:00' && $search_arr['server_time'] < '06:00:00') {
-            $start_date = $search_arr['server_date_only_yesterday'] . $server_hour . $start_time;
-            $end_date = $search_arr['server_date_only'] . $server_hour . $end_time;
-         }
-      }
+      $start_date = $search_arr['server_date_only'] . $server_hour . $start_time;
+      $end_date = $search_arr['server_date_only'] . $server_hour . $end_time;
    }
 
    // SELECT COUNT(PARTSNAME) AS HOURLY_OUTPUT FROM T_PRODUCTWK
