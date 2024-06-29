@@ -82,7 +82,7 @@ if ($result) {
 										<div class="col-lg-3">
 											<div class="form-group">
 												<label>PLAN</label>
-												<input type="text" name="daily_plan"
+												<input type="number" name="daily_plan"
 													class="form-control form-control-lg" id="plan" autofocus="on"
 													min="1" required>
 											</div>
@@ -97,8 +97,8 @@ if ($result) {
 										<div class="col-lg-3">
 											<div class="form-group">
 												<label for="c">TAKT TIME</label>
-												<input type="text" name="takt_time" class="form-control form-control-lg"
-													id="takt_time" placeholder="00">
+												<input type="number" name="takt_time" class="form-control form-control-lg"
+													id="takt_time" placeholder="00" min="1">
 											</div>
 										</div>
 									</div>
