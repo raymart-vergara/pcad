@@ -152,7 +152,11 @@ if ($method == 'inspection_list') {
 		$query .= " AND process LIKE '" . $process . "%'";
 	}
 
+	// MySQL
 	$query .= " LIMIT " . $page_first_result . ", " . $results_per_page;
+	// MS SQL Server
+	// $query .= " ORDER BY id ASC";
+	// $query .= " OFFSET " . $page_first_result . " ROWS FETCH NEXT " . $results_per_page . " ROWS ONLY";
 
 	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
@@ -195,7 +199,7 @@ if ($method == 'add_insp') {
 	} else {
 		$stmt = NULL;
 
-		$query = "INSERT INTO m_inspection_ip (`ircs_line`, `process`, `ip_address`, `ip_address2`, `ipaddresscolumn`, `finishdatetime`, `judgement`) VALUES ('$ircs_line','$process','$ip_address_1','$ip_address_2','$ip_address_col','$finish_date_time','$judgement')";
+		$query = "INSERT INTO m_inspection_ip (ircs_line, process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement) VALUES ('$ircs_line','$process','$ip_address_1','$ip_address_2','$ip_address_col','$finish_date_time','$judgement')";
 
 		$stmt = $conn_pcad->prepare($query);
 		if ($stmt->execute()) {

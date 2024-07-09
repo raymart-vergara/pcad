@@ -13,7 +13,7 @@ if ($method == 'a_down_time') {
                 SUM(Minute(TIMEDIFF(requestDateTime,startDateTime))) as Waiting_Time,
                 SUM(Minute(TIMEDIFF(startDateTime,endDateTime))) as Fixing_Time,
                 SUM(Minute(TIMEDIFF(requestDateTime,startDateTime))) + SUM(Minute(TIMEDIFF(startDateTime,endDateTime))) as Total_DT
-                FROM `tblhistory` 
+                FROM tblhistory 
                 WHERE line = '$andon_line' ";
 
     if ($shift == 'DS') {

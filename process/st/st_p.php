@@ -88,7 +88,11 @@ if ($method == 'st_list') {
 		$query = $query . " AND st LIKE '$st%'";
 	}
 
+	// MySQL
 	$query = $query . " LIMIT ".$page_first_result.", ".$results_per_page;
+	// MS SQL Server
+	// $query .= " ORDER BY id ASC";
+	// $query .= " OFFSET " . $page_first_result . " ROWS FETCH NEXT " . $results_per_page . " ROWS ONLY";
 	
 	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();

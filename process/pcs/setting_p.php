@@ -408,9 +408,14 @@ if (isset($_POST['request'])) {
             }
 
             // Check existing done or pending plan
+            // MySQL
             $sql = "SELECT id FROM t_plan WHERE 
                     (datetime_DB >= '$date_only_actual_start $time_only_actual_start' AND datetime_DB <= '$date_only_actual_end $time_only_actual_end') 
                     AND IRCS_Line='$registlinename' ORDER BY id DESC LIMIT 1";
+            // MS SQL Server
+            // $sql = "SELECT TOP 1 id FROM t_plan WHERE 
+            //         (datetime_DB >= '$date_only_actual_start $time_only_actual_start' AND datetime_DB <= '$date_only_actual_end $time_only_actual_end') 
+            //         AND IRCS_Line='$registlinename' ORDER BY id DESC";
             
             $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
             $stmt->execute();

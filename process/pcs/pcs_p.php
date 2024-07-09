@@ -97,7 +97,11 @@ if ($method == 'pcs_list') {
 		$query = $query . " AND andon_line LIKE '$andon_line%'";
 	}
 
+	// MySQL
 	$query = $query . " LIMIT " . $page_first_result . ", " . $results_per_page;
+	// MS SQL Server
+	// $query .= " ORDER BY id ASC";
+	// $query .= " OFFSET " . $page_first_result . " ROWS FETCH NEXT " . $results_per_page . " ROWS ONLY";
 
 	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
@@ -140,7 +144,7 @@ if ($method == 'add_pcs') {
 	$final_process = addslashes($_POST['final_process']);
 	$ip = addslashes($_POST['ip']);
 
-	$query = "INSERT INTO m_ircs_line (`car_maker`,`car_model`,`line_no`, `ircs_line`, `andon_line`, `final_process`, `ip`) VALUES ('$car_maker','$car_model','$line_no','$ircs_line','$andon_line','$final_process','$ip')";
+	$query = "INSERT INTO m_ircs_line (car_maker,car_model,line_no, ircs_line, andon_line, final_process, ip) VALUES ('$car_maker','$car_model','$line_no','$ircs_line','$andon_line','$final_process','$ip')";
 
 	$stmt = $conn_pcad->prepare($query);
 	if ($stmt->execute()) {
