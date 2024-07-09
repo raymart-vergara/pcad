@@ -11,7 +11,7 @@ function get_st_data($parts_name, $conn_pcad) {
 	$response_arr = array();
 	if (!empty($parts_name)) {
 		$query = "SELECT parts_name, st FROM m_st WHERE parts_name LIKE '$parts_name%'";
-		$stmt = $conn_pcad->prepare($query);
+		$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){

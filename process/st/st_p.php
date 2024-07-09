@@ -20,7 +20,7 @@ function count_st_list($search_arr, $conn_pcad) {
 		$query = $query . " AND st LIKE '".$search_arr['st']."%'";
 	}
 
-	$stmt = $conn_pcad->prepare($query);
+	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $j){
@@ -90,7 +90,7 @@ if ($method == 'st_list') {
 
 	$query = $query . " LIMIT ".$page_first_result.", ".$results_per_page;
 	
-	$stmt = $conn_pcad->prepare($query);
+	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -129,7 +129,7 @@ if ($method == 'add_st') {
 	$st = addslashes(trim($_POST['st']));
 
 	$check = "SELECT id FROM m_st WHERE parts_name = '$parts_name'";
-	$stmt = $conn_pcad->prepare($check);
+	$stmt = $conn_pcad->prepare($check, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		echo 'Already Exist';
@@ -157,7 +157,7 @@ if ($method == 'update_st') {
 	$st = addslashes(trim($_POST['st']));
 
 	$check = "SELECT id FROM m_st WHERE parts_name = '$parts_name'";
-	$stmt = $conn_pcad->prepare($check);
+	$stmt = $conn_pcad->prepare($check, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		$query = "UPDATE m_st SET sub_assy = '$sub_assy', final_assy = '$final_assy', 

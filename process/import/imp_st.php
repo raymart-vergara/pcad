@@ -169,12 +169,14 @@ if (!empty($_FILES['file']['name']) && in_array($_FILES['file']['type'],$csvMime
                 $final_assy = addslashes($line[13]);
                 $inspection = addslashes($line[14]);
                 $st = addslashes(custom_trim($line[15]));
+                $updated_by_no = $_SESSION['emp_no'];
+                $updated_by = $_SESSION['full_name'];
 
                 $conn_pcad->beginTransaction();
 
                 // CHECK DATA
                 $sql = "SELECT id FROM m_st WHERE parts_name = '$parts_name'";
-                $stmt = $conn_pcad->prepare($sql);
+                $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
                 $stmt->execute();
                 if ($stmt->rowCount() > 0) {
                     foreach($stmt->fetchALL() as $x){
@@ -182,7 +184,7 @@ if (!empty($_FILES['file']['name']) && in_array($_FILES['file']['type'],$csvMime
                     }
                     $sql = "UPDATE m_st SET parts_name='$parts_name',sub_assy='$sub_assy',
                             final_assy='$final_assy',inspection='$inspection',st='$st',
-                            updated_by_no='".$_SESSION['emp_no']."',updated_by='".$_SESSION['full_name']."' 
+                            updated_by_no='$updated_by_no',updated_by='$updated_by' 
                             WHERE id = '$id'";
 
                     $stmt = $conn_pcad->prepare($sql);
@@ -191,7 +193,7 @@ if (!empty($_FILES['file']['name']) && in_array($_FILES['file']['type'],$csvMime
                     }
                 } else {
                     $sql = "INSERT INTO m_st (parts_name, sub_assy, final_assy, inspection, st, updated_by_no, updated_by) 
-                            VALUES ('$parts_name','$sub_assy','$final_assy','$inspection','$st','".$_SESSION['emp_no']."','".$_SESSION['full_name']."')";
+                            VALUES ('$parts_name','$sub_assy','$final_assy','$inspection','$st','$updated_by_no','$updated_by')";
 
                     $stmt = $conn_pcad->prepare($sql);
                     if (!$stmt->execute()) {

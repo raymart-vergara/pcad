@@ -10,7 +10,7 @@ if ($method == 'fetch_process') {
 	$final_process = array();
 	$query = "SELECT final_process FROM m_final_process ORDER BY final_process ASC";
 
-	$stmt = $conn_pcad->query($query);
+	$stmt = $conn_pcad->query($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 
 	$final_process = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -28,7 +28,7 @@ if ($method == 'fetch_ip_address_column') {
 	$ip_address_col = array();
 	$query = "SELECT ipaddresscolumn FROM m_final_process";
 
-	$stmt = $conn_pcad->query($query);
+	$stmt = $conn_pcad->query($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 
 	$ip_address_col = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -46,7 +46,7 @@ if ($method == 'fetch_finish_date_time') {
 	$finish_date_time = array();
 	$query = "SELECT finishdatetime FROM m_final_process";
 
-	$stmt = $conn_pcad->query($query);
+	$stmt = $conn_pcad->query($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 
 	$finish_date_time = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -64,7 +64,7 @@ if ($method == 'fetch_judgement') {
 	$judgement = array();
 	$query = "SELECT judgement FROM m_final_process";
 
-	$stmt = $conn_pcad->query($query);
+	$stmt = $conn_pcad->query($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 
 	$judgement = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -88,7 +88,7 @@ function count_insp_list($search_arr, $conn_pcad)
 		$query .= " AND process LIKE '" . $search_arr['process'] . "%'";
 	}
 
-	$stmt = $conn_pcad->prepare($query);
+	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 
 	if ($stmt->rowCount() > 0) {
@@ -154,7 +154,7 @@ if ($method == 'inspection_list') {
 
 	$query .= " LIMIT " . $page_first_result . ", " . $results_per_page;
 
-	$stmt = $conn_pcad->prepare($query);
+	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach ($stmt->fetchAll() as $row) {
@@ -188,7 +188,7 @@ if ($method == 'add_insp') {
 	$judgement = addslashes($_POST['judgement']);
 
 	$check = "SELECT id FROM m_inspection_ip WHERE ircs_line = '$ircs_line' AND process = '$process' AND ip_address = '$ip_address_1' AND ip_address2 = '$ip_address_2' AND ipaddresscolumn = '$ip_address_col' AND finishdatetime = '$finish_date_time' AND judgement = '$judgement'";
-	$stmt = $conn_pcad->prepare($check);
+	$stmt = $conn_pcad->prepare($check, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		echo 'Already Exist';
@@ -217,7 +217,7 @@ if ($method == 'update_insp') {
 	$judgement = addslashes($_POST['judgement']);
 
 	$check = "SELECT id FROM m_inspection_ip WHERE ircs_line = '$ircs_line' AND process = '$process' AND ip_address = '$ip_address_1' AND ip_address2 = '$ip_address_2' AND ipaddresscolumn = '$ip_address_col' AND finishdatetime = '$finish_date_time' AND judgement = '$judgement'";
-	$stmt = $conn_pcad->prepare($check);
+	$stmt = $conn_pcad->prepare($check, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		$query = "UPDATE m_inspection_ip SET ircs_line = '$ircs_line', process = '$process', ip_address = '$ip_address_1', ip_address2 = '$ip_address_2', ipaddresscolumn = '$ip_address_col', finishdatetime = '$finish_date_time', judgement = '$judgement' WHERE id = '$id'";

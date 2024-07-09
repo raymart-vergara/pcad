@@ -12,7 +12,7 @@ if (isset($_POST['login_btn'])) {
         echo '<script>alert("Please Scan QR Code or Enter ID Number")</script>';
     } else {
         $check = "SELECT emp_no, full_name FROM m_st_accounts WHERE BINARY emp_no = '$emp_no'";
-        $stmt = $conn_pcad->prepare($check);
+        $stmt = $conn_pcad->prepare($check, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
             foreach($stmt->fetchALL() as $x){

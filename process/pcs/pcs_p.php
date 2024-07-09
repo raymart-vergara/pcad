@@ -20,7 +20,7 @@ function count_pcs_list($search_arr, $conn_pcad)
 		$query .= " AND andon_line LIKE '" . $search_arr['andon_line'] . "%'";
 	}
 
-	$stmt = $conn_pcad->prepare($query);
+	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 
 	if ($stmt->rowCount() > 0) {
@@ -99,7 +99,7 @@ if ($method == 'pcs_list') {
 
 	$query = $query . " LIMIT " . $page_first_result . ", " . $results_per_page;
 
-	$stmt = $conn_pcad->prepare($query);
+	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach ($stmt->fetchALL() as $j) {
@@ -206,7 +206,7 @@ if ($method == 'final_process') {
 	$final_process = array();
 	$query = "SELECT DISTINCT finishdatetime FROM m_final_process";
 
-	$stmt = $conn_pcad->query($query);
+	$stmt = $conn_pcad->query($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 
 	$final_process = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
