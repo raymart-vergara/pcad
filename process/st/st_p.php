@@ -127,6 +127,8 @@ if ($method == 'add_st') {
 	$final_assy = addslashes(trim($_POST['final_assy']));
 	$inspection = addslashes(trim($_POST['inspection']));
 	$st = addslashes(trim($_POST['st']));
+	$updated_by_no = $_SESSION['emp_no'];
+	$updated_by = $_SESSION['full_name'];
 
 	$check = "SELECT id FROM m_st WHERE parts_name = '$parts_name'";
 	$stmt = $conn_pcad->prepare($check, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
@@ -137,7 +139,7 @@ if ($method == 'add_st') {
 		$stmt = NULL;
 
 		$query = "INSERT INTO m_st (parts_name, sub_assy, final_assy, inspection, st, updated_by_no, updated_by) 
-				VALUES ('$parts_name','$sub_assy','$final_assy','$inspection','$st','".$_SESSION['emp_no']."','".$_SESSION['full_name']."')";
+				VALUES ('$parts_name','$sub_assy','$final_assy','$inspection','$st','$updated_by_no','$updated_by')";
 
 		$stmt = $conn_pcad->prepare($query);
 		if ($stmt->execute()) {
@@ -155,6 +157,8 @@ if ($method == 'update_st') {
 	$final_assy = addslashes(trim($_POST['final_assy']));
 	$inspection = addslashes(trim($_POST['inspection']));
 	$st = addslashes(trim($_POST['st']));
+	$updated_by_no = $_SESSION['emp_no'];
+	$updated_by = $_SESSION['full_name'];
 
 	$check = "SELECT id FROM m_st WHERE parts_name = '$parts_name'";
 	$stmt = $conn_pcad->prepare($check, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
@@ -162,7 +166,7 @@ if ($method == 'update_st') {
 	if ($stmt->rowCount() > 0) {
 		$query = "UPDATE m_st SET sub_assy = '$sub_assy', final_assy = '$final_assy', 
 					inspection = '$inspection', st = '$st',
-					updated_by_no = '".$_SESSION['emp_no']."', updated_by = '".$_SESSION['full_name']."' 
+					updated_by_no = '$updated_by_no', updated_by = '$updated_by' 
 					WHERE id = '$id'";
 
 		$stmt = $conn_pcad->prepare($query);
@@ -174,7 +178,7 @@ if ($method == 'update_st') {
 	}else{
 		$query = "UPDATE m_st SET parts_name = '$parts_name', sub_assy = '$sub_assy', 
 					final_assy = '$final_assy', inspection = '$inspection', st = '$st',
-					updated_by_no = '".$_SESSION['emp_no']."', updated_by = '".$_SESSION['full_name']."' 
+					updated_by_no = '$updated_by_no', updated_by = '$updated_by' 
 					WHERE id = '$id'";
 
 		$stmt = $conn_pcad->prepare($query);
