@@ -82,7 +82,10 @@ if (isset($_POST['request'])) {
         $url = "location: ../../index_exec.php?registlinename=" . $registlinename . "&opt=" . $opt;
         $message = "No plan has been set for the selected line. The dashboard for the selected line cannot be viewed.";
 
+        // MySQL
         $sql_get_line = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND `group` = :group";
+        // MS SQL Server
+        // $sql_get_line = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND [group] = :group";
 
         switch($opt) {
             case 1:

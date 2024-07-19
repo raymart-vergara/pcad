@@ -267,8 +267,12 @@ if (isset($_POST['request'])) {
         $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
         $work_time_plan = $_POST['work_time_plan'];
 
+        // MySQL
         $sql = "SELECT datetime_DB FROM t_plan 
                 WHERE IRCS_Line = '$registlinename' AND `group` = '$shift_group' AND Status = 'Pending'";
+        // MS SQL Server
+        // $sql = "SELECT datetime_DB FROM t_plan 
+        //         WHERE IRCS_Line = '$registlinename' AND [group] = '$shift_group' AND Status = 'Pending'";
         $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -424,10 +428,16 @@ if (isset($_POST['request'])) {
                     $id = $row['id'];
                 }
 
+                // MySQL
                 $sql = "UPDATE t_plan SET Carmodel = '$car_maker', Line = '$line_no', Target = '$plan', Status = '$status', IRCS_Line = '$registlinename', 
                         datetime_DB = NOW(), ended_DB = null, takt_secs_DB = '$takt_secs', actual_start_DB = '$date_actual_start', last_update_DB = NOW(), 
                         IP_address = '$IP_address', `group` = '$group',  yield_target = '$yield_target', ppm_target = '$ppm_target', acc_eff = '$acc_eff', 
                         start_bal_delay = '$start_bal_delay', work_time_plan = '$work_time_plan', daily_plan = '$daily_plan' WHERE id = '$id'";
+                // MS SQL Server
+                // $sql = "UPDATE t_plan SET Carmodel = '$car_maker', Line = '$line_no', Target = '$plan', Status = '$status', IRCS_Line = '$registlinename', 
+                //         datetime_DB = NOW(), ended_DB = null, takt_secs_DB = '$takt_secs', actual_start_DB = '$date_actual_start', last_update_DB = NOW(), 
+                //         IP_address = '$IP_address', [group] = '$group',  yield_target = '$yield_target', ppm_target = '$ppm_target', acc_eff = '$acc_eff', 
+                //         start_bal_delay = '$start_bal_delay', work_time_plan = '$work_time_plan', daily_plan = '$daily_plan' WHERE id = '$id'";
                 $stmt = $conn_pcad->prepare($sql);
 
                 if ($stmt->execute()) {
@@ -436,8 +446,12 @@ if (isset($_POST['request'])) {
                     echo "Failed to update existing data into t_plan.";
                 }
             } else {
+                // MySQL
                 $sql_insert_plan = "INSERT INTO t_plan (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address, `group`, yield_target, ppm_target, acc_eff, start_bal_delay, work_time_plan, daily_plan) 
                 VALUES (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address, :group, :yield_target, :ppm_target, :acc_eff, :start_bal_delay, :work_time_plan, :daily_plan)";
+                // MS SQL Server
+                // $sql_insert_plan = "INSERT INTO t_plan (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address, [group], yield_target, ppm_target, acc_eff, start_bal_delay, work_time_plan, daily_plan) 
+                // VALUES (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address, :group, :yield_target, :ppm_target, :acc_eff, :start_bal_delay, :work_time_plan, :daily_plan)";
 
                 $stmt_insert_plan = $conn_pcad->prepare($sql_insert_plan);
                 $stmt_insert_plan->bindParam(':car_maker', $car_maker);
