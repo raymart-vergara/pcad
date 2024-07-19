@@ -10,7 +10,10 @@ $method = $_POST['method'];
 
 function count_pcs_list($search_arr, $conn_pcad)
 {
+	// MySQL
 	$query = "SELECT count(id) AS total FROM m_ircs_line WHERE 1";
+	// MS SQL Server
+	// $query = "SELECT count(id) AS total FROM m_ircs_line WHERE 1=1";
 
 	if (!empty($search_arr['line_no'])) {
 		$query .= " AND line_no LIKE '" . $search_arr['line_no'] . "%'";

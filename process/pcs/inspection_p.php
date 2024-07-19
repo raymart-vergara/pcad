@@ -80,7 +80,10 @@ if ($method == 'fetch_judgement') {
 
 function count_insp_list($search_arr, $conn_pcad)
 {
+	// MySQL
 	$query = "SELECT count(id) AS total FROM m_inspection_ip WHERE 1";
+	// MS SQL Server
+	// $query = "SELECT count(id) AS total FROM m_inspection_ip WHERE 1=1";
 
 	if (!empty($search_arr['ircs_line'])) {
 		$query .= " AND ircs_line LIKE '" . $search_arr['ircs_line'] . "%'";
@@ -145,7 +148,10 @@ if ($method == 'inspection_list') {
 	$page_first_result = ($current_page - 1) * $results_per_page;
 	$c = $page_first_result;
 
+	// MySQL
 	$query = "SELECT id, ircs_line, process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement FROM m_inspection_ip WHERE 1"; // Start with a condition that is always true
+	// MS SQL Server
+	// $query = "SELECT id, ircs_line, process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement FROM m_inspection_ip WHERE 1=1";
 	if (!empty($ircs_line)) {
 		$query .= " AND ircs_line LIKE '" . $ircs_line . "%'";
 	} elseif (!empty($process)) {

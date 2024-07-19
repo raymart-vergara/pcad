@@ -185,8 +185,14 @@ if (isset($_POST['request'])) {
                 "started" => $started
             );
             //UPDATE PLAN
+            // MySQL
             $added_target_formula = "FLOOR(TIME_TO_SEC(TIMEDIFF(NOW(), last_update_DB)) / takt_secs_DB)";
+            // MS SQL Server
+            // $added_target_formula = "FLOOR(DATEDIFF(SECOND, last_update_DB, GETDATE()) / takt_secs_DB)";
+            // MySQL
             $sql = "UPDATE t_plan SET Target = Target + $added_target_formula, Actual_Target = :Actual_Target, Remaining_Target = :Remaining_Target, last_takt_DB = :last_takt, last_update_DB = NOW() WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending' AND is_paused = 'NO'";
+            // MS SQL Server
+            // $sql = "UPDATE t_plan SET Target = Target + $added_target_formula, Actual_Target = :Actual_Target, Remaining_Target = :Remaining_Target, last_takt_DB = :last_takt, last_update_DB = GETDATE() WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending' AND is_paused = 'NO'";
 
             $stmt = $conn_pcad->prepare($sql);
             $stmt->bindParam(':Actual_Target', $Actual_Target);
@@ -322,9 +328,14 @@ if (isset($_POST['request'])) {
             $acc_eff_actual = compute_accounting_efficiency($total_st_per_line, $wt_x_mp);
 
             // Update t_plan
+            // MySQL
             $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = NOW(), 
                     yield_actual = :yield_actual, ppm_actual = :ppm_actual, acc_eff_actual = :acc_eff_actual 
                     WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
+            // MS SQL Server
+            // $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = GETDATE(), 
+            //         yield_actual = :yield_actual, ppm_actual = :ppm_actual, acc_eff_actual = :acc_eff_actual 
+            //         WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
             $stmt = $conn_pcad->prepare($sql);
             $stmt->bindParam(':yield_actual', $yield_actual);
             $stmt->bindParam(':ppm_actual', $ppm_actual);
@@ -337,8 +348,12 @@ if (isset($_POST['request'])) {
             }
         } else {
             // Update t_plan
+            // MySQL
             $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = NOW()
                     WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
+            // MS SQL Server
+            // $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = GETDATE()
+            //         WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
             $stmt = $conn_pcad->prepare($sql);
             $stmt->bindParam(':IRCS_Line', $registlinename);
             if ($stmt->execute()) {
@@ -435,7 +450,7 @@ if (isset($_POST['request'])) {
                         start_bal_delay = '$start_bal_delay', work_time_plan = '$work_time_plan', daily_plan = '$daily_plan' WHERE id = '$id'";
                 // MS SQL Server
                 // $sql = "UPDATE t_plan SET Carmodel = '$car_maker', Line = '$line_no', Target = '$plan', Status = '$status', IRCS_Line = '$registlinename', 
-                //         datetime_DB = NOW(), ended_DB = null, takt_secs_DB = '$takt_secs', actual_start_DB = '$date_actual_start', last_update_DB = NOW(), 
+                //         datetime_DB = GETDATE(), ended_DB = null, takt_secs_DB = '$takt_secs', actual_start_DB = '$date_actual_start', last_update_DB = GETDATE(), 
                 //         IP_address = '$IP_address', [group] = '$group',  yield_target = '$yield_target', ppm_target = '$ppm_target', acc_eff = '$acc_eff', 
                 //         start_bal_delay = '$start_bal_delay', work_time_plan = '$work_time_plan', daily_plan = '$daily_plan' WHERE id = '$id'";
                 $stmt = $conn_pcad->prepare($sql);
@@ -451,7 +466,7 @@ if (isset($_POST['request'])) {
                 VALUES (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address, :group, :yield_target, :ppm_target, :acc_eff, :start_bal_delay, :work_time_plan, :daily_plan)";
                 // MS SQL Server
                 // $sql_insert_plan = "INSERT INTO t_plan (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address, [group], yield_target, ppm_target, acc_eff, start_bal_delay, work_time_plan, daily_plan) 
-                // VALUES (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address, :group, :yield_target, :ppm_target, :acc_eff, :start_bal_delay, :work_time_plan, :daily_plan)";
+                // VALUES (:car_maker, :line_no, :plan, :status, :registlinename, GETDATE(), :takt_secs, :date_actual_start, GETDATE(), :IP_address, :group, :yield_target, :ppm_target, :acc_eff, :start_bal_delay, :work_time_plan, :daily_plan)";
 
                 $stmt_insert_plan = $conn_pcad->prepare($sql_insert_plan);
                 $stmt_insert_plan->bindParam(':car_maker', $car_maker);
@@ -509,7 +524,10 @@ if (isset($_POST['request'])) {
     } else if ($request == "setPaused") {
         $registlinename = $_POST['registlinename'];
         $is_paused = $_POST['is_paused'];
+        // MySQL
         $sql = "UPDATE t_plan SET is_paused = :is_paused, last_update_DB = NOW() WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
+        // MS SQL Server
+        // $sql = "UPDATE t_plan SET is_paused = :is_paused, last_update_DB = GETDATE() WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
         $stmt = $conn_pcad->prepare($sql);
         $stmt->bindParam(':is_paused', $is_paused);
         $stmt->bindParam(':registlinename', $registlinename);
