@@ -14,7 +14,7 @@ $processing = false;
 if (isset($_GET['registlinename'])) {
     $registlinename = $_GET['registlinename'];
     $q = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
-    $stmt = $conn_pcad->prepare($q);
+    $stmt = $conn_pcad->prepare($q, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $stmt->bindParam(':registlinename', $registlinename);
     $stmt->execute();
     $res = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -37,7 +37,7 @@ if (isset($_GET['registlinename'])) {
 
 
         $sql = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename";
-        $stmt = $conn_pcad->prepare($sql);
+        $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->bindParam(':registlinename', $registlinename);
         $stmt->execute();
         $line_data = $stmt->fetch(PDO::FETCH_ASSOC);

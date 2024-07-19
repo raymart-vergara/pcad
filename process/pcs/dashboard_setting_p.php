@@ -28,7 +28,7 @@ if (isset($_POST['request'])) {
                 WHERE IRCS_Line = '" . $IRCS_Line . "' 
                 AND Status = 'Pending'";
 
-        $stmt = $conn_pcad->prepare($sql);
+        $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->bindParam(':IRCS_Line', $IRCS_Line);
         $stmt->execute();
         $line = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -82,7 +82,10 @@ if (isset($_POST['request'])) {
         $url = "location: ../../index_exec.php?registlinename=" . $registlinename . "&opt=" . $opt;
         $message = "No plan has been set for the selected line. The dashboard for the selected line cannot be viewed.";
 
+        // MySQL
         $sql_get_line = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND `group` = :group";
+        // MS SQL Server
+        // $sql_get_line = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND [group] = :group";
 
         switch($opt) {
             case 1:
@@ -111,7 +114,7 @@ if (isset($_POST['request'])) {
                 break;
         }
 
-        $stmt_get_line = $conn_pcad->prepare($sql_get_line);
+        $stmt_get_line = $conn_pcad->prepare($sql_get_line, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt_get_line->bindParam(':registlinename', $registlinename);
         $stmt_get_line->bindParam(':group', $group);
 
@@ -133,7 +136,7 @@ if (isset($_POST['request'])) {
     } else if ($request == "getLineNo") {
         $registlinename = $_POST['registlinename'];
         $q = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename ";
-        $stmt = $conn_pcad->prepare($q);
+        $stmt = $conn_pcad->prepare($q, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->bindParam(':registlinename', $registlinename);
         $stmt->execute();
         $line = $stmt->fetch(PDO::FETCH_ASSOC);

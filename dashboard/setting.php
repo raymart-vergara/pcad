@@ -6,7 +6,7 @@ include 'plugins/head.php';
 
 $ircs_lines = array();
 $query = "SELECT * FROM m_ircs_line ORDER BY ircs_line ASC";
-$result = $conn_pcad->query($query);
+$result = $conn_pcad->query($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 
 if ($result) {
     $ircs_lines = $result->fetchAll(PDO::FETCH_ASSOC);

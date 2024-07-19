@@ -50,7 +50,7 @@ if (isset($_POST['request'])) {
     if ($request == "getPlan") {
         $carmaker = $_POST['carmaker'];
         $sql = " SELECT * FROM t_plan  WHERE Carmodel  LIKE '%" . $carmaker . "%' AND Status = 'Pending' ";
-        $stmt = $conn_pcad->prepare($sql);
+        $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->bindValue(':carmaker', '%' . $carmaker . '%', PDO::PARAM_STR);
         $stmt->execute();
         $plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -126,7 +126,7 @@ if (isset($_POST['request'])) {
                 FROM t_plan 
                 WHERE IRCS_Line = '" . $IRCS_Line . "' 
                 AND Status = 'Pending'";
-        $stmt = $conn_pcad->prepare($sql);
+        $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->bindParam(':IRCS_Line', $IRCS_Line);
         $stmt->execute();
         $line = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -185,8 +185,14 @@ if (isset($_POST['request'])) {
                 "started" => $started
             );
             //UPDATE PLAN
+            // MySQL
             $added_target_formula = "FLOOR(TIME_TO_SEC(TIMEDIFF(NOW(), last_update_DB)) / takt_secs_DB)";
+            // MS SQL Server
+            // $added_target_formula = "FLOOR(DATEDIFF(SECOND, last_update_DB, GETDATE()) / takt_secs_DB)";
+            // MySQL
             $sql = "UPDATE t_plan SET Target = Target + $added_target_formula, Actual_Target = :Actual_Target, Remaining_Target = :Remaining_Target, last_takt_DB = :last_takt, last_update_DB = NOW() WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending' AND is_paused = 'NO'";
+            // MS SQL Server
+            // $sql = "UPDATE t_plan SET Target = Target + $added_target_formula, Actual_Target = :Actual_Target, Remaining_Target = :Remaining_Target, last_takt_DB = :last_takt, last_update_DB = GETDATE() WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending' AND is_paused = 'NO'";
 
             $stmt = $conn_pcad->prepare($sql);
             $stmt->bindParam(':Actual_Target', $Actual_Target);
@@ -232,7 +238,7 @@ if (isset($_POST['request'])) {
 
         $sql = "SELECT datetime_DB FROM t_plan 
                 WHERE IRCS_Line = '$IRCS_Line' AND Status = 'Pending'";
-        $stmt = $conn_pcad->prepare($sql);
+        $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $start_plan_date = date('Y-m-d', strtotime($result['datetime_DB']));
@@ -267,9 +273,13 @@ if (isset($_POST['request'])) {
         $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
         $work_time_plan = $_POST['work_time_plan'];
 
+        // MySQL
         $sql = "SELECT datetime_DB FROM t_plan 
                 WHERE IRCS_Line = '$registlinename' AND `group` = '$shift_group' AND Status = 'Pending'";
-        $stmt = $conn_pcad->prepare($sql);
+        // MS SQL Server
+        // $sql = "SELECT datetime_DB FROM t_plan 
+        //         WHERE IRCS_Line = '$registlinename' AND [group] = '$shift_group' AND Status = 'Pending'";
+        $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $start_plan_date = date('Y-m-d', strtotime($result['datetime_DB']));
@@ -318,9 +328,14 @@ if (isset($_POST['request'])) {
             $acc_eff_actual = compute_accounting_efficiency($total_st_per_line, $wt_x_mp);
 
             // Update t_plan
+            // MySQL
             $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = NOW(), 
                     yield_actual = :yield_actual, ppm_actual = :ppm_actual, acc_eff_actual = :acc_eff_actual 
                     WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
+            // MS SQL Server
+            // $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = GETDATE(), 
+            //         yield_actual = :yield_actual, ppm_actual = :ppm_actual, acc_eff_actual = :acc_eff_actual 
+            //         WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
             $stmt = $conn_pcad->prepare($sql);
             $stmt->bindParam(':yield_actual', $yield_actual);
             $stmt->bindParam(':ppm_actual', $ppm_actual);
@@ -333,8 +348,12 @@ if (isset($_POST['request'])) {
             }
         } else {
             // Update t_plan
+            // MySQL
             $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = NOW()
                     WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
+            // MS SQL Server
+            // $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = GETDATE()
+            //         WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
             $stmt = $conn_pcad->prepare($sql);
             $stmt->bindParam(':IRCS_Line', $registlinename);
             if ($stmt->execute()) {
@@ -382,7 +401,7 @@ if (isset($_POST['request'])) {
                 $secs = "00";
             }
             $sql_get_line = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename";
-            $stmt_get_line = $conn_pcad->prepare($sql_get_line);
+            $stmt_get_line = $conn_pcad->prepare($sql_get_line, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
             $stmt_get_line->bindParam(':registlinename', $registlinename);
             $stmt_get_line->execute();
             $line = $stmt_get_line->fetch(PDO::FETCH_ASSOC);
@@ -408,21 +427,32 @@ if (isset($_POST['request'])) {
             }
 
             // Check existing done or pending plan
+            // MySQL
             $sql = "SELECT id FROM t_plan WHERE 
                     (datetime_DB >= '$date_only_actual_start $time_only_actual_start' AND datetime_DB <= '$date_only_actual_end $time_only_actual_end') 
                     AND IRCS_Line='$registlinename' ORDER BY id DESC LIMIT 1";
+            // MS SQL Server
+            // $sql = "SELECT TOP 1 id FROM t_plan WHERE 
+            //         (datetime_DB >= '$date_only_actual_start $time_only_actual_start' AND datetime_DB <= '$date_only_actual_end $time_only_actual_end') 
+            //         AND IRCS_Line='$registlinename' ORDER BY id DESC";
             
-            $stmt = $conn_pcad->prepare($sql);
+            $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
             $stmt->execute();
             if ($stmt->rowCount() > 0) {
                 foreach($stmt->fetchALL() as $row){
                     $id = $row['id'];
                 }
 
+                // MySQL
                 $sql = "UPDATE t_plan SET Carmodel = '$car_maker', Line = '$line_no', Target = '$plan', Status = '$status', IRCS_Line = '$registlinename', 
                         datetime_DB = NOW(), ended_DB = null, takt_secs_DB = '$takt_secs', actual_start_DB = '$date_actual_start', last_update_DB = NOW(), 
                         IP_address = '$IP_address', `group` = '$group',  yield_target = '$yield_target', ppm_target = '$ppm_target', acc_eff = '$acc_eff', 
                         start_bal_delay = '$start_bal_delay', work_time_plan = '$work_time_plan', daily_plan = '$daily_plan' WHERE id = '$id'";
+                // MS SQL Server
+                // $sql = "UPDATE t_plan SET Carmodel = '$car_maker', Line = '$line_no', Target = '$plan', Status = '$status', IRCS_Line = '$registlinename', 
+                //         datetime_DB = GETDATE(), ended_DB = null, takt_secs_DB = '$takt_secs', actual_start_DB = '$date_actual_start', last_update_DB = GETDATE(), 
+                //         IP_address = '$IP_address', [group] = '$group',  yield_target = '$yield_target', ppm_target = '$ppm_target', acc_eff = '$acc_eff', 
+                //         start_bal_delay = '$start_bal_delay', work_time_plan = '$work_time_plan', daily_plan = '$daily_plan' WHERE id = '$id'";
                 $stmt = $conn_pcad->prepare($sql);
 
                 if ($stmt->execute()) {
@@ -431,8 +461,12 @@ if (isset($_POST['request'])) {
                     echo "Failed to update existing data into t_plan.";
                 }
             } else {
+                // MySQL
                 $sql_insert_plan = "INSERT INTO t_plan (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address, `group`, yield_target, ppm_target, acc_eff, start_bal_delay, work_time_plan, daily_plan) 
                 VALUES (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address, :group, :yield_target, :ppm_target, :acc_eff, :start_bal_delay, :work_time_plan, :daily_plan)";
+                // MS SQL Server
+                // $sql_insert_plan = "INSERT INTO t_plan (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address, [group], yield_target, ppm_target, acc_eff, start_bal_delay, work_time_plan, daily_plan) 
+                // VALUES (:car_maker, :line_no, :plan, :status, :registlinename, GETDATE(), :takt_secs, :date_actual_start, GETDATE(), :IP_address, :group, :yield_target, :ppm_target, :acc_eff, :start_bal_delay, :work_time_plan, :daily_plan)";
 
                 $stmt_insert_plan = $conn_pcad->prepare($sql_insert_plan);
                 $stmt_insert_plan->bindParam(':car_maker', $car_maker);
@@ -465,7 +499,7 @@ if (isset($_POST['request'])) {
         } else if ($request == "getLineNo") {
         $registlinename = $_POST['registlinename'];
         $q = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename ";
-        $stmt = $conn_pcad->prepare($q);
+        $stmt = $conn_pcad->prepare($q, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->bindParam(':registlinename', $registlinename);
         $stmt->execute();
         $line = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -477,7 +511,7 @@ if (isset($_POST['request'])) {
     } elseif ($request == "checkRunningPlans") {
         $registlinename = $_POST['registlinename'];
         $sql = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
-        $stmt = $conn_pcad->prepare($sql);
+        $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->bindParam(':registlinename', $registlinename);
         $stmt->execute();
         $plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -490,7 +524,10 @@ if (isset($_POST['request'])) {
     } else if ($request == "setPaused") {
         $registlinename = $_POST['registlinename'];
         $is_paused = $_POST['is_paused'];
+        // MySQL
         $sql = "UPDATE t_plan SET is_paused = :is_paused, last_update_DB = NOW() WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
+        // MS SQL Server
+        // $sql = "UPDATE t_plan SET is_paused = :is_paused, last_update_DB = GETDATE() WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
         $stmt = $conn_pcad->prepare($sql);
         $stmt->bindParam(':is_paused', $is_paused);
         $stmt->bindParam(':registlinename', $registlinename);

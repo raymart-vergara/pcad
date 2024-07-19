@@ -54,7 +54,7 @@ if (isset($_GET['registlinename'])) {
             break;
     }
 
-    $stmt = $conn_pcad->prepare($q);
+    $stmt = $conn_pcad->prepare($q, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $stmt->bindParam(':registlinename', $registlinename);
     $stmt->execute();
     $res = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -105,7 +105,7 @@ if (isset($_GET['registlinename'])) {
         // m_ircs_line Data
 
         $sql = "SELECT * FROM m_ircs_line WHERE ircs_line = '$registlinename'";
-        $stmt = $conn_pcad->prepare($sql);
+        $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->execute();
         $line_data = $stmt->fetch(PDO::FETCH_ASSOC);
         $line_no = $line_data['line_no'];

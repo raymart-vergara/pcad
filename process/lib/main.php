@@ -90,7 +90,7 @@ function get_ircs_line_data($registlinename, $conn_pcad)
 				LEFT JOIN m_inspection_ip insp
 				ON i.ircs_line = insp.ircs_line AND i.final_process = insp.finishdatetime
 				WHERE i.ircs_line = '$registlinename'";
-		$stmt = $conn_pcad->prepare($query);
+		$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach ($stmt->fetchALL() as $row) {
@@ -139,7 +139,7 @@ function get_ircs_ip_address($registlinename, $conn_pcad)
 	if (!empty($registlinename)) {
 		try {
 			$query = "SELECT ircs_line, process, ipaddresscolumn FROM m_inspection_ip WHERE ircs_line = :registlinename";
-			$stmt = $conn_pcad->prepare($query);
+			$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 			$stmt->bindParam(':registlinename', $registlinename, PDO::PARAM_STR);
 			$stmt->execute();
 
@@ -172,7 +172,7 @@ function getIpAddressesFromDatabase($registlinename, $conn_pcad)
 
     // Retrieve IP addresses from the first column (ip_address) for the specified process
     $query = "SELECT process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement FROM m_inspection_ip WHERE ircs_line = :registlinename";
-    $stmt = $conn_pcad->prepare($query);
+    $stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $stmt->bindParam(':registlinename', $registlinename, PDO::PARAM_STR);
     $stmt->execute();
 
@@ -245,7 +245,7 @@ function get_plan_data($registlinename, $day, $shift, $conn_pcad, $opt)
 			break;
 	}
 
-    $stmt = $conn_pcad->prepare($sql);
+    $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $stmt->bindParam(':registlinename', $registlinename);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);

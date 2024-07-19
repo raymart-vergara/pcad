@@ -10,7 +10,10 @@ $method = $_POST['method'];
 
 function count_pcs_list($search_arr, $conn_pcad)
 {
+	// MySQL
 	$query = "SELECT count(id) AS total FROM m_ircs_line WHERE 1";
+	// MS SQL Server
+	// $query = "SELECT count(id) AS total FROM m_ircs_line WHERE 1=1";
 
 	if (!empty($search_arr['line_no'])) {
 		$query .= " AND line_no LIKE '" . $search_arr['line_no'] . "%'";
@@ -20,7 +23,7 @@ function count_pcs_list($search_arr, $conn_pcad)
 		$query .= " AND andon_line LIKE '" . $search_arr['andon_line'] . "%'";
 	}
 
-	$stmt = $conn_pcad->prepare($query);
+	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 
 	if ($stmt->rowCount() > 0) {
@@ -97,9 +100,13 @@ if ($method == 'pcs_list') {
 		$query = $query . " AND andon_line LIKE '$andon_line%'";
 	}
 
+	// MySQL
 	$query = $query . " LIMIT " . $page_first_result . ", " . $results_per_page;
+	// MS SQL Server
+	// $query .= " ORDER BY id ASC";
+	// $query .= " OFFSET " . $page_first_result . " ROWS FETCH NEXT " . $results_per_page . " ROWS ONLY";
 
-	$stmt = $conn_pcad->prepare($query);
+	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach ($stmt->fetchALL() as $j) {
@@ -140,7 +147,7 @@ if ($method == 'add_pcs') {
 	$final_process = addslashes($_POST['final_process']);
 	$ip = addslashes($_POST['ip']);
 
-	$query = "INSERT INTO m_ircs_line (`car_maker`,`car_model`,`line_no`, `ircs_line`, `andon_line`, `final_process`, `ip`) VALUES ('$car_maker','$car_model','$line_no','$ircs_line','$andon_line','$final_process','$ip')";
+	$query = "INSERT INTO m_ircs_line (car_maker,car_model,line_no, ircs_line, andon_line, final_process, ip) VALUES ('$car_maker','$car_model','$line_no','$ircs_line','$andon_line','$final_process','$ip')";
 
 	$stmt = $conn_pcad->prepare($query);
 	if ($stmt->execute()) {
@@ -206,7 +213,7 @@ if ($method == 'final_process') {
 	$final_process = array();
 	$query = "SELECT DISTINCT finishdatetime FROM m_final_process";
 
-	$stmt = $conn_pcad->query($query);
+	$stmt = $conn_pcad->query($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 
 	$final_process = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

@@ -1385,7 +1385,7 @@ function sum_process_design_plan($search_arr, $conn_pcad) {
 
 	$sql = $sql . "FROM m_process_design WHERE ircs_line = '$registlinename'";
 
-	$stmt = $conn_pcad->prepare($sql);
+	$stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
@@ -1499,7 +1499,7 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 
 	$sql = $sql . "FROM m_process_design WHERE ircs_line = '$registlinename'";
 
-	$stmt = $conn_pcad->prepare($sql);
+	$stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
