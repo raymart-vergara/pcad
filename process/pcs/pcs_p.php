@@ -11,9 +11,9 @@ $method = $_POST['method'];
 function count_pcs_list($search_arr, $conn_pcad)
 {
 	// MySQL
-	$query = "SELECT count(id) AS total FROM m_ircs_line WHERE 1";
+	// $query = "SELECT count(id) AS total FROM m_ircs_line WHERE 1";
 	// MS SQL Server
-	// $query = "SELECT count(id) AS total FROM m_ircs_line WHERE 1=1";
+	$query = "SELECT count(id) AS total FROM m_ircs_line WHERE 1=1";
 
 	if (!empty($search_arr['line_no'])) {
 		$query .= " AND line_no LIKE '" . $search_arr['line_no'] . "%'";
@@ -101,10 +101,10 @@ if ($method == 'pcs_list') {
 	}
 
 	// MySQL
-	$query = $query . " LIMIT " . $page_first_result . ", " . $results_per_page;
+	// $query = $query . " LIMIT " . $page_first_result . ", " . $results_per_page;
 	// MS SQL Server
-	// $query .= " ORDER BY id ASC";
-	// $query .= " OFFSET " . $page_first_result . " ROWS FETCH NEXT " . $results_per_page . " ROWS ONLY";
+	$query .= " ORDER BY id ASC";
+	$query .= " OFFSET " . $page_first_result . " ROWS FETCH NEXT " . $results_per_page . " ROWS ONLY";
 
 	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
@@ -213,7 +213,7 @@ if ($method == 'final_process') {
 	$final_process = array();
 	$query = "SELECT DISTINCT finishdatetime FROM m_final_process";
 
-	$stmt = $conn_pcad->query($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+	$stmt = $conn_pcad->query($query);
 
 	$final_process = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

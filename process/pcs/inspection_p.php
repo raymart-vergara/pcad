@@ -10,7 +10,7 @@ if ($method == 'fetch_process') {
 	$final_process = array();
 	$query = "SELECT final_process FROM m_final_process ORDER BY final_process ASC";
 
-	$stmt = $conn_pcad->query($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+	$stmt = $conn_pcad->query($query);
 
 	$final_process = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -28,7 +28,7 @@ if ($method == 'fetch_ip_address_column') {
 	$ip_address_col = array();
 	$query = "SELECT ipaddresscolumn FROM m_final_process";
 
-	$stmt = $conn_pcad->query($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+	$stmt = $conn_pcad->query($query);
 
 	$ip_address_col = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -46,7 +46,7 @@ if ($method == 'fetch_finish_date_time') {
 	$finish_date_time = array();
 	$query = "SELECT finishdatetime FROM m_final_process";
 
-	$stmt = $conn_pcad->query($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+	$stmt = $conn_pcad->query($query);
 
 	$finish_date_time = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -64,7 +64,7 @@ if ($method == 'fetch_judgement') {
 	$judgement = array();
 	$query = "SELECT judgement FROM m_final_process";
 
-	$stmt = $conn_pcad->query($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+	$stmt = $conn_pcad->query($query);
 
 	$judgement = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -81,9 +81,9 @@ if ($method == 'fetch_judgement') {
 function count_insp_list($search_arr, $conn_pcad)
 {
 	// MySQL
-	$query = "SELECT count(id) AS total FROM m_inspection_ip WHERE 1";
+	// $query = "SELECT count(id) AS total FROM m_inspection_ip WHERE 1";
 	// MS SQL Server
-	// $query = "SELECT count(id) AS total FROM m_inspection_ip WHERE 1=1";
+	$query = "SELECT count(id) AS total FROM m_inspection_ip WHERE 1=1";
 
 	if (!empty($search_arr['ircs_line'])) {
 		$query .= " AND ircs_line LIKE '" . $search_arr['ircs_line'] . "%'";
@@ -149,9 +149,9 @@ if ($method == 'inspection_list') {
 	$c = $page_first_result;
 
 	// MySQL
-	$query = "SELECT id, ircs_line, process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement FROM m_inspection_ip WHERE 1"; // Start with a condition that is always true
+	// $query = "SELECT id, ircs_line, process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement FROM m_inspection_ip WHERE 1"; // Start with a condition that is always true
 	// MS SQL Server
-	// $query = "SELECT id, ircs_line, process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement FROM m_inspection_ip WHERE 1=1";
+	$query = "SELECT id, ircs_line, process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement FROM m_inspection_ip WHERE 1=1";
 	if (!empty($ircs_line)) {
 		$query .= " AND ircs_line LIKE '" . $ircs_line . "%'";
 	} elseif (!empty($process)) {
@@ -159,10 +159,10 @@ if ($method == 'inspection_list') {
 	}
 
 	// MySQL
-	$query .= " LIMIT " . $page_first_result . ", " . $results_per_page;
+	// $query .= " LIMIT " . $page_first_result . ", " . $results_per_page;
 	// MS SQL Server
-	// $query .= " ORDER BY id ASC";
-	// $query .= " OFFSET " . $page_first_result . " ROWS FETCH NEXT " . $results_per_page . " ROWS ONLY";
+	$query .= " ORDER BY id ASC";
+	$query .= " OFFSET " . $page_first_result . " ROWS FETCH NEXT " . $results_per_page . " ROWS ONLY";
 
 	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
