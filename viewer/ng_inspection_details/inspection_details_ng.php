@@ -7,7 +7,7 @@ include 'plugins/navbar/ng_inspection_output_navbar.php';
 
 $ircs_lines = array();
 $query = "SELECT * FROM m_ircs_line ORDER BY ircs_line ASC";
-$result = $conn_pcad->query($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+$result = $conn_pcad->query($query);
 
 if ($result) {
     $ircs_lines = $result->fetchAll(PDO::FETCH_ASSOC);
