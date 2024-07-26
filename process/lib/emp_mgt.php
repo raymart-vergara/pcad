@@ -1356,12 +1356,12 @@ function get_manpower_count_per_line($search_arr, $conn_emp_mgt) {
 		'total_present_pd_mp' => $total_present_pd_mp,
 		'total_absent_pd_mp' => $total_absent_pd_mp,
 		'total_pd_mp_line_support_to' => $total_pd_mp_line_support_to,
-		'absent_ratio_pd_mp' => $absent_ratio_pd_mp,
+		'absent_ratio_pd_mp' => round($absent_ratio_pd_mp, 2),
 		'total_qa_mp' => $total_qa_mp,
 		'total_present_qa_mp' => $total_present_qa_mp,
 		'total_absent_qa_mp' => $total_absent_qa_mp,
 		'total_qa_mp_line_support_to' => $total_qa_mp_line_support_to,
-		'absent_ratio_qa_mp' => $absent_ratio_qa_mp,
+		'absent_ratio_qa_mp' => round($absent_ratio_qa_mp, 2),
 		'message' => 'success'
 	);
 
