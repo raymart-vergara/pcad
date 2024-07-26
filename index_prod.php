@@ -1064,6 +1064,10 @@ include 'process/pcs/index.php';
 
       // init_charts();
       // init_charts2();
+
+      setInterval(() => {
+         window.location.reload();
+      }, 1000 * 60 * 8);
    });
 </script>
 

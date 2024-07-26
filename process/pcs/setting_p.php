@@ -47,73 +47,75 @@ function TimeToSec($time)
 
 if (isset($_POST['request'])) {
     $request = $_POST['request'];
-    if ($request == "getPlan") {
-        $carmaker = $_POST['carmaker'];
-        $sql = " SELECT * FROM t_plan  WHERE Carmodel  LIKE '%" . $carmaker . "%' AND Status = 'Pending' ";
-        $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-        $stmt->bindValue(':carmaker', '%' . $carmaker . '%', PDO::PARAM_STR);
-        $stmt->execute();
-        $plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        if ($plans) {
-            $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
-            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
-            $shift = get_shift($server_time);
+    // if ($request == "getPlan") {
+    //     $carmaker = $_POST['carmaker'];
+    //     $sql = " SELECT * FROM t_plan  WHERE Carmodel LIKE :carmaker AND Status = 'Pending'";
+    //     $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+    //     $stmt->bindValue(':carmaker', '%' . $carmaker . '%', PDO::PARAM_STR);
+    //     $stmt->execute();
+    //     $plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    //     if ($plans) {
+    //         $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+    //         $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+    //         $shift = get_shift($server_time);
 
-            foreach ($plans as $i => $p) {
-                $IRCS_Line = $p['IRCS_Line'];
+    //         foreach ($plans as $i => $p) {
+    //             $IRCS_Line = $p['IRCS_Line'];
 
-                $ircs_line_data_arr = get_ircs_line_data($IRCS_Line, $conn_pcad);
+    //             $ircs_line_data_arr = get_ircs_line_data($IRCS_Line, $conn_pcad);
 
-                $search_arr = array(
-                    'day' => $day,
-                    'day_tomorrow' => $day_tomorrow,
-                    'shift' => $shift,
-                    'registlinename' => $IRCS_Line,
-                    'ircs_line_data_arr' => $ircs_line_data_arr,
-                    'server_date_only' => $server_date_only,
-                    'server_date_only_yesterday' => $server_date_only_yesterday,
-                    'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                    'server_time' => $server_time,
-                    'opt' => 1
-                );
+    //             $search_arr = array(
+    //                 'day' => $day,
+    //                 'day_tomorrow' => $day_tomorrow,
+    //                 'shift' => $shift,
+    //                 'registlinename' => $IRCS_Line,
+    //                 'ircs_line_data_arr' => $ircs_line_data_arr,
+    //                 'server_date_only' => $server_date_only,
+    //                 'server_date_only_yesterday' => $server_date_only_yesterday,
+    //                 'server_date_only_tomorrow' => $server_date_only_tomorrow,
+    //                 'server_time' => $server_time,
+    //                 'opt' => 1
+    //             );
 
-                $Actual_Target = count_overall_g($search_arr, $conn_ircs);
+    //             $Actual_Target = count_overall_g($search_arr, $conn_ircs);
 
-                // $IRCS_IP = $p['IP_address'];
-                // $started = $p['actual_start_DB'];
-                // $q = "
-                //     SELECT COUNT(*) AS c
-                //     FROM IRCS.T_PACKINGWK 
-                //     WHERE (REGISTLINENAME LIKE '" . $IRCS_Line . "' OR IPADDRESS = '" . $IRCS_IP . "') 
-                //     AND REGISTDATETIME >= TO_DATE('" . $started . "', 'yyyy-MM-dd HH24:MI:SS') AND PACKINGBOXCARDJUDGMENT = '1'";
-                // $stid = oci_parse($conn_ircs, $q);
-                // oci_execute($stid);
-                // while ($row = oci_fetch_object($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
-                //     $Actual_Target = $row->C;
-                // }
+    //             // $IRCS_IP = $p['IP_address'];
+    //             // $started = $p['actual_start_DB'];
+    //             // $q = "
+    //             //     SELECT COUNT(*) AS c
+    //             //     FROM IRCS.T_PACKINGWK 
+    //             //     WHERE (REGISTLINENAME LIKE '" . $IRCS_Line . "' OR IPADDRESS = '" . $IRCS_IP . "') 
+    //             //     AND REGISTDATETIME >= TO_DATE('" . $started . "', 'yyyy-MM-dd HH24:MI:SS') AND PACKINGBOXCARDJUDGMENT = '1'";
+    //             // $stid = oci_parse($conn_ircs, $q);
+    //             // oci_execute($stid);
+    //             // while ($row = oci_fetch_object($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
+    //             //     $Actual_Target = $row->C;
+    //             // }
                 
-                $Target = $p['Target'];
-                $Remaining_Target = $Target - $Actual_Target;
-                $class = '';
-                if ($Actual_Target > $Target) {
-                    $Remaining_Target = '+' . abs($Target - $Actual_Target);
-                } else {
-                    $Remaining_Target = $Target - $Actual_Target;
-                }
-                if ($Actual_Target >= $Target) {
-                    $class = 'tr-met';
-                } else {
-                    $class = 'tr-unmet';
-                }
-                echo '<tr class="' . $class . ' tr-click" data-id="' . $p['ID'] . '">';
-                echo '<td>' . $p['Line'] . '</td>';
-                echo '<td>' . $p['Target'] . '</td>';
-                echo '<td>' . $Actual_Target . '</td>';
-                echo '<td>' . $Remaining_Target . '</td>';
-                echo '</tr>';
-            }
-        }
-    } else if ($request == "getPlanLine") {
+    //             $Target = $p['Target'];
+    //             $Remaining_Target = $Target - $Actual_Target;
+    //             $class = '';
+    //             if ($Actual_Target > $Target) {
+    //                 $Remaining_Target = '+' . abs($Target - $Actual_Target);
+    //             } else {
+    //                 $Remaining_Target = $Target - $Actual_Target;
+    //             }
+    //             if ($Actual_Target >= $Target) {
+    //                 $class = 'tr-met';
+    //             } else {
+    //                 $class = 'tr-unmet';
+    //             }
+    //             echo '<tr class="' . $class . ' tr-click" data-id="' . $p['ID'] . '">';
+    //             echo '<td>' . $p['Line'] . '</td>';
+    //             echo '<td>' . $p['Target'] . '</td>';
+    //             echo '<td>' . $Actual_Target . '</td>';
+    //             echo '<td>' . $Remaining_Target . '</td>';
+    //             echo '</tr>';
+    //         }
+    //     }
+    // }
+    
+    if ($request == "getPlanLine") {
         $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
         $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
         $shift = get_shift($server_time);
@@ -227,7 +229,6 @@ if (isset($_POST['request'])) {
         }
     } else if ($request == "updateTakt") {
         $IRCS_Line = $_POST['registlinename'];
-        $added_takt_plan = $_POST['added_takt_plan'];
 
         // Actual Variables
         $yield_actual = floatval($_POST['yield_actual']);
@@ -491,12 +492,11 @@ if (isset($_POST['request'])) {
                     echo "Failed to insert data into t_plan.";
                 }
             }
-         }
-        elseif ($_POST['request'] == "mainMenu") {
+    } elseif ($_POST['request'] == "mainMenu") {
             // Redirect to the main menu without adding target
             header("Location: ../../pcs_page/index.php");
             exit();
-        } else if ($request == "getLineNo") {
+    } else if ($request == "getLineNo") {
         $registlinename = $_POST['registlinename'];
         $q = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename ";
         $stmt = $conn_pcad->prepare($q, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));

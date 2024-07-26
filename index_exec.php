@@ -547,21 +547,21 @@ include 'process/pcad/dashboard_p.php';
    <input type="hidden" id="section_qa" value="<?= $section_qa ?>">
    <input type="hidden" id="line_no" value="<?= $line_no ?>">
    <input type="hidden" id="registlinename" value="<?= $registlinename ?>">
-   <input type="hidden" id="started" value="<?= $started; ?>">
-   <input type="hidden" id="takt" value="<?= $takt; ?>">
-   <input type="hidden" id="last_takt" value="<?= $last_takt; ?>">
-   <input type="hidden" id="added_takt_plan" value="<?= $added_takt_plan; ?>">
-   <input type="hidden" id="is_paused" value="<?= $is_paused; ?>">
-   <input type="hidden" id="andon_line" name="andon_line" value="<?= $andon_line; ?>">
+   <input type="hidden" id="started" value="<?= $started ?>">
+   <input type="hidden" id="takt" value="<?= $takt ?>">
+   <input type="hidden" id="last_takt" value="<?= $last_takt ?>">
+   <input type="hidden" id="added_takt_plan" value="<?= $added_takt_plan ?>">
+   <input type="hidden" id="is_paused" value="<?= $is_paused ?>">
+   <input type="hidden" id="andon_line" name="andon_line" value="<?= $andon_line ?>">
 
-   <input type="hidden" id="yield_target" name="yield_target" value="<?= $yield_target; ?>">
-   <input type="hidden" id="ppm_target" name="ppm_target" value="<?= $ppm_target; ?>">
-   <input type="hidden" id="acc_eff" name="acc_eff" value="<?= $acc_eff; ?>">
-   <input type="hidden" id="start_bal_delay" name="start_bal_delay" value="<?= $start_bal_delay; ?>">
-   <input type="hidden" id="work_time_plan" name="work_time_plan" value="<?= $work_time_plan; ?>">
-   <input type="hidden" id="daily_plan" name="daily_plan" value="<?= $daily_plan; ?>">
+   <input type="hidden" id="yield_target" name="yield_target" value="<?= $yield_target ?>">
+   <input type="hidden" id="ppm_target" name="ppm_target" value="<?= $ppm_target ?>">
+   <input type="hidden" id="acc_eff" name="acc_eff" value="<?= $acc_eff ?>">
+   <input type="hidden" id="start_bal_delay" name="start_bal_delay" value="<?= $start_bal_delay ?>">
+   <input type="hidden" id="work_time_plan" name="work_time_plan" value="<?= $work_time_plan ?>">
+   <input type="hidden" id="daily_plan" name="daily_plan" value="<?= $daily_plan ?>">
 
-   <input type="hidden" id="opt" name="opt" value="<?= $opt; ?>">
+   <input type="hidden" id="opt" name="opt" value="<?= $opt ?>">
 
    <div class="container-fluid mt-3">
       <!-- ===================== LIGHT/DARK MODE TOGGLE AND RETURN TO SETTING-->
@@ -708,10 +708,10 @@ include 'process/pcad/dashboard_p.php';
                <tbody>
                   <tr>
                      <td class="plan-content yellow-bg" id="target_accounting_efficiency">
-                        <?= $acc_eff; ?>%
+                        <?= round($acc_eff, 2) ?>%
                      </td>
-                     <td class="plan-content yellow-bg" id="actual_accounting_efficiency"><?=$acc_eff_actual?>%</td>
-                     <td class="plan-content" id="gap_accounting_efficiency"><?=$acc_eff_gap?>%</td>
+                     <td class="plan-content yellow-bg" id="actual_accounting_efficiency"><?=round($acc_eff_actual, 2)?>%</td>
+                     <td class="plan-content" id="gap_accounting_efficiency"><?=round($acc_eff_gap, 2)?>%</td>
                   </tr>
                </tbody>
             </table>
@@ -792,9 +792,9 @@ include 'process/pcad/dashboard_p.php';
                      </td>
                   </tr>
                   <tr>
-                     <td class="yield-content yellow-bg" id="actual_yield"><?= $yield_actual; ?>%</td>
+                     <td class="yield-content yellow-bg" id="actual_yield"><?= round($yield_actual, 2) ?>%</td>
                      <td class="yield-sub-title">Actual</td>
-                     <td class="yield-content red-bg" id="actual_ppm"><?= number_format($ppm_actual); ?></td>
+                     <td class="yield-content red-bg" id="actual_ppm"><?= number_format($ppm_actual) ?></td>
                   </tr>
                </tbody>
             </table>
