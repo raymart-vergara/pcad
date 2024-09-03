@@ -270,6 +270,7 @@
     });
 
     const add_insp = () => {
+        var line_no = document.getElementById('line_no_insp_master').value;
         var ircs_line = document.getElementById('ircs_line_insp_master').value;
         var process = document.getElementById('process_insp_master').value;
         var ip_address_1 = document.getElementById('ip_address_1_insp_master').value;
@@ -278,7 +279,14 @@
         var finish_date_time = document.getElementById('finish_date_time_insp_master').value;
         var judgement = document.getElementById('judgement_insp_master').value;
 
-        if (ircs_line == '') {
+        if (line_no == '') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Please Input Line No.',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        } else if (ircs_line == '') {
             Swal.fire({
                 icon: 'info',
                 title: 'Please Input IRCS Line',
@@ -327,6 +335,7 @@
                 cache: false,
                 data: {
                     method: 'add_insp',
+                    line_no: line_no,
                     ircs_line: ircs_line,
                     process: process,
                     ip_address_1: ip_address_1,
@@ -344,6 +353,7 @@
                             showConfirmButton: false,
                             timer: 1000
                         });
+                        $('#line_no_insp_master').val('');
                         $('#ircs_line_insp_master').val('');
                         $('#process_insp_master').val('');
                         $('#ip_address_1_insp_master').val('');
@@ -376,15 +386,17 @@
     const get_insp_details = (param) => {
         var string = param.split('~!~');
         var id = string[0];
-        var ircs_line = string[1];
-        var process = string[2];
-        var ip_address_1 = string[3];
-        var ip_address_2 = string[4];
-        var ip_address_col = string[5];
-        var finish_date_time = string[6];
-        var judgement = string[7];
+        var line_no = string[1];
+        var ircs_line = string[2];
+        var process = string[3];
+        var ip_address_1 = string[4];
+        var ip_address_2 = string[5];
+        var ip_address_col = string[6];
+        var finish_date_time = string[7];
+        var judgement = string[8];
 
         document.getElementById('id_insp_update').value = id;
+        document.getElementById('line_no_insp_master_update').value = line_no;
         document.getElementById('ircs_line_insp_master_update').value = ircs_line;
         document.getElementById('process_insp_master_update').value = process;
         document.getElementById('ip_address_1_insp_master_update').value = ip_address_1;
@@ -396,6 +408,7 @@
 
     const update_insp = () => {
         var id = document.getElementById('id_insp_update').value;
+        var line_no = document.getElementById('line_no_insp_master_update').value;
         var ircs_line = document.getElementById('ircs_line_insp_master_update').value;
         var process = document.getElementById('process_insp_master_update').value;
         var ip_address_1 = document.getElementById('ip_address_1_insp_master_update').value;
@@ -404,7 +417,14 @@
         var finish_date_time = document.getElementById('finish_date_time_insp_master_update').value;
         var judgement = document.getElementById('judgement_insp_master_update').value;
 
-        if (ircs_line == '') {
+        if (line_no == '') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Please Line No.',
+                showConfirmButton: false,
+                timer: 1000
+            });
+        } else if (ircs_line == '') {
             Swal.fire({
                 icon: 'info',
                 title: 'Please Input IRCS Line',
@@ -454,6 +474,7 @@
                 data: {
                     method: 'update_insp',
                     id: id,
+                    line_no: line_no,
                     ircs_line: ircs_line,
                     process: process,
                     ip_address_1: ip_address_1,
@@ -473,6 +494,7 @@
                             timer: 1000
                         });
                         $('#id_insp_update').val('');
+                        $('#line_no_insp_master_update').val('');
                         $('#ircs_line_insp_master_update').val('');
                         $('#process_insp_master_update').val('');
                         $('#ip_address_1_insp_master_update').val('');

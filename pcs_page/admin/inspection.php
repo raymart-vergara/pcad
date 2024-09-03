@@ -77,6 +77,7 @@
                                             <th><input type="checkbox" name="check_all" id="check_all"
                                                     onclick="select_all_func()"></th>
                                             <th>#</th>
+                                            <th>Line No.</th>
                                             <th>IRCS Line</th>
                                             <th>Process</th>
                                             <th>IP Address 1</th>
