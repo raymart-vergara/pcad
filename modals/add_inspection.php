@@ -13,6 +13,10 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-3">
+                        <label>Line No.</label>
+                        <input type="text" id="line_no_insp_master" class="form-control" autocomplete="off">
+                    </div>
+                    <div class="col-3">
                         <label>IRCS Line</label>
                         <input type="text" id="ircs_line_insp_master" class="form-control" autocomplete="off">
                     </div>
@@ -29,12 +33,12 @@
                             <option value=""></option>
                         </select>
                     </div>
+                </div>
+                <div class="row mt-4">
                     <div class="col-3">
                         <label>IP Address 1</label>
                         <input type="text" id="ip_address_1_insp_master" class="form-control" autocomplete="off">
                     </div>
-                </div>
-                <div class="row mt-4">
                     <div class="col-3">
                         <label>IP Address 2</label>
                         <input type="text" id="ip_address_2_insp_master" class="form-control" autocomplete="off">
@@ -48,8 +52,7 @@
                     </div>
                     <div class="col-3">
                         <label>Judgement</label>
-                        <select id="judgement_insp_master" class="form-control" maxlength="255"
-                            autocomplete="off">
+                        <select id="judgement_insp_master" class="form-control" maxlength="255" autocomplete="off">
                             <option value=""></option>
                         </select>
                     </div>
