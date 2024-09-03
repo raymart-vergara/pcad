@@ -4,6 +4,20 @@ require 'process/conn/emp_mgt.php';
 include 'process/lib/emp_mgt.php';
 require 'process/conn/pcad.php';
 
+$opt = $_GET['opt'];
+
+$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+$shift = get_shift($server_time);
+
+if ($opt == 2) {
+    if (isset($_GET['day']) && isset($_GET['shift'])) {
+        $day = $_GET['day'];
+        $shift = $_GET['shift'];
+    }
+}
+
+$server_date_only = $day;
+
 // $line_no = '2132';
 // $line_no = $_GET['line_no'];
 $registlinename = $_GET['registlinename']; // IRCS LINE (PCS)
@@ -13,8 +27,34 @@ $processing = false;
 
 if (isset($_GET['registlinename'])) {
     $registlinename = $_GET['registlinename'];
-    $q = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
-    $stmt = $conn_pcad->prepare($q);
+
+    $q = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename";
+
+    switch($opt) {
+        case 1:
+            $q .= " AND Status = 'Pending'";
+            break;
+        case 2:
+            $start_date = '';
+            $end_date = '';
+
+            if ($shift == 'DS') {
+                $start_date = date('Y-m-d H:i:s',(strtotime("$day 06:00:00")));
+                $end_date = date('Y-m-d H:i:s',(strtotime("$day 17:59:59")));
+            } else if ($shift == 'NS') {
+                $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+                $start_date = date('Y-m-d H:i:s',(strtotime("$day 18:00:00")));
+                $end_date = date('Y-m-d H:i:s',(strtotime("$day_tomorrow 05:59:59")));
+            }
+
+            $q .= " AND Status = 'Done' AND (datetime_DB >= '$start_date' AND datetime_DB <= '$end_date')";
+            break;
+        default:
+            $q .= " AND Status = 'Pending'";
+            break;
+    }
+
+    $stmt = $conn_pcad->prepare($q, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $stmt->bindParam(':registlinename', $registlinename);
     $stmt->execute();
     $res = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -65,7 +105,7 @@ if (isset($_GET['registlinename'])) {
         // m_ircs_line Data
 
         $sql = "SELECT * FROM m_ircs_line WHERE ircs_line = '$registlinename'";
-        $stmt = $conn_pcad->prepare($sql);
+        $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->execute();
         $line_data = $stmt->fetch(PDO::FETCH_ASSOC);
         $line_no = $line_data['line_no'];
@@ -110,5 +150,4 @@ $dept_qa = 'QA';
 $section_pd = get_section($line_no, $conn_emp_mgt);
 $section_qa = get_section($line_no, $conn_emp_mgt);
 // $section_qa = 'QA';
-$shift = get_shift($server_time);
 ?>

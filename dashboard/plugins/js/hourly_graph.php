@@ -1,6 +1,8 @@
 <script type="text/javascript">
     const andon_hourly_graph = () => {
         let andon_line = localStorage.getItem("andon_line");
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
+        let server_date_only = localStorage.getItem("pcad_exec_server_date_only");
 
         $.ajax({
             url: 'process/andon_graph/a_hourly_p.php',
@@ -9,7 +11,9 @@
             cache: false,
             data: {
                 method: 'andon_hourly',
-                andon_line: andon_line
+                andon_line: andon_line,
+                opt: opt,
+                server_date_only: server_date_only
             },
             success: function (data) {
                 let total_counts = data[0];
@@ -147,8 +151,9 @@
 
     const get_hourly_output_chart = () => {
         let registlinename = localStorage.getItem("registlinename");
-        let hourly_output_date = '<?= $server_date_only ?>';
+        let hourly_output_date = localStorage.getItem("pcad_exec_server_date_only");
         let target_output = parseInt(localStorage.getItem('target_hourly_output'));
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
 
         $.ajax({
             url: 'process/hourly_output/hourly_output_p.php',
@@ -158,7 +163,8 @@
             data: {
                 method: 'get_hourly_output_graph',
                 registlinename: registlinename,
-                hourly_output_date: hourly_output_date
+                hourly_output_date: hourly_output_date,
+                opt: opt
             },
             success: function (data) {
                 let hourly_output_summary = data[0];
@@ -318,6 +324,8 @@
 
     const ng_graph = () => {
         let registlinename = localStorage.getItem("registlinename");
+        let server_date_only = localStorage.getItem("pcad_exec_server_date_only");
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
 
         $.ajax({
             url: 'process/inspection_output/inspection_output_p.php',
@@ -326,7 +334,9 @@
             dataType: 'json',
             data: {
                 method: 'ng_graph',
-                registlinename: registlinename
+                registlinename: registlinename,
+                server_date_only: server_date_only,
+                opt: opt
             },
             success: function (data) {
                 let hourly_ng_summary = data[0];

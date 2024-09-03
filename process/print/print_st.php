@@ -15,7 +15,7 @@ function count_st_list($search_arr, $conn_pcad) {
     $query = $query . " AND st LIKE '".$search_arr['st']."%'";
   }
   
-  $stmt = $conn_pcad->prepare($query);
+  $stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
   $stmt->execute();
   if ($stmt->rowCount() > 0) {
     foreach($stmt->fetchALL() as $j){
@@ -60,7 +60,7 @@ if (!empty($parts_name)) {
 if (!empty($st)) {
   $query = $query . " AND st LIKE '$st%'";
 }
-$stmt = $conn_pcad->prepare($query);
+$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 $stmt->execute();
 ?>
 <!DOCTYPE html>

@@ -44,7 +44,7 @@ if (!empty($st)) {
   $query = $query . " AND st LIKE '$st%'";
 }
 
-$stmt = $conn_pcad->prepare($query);
+$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 $stmt->execute();
 
 

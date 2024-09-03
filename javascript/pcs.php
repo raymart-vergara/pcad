@@ -7,7 +7,7 @@
     var timerOn = true;
     var isPause = false;
 
-    getDT();
+    // getDT();
 
     // $('.done').addClass('d-none');
     // $('.running').removeClass('d-none');
@@ -94,7 +94,6 @@
         function getValues() {
             var registlinename = $("#registlinename").val();
             var last_takt = $("#last_takt").val();
-            var added_takt_plan = $("#added_takt_plan").val();
 
             $.post('process/pcs/setting_p.php', {
                 request: 'getPlanLine',
@@ -168,24 +167,22 @@
         });
     }
 
-    setInterval(function () {
-        getDT();
-    }, 1000);
+    // setInterval(function () {
+    //     getDT();
+    // }, 1000);
 
-    function getDT() {
-        var datenow = moment().format('YYYY/MM/DD hh:mm:ss A');
-        $('.datenow').text(datenow);
-    }
+    // function getDT() {
+    //     var datenow = moment().format('YYYY/MM/DD hh:mm:ss A');
+    //     $('.datenow').text(datenow);
+    // }
 
     function updateTakt() {
-        var added_takt_plan = $("#added_takt_plan").val();
         $.post('process/pcs/setting_p.php', {
             request: 'updateTakt',
             registlinename: $('#registlinename').val(),
             yield_actual: $('#yield_actual').val(),
             ppm_actual: $('#ppm_actual').val(),
-            acc_eff_actual: $('#acc_eff_actual').val(),
-            added_takt_plan: added_takt_plan
+            acc_eff_actual: $('#acc_eff_actual').val()
         }, function (response) {
             if (response.trim() == "true") {
                 getValues();

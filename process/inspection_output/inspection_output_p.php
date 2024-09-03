@@ -198,16 +198,42 @@ $method = $_GET['method'];
 // }
 
 if ($method == 'get_inspection_list') {
-    $shift = get_shift($server_time);
     $registlinename = $_GET['registlinename'];
 
+    $opt = $_GET['opt'];
+
+    $day = '';
+    $day_tomorrow = '';
+    $shift = '';
+
+    switch($opt) {
+		case 1:
+			$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+		case 2:
+			$day = $_GET['day'];
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = $_GET['shift'];
+			break;
+		default:
+            $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+	}
+
     $search_arr = array(
+        'day' => $day,
+        'day_tomorrow' => $day_tomorrow,
         'shift' => $shift,
         'registlinename' => $registlinename,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time
+        'server_time' => $server_time,
+        'opt' => $opt
     );
 
     $overall_inspection_list_arr = get_overall_inspection_list($search_arr, $conn_ircs, $conn_pcad);
@@ -228,16 +254,42 @@ if ($method == 'get_inspection_list') {
 }
 
 if ($method == 'get_inspection_list_copy') {
-    $shift = get_shift($server_time);
     $registlinename = $_GET['registlinename'];
 
+    $opt = $_GET['opt'];
+
+    $day = '';
+    $day_tomorrow = '';
+    $shift = '';
+
+    switch($opt) {
+		case 1:
+			$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+		case 2:
+			$day = $_GET['day'];
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = $_GET['shift'];
+			break;
+		default:
+            $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+	}
+
     $search_arr = array(
+        'day' => $day,
+        'day_tomorrow' => $day_tomorrow,
         'shift' => $shift,
         'registlinename' => $registlinename,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time
+        'server_time' => $server_time,
+        'opt' => $opt
     );
 
     $overall_inspection_list_arr = get_overall_inspection_list($search_arr, $conn_ircs, $conn_pcad);
@@ -258,19 +310,45 @@ if ($method == 'get_inspection_list_copy') {
 }
 
 if ($method == 'get_overall_inspection') {
-    $shift = get_shift($server_time);
     $registlinename = $_GET['registlinename'];
+
+    $opt = $_GET['opt'];
+
+    $day = '';
+    $day_tomorrow = '';
+    $shift = '';
+
+    switch($opt) {
+		case 1:
+			$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+		case 2:
+			$day = $_GET['day'];
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = $_GET['shift'];
+			break;
+		default:
+            $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+	}
 
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
     $search_arr = array(
+        'day' => $day,
+        'day_tomorrow' => $day_tomorrow,
         'shift' => $shift,
         'registlinename' => $registlinename,
         'ircs_line_data_arr' => $ircs_line_data_arr,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time
+        'server_time' => $server_time,
+        'opt' => $opt
     );
 
     $insp_overall_g = count_overall_g($search_arr, $conn_ircs);
@@ -286,9 +364,14 @@ if ($method == 'get_overall_inspection') {
 }
 
 if ($method == 'get_inspection_details_no_good') {
-    $shift = get_shift($server_time);
+    $shift = $_GET['shift'];
     $registlinename = $_GET['registlinename'];
     // $shift_group = $_GET['shift_group'];
+
+    $opt = $_GET['opt'];
+
+    $hourly_ng_date = $_GET['server_date_only'];
+    $hourly_ng_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_ng_date))));
 
     // $shift = 'DS';
     // $registlinename = 'DAIHATSU_30';
@@ -303,7 +386,10 @@ if ($method == 'get_inspection_details_no_good') {
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time
+        'server_time' => $server_time,
+        'hourly_ng_date' => $hourly_ng_date,
+        'hourly_ng_date_tomorrow' => $hourly_ng_date_tomorrow,
+        'opt' => $opt
     );
 
     $list_of_no_good_viewer = get_rows_overall_ng($search_arr, $conn_ircs, $conn_pcad);
@@ -889,9 +975,14 @@ if ($method == 'get_inspection_details_no_good') {
 }
 
 if ($method == 'get_inspection_details_good') {
-    $shift = get_shift($server_time);
+    $shift = $_GET['shift'];
     $registlinename = $_GET['registlinename'];
     // $shift_group = $_GET['shift_group'];
+
+    $opt = $_GET['opt'];
+
+    $hourly_output_date = $_GET['server_date_only'];
+    $hourly_output_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_output_date))));
 
     // $shift = 'DS';
     // $registlinename = 'DAIHATSU_30';
@@ -906,7 +997,10 @@ if ($method == 'get_inspection_details_good') {
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time
+        'server_time' => $server_time,
+        'hourly_output_date' => $hourly_output_date,
+        'hourly_output_date_tomorrow' => $hourly_output_date_tomorrow,
+        'opt' => $opt
     );
 
     $list_of_good_viewer = get_rows_overall_g($search_arr, $conn_ircs);
@@ -1197,6 +1291,12 @@ if ($method == 'get_ng_hourly_output_per_process') {
     $registlinename = $_GET['registlinename'];
     // $registlinename = 'DAIHATSU_30';
 
+    $hourly_ng_date = $_GET['server_date_only'];
+
+    $opt = $_GET['opt'];
+
+    $hourly_ng_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_ng_date))));
+
     $hourly_output_hour_ds_array = array('06' => "06", '07' => "07", '08' => "08", '09' => "09", '10' => "10", '11' => "11", '12' => "12", '13' => "13", '14' => "14", '15' => "15", '16' => "16", '17' => "17");
     $hourly_output_hour_ns_array = array('18' => "18", '19' => "19", '20' => "20", '21' => "21", '22' => "22", '23' => "23", '00' => "00", '01' => "01", '02' => "02", '03' => "03", '04' => "04", '05' => "05");
     $hourly_output_hour_array = $hourly_output_hour_ds_array + $hourly_output_hour_ns_array;
@@ -1222,7 +1322,10 @@ if ($method == 'get_ng_hourly_output_per_process') {
                 'server_date_only' => $server_date_only,
                 'server_date_only_yesterday' => $server_date_only_yesterday,
                 'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                'server_time' => $server_time
+                'server_time' => $server_time,
+                'hourly_ng_date' => $hourly_ng_date,
+                'hourly_ng_date_tomorrow' => $hourly_ng_date_tomorrow,
+                'opt' => $opt
             );
 
             // switch ($process) {
@@ -1325,6 +1428,12 @@ if ($method == 'ng_graph') {
     $registlinename = $_GET['registlinename'];
     // $registlinename = 'DAIHATSU_30';
 
+    $hourly_ng_date = $_GET['server_date_only'];
+
+    $opt = $_GET['opt'];
+
+    $hourly_ng_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_ng_date))));
+
     $hour_6_array = array();
     $hour_7_array = array();
     $hour_8_array = array();
@@ -1377,7 +1486,10 @@ if ($method == 'ng_graph') {
                 'server_date_only' => $server_date_only,
                 'server_date_only_yesterday' => $server_date_only_yesterday,
                 'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                'server_time' => $server_time
+                'server_time' => $server_time,
+                'hourly_ng_date' => $hourly_ng_date,
+                'hourly_ng_date_tomorrow' => $hourly_ng_date_tomorrow,
+                'opt' => $opt
             );
 
             // switch ($process) {

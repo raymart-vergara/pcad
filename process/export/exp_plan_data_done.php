@@ -38,6 +38,7 @@ $section_qa = get_section($plan_data_done_arr['line_no'], $conn_emp_mgt);
 
 $search_arr = array(
   'day' => $day,
+  'day_tomorrow' => $day_tomorrow,
   'shift' => $shift,
   'shift_group' => $plan_data_done_arr['shift_group'],
   'dept_pd' => $dept_pd,
@@ -83,7 +84,7 @@ $process_design_results = get_process_design($search_arr, $conn_emp_mgt, $conn_p
 
 $delimiter = ",";
 
-$filename = "PCAD_ExecPlanDataDone_" . $day . "_" . $shift . ".csv";
+$filename = "PCAD_ExecPlanDataDone_" . $plan_data_done_arr['line_no'] . "_" . $day . "_" . $shift . ".csv";
  
 // Create a file pointer 
 $f = fopen('php://memory', 'w'); 

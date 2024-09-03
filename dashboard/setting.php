@@ -1,6 +1,8 @@
 <?php
-include 'plugins/head.php';
+include '../process/server_date_time.php';
 include '../process/conn/pcad.php';
+include '../process/lib/emp_mgt.php';
+include 'plugins/head.php';
 
 $ircs_lines = array();
 $query = "SELECT * FROM m_ircs_line ORDER BY ircs_line ASC";
@@ -28,6 +30,37 @@ if ($result) {
                         <div class="col-12 text-right pr-lg-5 pr-md-4 pr-sm-3 pt-lg-4 pt-md-3 pt-sm-2"
                             style="color: #003D9E; font-size: 22px;">
                             Settings
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-12 col-md-6 px-lg-5 px-md-4 px-sm-3">
+                            Option <br>
+                            <div class="form-group mb-0">
+                                <input type="radio" id="opt_1" name="opt" value="1" onclick="check_opt()" checked>
+                                <label class="h6" for="opt_1">Live</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 px-lg-5 px-md-4 px-sm-3">
+                            <br>
+                            <div class="form-group mb-0">
+                                <input type="radio" id="opt_2" name="opt" value="2" onclick="check_opt()">
+                                <label class="h6" for="opt_2">History</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-12 px-lg-5 px-md-4 px-sm-3">
+                            Day <br>
+                            <input type="date" name="day" id="day" class="form-control" required disabled>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-12 px-lg-5 px-md-4 px-sm-3">
+                            Shift <br>
+                            <select name="shift" id="shift" class="form-control" required disabled>
+                                <option value="DS">DS</option>
+                                <option value="NS">NS</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-2">

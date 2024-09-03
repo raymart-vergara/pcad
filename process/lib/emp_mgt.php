@@ -25,10 +25,10 @@ function get_section($line_no, $conn_emp_mgt) {
 	$line_no = addslashes($line_no);
 	$section = "";
 	// MySQL
-	$query = "SELECT section FROM m_access_locations WHERE line_no = '$line_no' LIMIT 1";
+	// $query = "SELECT section FROM m_access_locations WHERE line_no = '$line_no' LIMIT 1";
 	// MS SQL Server
-	// $query = "SELECT TOP 1 section FROM m_access_locations WHERE line_no = '$line_no'";
-	$stmt = $conn_emp_mgt->prepare($query);
+	$query = "SELECT TOP 1 section FROM m_access_locations WHERE line_no = '$line_no'";
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -59,7 +59,7 @@ function count_emp($search_arr, $conn_emp_mgt) {
 	}
 	$query = $query . " AND shift_group = '$shift_group'";
 
-	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -94,7 +94,7 @@ function count_emp_tio($search_arr, $conn_emp_mgt) {
 		$sql = $sql . " AND emp.line_no = '$line_no'";
 	}
 
-	$stmt = $conn_emp_mgt->prepare($sql);
+	$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -142,7 +142,7 @@ function count_emp_line_support_to($search_arr, $conn_emp_mgt) {
 	// 	$query = $query . " AND emp.dept = '$dept'";
 	// }
 
-	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -190,7 +190,7 @@ function count_emp_line_support_from($search_arr, $conn_emp_mgt) {
 	// 	$query = $query . " AND emp.dept = '$dept'";
 	// }
 
-	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -238,7 +238,7 @@ function count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt) {
 	// 	$query = $query . " AND emp.dept = '$dept'";
 	// }
 
-	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -253,8 +253,17 @@ function count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt) {
 // Total Employee Time Out Line Support Count (Resigned Not Included, Unregistered Employee Included)
 function count_emp_out_line_support_to($search_arr, $time_out_range, $is_null, $conn_emp_mgt) {
 	$day = addslashes($search_arr['day']);
+	$day_tomorrow = addslashes($search_arr['day_tomorrow']);
 	$shift = addslashes($search_arr['shift']);
 	$line_no = addslashes($search_arr['line_no']);
+
+	$time_out_day = '';
+
+	if ($shift == 'DS') {
+		$time_out_day = $day;
+	} else if ($shift == 'NS') {
+		$time_out_day = $day_tomorrow;
+	}
 	
 	$query = "SELECT count(tio.emp_no) AS total 
 		FROM t_time_in_out tio
@@ -265,14 +274,14 @@ function count_emp_out_line_support_to($search_arr, $time_out_range, $is_null, $
 		$time_out_from = addslashes($time_out_range['time_out_from']);
 		$time_out_to = addslashes($time_out_range['time_out_to']);
 
-		$query = $query . " AND tio.time_out BETWEEN '$day $time_out_from' AND '$day $time_out_to'";
+		$query = $query . " AND tio.time_out BETWEEN '$time_out_day $time_out_from' AND '$time_out_day $time_out_to'";
 	} else {
 		$query = $query . " AND tio.time_out IS NULL";
 	}
 
 	$query = $query . " AND lsh.shift = '$shift' AND lsh.line_no_to LIKE '$line_no%' AND lsh.status = 'accepted'";
 
-	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -287,8 +296,17 @@ function count_emp_out_line_support_to($search_arr, $time_out_range, $is_null, $
 // Total Employee Time Out Line Support Count (Resigned Not Included, Unregistered Employee Included)
 function count_emp_out_line_support_from($search_arr, $time_out_range, $is_null, $conn_emp_mgt) {
 	$day = addslashes($search_arr['day']);
+	$day_tomorrow = addslashes($search_arr['day_tomorrow']);
 	$shift = addslashes($search_arr['shift']);
 	$line_no = addslashes($search_arr['line_no']);
+
+	$time_out_day = '';
+
+	if ($shift == 'DS') {
+		$time_out_day = $day;
+	} else if ($shift == 'NS') {
+		$time_out_day = $day_tomorrow;
+	}
 	
 	$query = "SELECT count(tio.emp_no) AS total 
 		FROM t_time_in_out tio
@@ -299,14 +317,14 @@ function count_emp_out_line_support_from($search_arr, $time_out_range, $is_null,
 		$time_out_from = addslashes($time_out_range['time_out_from']);
 		$time_out_to = addslashes($time_out_range['time_out_to']);
 
-		$query = $query . " AND tio.time_out BETWEEN '$day $time_out_from' AND '$day $time_out_to'";
+		$query = $query . " AND tio.time_out BETWEEN '$time_out_day $time_out_from' AND '$time_out_day $time_out_to'";
 	} else {
 		$query = $query . " AND tio.time_out IS NULL";
 	}
 
 	$query = $query . " AND lsh.shift = '$shift' AND lsh.line_no_from LIKE '$line_no%' AND lsh.status = 'accepted'";
 
-	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -321,8 +339,17 @@ function count_emp_out_line_support_from($search_arr, $time_out_range, $is_null,
 // Total Employee Time Out Line Support Count (Resigned Not Included, Unregistered Employee Included)
 function count_emp_out_line_support_from_rejected($search_arr, $time_out_range, $is_null, $conn_emp_mgt) {
 	$day = addslashes($search_arr['day']);
+	$day_tomorrow = addslashes($search_arr['day_tomorrow']);
 	$shift = addslashes($search_arr['shift']);
 	$line_no = addslashes($search_arr['line_no']);
+
+	$time_out_day = '';
+
+	if ($shift == 'DS') {
+		$time_out_day = $day;
+	} else if ($shift == 'NS') {
+		$time_out_day = $day_tomorrow;
+	}
 	
 	$query = "SELECT count(tio.emp_no) AS total 
 		FROM t_time_in_out tio
@@ -333,14 +360,14 @@ function count_emp_out_line_support_from_rejected($search_arr, $time_out_range, 
 		$time_out_from = addslashes($time_out_range['time_out_from']);
 		$time_out_to = addslashes($time_out_range['time_out_to']);
 
-		$query = $query . " AND tio.time_out BETWEEN '$day $time_out_from' AND '$day $time_out_to'";
+		$query = $query . " AND tio.time_out BETWEEN '$time_out_day $time_out_from' AND '$time_out_day $time_out_to'";
 	} else {
 		$query = $query . " AND tio.time_out IS NULL";
 	}
 
 	$query = $query . " AND lsh.shift = '$shift' AND lsh.line_no_from LIKE '$line_no%' AND lsh.status = 'rejected'";
 
-	$stmt = $conn_emp_mgt->prepare($query);
+	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		foreach($stmt->fetchALL() as $row){
@@ -355,6 +382,7 @@ function count_emp_out_line_support_from_rejected($search_arr, $time_out_range, 
 // Working Time X Manpower (Needed for Accounting Efficiency)
 function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 	$day = addslashes($search_arr['day']);
+	$day_tomorrow = addslashes($search_arr['day_tomorrow']);
 	$shift = addslashes($search_arr['shift']);
 	$shift_group = addslashes($search_arr['shift_group']);
 	$dept = addslashes($search_arr['dept']);
@@ -388,12 +416,12 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 03:00:00' AND '$day 03:29:59'";
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day_tomorrow 03:00:00' AND '$day_tomorrow 03:29:59'";
 		if (!empty($line_no)) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -414,12 +442,12 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 03:30:00' AND '$day 04:29:59'";
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day_tomorrow 03:30:00' AND '$day_tomorrow 04:29:59'";
 		if (!empty($line_no)) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -440,12 +468,12 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 04:30:00' AND '$day 05:29:59'";
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day_tomorrow 04:30:00' AND '$day_tomorrow 05:29:59'";
 		if (!empty($line_no)) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -466,12 +494,12 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 05:30:00' AND '$day 06:29:59'";
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day_tomorrow 05:30:00' AND '$day_tomorrow 06:29:59'";
 		if (!empty($line_no)) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -499,7 +527,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -525,7 +553,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -551,7 +579,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -577,7 +605,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -604,7 +632,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$sql = $sql . " AND line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -831,6 +859,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 // Working Time X Manpower (Needed for Accounting Efficiency)
 function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $conn_emp_mgt) {
 	$day = addslashes($search_arr['day']);
+	$day_tomorrow = addslashes($search_arr['day_tomorrow']);
 	$shift = addslashes($search_arr['shift']);
 	$shift_group = addslashes($search_arr['shift_group']);
 	$dept = addslashes($search_arr['dept']);
@@ -862,7 +891,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 03:00:00' AND '$day 03:29:59'
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day_tomorrow 03:00:00' AND '$day_tomorrow 03:29:59'
 			AND emp.dept = '$dept'";
 		if (!empty($section)) {
 			$sql = $sql . " AND emp.section = '$section'";
@@ -871,7 +900,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -892,7 +921,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 03:30:00' AND '$day 04:29:59'
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day_tomorrow 03:30:00' AND '$day_tomorrow 04:29:59'
 			AND emp.dept = '$dept'";
 		if (!empty($section)) {
 			$sql = $sql . " AND emp.section = '$section'";
@@ -901,7 +930,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -922,7 +951,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 04:30:00' AND '$day 05:29:59'
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day_tomorrow 04:30:00' AND '$day_tomorrow 05:29:59'
 			AND emp.dept = '$dept'";
 		if (!empty($section)) {
 			$sql = $sql . " AND emp.section = '$section'";
@@ -931,7 +960,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -952,7 +981,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$sql = "SELECT count(tio.id) AS total FROM t_time_in_out tio
 			LEFT JOIN m_employees emp
 			ON tio.emp_no = emp.emp_no
-			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day 05:30:00' AND '$day 06:29:59'
+			WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND tio.time_out BETWEEN '$day_tomorrow 05:30:00' AND '$day_tomorrow 06:29:59'
 			AND emp.dept = '$dept'";
 		if (!empty($section)) {
 			$sql = $sql . " AND emp.section = '$section'";
@@ -961,7 +990,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -993,7 +1022,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -1023,7 +1052,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -1053,7 +1082,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -1083,7 +1112,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND emp.line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -1111,7 +1140,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$sql = $sql . " AND line_no = '$line_no'";
 		}
 
-		$stmt = $conn_emp_mgt->prepare($sql);
+		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
 			foreach($stmt->fetchALL() as $row){
@@ -1327,12 +1356,12 @@ function get_manpower_count_per_line($search_arr, $conn_emp_mgt) {
 		'total_present_pd_mp' => $total_present_pd_mp,
 		'total_absent_pd_mp' => $total_absent_pd_mp,
 		'total_pd_mp_line_support_to' => $total_pd_mp_line_support_to,
-		'absent_ratio_pd_mp' => $absent_ratio_pd_mp,
+		'absent_ratio_pd_mp' => round($absent_ratio_pd_mp, 2),
 		'total_qa_mp' => $total_qa_mp,
 		'total_present_qa_mp' => $total_present_qa_mp,
 		'total_absent_qa_mp' => $total_absent_qa_mp,
 		'total_qa_mp_line_support_to' => $total_qa_mp_line_support_to,
-		'absent_ratio_qa_mp' => $absent_ratio_qa_mp,
+		'absent_ratio_qa_mp' => round($absent_ratio_qa_mp, 2),
 		'message' => 'success'
 	);
 
@@ -1356,7 +1385,7 @@ function sum_process_design_plan($search_arr, $conn_pcad) {
 
 	$sql = $sql . "FROM m_process_design WHERE ircs_line = '$registlinename'";
 
-	$stmt = $conn_pcad->prepare($sql);
+	$stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
@@ -1378,15 +1407,15 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 
 	// Get Process by m_employees
 	// MySQL
-	$sql = "SELECT IFNULL(process, 'No Process') AS process1, 
-			COUNT(emp_no) AS total 
-		FROM m_employees 
-		WHERE shift_group = '$shift_group' AND dept != ''";
+	// $sql = "SELECT IFNULL(process, 'No Process') AS process1, 
+	// 		COUNT(emp_no) AS total 
+	// 	FROM m_employees 
+	// 	WHERE shift_group = '$shift_group' AND dept != ''";
 	// MS SQL Server
-	// $sql = "SELECT ISNULL(process, 'No Process') AS process1, 
-	// 	COUNT(emp_no) AS total 
-	// FROM m_employees 
-	// WHERE shift_group = '$shift_group' AND dept != ''";
+	$sql = "SELECT ISNULL(process, 'No Process') AS process1, 
+		COUNT(emp_no) AS total 
+	FROM m_employees 
+	WHERE shift_group = '$shift_group' AND dept != ''";
 
 	if ($line_no == 'No Line') {
 		$sql = $sql . " AND line_no IS NULL";
@@ -1397,12 +1426,12 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 	}
 
 	// MySQL
-	$sql = $sql . " AND (resigned_date IS NULL OR resigned_date = '0000-00-00' OR resigned_date >= '$day')";
+	// $sql = $sql . " AND (resigned_date IS NULL OR resigned_date = '0000-00-00' OR resigned_date >= '$day')";
 	// MS SQL Server
-	// $sql = $sql . " AND (resigned_date IS NULL OR resigned_date >= '$day')";
+	$sql = $sql . " AND (resigned_date IS NULL OR resigned_date >= '$day')";
 	$sql = $sql . " GROUP BY process";
 
-	$stmt = $conn_emp_mgt->prepare($sql);
+	$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
@@ -1416,19 +1445,19 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 
 	// Get Total Present per Process by joining t_time_in_out on m_employees
 	// MySQL
-	$sql = "SELECT IFNULL(emp.process, 'No Process') AS process1, 
-			COUNT(tio.emp_no) AS total_present 
-		FROM t_time_in_out tio 
-		LEFT JOIN m_employees emp 
-		ON tio.emp_no = emp.emp_no 
-		WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND emp.dept != ''";
-	// MS SQL Server
-	// $sql = "SELECT ISNULL(emp.process, 'No Process') AS process1, 
+	// $sql = "SELECT IFNULL(emp.process, 'No Process') AS process1, 
 	// 		COUNT(tio.emp_no) AS total_present 
 	// 	FROM t_time_in_out tio 
 	// 	LEFT JOIN m_employees emp 
 	// 	ON tio.emp_no = emp.emp_no 
 	// 	WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND emp.dept != ''";
+	// MS SQL Server
+	$sql = "SELECT ISNULL(emp.process, 'No Process') AS process1, 
+			COUNT(tio.emp_no) AS total_present 
+		FROM t_time_in_out tio 
+		LEFT JOIN m_employees emp 
+		ON tio.emp_no = emp.emp_no 
+		WHERE tio.day = '$day' AND emp.shift_group = '$shift_group' AND emp.dept != ''";
 
 	if ($line_no == 'No Line') {
 		$sql = $sql . " AND line_no IS NULL";
@@ -1438,12 +1467,12 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 		$sql = $sql . " AND (line_no = '' OR line_no IS NULL)";
 	}
 	// MySQL
-	$sql = $sql . " AND (emp.resigned_date IS NULL OR emp.resigned_date = '0000-00-00' OR emp.resigned_date >= '$day')";
+	// $sql = $sql . " AND (emp.resigned_date IS NULL OR emp.resigned_date = '0000-00-00' OR emp.resigned_date >= '$day')";
 	// MS SQL Server
-	// $sql = $sql . " AND (emp.resigned_date IS NULL OR emp.resigned_date >= '$day')";
+	$sql = $sql . " AND (emp.resigned_date IS NULL OR emp.resigned_date >= '$day')";
 	$sql = $sql . " GROUP BY emp.process";
 
-	$stmt = $conn_emp_mgt->prepare($sql);
+	$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
@@ -1470,7 +1499,7 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 
 	$sql = $sql . "FROM m_process_design WHERE ircs_line = '$registlinename'";
 
-	$stmt = $conn_pcad->prepare($sql);
+	$stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {

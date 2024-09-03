@@ -289,6 +289,8 @@ include 'process/pcs/index.php';
    <input type="hidden" id="ppm_actual" name="ppm_actual" value="">
    <input type="hidden" id="acc_eff_actual" name="acc_eff_actual" value="">
 
+   <input type="hidden" id="server_date_only" name="server_date_only" value="<?= $server_date_only; ?>">
+
    <div class="container-fluid">
       <?php
       if ($processing) {
@@ -878,6 +880,7 @@ include 'process/pcs/index.php';
    // Set LocalStorage for these variables
    localStorage.setItem("andon_line", $("#andon_line").val());
    localStorage.setItem("shift", $("#shift").val());
+   localStorage.setItem("pcad_prod_server_date_only", $("#server_date_only").val());
 
    // Interval Variables
    let realtime_get_accounting_efficiency;
@@ -1061,6 +1064,10 @@ include 'process/pcs/index.php';
 
       // init_charts();
       // init_charts2();
+
+      setInterval(() => {
+         window.location.reload();
+      }, 1000 * 60 * 8);
    });
 </script>
 

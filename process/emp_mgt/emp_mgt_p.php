@@ -10,9 +10,6 @@ $method = $_GET['method'];
 // Employee Management System
 
 if ($method == 'count_emp') {
-	$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
-	$shift = get_shift($server_time);
-
 	$dept_pd = $_GET['dept_pd'];
 	$dept_qa = $_GET['dept_qa'];
 	$section_pd = $_GET['section_pd'];
@@ -21,15 +18,41 @@ if ($method == 'count_emp') {
 
 	$shift_group = $_GET['shift_group'];
 
+	$opt = $_GET['opt'];
+
+	$day = '';
+    $day_tomorrow = '';
+    $shift = '';
+
+    switch($opt) {
+		case 1:
+			$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+		case 2:
+			$day = $_GET['day'];
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = $_GET['shift'];
+			break;
+		default:
+            $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+            $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+            $shift = get_shift($server_time);
+			break;
+	}
+
 	$search_arr = array(
 		'day' => $day,
+		'day_tomorrow' => $day_tomorrow,
 		'shift' => $shift,
 		'shift_group' => $shift_group,
 		'dept_pd' => $dept_pd,
 		'dept_qa' => $dept_qa,
 		'section_pd' => $section_pd,
 		'section_qa' => $section_qa,
-		'line_no' => $line_no
+		'line_no' => $line_no,
+		'opt' => $opt
 	);
 
 	$response_arr = get_manpower_count_per_line($search_arr, $conn_emp_mgt);
@@ -38,11 +61,25 @@ if ($method == 'count_emp') {
 }
 
 if ($method == 'get_process_design') {
-	$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
-
 	$registlinename = $_GET['registlinename'];
 	$line_no = $_GET['line_no'];
 	$shift_group = $_GET['shift_group'];
+	
+	$opt = $_GET['opt'];
+
+	$day = '';
+
+    switch($opt) {
+		case 1:
+			$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+			break;
+		case 2:
+			$day = $_GET['day'];
+			break;
+		default:
+            $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+			break;
+	}
 
 	$search_arr = array(
 		'registlinename' => $registlinename,

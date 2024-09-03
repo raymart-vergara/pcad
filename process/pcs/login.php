@@ -11,8 +11,11 @@ if (isset($_POST['login_pcs_btn'])) {
     if (empty($emp_id)) {
         echo '<script>alert("Please Scan QR Code or Enter ID Number")</script>';
     } else {
-        $check = "SELECT emp_id, full_name FROM m_pcs_accounts WHERE BINARY emp_id = '$emp_id'";
-        $stmt = $conn_pcad->prepare($check);
+        // MySQL
+        // $check = "SELECT emp_id, full_name FROM m_pcs_accounts WHERE BINARY emp_id = '$emp_id'";
+        // MS SQL Server
+        $check = "SELECT emp_id, full_name FROM m_pcs_accounts WHERE emp_id = '$emp_id' COLLATE SQL_Latin1_General_CP1_CS_AS";
+        $stmt = $conn_pcad->prepare($check, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
             foreach($stmt->fetchALL() as $x){

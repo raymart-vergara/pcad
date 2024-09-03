@@ -20,11 +20,15 @@ function get_shift_end_plan($start_plan_time) {
 	}
 }
 
-function get_day_end_plan($start_plan_date, $start_plan_time, $server_date_only, $server_date_only_yesterday) {
+function get_day_end_plan($start_plan_date, $start_plan_time, $server_time, $server_date_only, $server_date_only_yesterday) {
     if ($start_plan_time >= '06:00:00' && $start_plan_time < '18:00:00') {
 		return $server_date_only;
 	} else if ($start_plan_time >= '18:00:00' && $start_plan_time <= '23:59:59') {
-		return $server_date_only;
+        if ($server_time >= '18:00:00' && $server_time <= '23:59:59') {
+            return $server_date_only;
+        } else if ($server_time >= '00:00:00' && $server_time <= '06:00:00') {
+            return $server_date_only_yesterday;
+        }
 	} else if ($start_plan_time >= '00:00:00' && $start_plan_time < '06:00:00') {
         if ($start_plan_date == $server_date_only_yesterday) {
             return $server_date_only_yesterday;
@@ -43,68 +47,77 @@ function TimeToSec($time)
 
 if (isset($_POST['request'])) {
     $request = $_POST['request'];
-    if ($request == "getPlan") {
-        $carmaker = $_POST['carmaker'];
-        $sql = " SELECT * FROM t_plan  WHERE Carmodel  LIKE '%" . $carmaker . "%' AND Status = 'Pending' ";
-        $stmt = $conn_pcad->prepare($sql);
-        $stmt->bindValue(':carmaker', '%' . $carmaker . '%', PDO::PARAM_STR);
-        $stmt->execute();
-        $plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        if ($plans) {
-            $shift = get_shift($server_time);
+    // if ($request == "getPlan") {
+    //     $carmaker = $_POST['carmaker'];
+    //     $sql = " SELECT * FROM t_plan  WHERE Carmodel LIKE :carmaker AND Status = 'Pending'";
+    //     $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+    //     $stmt->bindValue(':carmaker', '%' . $carmaker . '%', PDO::PARAM_STR);
+    //     $stmt->execute();
+    //     $plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    //     if ($plans) {
+    //         $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+    //         $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
+    //         $shift = get_shift($server_time);
 
-            foreach ($plans as $i => $p) {
-                $IRCS_Line = $p['IRCS_Line'];
+    //         foreach ($plans as $i => $p) {
+    //             $IRCS_Line = $p['IRCS_Line'];
 
-                $ircs_line_data_arr = get_ircs_line_data($IRCS_Line, $conn_pcad);
+    //             $ircs_line_data_arr = get_ircs_line_data($IRCS_Line, $conn_pcad);
 
-                $search_arr = array(
-                    'shift' => $shift,
-                    'registlinename' => $IRCS_Line,
-                    'ircs_line_data_arr' => $ircs_line_data_arr,
-                    'server_date_only' => $server_date_only,
-                    'server_date_only_yesterday' => $server_date_only_yesterday,
-                    'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                    'server_time' => $server_time
-                );
+    //             $search_arr = array(
+    //                 'day' => $day,
+    //                 'day_tomorrow' => $day_tomorrow,
+    //                 'shift' => $shift,
+    //                 'registlinename' => $IRCS_Line,
+    //                 'ircs_line_data_arr' => $ircs_line_data_arr,
+    //                 'server_date_only' => $server_date_only,
+    //                 'server_date_only_yesterday' => $server_date_only_yesterday,
+    //                 'server_date_only_tomorrow' => $server_date_only_tomorrow,
+    //                 'server_time' => $server_time,
+    //                 'opt' => 1
+    //             );
 
-                $Actual_Target = count_overall_g($search_arr, $conn_ircs);
+    //             $Actual_Target = count_overall_g($search_arr, $conn_ircs);
 
-                // $IRCS_IP = $p['IP_address'];
-                // $started = $p['actual_start_DB'];
-                // $q = "
-                //     SELECT COUNT(*) AS c
-                //     FROM IRCS.T_PACKINGWK 
-                //     WHERE (REGISTLINENAME LIKE '" . $IRCS_Line . "' OR IPADDRESS = '" . $IRCS_IP . "') 
-                //     AND REGISTDATETIME >= TO_DATE('" . $started . "', 'yyyy-MM-dd HH24:MI:SS') AND PACKINGBOXCARDJUDGMENT = '1'";
-                // $stid = oci_parse($conn_ircs, $q);
-                // oci_execute($stid);
-                // while ($row = oci_fetch_object($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
-                //     $Actual_Target = $row->C;
-                // }
+    //             // $IRCS_IP = $p['IP_address'];
+    //             // $started = $p['actual_start_DB'];
+    //             // $q = "
+    //             //     SELECT COUNT(*) AS c
+    //             //     FROM IRCS.T_PACKINGWK 
+    //             //     WHERE (REGISTLINENAME LIKE '" . $IRCS_Line . "' OR IPADDRESS = '" . $IRCS_IP . "') 
+    //             //     AND REGISTDATETIME >= TO_DATE('" . $started . "', 'yyyy-MM-dd HH24:MI:SS') AND PACKINGBOXCARDJUDGMENT = '1'";
+    //             // $stid = oci_parse($conn_ircs, $q);
+    //             // oci_execute($stid);
+    //             // while ($row = oci_fetch_object($stid, OCI_ASSOC + OCI_RETURN_NULLS)) {
+    //             //     $Actual_Target = $row->C;
+    //             // }
                 
-                $Target = $p['Target'];
-                $Remaining_Target = $Target - $Actual_Target;
-                $class = '';
-                if ($Actual_Target > $Target) {
-                    $Remaining_Target = '+' . abs($Target - $Actual_Target);
-                } else {
-                    $Remaining_Target = $Target - $Actual_Target;
-                }
-                if ($Actual_Target >= $Target) {
-                    $class = 'tr-met';
-                } else {
-                    $class = 'tr-unmet';
-                }
-                echo '<tr class="' . $class . ' tr-click" data-id="' . $p['ID'] . '">';
-                echo '<td>' . $p['Line'] . '</td>';
-                echo '<td>' . $p['Target'] . '</td>';
-                echo '<td>' . $Actual_Target . '</td>';
-                echo '<td>' . $Remaining_Target . '</td>';
-                echo '</tr>';
-            }
-        }
-    } else if ($request == "getPlanLine") {
+    //             $Target = $p['Target'];
+    //             $Remaining_Target = $Target - $Actual_Target;
+    //             $class = '';
+    //             if ($Actual_Target > $Target) {
+    //                 $Remaining_Target = '+' . abs($Target - $Actual_Target);
+    //             } else {
+    //                 $Remaining_Target = $Target - $Actual_Target;
+    //             }
+    //             if ($Actual_Target >= $Target) {
+    //                 $class = 'tr-met';
+    //             } else {
+    //                 $class = 'tr-unmet';
+    //             }
+    //             echo '<tr class="' . $class . ' tr-click" data-id="' . $p['ID'] . '">';
+    //             echo '<td>' . $p['Line'] . '</td>';
+    //             echo '<td>' . $p['Target'] . '</td>';
+    //             echo '<td>' . $Actual_Target . '</td>';
+    //             echo '<td>' . $Remaining_Target . '</td>';
+    //             echo '</tr>';
+    //         }
+    //     }
+    // }
+    
+    if ($request == "getPlanLine") {
+        $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+        $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
         $shift = get_shift($server_time);
 
         $IRCS_Line = $_POST['registlinename'];
@@ -113,9 +126,9 @@ if (isset($_POST['request'])) {
 
         $sql = "SELECT *
                 FROM t_plan 
-                WHERE IRCS_Line = '" . $IRCS_Line . "' 
+                WHERE IRCS_Line = :IRCS_Line
                 AND Status = 'Pending'";
-        $stmt = $conn_pcad->prepare($sql);
+        $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->bindParam(':IRCS_Line', $IRCS_Line);
         $stmt->execute();
         $line = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -130,19 +143,22 @@ if (isset($_POST['request'])) {
         $start_plan_date = date('Y-m-d', strtotime($line['datetime_DB']));
         $start_plan_time = date('H:i:s', strtotime($line['datetime_DB']));
         $shift_pending = get_shift_end_plan($start_plan_time);
-        $start_plan_date_pending = get_day_end_plan($start_plan_date, $start_plan_time, $server_date_only, $server_date_only_yesterday);
+        $start_plan_date_pending = get_day_end_plan($start_plan_date, $start_plan_time, $server_time, $server_date_only, $server_date_only_yesterday);
 
         if ($start_plan_date == $start_plan_date_pending && $shift == $shift_pending) {
             $ircs_line_data_arr = get_ircs_line_data($IRCS_Line, $conn_pcad);
 
             $search_arr = array(
+                'day' => $day,
+                'day_tomorrow' => $day_tomorrow,
                 'shift' => $shift,
                 'registlinename' => $IRCS_Line,
                 'ircs_line_data_arr' => $ircs_line_data_arr,
                 'server_date_only' => $server_date_only,
                 'server_date_only_yesterday' => $server_date_only_yesterday,
                 'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                'server_time' => $server_time
+                'server_time' => $server_time,
+                'opt' => 1
             );
 
             $Actual_Target = count_overall_g($search_arr, $conn_ircs);
@@ -171,8 +187,14 @@ if (isset($_POST['request'])) {
                 "started" => $started
             );
             //UPDATE PLAN
-            $added_target_formula = "FLOOR(TIME_TO_SEC(TIMEDIFF(NOW(), last_update_DB)) / takt_secs_DB)";
-            $sql = "UPDATE t_plan SET Target = Target + $added_target_formula, Actual_Target = :Actual_Target, Remaining_Target = :Remaining_Target, last_takt_DB = :last_takt, last_update_DB = NOW() WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending' AND is_paused = 'NO'";
+            // MySQL
+            // $added_target_formula = "FLOOR(TIME_TO_SEC(TIMEDIFF(NOW(), last_update_DB)) / takt_secs_DB)";
+            // MS SQL Server
+            $added_target_formula = "FLOOR(DATEDIFF(SECOND, last_update_DB, GETDATE()) / takt_secs_DB)";
+            // MySQL
+            // $sql = "UPDATE t_plan SET Target = Target + $added_target_formula, Actual_Target = :Actual_Target, Remaining_Target = :Remaining_Target, last_takt_DB = :last_takt, last_update_DB = NOW() WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending' AND is_paused = 'NO'";
+            // MS SQL Server
+            $sql = "UPDATE t_plan SET Target = Target + $added_target_formula, Actual_Target = :Actual_Target, Remaining_Target = :Remaining_Target, last_takt_DB = :last_takt, last_update_DB = GETDATE() WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending' AND is_paused = 'NO'";
 
             $stmt = $conn_pcad->prepare($sql);
             $stmt->bindParam(':Actual_Target', $Actual_Target);
@@ -207,7 +229,6 @@ if (isset($_POST['request'])) {
         }
     } else if ($request == "updateTakt") {
         $IRCS_Line = $_POST['registlinename'];
-        $added_takt_plan = $_POST['added_takt_plan'];
 
         // Actual Variables
         $yield_actual = floatval($_POST['yield_actual']);
@@ -218,13 +239,13 @@ if (isset($_POST['request'])) {
 
         $sql = "SELECT datetime_DB FROM t_plan 
                 WHERE IRCS_Line = '$IRCS_Line' AND Status = 'Pending'";
-        $stmt = $conn_pcad->prepare($sql);
+        $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $start_plan_date = date('Y-m-d', strtotime($result['datetime_DB']));
         $start_plan_time = date('H:i:s', strtotime($result['datetime_DB']));
         $shift_pending = get_shift_end_plan($start_plan_time);
-        $start_plan_date_pending = get_day_end_plan($start_plan_date, $start_plan_time, $server_date_only, $server_date_only_yesterday);
+        $start_plan_date_pending = get_day_end_plan($start_plan_date, $start_plan_time, $server_time, $server_date_only, $server_date_only_yesterday);
 
         if ($start_plan_date == $start_plan_date_pending && $shift == $shift_pending) {
             $sql = "UPDATE t_plan SET Target = (Target + 1), yield_actual = :yield_actual, 
@@ -250,23 +271,29 @@ if (isset($_POST['request'])) {
         $shift_group = $_POST['shift_group'];
         $shift = get_shift($server_time);
         $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+        $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
         $work_time_plan = $_POST['work_time_plan'];
 
+        // MySQL
+        // $sql = "SELECT datetime_DB FROM t_plan 
+        //         WHERE IRCS_Line = '$registlinename' AND `group` = '$shift_group' AND Status = 'Pending'";
+        // MS SQL Server
         $sql = "SELECT datetime_DB FROM t_plan 
-                WHERE IRCS_Line = '$registlinename' AND `group` = '$shift_group' AND Status = 'Pending'";
-        $stmt = $conn_pcad->prepare($sql);
+                WHERE IRCS_Line = '$registlinename' AND [group] = '$shift_group' AND Status = 'Pending'";
+        $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $start_plan_date = date('Y-m-d', strtotime($result['datetime_DB']));
         $start_plan_time = date('H:i:s', strtotime($result['datetime_DB']));
         $shift_pending = get_shift_end_plan($start_plan_time);
-        $start_plan_date_pending = get_day_end_plan($start_plan_date, $start_plan_time, $server_date_only, $server_date_only_yesterday);
+        $start_plan_date_pending = get_day_end_plan($start_plan_date, $start_plan_time, $server_time, $server_date_only, $server_date_only_yesterday);
 
         if ($start_plan_date == $start_plan_date_pending && $shift == $shift_pending) {
             $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
 
             $search_arr = array(
                 'day' => $day,
+                'day_tomorrow' => $day_tomorrow,
                 'shift' => $shift,
                 'shift_group' => $shift_group,
                 'dept' => "",
@@ -277,7 +304,8 @@ if (isset($_POST['request'])) {
                 'server_date_only' => $server_date_only,
                 'server_date_only_yesterday' => $server_date_only_yesterday,
                 'server_date_only_tomorrow' => $server_date_only_tomorrow,
-                'server_time' => $server_time
+                'server_time' => $server_time,
+                'opt' => 1
             );
 
             // Variables for accounting efficiency
@@ -301,7 +329,12 @@ if (isset($_POST['request'])) {
             $acc_eff_actual = compute_accounting_efficiency($total_st_per_line, $wt_x_mp);
 
             // Update t_plan
-            $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = NOW(), 
+            // MySQL
+            // $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = NOW(), 
+            //         yield_actual = :yield_actual, ppm_actual = :ppm_actual, acc_eff_actual = :acc_eff_actual 
+            //         WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
+            // MS SQL Server
+            $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = GETDATE(), 
                     yield_actual = :yield_actual, ppm_actual = :ppm_actual, acc_eff_actual = :acc_eff_actual 
                     WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
             $stmt = $conn_pcad->prepare($sql);
@@ -316,7 +349,11 @@ if (isset($_POST['request'])) {
             }
         } else {
             // Update t_plan
-            $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = NOW()
+            // MySQL
+            // $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = NOW()
+            //         WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
+            // MS SQL Server
+            $sql = "UPDATE t_plan SET Status = 'Done', ended_DB = GETDATE()
                     WHERE IRCS_Line = :IRCS_Line AND Status = 'Pending'";
             $stmt = $conn_pcad->prepare($sql);
             $stmt->bindParam(':IRCS_Line', $registlinename);
@@ -365,7 +402,7 @@ if (isset($_POST['request'])) {
                 $secs = "00";
             }
             $sql_get_line = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename";
-            $stmt_get_line = $conn_pcad->prepare($sql_get_line);
+            $stmt_get_line = $conn_pcad->prepare($sql_get_line, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
             $stmt_get_line->bindParam(':registlinename', $registlinename);
             $stmt_get_line->execute();
             $line = $stmt_get_line->fetch(PDO::FETCH_ASSOC);
@@ -391,20 +428,31 @@ if (isset($_POST['request'])) {
             }
 
             // Check existing done or pending plan
-            $sql = "SELECT id FROM t_plan WHERE 
+            // MySQL
+            // $sql = "SELECT id FROM t_plan WHERE 
+            //         (datetime_DB >= '$date_only_actual_start $time_only_actual_start' AND datetime_DB <= '$date_only_actual_end $time_only_actual_end') 
+            //         AND IRCS_Line='$registlinename' ORDER BY id DESC LIMIT 1";
+            // MS SQL Server
+            $sql = "SELECT TOP 1 id FROM t_plan WHERE 
                     (datetime_DB >= '$date_only_actual_start $time_only_actual_start' AND datetime_DB <= '$date_only_actual_end $time_only_actual_end') 
-                    AND IRCS_Line='$registlinename' ORDER BY id DESC LIMIT 1";
+                    AND IRCS_Line='$registlinename' ORDER BY id DESC";
             
-            $stmt = $conn_pcad->prepare($sql);
+            $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
             $stmt->execute();
             if ($stmt->rowCount() > 0) {
                 foreach($stmt->fetchALL() as $row){
                     $id = $row['id'];
                 }
 
+                // MySQL
+                // $sql = "UPDATE t_plan SET Carmodel = '$car_maker', Line = '$line_no', Target = '$plan', Status = '$status', IRCS_Line = '$registlinename', 
+                //         datetime_DB = NOW(), ended_DB = null, takt_secs_DB = '$takt_secs', actual_start_DB = '$date_actual_start', last_update_DB = NOW(), 
+                //         IP_address = '$IP_address', `group` = '$group',  yield_target = '$yield_target', ppm_target = '$ppm_target', acc_eff = '$acc_eff', 
+                //         start_bal_delay = '$start_bal_delay', work_time_plan = '$work_time_plan', daily_plan = '$daily_plan' WHERE id = '$id'";
+                // MS SQL Server
                 $sql = "UPDATE t_plan SET Carmodel = '$car_maker', Line = '$line_no', Target = '$plan', Status = '$status', IRCS_Line = '$registlinename', 
-                        datetime_DB = NOW(), ended_DB = null, takt_secs_DB = '$takt_secs', actual_start_DB = '$date_actual_start', last_update_DB = NOW(), 
-                        IP_address = '$IP_address', `group` = '$group',  yield_target = '$yield_target', ppm_target = '$ppm_target', acc_eff = '$acc_eff', 
+                        datetime_DB = GETDATE(), ended_DB = null, takt_secs_DB = '$takt_secs', actual_start_DB = '$date_actual_start', last_update_DB = GETDATE(), 
+                        IP_address = '$IP_address', [group] = '$group',  yield_target = '$yield_target', ppm_target = '$ppm_target', acc_eff = '$acc_eff', 
                         start_bal_delay = '$start_bal_delay', work_time_plan = '$work_time_plan', daily_plan = '$daily_plan' WHERE id = '$id'";
                 $stmt = $conn_pcad->prepare($sql);
 
@@ -414,8 +462,12 @@ if (isset($_POST['request'])) {
                     echo "Failed to update existing data into t_plan.";
                 }
             } else {
-                $sql_insert_plan = "INSERT INTO t_plan (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address, `group`, yield_target, ppm_target, acc_eff, start_bal_delay, work_time_plan, daily_plan) 
-                VALUES (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address, :group, :yield_target, :ppm_target, :acc_eff, :start_bal_delay, :work_time_plan, :daily_plan)";
+                // MySQL
+                // $sql_insert_plan = "INSERT INTO t_plan (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address, `group`, yield_target, ppm_target, acc_eff, start_bal_delay, work_time_plan, daily_plan) 
+                // VALUES (:car_maker, :line_no, :plan, :status, :registlinename, NOW(), :takt_secs, :date_actual_start, NOW(), :IP_address, :group, :yield_target, :ppm_target, :acc_eff, :start_bal_delay, :work_time_plan, :daily_plan)";
+                // MS SQL Server
+                $sql_insert_plan = "INSERT INTO t_plan (Carmodel, Line, Target, Status, IRCS_Line, datetime_DB, takt_secs_DB, actual_start_DB, last_update_DB, IP_address, [group], yield_target, ppm_target, acc_eff, start_bal_delay, work_time_plan, daily_plan) 
+                VALUES (:car_maker, :line_no, :plan, :status, :registlinename, GETDATE(), :takt_secs, :date_actual_start, GETDATE(), :IP_address, :group, :yield_target, :ppm_target, :acc_eff, :start_bal_delay, :work_time_plan, :daily_plan)";
 
                 $stmt_insert_plan = $conn_pcad->prepare($sql_insert_plan);
                 $stmt_insert_plan->bindParam(':car_maker', $car_maker);
@@ -440,15 +492,14 @@ if (isset($_POST['request'])) {
                     echo "Failed to insert data into t_plan.";
                 }
             }
-         }
-        elseif ($_POST['request'] == "mainMenu") {
+    } elseif ($_POST['request'] == "mainMenu") {
             // Redirect to the main menu without adding target
             header("Location: ../../pcs_page/index.php");
             exit();
-        } else if ($request == "getLineNo") {
+    } else if ($request == "getLineNo") {
         $registlinename = $_POST['registlinename'];
         $q = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename ";
-        $stmt = $conn_pcad->prepare($q);
+        $stmt = $conn_pcad->prepare($q, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->bindParam(':registlinename', $registlinename);
         $stmt->execute();
         $line = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -460,7 +511,7 @@ if (isset($_POST['request'])) {
     } elseif ($request == "checkRunningPlans") {
         $registlinename = $_POST['registlinename'];
         $sql = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
-        $stmt = $conn_pcad->prepare($sql);
+        $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->bindParam(':registlinename', $registlinename);
         $stmt->execute();
         $plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -473,7 +524,10 @@ if (isset($_POST['request'])) {
     } else if ($request == "setPaused") {
         $registlinename = $_POST['registlinename'];
         $is_paused = $_POST['is_paused'];
-        $sql = "UPDATE t_plan SET is_paused = :is_paused, last_update_DB = NOW() WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
+        // MySQL
+        // $sql = "UPDATE t_plan SET is_paused = :is_paused, last_update_DB = NOW() WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
+        // MS SQL Server
+        $sql = "UPDATE t_plan SET is_paused = :is_paused, last_update_DB = GETDATE() WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
         $stmt = $conn_pcad->prepare($sql);
         $stmt->bindParam(':is_paused', $is_paused);
         $stmt->bindParam(':registlinename', $registlinename);

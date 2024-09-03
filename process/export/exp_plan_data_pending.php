@@ -16,6 +16,7 @@ switch (true) {
 $registlinename = trim($_GET['registlinename']);
 
 $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+$day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
 $shift = get_shift($server_time);
 
 // Plan Data (Yield, PPM, Accounting Efficiency, Production Plan)
@@ -33,6 +34,7 @@ $section_qa = get_section($plan_data_pending_arr['line_no'], $conn_emp_mgt);
 
 $search_arr = array(
   'day' => $day,
+  'day_tomorrow' => $day_tomorrow,
   'shift' => $shift,
   'shift_group' => $plan_data_pending_arr['shift_group'],
   'dept_pd' => $dept_pd,

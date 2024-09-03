@@ -12,13 +12,20 @@
     const andon_detail = () => {
         // let andon_line = 'DAIHATSU D92-2132';
         let andon_line = localStorage.getItem("andon_line");
+        let server_date_only = localStorage.getItem("pcad_exec_server_date_only");
+        let shift = localStorage.getItem("shift");
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
+
         $.ajax({
             url: '../../process/andon_graph/a_graph_p.php',
             type: 'POST',
             cache: false,
             data: {
                 method: 'andon_detail',
-                andon_line: andon_line
+                andon_line: andon_line,
+                server_date_only: server_date_only,
+                shift: shift,
+                opt: opt
             }, success: function (response) {
                 $('#andon_details').html(response);
             }
@@ -27,6 +34,8 @@
 
     const andon_hourly = () => {
         let andon_line = localStorage.getItem("andon_line");
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
+        let server_date_only = localStorage.getItem("pcad_exec_server_date_only");
 
         $.ajax({
             url: '../../process/andon_graph/a_hourly_p.php',
@@ -35,7 +44,9 @@
             cache: false,
             data: {
                 method: 'andon_hourly',
-                andon_line: andon_line
+                andon_line: andon_line,
+                opt: opt,
+                server_date_only: server_date_only
             },
             success: function (data) {
                 let total_counts = data[0];
