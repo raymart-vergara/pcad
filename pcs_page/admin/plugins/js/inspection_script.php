@@ -11,9 +11,22 @@
         fetch_judgement();
     });
 
+    var typingTimerLineNoInspSearch; // Timer identifier IrcsLineInsp Search
     var typingTimerIrcsLineInspSearch; // Timer identifier IrcsLineInsp Search
     var typingTimerProcessInspSearch; // Timer identifier ProcessInsp Search
+    var typingTimerIPAddressInspSearch; // Timer identifier ProcessInsp Search
     var doneTypingInterval = 250; // Time in ms
+
+    // On keyup, start the countdown
+    document.getElementById("line_no_insp_search").addEventListener('keyup', e => {
+        clearTimeout(typingTimerIrcsLineInspSearch);
+        typingTimerIrcsLineInspSearch = setTimeout(doneTypingLoadInsp, doneTypingInterval);
+    });
+
+    // On keydown, clear the countdown
+    document.getElementById("line_no_insp_search").addEventListener('keydown', e => {
+        clearTimeout(typingTimerIrcsLineInspSearch);
+    });
 
     // On keyup, start the countdown
     document.getElementById("ircs_line_insp_search").addEventListener('keyup', e => {
@@ -34,6 +47,17 @@
 
     // On keydown, clear the countdown
     document.getElementById("process_insp_search").addEventListener('keydown', e => {
+        clearTimeout(typingTimerProcessInspSearch);
+    });
+
+    // On keyup, start the countdown
+    document.getElementById("ip_address_insp_search").addEventListener('keyup', e => {
+        clearTimeout(typingTimerProcessInspSearch);
+        typingTimerProcessInspSearch = setTimeout(doneTypingLoadInsp, doneTypingInterval);
+    });
+
+    // On keydown, clear the countdown
+    document.getElementById("ip_address_insp_search").addEventListener('keydown', e => {
         clearTimeout(typingTimerProcessInspSearch);
     });
 
@@ -141,8 +165,10 @@
     }
 
     const count_insp_list = () => {
+        var line_no = document.getElementById('line_no_insp_search').value;
         var ircs_line = document.getElementById('ircs_line_insp_search').value;
         var process = document.getElementById('process_insp_search').value;
+        var ip_address = document.getElementById('ip_address_insp_search').value;
 
         $.ajax({
             url: '../../process/pcs/inspection_p.php',
@@ -150,8 +176,10 @@
             cache: false,
             data: {
                 method: 'count_insp_list',
+                line_no: line_no,
                 ircs_line: ircs_line,
-                process: process
+                process: process,
+                ip_address: ip_address
             },
             success: function (response) {
                 sessionStorage.setItem('count_rows', response);
@@ -169,8 +197,10 @@
     }
 
     const load_insp_last_page = () => {
+        var line_no = document.getElementById('line_no_insp_search').value;
         var ircs_line = document.getElementById('ircs_line_insp_search').value;
         var process = document.getElementById('process_insp_search').value;
+        var ip_address = document.getElementById('ip_address_insp_search').value;
         var current_page = parseInt(sessionStorage.getItem('list_of_insp_table_pagination'));
         $.ajax({
             url: '../../process/pcs/inspection_p.php',
@@ -178,8 +208,10 @@
             cache: false,
             data: {
                 method: 'insp_list_last_page',
+                line_no: line_no,
                 ircs_line: ircs_line,
-                process: process
+                process: process,
+                ip_address: ip_address
             },
             success: function (response) {
                 sessionStorage.setItem('last_page', response);
@@ -202,24 +234,34 @@
             return;
         }
 
+        var line_no = document.getElementById('line_no_insp_search').value;
         var ircs_line = document.getElementById('ircs_line_insp_search').value;
         var process = document.getElementById('process_insp_search').value;
+        var ip_address = document.getElementById('ip_address_insp_search').value;
 
+        var line_no1 = sessionStorage.getItem('line_no_insp_search');
         var ircs_line1 = sessionStorage.getItem('ircs_line_insp_search');
         var process1 = sessionStorage.getItem('process_insp_search');
+        var ip_address1 = sessionStorage.getItem('ip_address_insp_search');
 
         if (current_page > 1) {
             switch (true) {
+                case line_no !== line_no1:
                 case ircs_line !== ircs_line1:
                 case process !== process1:
+                case ip_address !== ip_address1:
+                    line_no = line_no1;
                     ircs_line = ircs_line1;
                     process = process1;
+                    ip_address = ip_address1;
                     break;
                 default:
             }
         } else {
+            sessionStorage.setItem('line_no_insp_search', ircs_line);
             sessionStorage.setItem('ircs_line_insp_search', ircs_line);
             sessionStorage.setItem('process_insp_search', process);
+            sessionStorage.setItem('ip_address_insp_search', ip_address);
         }
 
         // Set the flag to true as we're starting an AJAX call
@@ -231,8 +273,10 @@
             cache: false,
             data: {
                 method: 'inspection_list',
+                line_no:line_no,
                 ircs_line: ircs_line,
                 process: process,
+                ip_address: ip_address,
                 current_page: current_page
             },
             beforeSend: () => {
@@ -491,7 +535,7 @@
                             title: 'Successfully Recorded!!!',
                             text: 'Success',
                             showConfirmButton: false,
-                            timer: 1000
+                            timer: 500
                         });
                         $('#id_insp_update').val('');
                         $('#line_no_insp_master_update').val('');
