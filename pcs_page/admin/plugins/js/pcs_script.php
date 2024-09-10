@@ -10,6 +10,7 @@
     var typingTimerLineNoSearch; // Timer identifier LineNo Search
     var typingTimerIrcsSearch; // Timer identifier Ircs Search
     var typingTimerAndonSearch; // Timer identifier Andon Search
+    var typingTimerIPAddressSearch; // Timer identifier Andon Search
     var doneTypingInterval = 250; // Time in ms
 
     // On keyup, start the countdown
@@ -45,6 +46,17 @@
         clearTimeout(typingTimerAndonSearch);
     });
 
+    // On keyup, start the countdown
+    document.getElementById("ip_address_search").addEventListener('keyup', e => {
+        clearTimeout(typingTimerAndonSearch);
+        typingTimerAndonSearch = setTimeout(doneTypingLoadPcs, doneTypingInterval);
+    });
+
+    // On keydown, clear the countdown
+    document.getElementById("ip_address_search").addEventListener('keydown', e => {
+        clearTimeout(typingTimerAndonSearch);
+    });
+
     // User is "finished typing," do something
     const doneTypingLoadPcs = () => {
         load_pcs(1);
@@ -76,6 +88,7 @@
         var line_no = document.getElementById('line_no_search').value;
         var ircs_line = document.getElementById('ircs_search').value;
         var andon_line = document.getElementById('andon_search').value;
+        var ip_address = document.getElementById('ip_address_search').value;
 
         $.ajax({
             url: '../../process/pcs/pcs_p.php',
@@ -85,7 +98,8 @@
                 method: 'count_pcs_list',
                 line_no: line_no,
                 ircs_line: ircs_line,
-                andon_line: andon_line
+                andon_line: andon_line,
+                ip_address: ip_address
             },
             success: function (response) {
                 sessionStorage.setItem('count_rows', response);
@@ -106,6 +120,7 @@
         var line_no = document.getElementById('line_no_search').value;
         var ircs_line = document.getElementById('ircs_search').value;
         var andon_line = document.getElementById('andon_search').value;
+        var ip_address = document.getElementById('ip_address_search').value;
         var current_page = parseInt(sessionStorage.getItem('list_of_pcs_table_pagination'));
         $.ajax({
             url: '../../process/pcs/pcs_p.php',
@@ -115,7 +130,8 @@
                 method: 'pcs_list_last_page',
                 line_no: line_no,
                 ircs_line: ircs_line,
-                andon_line: andon_line
+                andon_line: andon_line,
+                ip_address: ip_address
             },
             success: function (response) {
                 sessionStorage.setItem('last_page', response);
@@ -141,19 +157,23 @@
         var line_no = document.getElementById('line_no_search').value;
         var ircs_line = document.getElementById('ircs_search').value;
         var andon_line = document.getElementById('andon_search').value;
+        var ip_address = document.getElementById('ip_address_search').value;
 
         var line_no1 = sessionStorage.getItem('line_no_search');
         var ircs_line1 = sessionStorage.getItem('ircs_search');
         var andon_line1 = sessionStorage.getItem('andon_search');
+        var ip_address1 = sessionStorage.getItem('ip_address_search');
 
         if (current_page > 1) {
             switch (true) {
                 case line_no !== line_no1:
                 case ircs_line !== ircs_line1:
                 case andon_line !== andon_line1:
+                case ip_address !== ip_address1:
                     line_no = line_no1;
                     ircs_line = ircs_line1;
                     andon_line = andon_line1;
+                    ip_address = ip_address1;
                     break;
                 default:
             }
@@ -161,6 +181,7 @@
             sessionStorage.setItem('line_no_search', line_no);
             sessionStorage.setItem('ircs_search', ircs_line);
             sessionStorage.setItem('andon_search', andon_line);
+            sessionStorage.setItem('ip_address_search', ip_address);
         }
 
         // Set the flag to true as we're starting an AJAX call
@@ -175,6 +196,7 @@
                 line_no: line_no,
                 ircs_line: ircs_line,
                 andon_line: andon_line,
+                ip_address: ip_address,
                 current_page: current_page
             },
             beforeSend: () => {

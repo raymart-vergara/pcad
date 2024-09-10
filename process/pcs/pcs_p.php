@@ -21,6 +21,8 @@ function count_pcs_list($search_arr, $conn_pcad)
 		$query .= " AND ircs_line LIKE '" . $search_arr['ircs_line'] . "%'";
 	} elseif (!empty($search_arr['andon_line'])) {
 		$query .= " AND andon_line LIKE '" . $search_arr['andon_line'] . "%'";
+	} elseif (!empty($search_arr['ip_address'])) {
+		$query .= " AND ip LIKE '" . $search_arr['ip_address'] . "%'";
 	}
 
 	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
@@ -42,11 +44,13 @@ if ($method == 'count_pcs_list') {
 	$line_no = addslashes($_POST['line_no']);
 	$ircs_line = addslashes($_POST['ircs_line']);
 	$andon_line = addslashes($_POST['andon_line']);
+	$ip_address = addslashes($_POST['ip_address']);
 
 	$search_arr = array(
 		"line_no" => $line_no,
 		"ircs_line" => $ircs_line,
-		"andon_line" => $andon_line
+		"andon_line" => $andon_line,
+		"ip_address" => $ip_address
 	);
 
 	echo count_pcs_list($search_arr, $conn_pcad);
@@ -56,11 +60,13 @@ if ($method == 'pcs_list_last_page') {
 	$line_no = addslashes($_POST['line_no']);
 	$ircs_line = addslashes($_POST['ircs_line']);
 	$andon_line = addslashes($_POST['andon_line']);
+	$ip_address = addslashes($_POST['ip_address']);
 
 	$search_arr = array(
 		"line_no" => $line_no,
 		"ircs_line" => $ircs_line,
-		"andon_line" => $andon_line
+		"andon_line" => $andon_line,
+		"ip_address" => $ip_address
 	);
 
 	$results_per_page = 20;
@@ -78,6 +84,7 @@ if ($method == 'pcs_list') {
 	$line_no = addslashes($_POST['line_no']);
 	$ircs_line = addslashes($_POST['ircs_line']);
 	$andon_line = addslashes($_POST['andon_line']);
+	$ip_address = addslashes($_POST['ip_address']);
 
 	$current_page = intval($_POST['current_page']);
 	$c = 0;
@@ -99,11 +106,14 @@ if ($method == 'pcs_list') {
 	if (!empty($andon_line)) {
 		$query = $query . " AND andon_line LIKE '$andon_line%'";
 	}
+	if (!empty($ip_address)) {
+		$query = $query . " AND ip LIKE '$ip_address%'";
+	}
 
 	// MySQL
 	// $query = $query . " LIMIT " . $page_first_result . ", " . $results_per_page;
 	// MS SQL Server
-	$query .= " ORDER BY id ASC";
+	$query .= " ORDER BY ircs_line ASC";
 	$query .= " OFFSET " . $page_first_result . " ROWS FETCH NEXT " . $results_per_page . " ROWS ONLY";
 
 	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));

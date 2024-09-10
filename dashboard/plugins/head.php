@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" http-equiv="refresh">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PCAD | Executive Settings</title>
 
 
@@ -47,10 +47,40 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        .pcad-title {
+        /* .pcad-title {
             margin: 0;
             padding: 0;
             font-size: 30px;
+        } */
+
+        .form-container {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.15);
+            background-color: #fff;
+        }
+
+        .form-button {
+            width: 100%;
+            border-radius: 20px;
+            background-color: #003D9E;
+            color: #FFF;
+        }
+
+        .form-button:hover {
+            background-color: #021253;
+            color: #FFF;
+        }
+
+        .form-header {
+            color: #003D9E;
+            font-size: 22px;
+        }
+
+        .img-fill {
+            width: 500px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 10px 0 0 10px;
         }
     </style>
 </head>
