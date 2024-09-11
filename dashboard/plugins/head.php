@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PCAD | Executive Settings</title>
 
@@ -43,20 +43,19 @@
         }
 
         body {
-            background: #FBFBFB;
+            /* background: #FBFBFB; */
+            background: linear-gradient(90deg, #021253, #003d9e);
             font-family: 'Poppins', sans-serif;
         }
 
-        /* .pcad-title {
-            margin: 0;
-            padding: 0;
-            font-size: 30px;
-        } */
-
         .form-container {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.15);
-            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.1);
+            background-color: #FBFBFB;
+        }
+
+        .bg-color {
+            background-color: #fffafa;
         }
 
         .form-button {
@@ -73,14 +72,37 @@
 
         .form-header {
             color: #003D9E;
-            font-size: 22px;
+            font-size: 25px;
         }
 
-        .img-fill {
-            width: 500px;
-            height: auto;
+        .img-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .img-container img {
+            width: 100%;
+            height: 100%;
             object-fit: contain;
-            border-radius: 10px 0 0 10px;
+            background: linear-gradient(90deg, #021253, #003d9e);
+        }
+
+        @media screen and (max-width: 768px) {
+            .img-container img {
+                object-fit: contain;
+                background: linear-gradient(90deg, #021253, #003d9e);
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .img-container img {
+                object-fit: contain;
+                background: linear-gradient(90deg, #021253, #003d9e);
+            }
         }
     </style>
 </head>
