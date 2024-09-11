@@ -51,14 +51,19 @@
                   <input type="text" class="form-control" id="line_no_search" placeholder="Search" autocomplete="off"
                     maxlength="255">
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                   <label>IRCS Line</label>
                   <input type="text" class="form-control" id="ircs_search" placeholder="Search" autocomplete="off"
                     maxlength="255">
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                   <label>Andon Line</label>
                   <input type="text" class="form-control" id="andon_search" placeholder="Search" autocomplete="off"
+                    maxlength="255">
+                </div>
+                <div class="col-sm-2">
+                  <label>IP Address</label>
+                  <input type="text" class="form-control" id="ip_address_search" placeholder="Search" autocomplete="off"
                     maxlength="255">
                 </div>
                 <div class="col-sm-2">

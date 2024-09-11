@@ -17,46 +17,42 @@ if ($result) {
 ?>
 
 <div class="container-fluid d-flex justify-content-center align-items-center" style="height: 100vh;">
-    <div class="col-6" style="border-radius: 10px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.15);">
+    <div class="col-lg-7 col-md-10 col-sm-12 form-container p-4">
         <form method="post" action="../process/pcs/dashboard_setting_p.php">
             <input type="hidden" name="request" value="addTarget">
             <div class="row">
-                <div class="col-lg-6 col-md-12 m-0 p-0">
-                    <img src="../dist/img/tech.png" alt="pcad_cover" class="img-fluid"
-                        style="border-radius: 10px 0px 0px 10px;">
+                <div class="col-lg-6 col-md-12 p-0">
+                    <img src="../dist/img/tech.png" alt="pcad_cover" class="img-fill rounded-left">
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <div class="row mb-3">
-                        <div class="col-12 text-right pr-lg-5 pr-md-4 pr-sm-3 pt-lg-4 pt-md-3 pt-sm-2"
-                            style="color: #003D9E; font-size: 22px;">
+                        <div class="col-12 text-lg-right text-center form-header">
                             Settings
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-sm-12 col-md-6 px-lg-5 px-md-4 px-sm-3">
-                            Option <br>
-                            <div class="form-group mb-0">
+                        <div class="col-sm-6 col-md-6 px-2">
+                            <div class="form-group">
                                 <input type="radio" id="opt_1" name="opt" value="1" onclick="check_opt()" checked>
                                 <label class="h6" for="opt_1">Live</label>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-6 px-lg-5 px-md-4 px-sm-3">
-                            <br>
-                            <div class="form-group mb-0">
+                        <div class="col-sm-6 col-md-6 px-2">
+                            <div class="form-group">
                                 <input type="radio" id="opt_2" name="opt" value="2" onclick="check_opt()">
                                 <label class="h6" for="opt_2">History</label>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-12 px-lg-5 px-md-4 px-sm-3">
-                            Day <br>
+                        <div class="col-12 px-2">
+                            <label for="day">Day</label>
                             <input type="date" name="day" id="day" class="form-control" required disabled>
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-12 px-lg-5 px-md-4 px-sm-3">
-                            Shift <br>
+                        <div class="col-12 px-2">
+                            <label for="shift">Shift</label>
                             <select name="shift" id="shift" class="form-control" required disabled>
                                 <option value="DS">DS</option>
                                 <option value="NS">NS</option>
@@ -64,8 +60,8 @@ if ($result) {
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-12 px-lg-5 px-md-4 px-sm-3">
-                            Select Line No. <br>
+                        <div class="col-12 px-2">
+                            <label for="ircs_line">Select Line No.</label>
                             <select name="registlinename" id="ircs_line" class="form-control" required>
                                 <option value="">Select Line No.</option>
                                 <?php
@@ -79,25 +75,19 @@ if ($result) {
                         </div>
                     </div>
                     <div class="row mb-4">
-                        <div class="col-12 px-lg-5 px-md-4 px-sm-3">
-                            Group <br>
+                        <div class="col-12 px-2">
+                            <label for="group">Group</label>
                             <select name="group" id="group" class="form-control" required>
-                                <option value="" disabled selected>Select Group </option>
+                                <option value="" disabled selected>Select Group</option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                             </select>
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-12 px-lg-5 px-md-4 px-sm-3 d-flex justify-content-center">
-                            <button type="submit"
-                                style="width: 75%; border-radius: 20px; background-color: #003D9E; color: #FFF"
-                                onmouseover="this.style.backgroundColor='#021253'; this.style.color='#fff';"
-                                onmouseout="this.style.backgroundColor='#003D9E'; this.style.color='#fff';"
-                                class="btn btn-hover" id="runcounterbtn" name="request" value="addTarget">
-                                <a class="small-box-footer monitor" style="color: #FFF;">Proceed &ensp;<i
-                                        class="fas fa-arrow-right"></i>
-                                </a>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn form-button">
+                                Proceed &ensp;<i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
                     </div>

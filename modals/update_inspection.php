@@ -14,6 +14,10 @@
                 <div class="row">
                     <div class="col-3">
                         <input type="hidden" id="id_insp_update" class="form-control">
+                        <label>Line No.</label>
+                        <input type="text" id="line_no_insp_master_update" class="form-control" autocomplete="off">
+                    </div>
+                    <div class="col-3">
                         <label>IRCS Line</label>
                         <input type="text" id="ircs_line_insp_master_update" class="form-control" autocomplete="off">
                     </div>
@@ -23,21 +27,24 @@
                     </div>
                     <div class="col-3">
                         <label>IP Address Column</label>
-                        <input type="text" id="ip_address_column_insp_master_update" class="form-control" autocomplete="off">
+                        <input type="text" id="ip_address_column_insp_master_update" class="form-control"
+                            autocomplete="off">
                     </div>
+
+                </div>
+                <div class="row mt-4">
                     <div class="col-3">
                         <label>IP Address 1</label>
                         <input type="text" id="ip_address_1_insp_master_update" class="form-control" autocomplete="off">
                     </div>
-                </div>
-                <div class="row mt-4">
                     <div class="col-3">
                         <label>IP Address 2</label>
                         <input type="text" id="ip_address_2_insp_master_update" class="form-control" autocomplete="off">
                     </div>
                     <div class="col-3">
                         <label>Finish Date Time</label>
-                        <input type="text" id="finish_date_time_insp_master_update" class="form-control" autocomplete="off">
+                        <input type="text" id="finish_date_time_insp_master_update" class="form-control"
+                            autocomplete="off">
                     </div>
                     <div class="col-3">
                         <label>Judgement</label>

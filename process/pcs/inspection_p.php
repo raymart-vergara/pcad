@@ -87,9 +87,13 @@ function count_insp_list($search_arr, $conn_pcad)
 
 	if (!empty($search_arr['ircs_line'])) {
 		$query .= " AND ircs_line LIKE '" . $search_arr['ircs_line'] . "%'";
+	} elseif (!empty($search_arr['line_no'])) {
+		$query .= " AND line_no LIKE '" . $search_arr['line_no'] . "%'";
 	} elseif (!empty($search_arr['process'])) {
 		$query .= " AND process LIKE '" . $search_arr['process'] . "%'";
-	}
+	} elseif (!empty($search_arr['ip_address'])) {
+		$query .= " AND ip_address LIKE '" . $search_arr['ip_address'] . "%'";
+	} 
 
 	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
@@ -106,27 +110,35 @@ function count_insp_list($search_arr, $conn_pcad)
 }
 
 if ($method == 'count_insp_list') {
+	$line_no = addslashes($_POST['line_no']);
 	$ircs_line = addslashes($_POST['ircs_line']);
 	$process = addslashes($_POST['process']);
+	$ip_address = addslashes($_POST['ip_address']);
 
 	$search_arr = array(
+		"line_no" => $line_no,
 		"ircs_line" => $ircs_line,
-		"process" => $process
+		"process" => $process,
+		"ip_address" => $ip_address
 	);
 
 	echo count_insp_list($search_arr, $conn_pcad);
 }
 
 if ($method == 'insp_list_last_page') {
+	$line_no = addslashes($_POST['line_no']);
 	$ircs_line = addslashes($_POST['ircs_line']);
 	$process = addslashes($_POST['process']);
+	$ip_address = addslashes($_POST['ip_address']);
 
 	$search_arr = array(
+		"line_no" => $line_no,
 		"ircs_line" => $ircs_line,
-		"process" => $process
+		"process" => $process,
+		"ip_address" => $ip_address
 	);
 
-	$results_per_page = 10;
+	$results_per_page = 20;
 
 	$number_of_result = intval(count_insp_list($search_arr, $conn_pcad));
 
@@ -137,13 +149,15 @@ if ($method == 'insp_list_last_page') {
 }
 
 if ($method == 'inspection_list') {
+	$line_no = addslashes($_POST['line_no']);
 	$ircs_line = addslashes($_POST['ircs_line']);
 	$process = addslashes($_POST['process']);
+	$ip_address = addslashes($_POST['ip_address']);
 
 	$current_page = intval($_POST['current_page']);
 	$c = 0;
 
-	$results_per_page = 10;
+	$results_per_page = 20;
 	// Determine the SQL LIMIT starting number for the results on the displaying page
 	$page_first_result = ($current_page - 1) * $results_per_page;
 	$c = $page_first_result;
@@ -151,18 +165,24 @@ if ($method == 'inspection_list') {
 	// MySQL
 	// $query = "SELECT id, ircs_line, process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement FROM m_inspection_ip WHERE 1"; // Start with a condition that is always true
 	// MS SQL Server
-	$query = "SELECT id, ircs_line, process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement FROM m_inspection_ip WHERE 1=1";
+	$query = "SELECT id, line_no, ircs_line, process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement FROM m_inspection_ip WHERE 1=1";
+
 	if (!empty($ircs_line)) {
 		$query .= " AND ircs_line LIKE '" . $ircs_line . "%'";
+	} elseif (!empty($line_no)) {
+		$query .= " AND line_no LIKE '" . $line_no . "%'";
 	} elseif (!empty($process)) {
 		$query .= " AND process LIKE '" . $process . "%'";
+	} elseif (!empty($ip_address)) {
+		$query .= " AND ip_address LIKE '" . $ip_address . "%'";
 	}
 
 	// MySQL
 	// $query .= " LIMIT " . $page_first_result . ", " . $results_per_page;
 	// MS SQL Server
-	$query .= " ORDER BY id ASC";
+	$query .= " ORDER BY ircs_line ASC";
 	$query .= " OFFSET " . $page_first_result . " ROWS FETCH NEXT " . $results_per_page . " ROWS ONLY";
+
 
 	$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
@@ -171,7 +191,8 @@ if ($method == 'inspection_list') {
 			$c++;
 			echo '<tr>';
 			echo '<td><p class="mb-0"><label class="mb-0"><input type="checkbox" class="singleCheck" value="' . $row['id'] . '" onclick="get_checked_length()" /><span></span></label></p></td>';
-			echo '<td style="cursor:pointer;" class="modal-trigger" data-toggle="modal" data-target="#update_modal_insp" onclick="get_insp_details(&quot;' . $row['id'] . '~!~' . $row['ircs_line'] . '~!~' . $row['process'] . '~!~' . $row['ip_address'] . '~!~' . $row['ip_address2'] . '~!~' . $row['ipaddresscolumn'] . '~!~' . $row['finishdatetime'] . '~!~' . $row['judgement'] . '&quot;)">' . $c . '</td>';
+			echo '<td style="cursor:pointer;" class="modal-trigger" data-toggle="modal" data-target="#update_modal_insp" onclick="get_insp_details(&quot;' . $row['id'] . '~!~' . $row['line_no'] . '~!~' . $row['ircs_line'] . '~!~' . $row['process'] . '~!~' . $row['ip_address'] . '~!~' . $row['ip_address2'] . '~!~' . $row['ipaddresscolumn'] . '~!~' . $row['finishdatetime'] . '~!~' . $row['judgement'] . '&quot;)">' . $c . '</td>';
+			echo '<td>' . $row['line_no'] . '</td>';
 			echo '<td>' . $row['ircs_line'] . '</td>';
 			echo '<td>' . $row['process'] . '</td>';
 			echo '<td>' . $row['ip_address'] . '</td>';
@@ -189,6 +210,7 @@ if ($method == 'inspection_list') {
 }
 
 if ($method == 'add_insp') {
+	$line_no = addslashes($_POST['line_no']);
 	$ircs_line = addslashes($_POST['ircs_line']);
 	$process = addslashes($_POST['process']);
 	$ip_address_1 = addslashes($_POST['ip_address_1']);
@@ -199,14 +221,15 @@ if ($method == 'add_insp') {
 
 	$check = "SELECT id FROM m_inspection_ip WHERE ircs_line = '$ircs_line' AND process = '$process' AND ip_address = '$ip_address_1' AND ip_address2 = '$ip_address_2' AND ipaddresscolumn = '$ip_address_col' AND finishdatetime = '$finish_date_time' AND judgement = '$judgement'";
 	$stmt = $conn_pcad->prepare($check, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
 		echo 'Already Exist';
 	} else {
 		$stmt = NULL;
 
-		$query = "INSERT INTO m_inspection_ip (ircs_line, process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement) VALUES ('$ircs_line','$process','$ip_address_1','$ip_address_2','$ip_address_col','$finish_date_time','$judgement')";
 
+		$query = "INSERT INTO m_inspection_ip (ircs_line, process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement) VALUES ('$ircs_line','$process','$ip_address_1','$ip_address_2','$ip_address_col','$finish_date_time','$judgement')";
 		$stmt = $conn_pcad->prepare($query);
 		if ($stmt->execute()) {
 			echo 'success';
@@ -218,6 +241,7 @@ if ($method == 'add_insp') {
 
 if ($method == 'update_insp') {
 	$id = $_POST['id'];
+	$line_no = addslashes($_POST['line_no']);
 	$ircs_line = addslashes($_POST['ircs_line']);
 	$process = addslashes($_POST['process']);
 	$ip_address_1 = addslashes($_POST['ip_address_1']);
@@ -226,25 +250,12 @@ if ($method == 'update_insp') {
 	$finish_date_time = addslashes($_POST['finish_date_time']);
 	$judgement = addslashes($_POST['judgement']);
 
-	$check = "SELECT id FROM m_inspection_ip WHERE ircs_line = '$ircs_line' AND process = '$process' AND ip_address = '$ip_address_1' AND ip_address2 = '$ip_address_2' AND ipaddresscolumn = '$ip_address_col' AND finishdatetime = '$finish_date_time' AND judgement = '$judgement'";
-	$stmt = $conn_pcad->prepare($check, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-	$stmt->execute();
-	if ($stmt->rowCount() > 0) {
-		$query = "UPDATE m_inspection_ip SET ircs_line = '$ircs_line', process = '$process', ip_address = '$ip_address_1', ip_address2 = '$ip_address_2', ipaddresscolumn = '$ip_address_col', finishdatetime = '$finish_date_time', judgement = '$judgement' WHERE id = '$id'";
-		$stmt = $conn_pcad->prepare($query);
-		if ($stmt->execute()) {
-			echo 'success';
-		} else {
-			echo 'error';
-		}
+	$query = "UPDATE m_inspection_ip SET line_no = '$line_no', ircs_line = '$ircs_line', process = '$process', ip_address = '$ip_address_1', ip_address2 = '$ip_address_2', ipaddresscolumn = '$ip_address_col', finishdatetime = '$finish_date_time', judgement = '$judgement' WHERE id = '$id'";
+	$stmt = $conn_pcad->prepare($query);
+	if ($stmt->execute()) {
+		echo 'success';
 	} else {
-		$query = "UPDATE m_inspection_ip SET ircs_line = '$ircs_line', process = '$process', ip_address = '$ip_address_1', ip_address2 = '$ip_address_2', ipaddresscolumn = '$ip_address_col', finishdatetime = '$finish_date_time', judgement = '$judgement' WHERE id = '$id'";
-		$stmt = $conn_pcad->prepare($query);
-		if ($stmt->execute()) {
-			echo 'success';
-		} else {
-			echo 'error';
-		}
+		echo 'error';
 	}
 }
 

@@ -46,22 +46,32 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="row mb-4">
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
+                                    <label>Line No.</label>
+                                    <input type="text" class="form-control" id="line_no_insp_search"
+                                        placeholder="Search" autocomplete="off" maxlength="255">
+                                </div>
+                                <div class="col-sm-2">
                                     <label>IRCS Line</label>
-                                    <input type="text" class="form-control" id="ircs_line_insp_search" placeholder="Search"
-                                        autocomplete="off" maxlength="255">
+                                    <input type="text" class="form-control" id="ircs_line_insp_search"
+                                        placeholder="Search" autocomplete="off" maxlength="255">
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label>Process</label>
-                                    <input type="text" class="form-control" id="process_insp_search" placeholder="Search"
-                                        autocomplete="off" maxlength="255">
+                                    <input type="text" class="form-control" id="process_insp_search"
+                                        placeholder="Search" autocomplete="off" maxlength="255">
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
+                                    <label>IP Address 1</label>
+                                    <input type="text" class="form-control" id="ip_address_insp_search"
+                                        placeholder="Search" autocomplete="off" maxlength="255">
+                                </div>
+                                <div class="col-sm-2">
                                     <label>&nbsp;</label>
                                     <button type="button" class="btn bg-primary btn-block" onclick="load_insp(1)"><i
                                             class="fas fa-search"></i> Search</button>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <label>&nbsp;</label>
                                     <button type="button" class="btn bg-danger btn-block" data-toggle="modal"
                                         data-target="#delete_insp_selected" id="btnDeleteSelected" disabled><i
@@ -77,6 +87,7 @@
                                             <th><input type="checkbox" name="check_all" id="check_all"
                                                     onclick="select_all_func()"></th>
                                             <th>#</th>
+                                            <th>Line No.</th>
                                             <th>IRCS Line</th>
                                             <th>Process</th>
                                             <th>IP Address 1</th>
