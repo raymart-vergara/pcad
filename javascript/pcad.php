@@ -42,6 +42,7 @@
     const get_hourly_output = () => {
         let shift_group = document.getElementById('shift_group').value;
         let registlinename = document.getElementById('registlinename').value;
+        let line_no = document.getElementById('line_no').value;
         let takt = document.getElementById('takt').value;
         let working_time = document.getElementById('work_time_plan').value;
         let day = localStorage.getItem("pcad_prod_server_date_only");
@@ -55,6 +56,7 @@
                 method: 'get_hourly_output',
                 shift_group: shift_group,
                 registlinename: registlinename,
+                line_no: line_no,
                 takt: takt,
                 working_time: working_time,
                 day: day,
@@ -100,6 +102,7 @@
     const get_yield = () => {
         let shift_group = document.getElementById('shift_group').value;
         let registlinename = document.getElementById('registlinename').value;
+        let line_no = document.getElementById('line_no').value;
         let day = localStorage.getItem("pcad_prod_server_date_only");
         let shift = localStorage.getItem("shift");
 
@@ -111,6 +114,7 @@
                 method: 'get_yield',
                 shift_group: shift_group,
                 registlinename: registlinename,
+                line_no: line_no,
                 day: day,
                 shift: shift,
                 opt: 1
@@ -125,6 +129,7 @@
     const get_ppm = () => {
         let shift_group = document.getElementById('shift_group').value;
         let registlinename = document.getElementById('registlinename').value;
+        let line_no = document.getElementById('line_no').value;
         let day = localStorage.getItem("pcad_prod_server_date_only");
         let shift = localStorage.getItem("shift");
 
@@ -136,6 +141,7 @@
                 method: 'get_ppm',
                 shift_group: shift_group,
                 registlinename: registlinename,
+                line_no: line_no,
                 day: day,
                 shift: shift,
                 opt: 1

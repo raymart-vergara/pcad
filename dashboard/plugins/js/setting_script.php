@@ -1,4 +1,14 @@
 <script>
+	const split_registlinename = registlinename => {
+		const myArray = registlinename.split("-");
+		return myArray[0];
+	}
+
+	const split_line_no = registlinename => {
+		const myArray = registlinename.split("-");
+		return myArray[1];
+	}
+
 	$(document).ready(function () {
 		var day = '<?= get_day($server_time, $server_date_only, $server_date_only_yesterday) ?>';
 		var shift = '<?= get_shift($server_time) ?>';
@@ -8,32 +18,19 @@
 		document.getElementById("shift").value = shift;
 
 		if (localStorage.getItem("registlinename") !== null) {
+			var line_no = localStorage.getItem("pcad_line_no");
 			var registlinename = localStorage.getItem("registlinename");
-			$.post('../process/pcs/dashboard_setting_p.php', {
-				request: 'getLineNo',
-				registlinename: registlinename
-			}, function (response) {
-				console.log(response);
-				$("#line_no").val(response.trim());
-				$("#registlinenameplan").val(registlinename);
-				// After receiving the response, check if plans are running
-
-			});
+			$("#line_no").val(line_no);
+			$("#registlinenameplan").val(registlinename);
 		}
 
 		$(document).on('change', '#ircs_line', function () {
-			localStorage.setItem("registlinename", $("#ircs_line").val());
+			localStorage.setItem("registlinename", split_registlinename($("#ircs_line").val()));
+			localStorage.setItem("pcad_line_no", split_line_no($("#ircs_line").val()));
 			var registlinename = localStorage.getItem("registlinename");
-			$.post('../process/pcs/dashboard_setting_p.php', {
-				request: 'getLineNo',
-				registlinename: registlinename
-			}, function (response) {
-				// console.log(response);
-				// console.log(registlinename);
-				$("#line_no").val(response.trim());
-				$("#registlinenameplan").val(registlinename);
-				// After receiving the response, check if plans are running
-			});
+			var line_no = localStorage.getItem("pcad_line_no");
+			$("#line_no").val(line_no);
+			$("#registlinenameplan").val(registlinename);
 		});
 	});
 

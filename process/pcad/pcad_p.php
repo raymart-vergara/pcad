@@ -32,7 +32,7 @@ if ($method == 'get_accounting_efficiency') {
     $registlinename = $_GET['registlinename'];
     $shift_group = $_GET['shift_group'];
     
-    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
     $search_arr = array(
         'day' => $day,
@@ -73,6 +73,7 @@ if ($method == 'get_accounting_efficiency') {
 // http://172.25.112.131/pcad/process/pcad/pcad_p.php?method=get_yield
 if ($method == 'get_yield') {
     $registlinename = $_GET['registlinename'];
+    $line_no = $_GET['line_no'];
     $shift_group = $_GET['shift_group'];
 
     $opt = $_GET['opt'];
@@ -99,7 +100,7 @@ if ($method == 'get_yield') {
 			break;
 	}
 
-    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
     $search_arr = array(
         'day' => $day,
@@ -107,6 +108,7 @@ if ($method == 'get_yield') {
 		'shift' => $shift,
         'shift_group' => $shift_group,
         'registlinename' => $registlinename,
+        'line_no' => $line_no,
         'ircs_line_data_arr' => $ircs_line_data_arr,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
@@ -126,6 +128,7 @@ if ($method == 'get_yield') {
 // http://172.25.112.131/pcad/process/pcad/pcad_p.php?method=get_ppm
 if ($method == 'get_ppm') {
     $registlinename = $_GET['registlinename'];
+    $line_no = $_GET['line_no'];
     $shift_group = $_GET['shift_group'];
 
     $opt = $_GET['opt'];
@@ -152,7 +155,7 @@ if ($method == 'get_ppm') {
 			break;
 	}
 
-    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
     $search_arr = array(
         'day' => $day,
@@ -160,6 +163,7 @@ if ($method == 'get_ppm') {
 		'shift' => $shift,
         'shift_group' => $shift_group,
         'registlinename' => $registlinename,
+        'line_no' => $line_no,
 		'ircs_line_data_arr' => $ircs_line_data_arr,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
@@ -184,6 +188,7 @@ if ($method == 'get_ppm') {
 // http://172.25.112.131/pcad/process/pcad/pcad_p.php?method=get_hourly_output
 if ($method == 'get_hourly_output') {
     $registlinename = $_GET['registlinename'];
+    $line_no = $_GET['line_no'];
     $shift_group = $_GET['shift_group'];
 
     $opt = $_GET['opt'];
@@ -210,7 +215,7 @@ if ($method == 'get_hourly_output') {
 			break;
 	}
 
-    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
     $search_arr = array(
         'day' => $day,
@@ -257,6 +262,7 @@ if ($method == 'get_conveyor_speed') {
 
 if ($method == 'get_plan_data') {
     $registlinename = $_GET['registlinename'];
+    $line_no = $_GET['line_no'];
 
     $opt = $_GET['opt'];
 
@@ -281,8 +287,8 @@ if ($method == 'get_plan_data') {
     $shift_arr = array(
         "shift" => $shift
     );
-    $plan_data_arr = get_plan_data($registlinename, $day, $shift, $conn_pcad, $opt);
-    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $plan_data_arr = get_plan_data($registlinename, $line_no, $day, $shift, $conn_pcad, $opt);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
     $response_arr = array_merge($shift_arr, $plan_data_arr, $ircs_line_data_arr);
 

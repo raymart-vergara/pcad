@@ -16,6 +16,7 @@ $shift = $_GET['shift'];
 
 $registlinename = $_GET['registlinename'];
 // $registlinename = 'DAIHATSU_30';
+$line_no = $_GET['line_no'];
 
 $opt = $_GET['opt'];
 
@@ -73,6 +74,7 @@ fputcsv($f, $combined_c_fields, $delimiter);
 $search_arr = array(
         'shift' => $shift,
         'registlinename' => $registlinename,
+        'line_no' => $line_no,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,

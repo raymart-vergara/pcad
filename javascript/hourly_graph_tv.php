@@ -136,6 +136,7 @@
     const get_hourly_output_chart = () => {
         // let registlinename = sessionStorage.getItem('line_no_search');
         let registlinename = localStorage.getItem("registlinename");
+        let line_no = localStorage.getItem("pcad_line_no");
         let hourly_output_date = '<?= $server_date_only ?>';
         let target_output = parseInt(localStorage.getItem('target_hourly_output'));
 
@@ -147,6 +148,7 @@
             data: {
                 method: 'get_hourly_output_graph',
                 registlinename: registlinename,
+                line_no: line_no,
                 hourly_output_date: hourly_output_date,
                 opt: 1
             },
@@ -295,6 +297,7 @@
 
     const ng_graph = () => {
         let registlinename = localStorage.getItem("registlinename");
+        let line_no = localStorage.getItem("pcad_line_no");
         let server_date_only = '<?= $server_date_only ?>';
 
         $.ajax({
@@ -305,6 +308,7 @@
             data: {
                 method: 'ng_graph',
                 registlinename: registlinename,
+                line_no: line_no,
                 server_date_only: server_date_only,
                 opt: 1
             },

@@ -4,18 +4,18 @@ require 'process/conn/emp_mgt.php';
 include 'process/lib/emp_mgt.php';
 require 'process/conn/pcad.php';
 
-// $line_no = '2132';
-// $line_no = $_GET['line_no'];
-$registlinename = $_GET['registlinename']; // IRCS LINE (PCS)
+$registlinename = $_GET['registlinename']; // IRCS LINE NAME (PCS)
+$line_no = $_GET['line_no']; // IRCS LINE NO
 $shift_group = '';
 
 $processing = false;
 
 if (isset($_GET['registlinename'])) {
     $registlinename = $_GET['registlinename'];
-    $q = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND Status = 'Pending'";
+    $q = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND Line = :line_no AND Status = 'Pending'";
     $stmt = $conn_pcad->prepare($q, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $stmt->bindParam(':registlinename', $registlinename);
+    $stmt->bindParam(':line_no', $line_no);
     $stmt->execute();
     $res = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -36,9 +36,11 @@ if (isset($_GET['registlinename'])) {
         $daily_plan = $res['daily_plan'];
 
 
-        $sql = "SELECT * FROM m_ircs_line WHERE ircs_line = :registlinename";
+        $sql = "SELECT line_no, andon_line, final_process FROM m_ircs_line 
+                WHERE ircs_line = :registlinename AND line_no = :line_no";
         $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->bindParam(':registlinename', $registlinename);
+        $stmt->bindParam(':line_no', $line_no);
         $stmt->execute();
         $line_data = $stmt->fetch(PDO::FETCH_ASSOC);
         $line_no = $line_data['line_no'];

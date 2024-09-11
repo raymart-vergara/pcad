@@ -39,7 +39,7 @@ if ($result) {
 													<?php
 													if ($ircs_lines) {
 														foreach ($ircs_lines as $i => $ircs) {
-															echo '<option value="' . $ircs['ircs_line'] . '">' . $ircs['ircs_line'] . ' (' . $ircs['line_no'] . ')</option>';
+															echo '<option value="' . $ircs['ircs_line'] . '-' . $ircs['line_no'] . '">' . $ircs['ircs_line'] . ' (' . $ircs['line_no'] . ')</option>';
 														}
 													}
 													?>
@@ -54,7 +54,7 @@ if ($result) {
 												SELECTED LINE NO. </td>
 											<td>
 												<input type="text" readonly class="ml-4 form-control"
-													style="width: 250px;" id="line_no" value="" required>
+													style="width: 250px;" id="line_no" name="line_no" value="" required>
 											</td>
 										</tr>
 									</tbody>

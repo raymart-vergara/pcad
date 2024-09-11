@@ -13,6 +13,7 @@
 
     const get_hourly_output_chart = () => {
         let registlinename = localStorage.getItem("registlinename");
+        let line_no = localStorage.getItem("pcad_line_no");
         let hourly_output_date = localStorage.getItem("pcad_exec_server_date_only");
         let target_output = parseInt(localStorage.getItem('target_hourly_output'));
         let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
@@ -25,6 +26,7 @@
             data: {
                 method: 'get_hourly_output_graph',
                 registlinename: registlinename,
+                line_no: line_no,
                 hourly_output_date: hourly_output_date,
                 opt: opt
             },
@@ -190,6 +192,8 @@
         let target_output = sessionStorage.getItem('target_output_search');
         let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
 
+        let line_no = localStorage.getItem("pcad_line_no");
+
         $.ajax({
             url: '../../process/hourly_output/hourly_output_p.php',
             type: 'GET',
@@ -197,6 +201,7 @@
             data: {
                 method: 'get_hourly_output_per_process',
                 registlinename: registlinename,
+                line_no: line_no,
                 hourly_output_date: hourly_output_date,
                 target_output: target_output,
                 opt: opt
@@ -236,6 +241,8 @@
 
         let hourly_output_date = document.getElementById('hourly_output_date_search').value;
 
+        let line_no = localStorage.getItem("pcad_line_no");
+
         $.ajax({
             url: '../../process/hourly_output/hourly_output_p.php',
             type: 'GET',
@@ -243,6 +250,7 @@
             data: {
                 method: 'get_hourly_output',
                 registlinename: registlinename,
+                line_no: line_no,
                 hourly_output_date: hourly_output_date,
                 shift: shift,
                 target_output: target_output
@@ -266,9 +274,10 @@
 
     const export_hourly_output = () => {
         let registlinename = sessionStorage.getItem('line_no_search');
+        let line_no = localStorage.getItem("pcad_line_no");
         let hourly_output_date = sessionStorage.getItem('hourly_output_date_search');
         let shift = sessionStorage.getItem('shift_search');
         let target_output = sessionStorage.getItem('target_output_search');
-        window.open('../../process/export/exp_hourly_output.php?registlinename=' + registlinename + "&shift=" + shift + "&target_output=" + target_output + "&hourly_output_date=" + hourly_output_date, '_blank');
+        window.open('../../process/export/exp_hourly_output.php?registlinename=' + registlinename + '&line_no=' + line_no + "&shift=" + shift + "&target_output=" + target_output + "&hourly_output_date=" + hourly_output_date, '_blank');
     }
 </script>
