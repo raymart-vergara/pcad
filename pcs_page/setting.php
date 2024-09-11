@@ -14,11 +14,11 @@ if ($result) {
 }
 
 ?>
-<div class="pt-4 container-fluid">
+<div class="pt-4 container-fluid page">
 	<div class="row justify-content-center">
 		<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 			<div class="card"
-				style="background-color: #FDFEFF; border: 2px solid #334C69; box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.25)">
+				style="background-color: #FBFBFB; box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.25)">
 				<h2 class="card-header" style="color: #334C69;"><b>Production Conveyor Analysis Settings</b></h2>
 				<form method="post" action="../process/pcs/setting_p.php">
 					<input type="hidden" name="request" value="addTarget">
