@@ -2,6 +2,7 @@
     const get_hourly_output = () => {
         let shift_group = document.getElementById('shift_group').value;
         let registlinename = document.getElementById('registlinename').value;
+        let line_no = document.getElementById('line_no').value;
         let takt = document.getElementById('takt').value;
         let working_time = document.getElementById('work_time_plan').value;
         let day = localStorage.getItem("pcad_exec_server_date_only");
@@ -16,6 +17,7 @@
                 method: 'get_hourly_output',
                 shift_group: shift_group,
                 registlinename: registlinename,
+                line_no: line_no,
                 takt: takt,
                 working_time: working_time,
                 day: day,
@@ -60,6 +62,7 @@
 
     const get_plan_data = () => {
         let registlinename = document.getElementById('registlinename').value;
+        let line_no = document.getElementById('line_no').value;
         let day = localStorage.getItem("pcad_exec_server_date_only");
         let shift = localStorage.getItem("shift");
         let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
@@ -71,6 +74,7 @@
             data: {
                 method: 'get_plan_data',
                 registlinename: registlinename,
+                line_no: line_no,
                 day: day,
                 shift: shift,
                 opt: opt
@@ -197,14 +201,15 @@
 
     const export_plan_data_pending = () => {
         let registlinename = document.getElementById('registlinename').value;
+        let line_no = localStorage.getItem("pcad_line_no");
         let day = localStorage.getItem("pcad_exec_server_date_only");
         let shift = localStorage.getItem("shift");
         let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
 
         if (opt == 1) {
-            window.open('process/export/exp_plan_data_pending.php?registlinename=' + registlinename, '_blank');
+            window.open('process/export/exp_plan_data_pending.php?registlinename=' + registlinename + '&line_no=' + line_no, '_blank');
         } else if (opt == 2) {
-            window.open('process/export/exp_plan_data_done.php?registlinename=' + registlinename + '&day=' + day + '&shift=' + shift, '_blank');
+            window.open('process/export/exp_plan_data_done.php?registlinename=' + registlinename + '&line_no=' + line_no + '&day=' + day + '&shift=' + shift, '_blank');
         }
     }
 </script>

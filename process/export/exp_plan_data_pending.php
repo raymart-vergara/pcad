@@ -14,6 +14,7 @@ switch (true) {
 }
 
 $registlinename = trim($_GET['registlinename']);
+$line_no = trim($_GET['line_no']);
 
 $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
 $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
@@ -21,8 +22,8 @@ $shift = get_shift($server_time);
 
 // Plan Data (Yield, PPM, Accounting Efficiency, Production Plan)
 
-$plan_data_pending_arr = get_plan_data($registlinename, $day, $shift, $conn_pcad, 1);
-$ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+$plan_data_pending_arr = get_plan_data($registlinename, $line_no, $day, $shift, $conn_pcad, 1);
+$ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
 // Employee Management System Data
 

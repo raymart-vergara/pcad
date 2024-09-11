@@ -199,6 +199,7 @@ $method = $_GET['method'];
 
 if ($method == 'get_inspection_list') {
     $registlinename = $_GET['registlinename'];
+    $line_no = $_GET['line_no'];
 
     $opt = $_GET['opt'];
 
@@ -229,6 +230,7 @@ if ($method == 'get_inspection_list') {
         'day_tomorrow' => $day_tomorrow,
         'shift' => $shift,
         'registlinename' => $registlinename,
+        'line_no' => $line_no,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
@@ -255,6 +257,7 @@ if ($method == 'get_inspection_list') {
 
 if ($method == 'get_inspection_list_copy') {
     $registlinename = $_GET['registlinename'];
+    $line_no = $_GET['line_no'];
 
     $opt = $_GET['opt'];
 
@@ -285,6 +288,7 @@ if ($method == 'get_inspection_list_copy') {
         'day_tomorrow' => $day_tomorrow,
         'shift' => $shift,
         'registlinename' => $registlinename,
+        'line_no' => $line_no,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
         'server_date_only_tomorrow' => $server_date_only_tomorrow,
@@ -311,6 +315,7 @@ if ($method == 'get_inspection_list_copy') {
 
 if ($method == 'get_overall_inspection') {
     $registlinename = $_GET['registlinename'];
+    $line_no = $_GET['line_no'];
 
     $opt = $_GET['opt'];
 
@@ -336,13 +341,14 @@ if ($method == 'get_overall_inspection') {
 			break;
 	}
 
-    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
     $search_arr = array(
         'day' => $day,
         'day_tomorrow' => $day_tomorrow,
         'shift' => $shift,
         'registlinename' => $registlinename,
+        'line_no' => $line_no,
         'ircs_line_data_arr' => $ircs_line_data_arr,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
@@ -366,6 +372,7 @@ if ($method == 'get_overall_inspection') {
 if ($method == 'get_inspection_details_no_good') {
     $shift = $_GET['shift'];
     $registlinename = $_GET['registlinename'];
+    $line_no = $_GET['line_no'];
     // $shift_group = $_GET['shift_group'];
 
     $opt = $_GET['opt'];
@@ -377,11 +384,12 @@ if ($method == 'get_inspection_details_no_good') {
     // $registlinename = 'DAIHATSU_30';
     // $shift_group = 'B';
 
-    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
     $search_arr = array(
         'shift' => $shift,
         'registlinename' => $registlinename,
+        'line_no' => $line_no,
         'ircs_line_data_arr' => $ircs_line_data_arr,
         'server_date_only' => $server_date_only,
         'server_date_only_yesterday' => $server_date_only_yesterday,
@@ -977,6 +985,7 @@ if ($method == 'get_inspection_details_no_good') {
 if ($method == 'get_inspection_details_good') {
     $shift = $_GET['shift'];
     $registlinename = $_GET['registlinename'];
+    $line_no = $_GET['line_no'];
     // $shift_group = $_GET['shift_group'];
 
     $opt = $_GET['opt'];
@@ -988,7 +997,7 @@ if ($method == 'get_inspection_details_good') {
     // $registlinename = 'DAIHATSU_30';
     // $shift_group = 'B';
 
-    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
     $search_arr = array(
         'shift' => $shift,
@@ -1290,6 +1299,7 @@ function get_ng_cell_color($process, $actual_output)
 if ($method == 'get_ng_hourly_output_per_process') {
     $registlinename = $_GET['registlinename'];
     // $registlinename = 'DAIHATSU_30';
+    $line_no = $_GET['line_no'];
 
     $hourly_ng_date = $_GET['server_date_only'];
 
@@ -1304,7 +1314,7 @@ if ($method == 'get_ng_hourly_output_per_process') {
     $insp_overall_ng = array();
 
     // Fetch processes and their corresponding IP addresses
-    $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
+    $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $line_no, $conn_pcad);
 
     if (!empty($processesAndIpAddresses)) {
         foreach ($processesAndIpAddresses as $processData) {
@@ -1427,6 +1437,7 @@ if ($method == 'get_ng_hourly_output_per_process') {
 if ($method == 'ng_graph') {
     $registlinename = $_GET['registlinename'];
     // $registlinename = 'DAIHATSU_30';
+    $line_no = $_GET['line_no'];
 
     $hourly_ng_date = $_GET['server_date_only'];
 
@@ -1468,7 +1479,7 @@ if ($method == 'ng_graph') {
     $insp_overall_ng = array();
 
     // Fetch processes and their corresponding IP addresses
-    $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
+    $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $line_no, $conn_pcad);
 
     if (!empty($processesAndIpAddresses)) {
         foreach ($processesAndIpAddresses as $processData) {

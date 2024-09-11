@@ -55,13 +55,15 @@ if ($result) {
                         </select>
                     </div>
                     <div class="form-group mb-3">
+                        <input type="hidden" id="registlinenameplan" name="registlinenameplan" value="">
+                        <input type="hidden" id="line_no" name="line_no" value="">
                         <label for="ircs_line" class="m-0 p-0">Select Line No.</label>
                         <select name="registlinename" id="ircs_line" class="form-control bg-color" required>
                             <option value="">Select Line No.</option>
                             <?php
                             if ($ircs_lines) {
                                 foreach ($ircs_lines as $i => $ircs) {
-                                    echo '<option value="' . $ircs['ircs_line'] . '">' . $ircs['ircs_line'] . ' (' . $ircs['line_no'] . ')</option>';
+                                    echo '<option value="' . $ircs['ircs_line'] . '-' . $ircs['line_no'] . '">' . $ircs['ircs_line'] . ' (' . $ircs['line_no'] . ')</option>';
                                 }
                             }
                             ?>

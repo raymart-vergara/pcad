@@ -10,11 +10,12 @@ $method = $_GET['method'];
 
 if ($method == 'get_hourly_output') {
     $registlinename = $_GET['registlinename'];
+    $line_no = $_GET['line_no'];
     $hourly_output_date = $_GET['hourly_output_date'];
     $shift = $_GET['shift'];
     $target_output = intval($_GET['target_output']);
 
-    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
     $final_process = $ircs_line_data_arr['final_process'];
     $ipaddresscolumn = $ircs_line_data_arr['ipaddresscolumn'];
     $ipAddresses = $ircs_line_data_arr['ipAddresses'];
@@ -138,6 +139,7 @@ function get_cell_color($process, $target_output, $actual_output) {
 // http://172.25.112.131/pcad/process/hourly_output/hourly_output_p.php?method=get_hourly_output_per_process
 if ($method == 'get_hourly_output_per_process') {
     $registlinename = $_GET['registlinename'];
+    $line_no = $_GET['line_no'];
     $hourly_output_date = $_GET['hourly_output_date'];
     $target_output = intval($_GET['target_output']);
 
@@ -155,7 +157,7 @@ if ($method == 'get_hourly_output_per_process') {
     $insp_overall_g = array();
 
     // Fetch processes and their corresponding IP addresses
-    $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
+    $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $line_no, $conn_pcad);
 
     if (!empty($processesAndIpAddresses)) {
         foreach ($processesAndIpAddresses as $processData) {
@@ -271,6 +273,7 @@ if ($method == 'get_hourly_output_per_process') {
 // http://172.25.112.131/pcad/process/hourly_output/hourly_output_p.php?method=get_hourly_output_graph
 if ($method == 'get_hourly_output_graph') {
     $registlinename = $_GET['registlinename'];
+    $line_no = $_GET['line_no'];
     $hourly_output_date = $_GET['hourly_output_date'];
 
     $opt = $_GET['opt'];
@@ -291,7 +294,7 @@ if ($method == 'get_hourly_output_graph') {
         $hourly_output_summary_array[$hour_row] = 0;
     }
 
-    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
     $final_process = $ircs_line_data_arr['final_process'];
     $ipaddresscolumn = $ircs_line_data_arr['ipaddresscolumn'];
     $ipAddresses = $ircs_line_data_arr['ipAddresses'];

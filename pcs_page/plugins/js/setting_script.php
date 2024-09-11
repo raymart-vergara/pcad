@@ -1,34 +1,33 @@
 <script>
+	const split_registlinename = registlinename => {
+		const myArray = registlinename.split("-");
+		return myArray[0];
+	}
+
+	const split_line_no = registlinename => {
+		const myArray = registlinename.split("-");
+		return myArray[1];
+	}
+
 	$(document).ready(function () {
 		if (localStorage.getItem("registlinename") !== null) {
 			var registlinename = localStorage.getItem("registlinename");
-			$.post('../process/pcs/setting_p.php', {
-				request: 'getLineNo',
-				registlinename: registlinename
-			}, function (response) {
-				console.log(response);
-				$("#line_no").val(response.trim());
-				$("#registlinenameplan").val(registlinename);
-				// After receiving the response, check if plans are running
-				checkRunningPlans();
-			});
+			var line_no = localStorage.getItem("pcad_line_no");
+			$("#line_no").val(line_no);
+			$("#registlinenameplan").val(registlinename);
+			// After receiving the response, check if plans are running
+			checkRunningPlans();
 		}
 
-
 		$(document).on('change', '#ircs_line', function () {
-			localStorage.setItem("registlinename", $("#ircs_line").val());
+			localStorage.setItem("registlinename", split_registlinename($("#ircs_line").val()));
+			localStorage.setItem("pcad_line_no", split_line_no($("#ircs_line").val()));
 			var registlinename = localStorage.getItem("registlinename");
-			$.post('../process/pcs/setting_p.php', {
-				request: 'getLineNo',
-				registlinename: registlinename
-			}, function (response) {
-				// console.log(response);
-				// console.log(registlinename);
-				$("#line_no").val(response.trim());
-				$("#registlinenameplan").val(registlinename);
-				// After receiving the response, check if plans are running
-				checkRunningPlans();
-			});
+			var line_no = localStorage.getItem("pcad_line_no");
+			$("#line_no").val(line_no);
+			$("#registlinenameplan").val(registlinename);
+			// After receiving the response, check if plans are running
+			checkRunningPlans();
 		});
 	});
 
@@ -50,9 +49,11 @@
 
 	function checkRunningPlans() {
 		var registlinename = localStorage.getItem("registlinename");
+		var line_no = localStorage.getItem("pcad_line_no");
 		$.post('../process/pcs/setting_p.php', {
 			request: 'checkRunningPlans',
-			registlinename: registlinename
+			registlinename: registlinename,
+			line_no: line_no
 		}, function (response) {
 			console.log(response);
 			if (response === 'true') {

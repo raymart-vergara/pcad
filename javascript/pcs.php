@@ -93,11 +93,13 @@
 
         function getValues() {
             var registlinename = $("#registlinename").val();
+            var line_no = $("#line_no").val();
             var last_takt = $("#last_takt").val();
 
             $.post('process/pcs/setting_p.php', {
                 request: 'getPlanLine',
                 registlinename: registlinename,
+                line_no: line_no,
                 last_takt: last_takt
             }, function (response) {
                 fetch_digit();
@@ -180,6 +182,7 @@
         $.post('process/pcs/setting_p.php', {
             request: 'updateTakt',
             registlinename: $('#registlinename').val(),
+            line_no: $('#line_no').val(),
             yield_actual: $('#yield_actual').val(),
             ppm_actual: $('#ppm_actual').val(),
             acc_eff_actual: $('#acc_eff_actual').val()
@@ -242,6 +245,7 @@
         $.post('process/pcs/setting_p.php', {
             request: 'setPaused',
             registlinename: $("#registlinename").val(),
+            line_no: $('#line_no').val(),
             is_paused: 'YES'
         }, function (response) {
             console.log(response);
@@ -257,6 +261,7 @@
         $.post('process/pcs/setting_p.php', {
             request: 'setPaused',
             registlinename: $("#registlinename").val(),
+            line_no: $('#line_no').val(),
             is_paused: 'NO'
         }, function (response) {
             console.log(response);
@@ -273,6 +278,7 @@
             $.post('process/pcs/setting_p.php', {
                 request: 'setPaused',
                 registlinename: $("#registlinename").val(),
+                line_no: $('#line_no').val(),
                 is_paused: 'YES'
             }, function (response) {
                 console.log(response);
@@ -312,6 +318,7 @@
             $.post('process/pcs/setting_p.php', {
                 request: 'setPaused',
                 registlinename: $("#registlinename").val(),
+                line_no: $('#line_no').val(),
                 is_paused: 'NO'
             }, function (response) {
                 console.log(response);

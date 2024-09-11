@@ -81,7 +81,7 @@ function count_overall_ng($search_arr, $conn_ircs, $conn_pcad)
    $insp_overall_ng = 0;
 
    // Fetch processes and their corresponding IP addresses
-   $processesAndIpAddresses = getIpAddressesFromDatabase($search_arr['registlinename'], $conn_pcad);
+   $processesAndIpAddresses = getIpAddressesFromDatabase($search_arr['registlinename'], $search_arr['line_no'], $conn_pcad);
 
    if (!empty($processesAndIpAddresses)) {
       foreach ($processesAndIpAddresses as $processData) {
@@ -438,7 +438,7 @@ function get_rows_overall_ng($search_arr, $conn_ircs, $conn_pcad)
    $insp_overall_ng = array();
 
    // Fetch processes and their corresponding IP addresses
-   $processesAndIpAddresses = getIpAddressesFromDatabase($search_arr['registlinename'], $conn_pcad);
+   $processesAndIpAddresses = getIpAddressesFromDatabase($search_arr['registlinename'], $search_arr['line_no'], $conn_pcad);
 
    if (!empty($processesAndIpAddresses)) {
       foreach ($processesAndIpAddresses as $processData) {
@@ -788,7 +788,7 @@ function get_overall_inspection_list($search_arr, $conn_ircs, $conn_pcad) {
    $response_arr = array();
 
    // Fetch processes and their corresponding IP addresses
-   $processesAndIpAddresses = getIpAddressesFromDatabase($search_arr['registlinename'], $conn_pcad);
+   $processesAndIpAddresses = getIpAddressesFromDatabase($search_arr['registlinename'], $search_arr['line_no'], $conn_pcad);
 
    if (!empty($processesAndIpAddresses)) {
       foreach ($processesAndIpAddresses as $processData) {

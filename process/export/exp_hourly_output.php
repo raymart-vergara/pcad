@@ -14,11 +14,12 @@ switch (true) {
 }
 
 $registlinename = $_GET['registlinename'];
+$line_no = $_GET['line_no'];
 $hourly_output_date = $_GET['hourly_output_date'];
 $shift = $_GET['shift'];
 $target_output = $_GET['target_output'];
 
-$ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+$ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 $final_process = $ircs_line_data_arr['final_process'];
 $ipaddresscolumn = $ircs_line_data_arr['ipaddresscolumn'];
 $ipAddresses = $ircs_line_data_arr['ipAddresses'];

@@ -151,6 +151,7 @@
 
     const get_hourly_output_chart = () => {
         let registlinename = localStorage.getItem("registlinename");
+        let line_no = localStorage.getItem("pcad_line_no");
         let hourly_output_date = localStorage.getItem("pcad_exec_server_date_only");
         let target_output = parseInt(localStorage.getItem('target_hourly_output'));
         let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
@@ -163,6 +164,7 @@
             data: {
                 method: 'get_hourly_output_graph',
                 registlinename: registlinename,
+                line_no: line_no,
                 hourly_output_date: hourly_output_date,
                 opt: opt
             },
@@ -324,6 +326,7 @@
 
     const ng_graph = () => {
         let registlinename = localStorage.getItem("registlinename");
+        let line_no = localStorage.getItem("pcad_line_no");
         let server_date_only = localStorage.getItem("pcad_exec_server_date_only");
         let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
 
@@ -335,6 +338,7 @@
             data: {
                 method: 'ng_graph',
                 registlinename: registlinename,
+                line_no: line_no,
                 server_date_only: server_date_only,
                 opt: opt
             },
