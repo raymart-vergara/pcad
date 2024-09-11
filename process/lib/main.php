@@ -70,13 +70,25 @@ function compute_absent_ratio($actual_absent, $total_active_mp)
 // }
 
 
+// PCAD registlinename split functions
+function split_registlinename($registlinename) {
+    $registlinename_arr = explode("-", $registlinename);
+    return $registlinename_arr[0];
+}
+
+function split_line_no($registlinename) {
+    $registlinename_arr = explode("-", $registlinename);
+    return $registlinename_arr[1];
+}
+
+
 // PCAD Main Functions
 // Must Require Database Config "../conn/pcad.php" before using this functions
 
 // IRCS Line Data
-function get_ircs_line_data($registlinename, $conn_pcad)
+function get_ircs_line_data($registlinename, $line_no, $conn_pcad)
 {
-	$line_no = '';
+	$line_no = addslashes($line_no);
 	$registlinename = addslashes($registlinename);
 	$andon_line = '';
 	$final_process = '';
@@ -89,7 +101,7 @@ function get_ircs_line_data($registlinename, $conn_pcad)
 				FROM m_ircs_line i
 				LEFT JOIN m_inspection_ip insp
 				ON i.ircs_line = insp.ircs_line AND i.final_process = insp.finishdatetime
-				WHERE i.ircs_line = '$registlinename'";
+				WHERE i.ircs_line = '$registlinename' AND insp.line_no = '$line_no'";
 		$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
@@ -165,15 +177,18 @@ function get_ircs_ip_address($registlinename, $conn_pcad)
 }
 
 // 
-function getIpAddressesFromDatabase($registlinename, $conn_pcad)
+function getIpAddressesFromDatabase($registlinename, $line_no, $conn_pcad)
 {
     $ipaddresscolumn = "";
     $response_arr = array();
 
     // Retrieve IP addresses from the first column (ip_address) for the specified process
-    $query = "SELECT process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement FROM m_inspection_ip WHERE ircs_line = :registlinename";
+    $query = "SELECT process, ip_address, ip_address2, ipaddresscolumn, finishdatetime, judgement 
+				FROM m_inspection_ip 
+				WHERE ircs_line = :registlinename AND line_no = :line_no";
     $stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $stmt->bindParam(':registlinename', $registlinename, PDO::PARAM_STR);
+	$stmt->bindParam(':line_no', $line_no, PDO::PARAM_STR);
     $stmt->execute();
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -215,11 +230,11 @@ function getIpAddressesFromDatabase($registlinename, $conn_pcad)
 }
 
 // Get t_plan Data
-function get_plan_data($registlinename, $day, $shift, $conn_pcad, $opt)
+function get_plan_data($registlinename, $line_no, $day, $shift, $conn_pcad, $opt)
 {
 	$response_arr = array();
 
-    $sql = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename";
+    $sql = "SELECT * FROM t_plan WHERE IRCS_Line = :registlinename AND Line = :line_no";
 
 	switch($opt) {
 		case 1:
@@ -247,6 +262,7 @@ function get_plan_data($registlinename, $day, $shift, $conn_pcad, $opt)
 
     $stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
     $stmt->bindParam(':registlinename', $registlinename);
+	$stmt->bindParam(':line_no', $line_no);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 

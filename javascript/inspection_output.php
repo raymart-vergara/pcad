@@ -35,6 +35,7 @@
 
     const get_inspection_list = () => {
         let registlinename = document.getElementById('registlinename').value;
+        let line_no = document.getElementById('line_no').value;
         let day = localStorage.getItem("pcad_prod_server_date_only");
         let shift = localStorage.getItem("shift");
 
@@ -45,6 +46,7 @@
             data: {
                 method: 'get_inspection_list',
                 registlinename: registlinename,
+                line_no: line_no,
                 day: day,
                 shift: shift,
                 opt: 1
@@ -57,13 +59,15 @@
 
     const get_inspection_list_copy = () => {
         let registlinename = document.getElementById('registlinename').value;
+        let line_no = document.getElementById('line_no').value;
         $.ajax({
             url: 'process/inspection_output/inspection_output_p.php',
             type: 'GET',
             cache: false,
             data: {
                 method: 'get_inspection_list_copy',
-                registlinename: registlinename
+                registlinename: registlinename,
+                line_no: line_no
             },
             success: function (response) {
                 $('#inspection_process_list_copy').html(response);
@@ -73,6 +77,7 @@
 
     const get_overall_inspection = () => {
         let registlinename = document.getElementById('registlinename').value;
+        let line_no = document.getElementById('line_no').value;
         let day = localStorage.getItem("pcad_prod_server_date_only");
         let shift = localStorage.getItem("shift");
 
@@ -83,6 +88,7 @@
             data: {
                 method: 'get_overall_inspection',
                 registlinename: registlinename,
+                line_no: line_no,
                 day: day,
                 shift: shift,
                 opt: 1

@@ -15,6 +15,7 @@ switch (true) {
 $shift = $_GET['shift'];
 
 $registlinename = $_GET['registlinename'];
+$line_no = $_GET['line_no'];
 // $registlinename = 'DAIHATSU_30';
 
 $opt = $_GET['opt'];
@@ -68,7 +69,7 @@ $combined_c_fields = array_merge($f_c_register, $f_c_inspection1, $f_c_inspectio
 
 fputcsv($f, $combined_c_fields, $delimiter); 
 
-$ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+$ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
 $search_arr = array(
         'shift' => $shift,

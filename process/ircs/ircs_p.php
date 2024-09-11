@@ -14,9 +14,10 @@ if ($method == 'count_total_output') {
     $shift = 'DS';
     // $shift = $_GET['shift'];
     $registlinename = 'SUBARU_08';
+    $line_no = '';
     // $registlinename = $_GET['registlinename'];
 
-    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
     $search_arr = array(
 		'shift' => $shift,
@@ -96,7 +97,7 @@ if ($method == 'compute_st_per_line2') {
     // $registlinename = $_POST['registlinename'];
     // $shift_group = $_POST['shift_group'];
     
-    $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
+    $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
     $search_arr = array(
         'day' => $day,
