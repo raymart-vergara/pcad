@@ -328,4 +328,31 @@ function get_plan_data($registlinename, $line_no, $day, $shift, $conn_pcad, $opt
 
 	return $response_arr;
 }
-?>
+
+function get_shift_end_plan($start_plan_time) {
+	if ($start_plan_time >= '06:00:00' && $start_plan_time < '18:00:00') {
+		return 'DS';
+	} else if ($start_plan_time >= '18:00:00' && $start_plan_time <= '23:59:59') {
+		return 'NS';
+	} else if ($start_plan_time >= '00:00:00' && $start_plan_time < '06:00:00') {
+		return 'NS';
+	}
+}
+
+function get_day_end_plan($start_plan_date, $start_plan_time, $server_time, $server_date_only, $server_date_only_yesterday) {
+    if ($start_plan_time >= '06:00:00' && $start_plan_time < '18:00:00') {
+		return $server_date_only;
+	} else if ($start_plan_time >= '18:00:00' && $start_plan_time <= '23:59:59') {
+        if ($server_time >= '18:00:00' && $server_time <= '23:59:59') {
+            return $server_date_only;
+        } else if ($server_time >= '00:00:00' && $server_time <= '06:00:00') {
+            return $server_date_only_yesterday;
+        }
+	} else if ($start_plan_time >= '00:00:00' && $start_plan_time < '06:00:00') {
+        if ($start_plan_date == $server_date_only_yesterday) {
+            return $server_date_only_yesterday;
+        } else {
+            return $server_date_only;
+        }
+	}
+}
