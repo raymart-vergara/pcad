@@ -31,29 +31,31 @@ if ($method == 'get_accounting_efficiency') {
     // $shift_group = 'A';
     $registlinename = $_GET['registlinename'];
     $shift_group = $_GET['shift_group'];
+
+    $plan_data_arr = get_plan_data($registlinename, $line_no, $day, $shift, $conn_pcad, 1);
     
-    $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
+    // $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
-    $search_arr = array(
-        'day' => $day,
-        'day_tomorrow' => $day_tomorrow,
-		'shift' => $shift,
-        'shift_group' => $shift_group,
-        'dept' => "",
-        'section' => "",
-		'line_no' => $line_no,
-        'registlinename' => $registlinename,
-		'ircs_line_data_arr' => $ircs_line_data_arr,
-        'server_date_only' => $server_date_only,
-        'server_date_only_yesterday' => $server_date_only_yesterday,
-        'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time
-    );
+    // $search_arr = array(
+    //     'day' => $day,
+    //     'day_tomorrow' => $day_tomorrow,
+	// 	'shift' => $shift,
+    //     'shift_group' => $shift_group,
+    //     'dept' => "",
+    //     'section' => "",
+	// 	'line_no' => $line_no,
+    //     'registlinename' => $registlinename,
+	// 	'ircs_line_data_arr' => $ircs_line_data_arr,
+    //     'server_date_only' => $server_date_only,
+    //     'server_date_only_yesterday' => $server_date_only_yesterday,
+    //     'server_date_only_tomorrow' => $server_date_only_tomorrow,
+    //     'server_time' => $server_time
+    // );
 
-    $wt_x_mp_arr = get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt);
-    $wt_x_mp = $wt_x_mp_arr['wt_x_mp'];
-    $total_st_per_line = get_total_st_per_line($search_arr, $conn_ircs, $conn_pcad);
-    $accounting_efficiency = compute_accounting_efficiency($total_st_per_line, $wt_x_mp);
+    // $wt_x_mp_arr = get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt);
+    // $wt_x_mp = $wt_x_mp_arr['wt_x_mp'];
+    // $total_st_per_line = get_total_st_per_line($search_arr, $conn_ircs, $conn_pcad);
+    // $accounting_efficiency = compute_accounting_efficiency($total_st_per_line, $wt_x_mp);
 
     // echo var_dump($search_arr);
     // echo var_dump($wt_x_mp_arr);
@@ -66,7 +68,9 @@ if ($method == 'get_accounting_efficiency') {
 
     // echo var_dump($response_arr);
 
-    echo $accounting_efficiency;
+    // echo $accounting_efficiency;
+
+    echo $plan_data_arr['acc_eff_actual'];
 }
 
 // Yield
@@ -100,28 +104,32 @@ if ($method == 'get_yield') {
 			break;
 	}
 
-    $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
+    $plan_data_arr = get_plan_data($registlinename, $line_no, $day, $shift, $conn_pcad, $opt);
 
-    $search_arr = array(
-        'day' => $day,
-        'day_tomorrow' => $day_tomorrow,
-		'shift' => $shift,
-        'shift_group' => $shift_group,
-        'registlinename' => $registlinename,
-        'line_no' => $line_no,
-        'ircs_line_data_arr' => $ircs_line_data_arr,
-        'server_date_only' => $server_date_only,
-        'server_date_only_yesterday' => $server_date_only_yesterday,
-        'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time,
-        'opt' => $opt
-    );
+    // $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
-    $qa_output = count_overall_g($search_arr, $conn_ircs);
-    $input_ng = count_overall_ng($search_arr, $conn_ircs, $conn_pcad);
-    $yield = compute_yield($qa_output, $input_ng);
+    // $search_arr = array(
+    //     'day' => $day,
+    //     'day_tomorrow' => $day_tomorrow,
+	// 	'shift' => $shift,
+    //     'shift_group' => $shift_group,
+    //     'registlinename' => $registlinename,
+    //     'line_no' => $line_no,
+    //     'ircs_line_data_arr' => $ircs_line_data_arr,
+    //     'server_date_only' => $server_date_only,
+    //     'server_date_only_yesterday' => $server_date_only_yesterday,
+    //     'server_date_only_tomorrow' => $server_date_only_tomorrow,
+    //     'server_time' => $server_time,
+    //     'opt' => $opt
+    // );
 
-    echo $yield;
+    // $qa_output = count_overall_g($search_arr, $conn_ircs);
+    // $input_ng = count_overall_ng($search_arr, $conn_ircs, $conn_pcad);
+    // $yield = compute_yield($qa_output, $input_ng);
+
+    // echo $yield;
+
+    echo $plan_data_arr['yield_actual'];
 }
 
 // PPM
@@ -155,30 +163,37 @@ if ($method == 'get_ppm') {
 			break;
 	}
 
-    $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
+    $plan_data_arr = get_plan_data($registlinename, $line_no, $day, $shift, $conn_pcad, $opt);
 
-    $search_arr = array(
-        'day' => $day,
-        'day_tomorrow' => $day_tomorrow,
-		'shift' => $shift,
-        'shift_group' => $shift_group,
-        'registlinename' => $registlinename,
-        'line_no' => $line_no,
-		'ircs_line_data_arr' => $ircs_line_data_arr,
-        'server_date_only' => $server_date_only,
-        'server_date_only_yesterday' => $server_date_only_yesterday,
-        'server_date_only_tomorrow' => $server_date_only_tomorrow,
-        'server_time' => $server_time,
-        'opt' => $opt
-    );
+    // $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
-    $output = count_overall_g($search_arr, $conn_ircs);
-    $ng = count_overall_ng($search_arr, $conn_ircs, $conn_pcad);
-    $ppm = compute_ppm($ng, $output);
+    // $search_arr = array(
+    //     'day' => $day,
+    //     'day_tomorrow' => $day_tomorrow,
+	// 	'shift' => $shift,
+    //     'shift_group' => $shift_group,
+    //     'registlinename' => $registlinename,
+    //     'line_no' => $line_no,
+	// 	'ircs_line_data_arr' => $ircs_line_data_arr,
+    //     'server_date_only' => $server_date_only,
+    //     'server_date_only_yesterday' => $server_date_only_yesterday,
+    //     'server_date_only_tomorrow' => $server_date_only_tomorrow,
+    //     'server_time' => $server_time,
+    //     'opt' => $opt
+    // );
+
+    // $output = count_overall_g($search_arr, $conn_ircs);
+    // $ng = count_overall_ng($search_arr, $conn_ircs, $conn_pcad);
+    // $ppm = compute_ppm($ng, $output);
+
+    // $response_arr = array(
+    //     'ppm_formatted' => number_format($ppm),
+    //     'ppm' => $ppm
+    // );
 
     $response_arr = array(
-        'ppm_formatted' => number_format($ppm),
-        'ppm' => $ppm
+        'ppm_formatted' => $plan_data_arr['ppm_actual_formatted'],
+        'ppm' => $plan_data_arr['ppm_actual']
     );
 
     echo json_encode($response_arr, JSON_FORCE_OBJECT);
