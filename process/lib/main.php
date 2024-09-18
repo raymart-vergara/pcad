@@ -93,6 +93,8 @@ function get_ircs_line_data($registlinename, $line_no, $conn_pcad)
 	$andon_line = '';
 	$final_process = '';
 	$ipaddresscolumn = 'INSPECTION4IPADDRESS';
+	$finishdatetime = '';
+	$judgement = '';
 	$ipAddresses = array();
 	$response_arr = array();
 	
