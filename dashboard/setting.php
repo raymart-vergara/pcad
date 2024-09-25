@@ -58,7 +58,7 @@ if ($result) {
                         <input type="hidden" id="registlinenameplan" name="registlinenameplan" value="">
                         <input type="hidden" id="line_no" name="line_no" value="">
                         <label for="ircs_line" class="m-0 p-0">Select Line No.</label>
-                        <select name="registlinename" id="ircs_line" class="form-control bg-color" required>
+                        <select name="registlinename" id="ircs_line" class="form-control" required>
                             <option value="">Select Line No.</option>
                             <?php
                             if ($ircs_lines) {
@@ -71,7 +71,7 @@ if ($result) {
                     </div>
                     <div class="form-group mb-4">
                         <label for="group" class="m-0 p-0">Group</label>
-                        <select name="group" id="group" class="form-control bg-color" required>
+                        <select name="group" id="group" class="form-control" required>
                             <option value="" disabled selected>Select Group</option>
                             <option value="A">A</option>
                             <option value="B">B</option>

@@ -41,7 +41,11 @@
                 let ctx = document.getElementById('hourly_chart').getContext('2d');
                 let configuration = {
                     type: 'bar',
+                    responsive: true,
+                    maintainAspectRatio: false,
                     options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
                         plugins: {
                             title: {
                                 display: true,
