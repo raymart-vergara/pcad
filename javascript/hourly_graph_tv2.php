@@ -19,6 +19,8 @@
 
                 let configuration = {
                     type: 'bar',
+                    responsive: true,
+                    maintainAspectRatio: false,
                     options: {
                         plugins: {
                             annotation: {
@@ -136,6 +138,8 @@
                 let configuration = {
                     type: 'bar',
                     options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
                         scales: {
                             y: {
                                 stacked: true,
@@ -270,6 +274,8 @@
                     type: 'bar',
                     data: barChartData,
                     options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
                         scales: {
                             y: {
                                 ticks: {

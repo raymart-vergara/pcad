@@ -48,21 +48,27 @@
             font-family: 'Poppins', sans-serif;
         }
 
+        .container-fluid {
+            height: 60vh;
+            width: 90vw;
+        }
+
         .form-container {
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.1);
             background-color: #FBFBFB;
         }
 
-        .bg-color {
-            background-color: #fffafa;
-        }
-
         .form-button {
             width: 100%;
-            border-radius: 20px;
+            border-radius: 10px;
             background-color: #003D9E;
             color: #FFF;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            background-color: #fffafa;
         }
 
         .form-button:hover {

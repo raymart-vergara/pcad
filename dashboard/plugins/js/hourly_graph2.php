@@ -19,6 +19,8 @@
 
                 let configuration = {
                     type: 'bar',
+                    responsive: true,
+                    maintainAspectRatio: false,
                     options: {
                         plugins: {
                             annotation: {
@@ -72,7 +74,7 @@
                                         size: 15
                                     },
                                 },
-                                grid: { 
+                                grid: {
                                     display: false,
                                 },
                             },
@@ -129,6 +131,8 @@
                 let configuration = {
                     type: 'bar',
                     options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
                         scales: {
                             y: {
                                 stacked: true,
@@ -157,7 +161,7 @@
                                         size: 15
                                     },
                                 },
-                                grid: { 
+                                grid: {
                                     display: false,
                                 },
                             },
@@ -255,6 +259,8 @@
                     type: 'bar',
                     data: barChartData,
                     options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
                         scales: {
                             y: {
                                 ticks: {
@@ -281,7 +287,7 @@
                                         size: 15
                                     },
                                 },
-                                grid: { 
+                                grid: {
                                     display: false,
                                 },
                             },

@@ -1,5 +1,6 @@
 <?php
 include 'process/pcad/dashboard_p.php';
+// include 'process/pcad/analysis_p.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,6 +66,69 @@ include 'process/pcad/dashboard_p.php';
          }
       }
 
+      @media print {
+         @page {
+            margin: 0;
+         }
+
+         .no-print {
+            display: none;
+         }
+
+         body {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            margin: 0;
+         }
+
+         table {
+            border: 1px solid #DDD;
+         }
+
+         .inspection-container-2 {
+            margin-right: 10px;
+         }
+
+         .table-analysis-head {
+            font-weight: bold;
+            font-size: 22px;
+         }
+
+         #chart-container1,
+         #chart-container2,
+         #chart-container3 {
+            border: 1px solid #DDD;
+            margin: 0;
+            padding: 0;
+            height: auto !important;
+            page-break-inside: avoid;
+         }
+
+         #andon_hourly_chart,
+         #hourly_output_summary_chart,
+         #ng_summary_chart {
+            width: 100% !important;
+            height: 400px !important;
+         }
+      }
+
+      #chart-container1,
+      #chart-container2,
+      #chart-container3 {
+         width: 100% !important;
+         height: auto !important;
+         overflow: hidden !important;
+         padding: 0;
+         margin: 0;
+      }
+
+      #andon_hourly_chart,
+      #hourly_output_summary_chart,
+      #ng_summary_chart {
+         width: 100% !important;
+         height: auto !important;
+      }
+
       body {
          /* background: #292C35; */
          font-family: 'Poppins', sans-serif;
@@ -81,6 +145,11 @@ include 'process/pcad/dashboard_p.php';
          border-collapse: separate;
          border-spacing: 10px;
          width: 100%;
+      }
+
+      #analysis_table {
+         border-collapse: collapse;
+         border-spacing: 0;
       }
 
       /* for inspection output scroll */
@@ -315,7 +384,6 @@ include 'process/pcad/dashboard_p.php';
 
       .process-container {
          width: 33%;
-
       }
 
       .graphs-container {
@@ -535,6 +603,14 @@ include 'process/pcad/dashboard_p.php';
          cursor: pointer;
          height: 50px;
       }
+
+      .sticky-top {
+         position: sticky;
+         top: 0;
+         background: #f9f9f9;
+         z-index: 1000;
+         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
    </style>
 </head>
 
@@ -565,11 +641,12 @@ include 'process/pcad/dashboard_p.php';
 
    <div class="container-fluid mt-3">
       <!-- ===================== LIGHT/DARK MODE TOGGLE AND RETURN TO SETTING-->
-      <div class="row">
+      <div class="row sticky-top no-print">
          <div class="col-6">
             <div class="float-left mb-3 ml-2">
                <a href="dashboard/setting.php">
-                  <button class="btn btn-secondary return-btn" style="background: #f4f4f4; border: none; color: #000;"
+                  <button class="btn btn-secondary return-btn no-print"
+                     style="background: #f4f4f4; border: none; color: #000;"
                      onmouseover="this.style.backgroundColor='#383B46'; this.style.color='#FFF';"
                      onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';"><i
                         class="fas fa-arrow-left" style="width"></i>&ensp;&ensp;Return to Setting</button>
@@ -578,26 +655,42 @@ include 'process/pcad/dashboard_p.php';
          </div>
          <div class="col-6">
             <div class="float-right mb-3 mr-2">
-               <input type="checkbox" class="checkbox" id="checkbox" onclick="toggle_light_mode()">
-               <label for="checkbox" class="checkbox-label">
+               <input type="checkbox" class="checkbox no-print" id="checkbox" onclick="toggle_light_mode()">
+               <label for="checkbox" class="checkbox-label no-print">
                   <i class="fas fa-moon"></i>
                   <i class="fas fa-sun"></i>
                   <span class="ball"></span>
                </label>
             </div>
             <div class="float-right mb-3 mr-2">
-               <button class="btn btn-secondary" style="background: #f4f4f4; border: none; color: #000;"
+               <button class="btn btn-secondary no-print" style="background: #f4f4f4; border: none; color: #000;"
                   onmouseover="this.style.backgroundColor='#383B46'; this.style.color='#FFF';"
                   onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';"
                   onclick="refreshFunctions();">
-                  <i class="fas fa-sync"></i>&ensp;&ensp;Refresh</button>
+                  <i class="fas fa-sync"></i>&ensp;Refresh</button>
             </div>
             <div class="float-right mb-3 mr-2">
-               <button class="btn btn-secondary" style="background: #f4f4f4; border: none; color: #000;"
+               <button class="btn btn-secondary no-print" style="background: #f4f4f4; border: none; color: #000;"
                   onmouseover="this.style.backgroundColor='#383B46'; this.style.color='#FFF';"
                   onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';"
                   onclick="export_plan_data_pending();">
-                  <i class="fas fa-download"></i>&ensp;&ensp;Export</button>
+                  <i class="fas fa-download"></i>&ensp;Export CSV Data</button>
+            </div>
+            <div class="float-right mb-3 mr-2">
+               <button class="btn btn-secondary no-print" style="background: #f4f4f4; border: none; color: #000;"
+                  onmouseover="this.style.backgroundColor='#383B46'; this.style.color='#FFF';"
+                  onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';"
+                  onclick="window.open('pdf/pcad_rasci.pdf', '_blank');">
+                  <i class="fas fa-info"></i>&ensp;Support
+               </button>
+
+            </div>
+            <div class="float-right mb-3 mr-2">
+               <button class="btn btn-secondary no-print" style="background: #f4f4f4; border: none; color: #000;"
+                  data-toggle="modal" data-target="#add_analysis"
+                  onmouseover="this.style.backgroundColor='#383B46'; this.style.color='#FFF';"
+                  onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">
+                  <i class="fas fa-file-alt"></i>&ensp;Analysis</button>
             </div>
          </div>
       </div>
@@ -684,9 +777,9 @@ include 'process/pcad/dashboard_p.php';
                </thead>
                <tbody>
                   <tr>
-                     <td class="plan-content plan_target_value blue-bg" id="plan_target"><?=$plan_target?></td>
-                     <td class="plan-content plan_actual_value blue-bg" id="plan_actual"><?=$plan_actual?></td>
-                     <td class="plan-content plan_gap_value" id="plan_gap"><?=$plan_gap?></td>
+                     <td class="plan-content plan_target_value blue-bg" id="plan_target"><?= $plan_target ?></td>
+                     <td class="plan-content plan_actual_value blue-bg" id="plan_actual"><?= $plan_actual ?></td>
+                     <td class="plan-content plan_gap_value" id="plan_gap"><?= $plan_gap ?></td>
                   </tr>
                </tbody>
             </table>
@@ -710,8 +803,10 @@ include 'process/pcad/dashboard_p.php';
                      <td class="plan-content yellow-bg" id="target_accounting_efficiency">
                         <?= round($acc_eff, 2) ?>%
                      </td>
-                     <td class="plan-content yellow-bg" id="actual_accounting_efficiency"><?=round($acc_eff_actual, 2)?>%</td>
-                     <td class="plan-content" id="gap_accounting_efficiency"><?=round($acc_eff_gap, 2)?>%</td>
+                     <td class="plan-content yellow-bg" id="actual_accounting_efficiency">
+                        <?= round($acc_eff_actual, 2) ?>%
+                     </td>
+                     <td class="plan-content" id="gap_accounting_efficiency"><?= round($acc_eff_gap, 2) ?>%</td>
                   </tr>
                </tbody>
             </table>
@@ -730,24 +825,24 @@ include 'process/pcad/dashboard_p.php';
                         <div class="pl-2 pr-2"
                            style="display: flex; justify-content: space-between; align-items: center;">
                            <span>Target</span>
-                           <img class="icon-2" src="dist/img/expand-dark.png" data-light-src="dist/img/expand-light.png"
-                              data-dark-src="dist/img/expand-dark.png">
+                           <img class="icon-2 no-print" src="dist/img/expand-dark.png"
+                              data-light-src="dist/img/expand-light.png" data-dark-src="dist/img/expand-dark.png">
                         </div>
                      </td>
                      <td class="plan-sub-title"
                         onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                            <span>Actual</span>
-                           <img class="icon-2" src="dist/img/expand-dark.png" data-light-src="dist/img/expand-light.png"
-                              data-dark-src="dist/img/expand-dark.png">
+                           <img class="icon-2 no-print" src="dist/img/expand-dark.png"
+                              data-light-src="dist/img/expand-light.png" data-dark-src="dist/img/expand-dark.png">
                         </div>
                      </td>
                      <td class="plan-sub-title"
                         onclick='window.open("viewer/hourly_output/hourly_output.php","_blank")'>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                            <span>Gap</span>
-                           <img class="icon-2" src="dist/img/expand-dark.png" data-light-src="dist/img/expand-light.png"
-                              data-dark-src="dist/img/expand-dark.png">
+                           <img class="icon-2 no-print" src="dist/img/expand-dark.png"
+                              data-light-src="dist/img/expand-light.png" data-dark-src="dist/img/expand-dark.png">
                         </div>
                      </td>
                   </tr>
@@ -819,7 +914,7 @@ include 'process/pcad/dashboard_p.php';
                            <div class="pl-4 pr-4"
                               style="display: flex; justify-content: space-between; align-items: center;">
                               <span>Good</span>
-                              <img class="icon-2" src="dist/img/expand-dark.png"
+                              <img class="icon-2 no-print" src="dist/img/expand-dark.png"
                                  data-light-src="dist/img/expand-light.png" data-dark-src="dist/img/expand-dark.png">
                            </div>
                         </td>
@@ -828,7 +923,7 @@ include 'process/pcad/dashboard_p.php';
                            <div class="pl-4 pr-4"
                               style="display: flex; justify-content: space-between; align-items: center;">
                               <span>NG</span>
-                              <img class="icon-2" src="dist/img/expand-dark.png"
+                              <img class="icon-2 no-print" src="dist/img/expand-dark.png"
                                  data-light-src="dist/img/expand-light.png" data-dark-src="dist/img/expand-dark.png">
                            </div>
                         </td>
@@ -841,7 +936,8 @@ include 'process/pcad/dashboard_p.php';
                </table>
             </div>
 
-            <div class="inspection-container-3 table-responsive m-0 p-0" style="max-height: 215px; overflow-y: auto;">
+            <!-- <div class="inspection-container-3 table-responsive m-0 p-0" style="max-height: 215px; overflow-y: auto;"> -->
+            <div class="inspection-container-3 table-responsive m-0 p-0" style="max-height: auto; overflow-y: auto;">
                <!-- inspection details -->
                <table class="m-0 p-0 table-head-fixed text-nowrap">
                   <thead style="text-align: center; position: sticky; top: 0; z-index: 1; height: 55px">
@@ -869,8 +965,8 @@ include 'process/pcad/dashboard_p.php';
                         <div class="pl-2 pr-2"
                            style="display: flex; justify-content: space-between; align-items: center;">
                            <span>PD Manpower</span>
-                           <img class="icon-2" src="dist/img/expand-dark.png" data-light-src="dist/img/expand-light.png"
-                              data-dark-src="dist/img/expand-dark.png">
+                           <img class="icon-2 no-print" src="dist/img/expand-dark.png"
+                              data-light-src="dist/img/expand-light.png" data-dark-src="dist/img/expand-dark.png">
                         </div>
                      </td>
                   </tr>
@@ -909,8 +1005,8 @@ include 'process/pcad/dashboard_p.php';
                         <div class="pl-2 pr-2"
                            style="display: flex; justify-content: space-between; align-items: center;">
                            <span>QA Manpower</span>
-                           <img class="icon-2" src="dist/img/expand-dark.png" data-light-src="dist/img/expand-light.png"
-                              data-dark-src="dist/img/expand-dark.png">
+                           <img class="icon-2 no-print" src="dist/img/expand-dark.png"
+                              data-light-src="dist/img/expand-light.png" data-dark-src="dist/img/expand-dark.png">
                         </div>
                      </td>
                   </tr>
@@ -985,7 +1081,7 @@ include 'process/pcad/dashboard_p.php';
 
       <div class="process-design-div">
          <!-- ========== PROCESS DESIGN, HOURLY GRAPHS -->
-         <div class="card process-container table-responsive m-0 p-0" style="max-height: 700px; overflow-y: auto;">
+         <div class="card process-container table-responsive m-0 p-0" style="max-height: auto;">
             <!-- process design -->
             <table class="m-0 p-0 table-head-fixed text-nowrap">
                <thead style="position: sticky; top: 0; z-index: 1; height: 40px;">
@@ -998,12 +1094,12 @@ include 'process/pcad/dashboard_p.php';
             </table>
          </div>
 
-         <div class="card graphs-container">
+         <div class="card graphs-container" style="max-height: auto;">
             <!-- andon count graph -->
             <div id="chart-container1">
                <a target="_blank" href="../pcad/viewer/andon_details/andon_details.php">
                   <!-- <canvas id="andon_hourly_chart" height="70"></canvas> -->
-                  <div id="andon_hourly_chart" height="70"></div>
+                  <div id="andon_hourly_chart" height="auto"></div>
                </a>
             </div>
 
@@ -1011,7 +1107,7 @@ include 'process/pcad/dashboard_p.php';
             <div id="chart-container2">
                <a target="_blank" href="../pcad/viewer/hourly_output/hourly_output.php">
                   <!-- <canvas id="hourly_output_summary_chart" height="70"></canvas> -->
-                  <div id="hourly_output_summary_chart" height="70"></div>
+                  <div id="hourly_output_summary_chart" height="auto"></div>
                </a>
             </div>
 
@@ -1019,14 +1115,14 @@ include 'process/pcad/dashboard_p.php';
             <div id="chart-container3">
                <a target="_blank" href="../pcad/viewer/ng_inspection_details/inspection_details_ng.php">
                   <!-- <canvas id="ng_summary_chart" height="70"></canvas> -->
-                  <div id="ng_summary_chart" height="70"></div>
+                  <div id="ng_summary_chart" height="auto"></div>
                </a>
             </div>
 
-            <div class="row mx-1 my-1 row-btn">
+            <div class="row mx-1 my-1 row-btn no-print">
                <div class="col-12 my-auto">
                   <a target="_blank" href="../pcad/viewer/andon_details/andon_details.php">
-                     <button class="btn btn-secondary ml-1 for-btn"
+                     <button class="btn btn-secondary ml-1 for-btn no-print"
                         onmouseover="this.style.backgroundColor='#005BA3'; this.style.color='#FFF';"
                         onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly
                         Andon Details
@@ -1034,7 +1130,7 @@ include 'process/pcad/dashboard_p.php';
                   </a>
                   &ensp;&ensp;&ensp;
                   <a target="_blank" href="../pcad/viewer/hourly_output/hourly_output.php">
-                     <button class="btn btn-secondary ml-1 for-btn"
+                     <button class="btn btn-secondary ml-1 for-btn no-print"
                         onmouseover="this.style.backgroundColor='#10BA68'; this.style.color='#FFF';"
                         onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly
                         Inspection Output Details
@@ -1042,7 +1138,7 @@ include 'process/pcad/dashboard_p.php';
                   </a>
                   &ensp;&ensp;&ensp;
                   <a target="_blank" href="../pcad/viewer/ng_inspection_details/inspection_details_ng.php">
-                     <button class="btn btn-secondary ml-1 for-btn"
+                     <button class="btn btn-secondary ml-1 for-btn no-print"
                         onmouseover="this.style.backgroundColor='#E14747'; this.style.color='#FFF';"
                         onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">View Hourly
                         Defect Count Details</button>
@@ -1051,9 +1147,40 @@ include 'process/pcad/dashboard_p.php';
             </div>
          </div>
       </div>
+      <div class="card mt-3">
+         <div class="card-body">
+            <div class="card-header">
+               <h3 class="card-title table-analysis-head">Analysis Table</h3>
+            </div>
+            <div class="card-body table-responsive m-0 p-0 card-analysis-table" style="max-height: auto;">
+               <table class="table col-12 table-head-fixed text-nowrap table-hover" id="analysis_table"
+                  style="background: #F9F9F9;">
+                  <thead style="text-align: center;">
+                     <th>#</th>
+                     <th>Problem</th>
+                     <th>Recommendation</th>
+                     <th>DateTime Added</th>
+                     <th>DRI</th> <!--Directly Responsible Individual-->
+                     <th>Department</th>
+                     <th>Prepared By</th>
+                     <th>Reviewed By</th>
+                  </thead>
+                  <tbody class="mb-0" id="list_of_analysis">
+                     <tr>
+                        <td colspan="10" style="text-align: center;">
+                           <div class="spinner-border text-dark" role="status">
+                              <span class="sr-only">Loading...</span>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
 
       <!-- return to top -->
-      <button id="back-to-top" type="button" class="return-to-top"><img class="nav-icon-top nav-icon"
+      <button id="back-to-top" type="button" class="return-to-top no-print"><img class="nav-icon-top nav-icon"
             src="dist/img/up-arrow-dark.png" data-light-src="dist/img/up-arrow-light.png"
             data-dark-src="dist/img/up-arrow-dark.png"></button>
    </div>
@@ -1073,6 +1200,9 @@ include 'process/pcad/dashboard_p.php';
 <!--Moment JS -->
 <script src="plugins/moment-js/moment.min.js"></script>
 <script src="plugins/moment-js/moment-duration-format.min.js"></script>
+
+<script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="plugins/sweetalert2/dist/sweetalert2.min.js"></script>
 
 <script>
    let chartAndonHourly;
@@ -1102,14 +1232,14 @@ include 'process/pcad/dashboard_p.php';
          get_hourly_output_chart();
          ng_graph();
       }, 500);
-      
+
       get_process_design();
    });
 
    function refreshFunctions() {
       get_plan_data();
       get_hourly_output();
-     
+
       get_inspection_list_copy();
       get_overall_inspection();
       count_emp();
@@ -1274,6 +1404,10 @@ include 'dashboard/plugins/js/emp_mgt.php';
 include 'dashboard/plugins/js/hourly_graph.php';
 include 'dashboard/plugins/js/inspection_output.php';
 include 'dashboard/plugins/js/pcad.php';
+include 'dashboard/plugins/js/analysis_script.php';
+
+include 'modals/add_analysis.php';
+include 'modals/update_analysis.php';
 ?>
 
 </html>
