@@ -26,6 +26,8 @@
                 let ctx = document.querySelector("#hourly_chart");
 
                 let options = {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     series: [{
                         name: 'Waiting Time',
                         data: Waiting_Time
@@ -44,7 +46,7 @@
                             enabled: true
                         }
                     },
-                    colors:['rgba(1, 56, 99, 1)', 'rgba(23, 162, 184, 1)'],
+                    colors: ['rgba(1, 56, 99, 1)', 'rgba(23, 162, 184, 1)'],
                     responsive: [{
                         breakpoint: 480,
                         options: {
@@ -85,9 +87,9 @@
                             offsetY: 0,
                             floating: false,
                             style: {
-                                fontSize:  '15px',
-                                fontWeight:  'normal',
-                                fontFamily:  'Montserrat'
+                                fontSize: '15px',
+                                fontWeight: 'normal',
+                                fontFamily: 'Montserrat'
                             }
                         }
                     },
@@ -100,9 +102,9 @@
                             offsetY: 0,
                             floating: false,
                             style: {
-                                fontSize:  '15px',
-                                fontWeight:  'normal',
-                                fontFamily:  'Montserrat'
+                                fontSize: '15px',
+                                fontWeight: 'normal',
+                                fontFamily: 'Montserrat'
                             }
                         }
                     },
@@ -120,16 +122,16 @@
                         offsetY: 0,
                         floating: false,
                         style: {
-                            fontSize:  '25px',
-                            fontWeight:  'bold',
-                            fontFamily:  'Montserrat'
+                            fontSize: '25px',
+                            fontWeight: 'bold',
+                            fontFamily: 'Montserrat'
                         }
                     }
                 };
 
                 // Set department labels as sub-labels for each machine
                 options.xaxis.categories = machinename.map((machine, index) => [machine, department[index]]);
-        
+
                 // Destroy previous chart instance before creating a new one
                 if (chart) {
                     chart.destroy();

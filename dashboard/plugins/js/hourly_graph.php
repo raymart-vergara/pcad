@@ -22,6 +22,8 @@
                 let ctx = document.querySelector("#andon_hourly_chart");
 
                 let options = {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     series: [{
                         name: 'Andon Hourly Count',
                         data: total_counts
@@ -175,6 +177,8 @@
                 let ctx = document.querySelector("#hourly_output_summary_chart");
 
                 let options = {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     series: [{
                         name: 'Hourly Inspection Output',
                         data: hourly_output_summary
@@ -349,6 +353,8 @@
                 let ctx = document.querySelector("#ng_summary_chart");
 
                 let options = {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     series: [{
                         name: 'Defect Hourly',
                         data: hourly_ng_summary
