@@ -27,7 +27,7 @@
 
     @font-face {
       font-family: 'Montserrat';
-      src: url('dist/font/montserrat/Montserrat-Bold.ttf') format('truetype');
+      src: url('../dist/font/montserrat/Montserrat-Medium.ttf') format('truetype');
     }
 
     body {
@@ -47,6 +47,28 @@
       100% {
         transform: rotate(1080deg);
       }
+    }
+
+    ::-webkit-scrollbar {
+      width: 17px;
+      height: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 17px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      background: #2F323C;
+      border-radius: 17px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #332D2D;
     }
   </style>
 </head>

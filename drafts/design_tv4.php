@@ -56,7 +56,7 @@ include 'process/pcs/index.php';
 
         @font-face {
             font-family: 'Montserrat';
-            src: url('dist/font/montserrat/Montserrat-Bold.ttf') format('truetype');
+            src: url('../dist/font/montserrat/Montserrat-Bold.ttf') format('truetype');
         }
 
         @media screen and (min-width: 1366px) and (max-width: 1366px) {
