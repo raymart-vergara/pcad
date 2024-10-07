@@ -36,7 +36,7 @@ include 'plugins/head.php';
 								<div class="icon">
 									<i class="fa fa-play fa-4x" style="font-size: 100px;"></i>
 								</div>
-								<a href="../index_prod.php?registlinename=registlinename" id="runcounterbtn"
+								<a href="../index_prod.php?registlinename=registlinename&line_no=line_no" id="runcounterbtn"
 									class="small-box-footer monitor" style="font-size: 18px;">Proceed
 									&ensp;<i class="fas fa-arrow-right"></i></a>
 							</div>
@@ -74,7 +74,8 @@ include 'plugins/footer.php';
 					window.open(href, "_self");
 				} else {
 					var registlinename = localStorage.getItem("registlinename");
-					window.open("../index_prod.php?registlinename=" + registlinename, "_self");
+					var line_no = localStorage.getItem("pcad_line_no");
+					window.open("../index_prod.php?registlinename=" + registlinename + "&line_no=" + line_no, "_self");
 				}
 			}
 		});
@@ -94,7 +95,8 @@ include 'plugins/footer.php';
 				window.open(href, "_self");
 			} else {
 				var registlinename = localStorage.getItem("registlinename");
-				window.open("../index_prod.php?registlinename=" + registlinename, "_self");
+				var line_no = localStorage.getItem("pcad_line_no");
+				window.open("../index_prod.php?registlinename=" + registlinename + "&line_no=" + line_no, "_self");
 			}
 		});
 	});

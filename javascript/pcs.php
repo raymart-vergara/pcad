@@ -182,10 +182,7 @@
         $.post('process/pcs/setting_p.php', {
             request: 'updateTakt',
             registlinename: $('#registlinename').val(),
-            line_no: $('#line_no').val(),
-            yield_actual: $('#yield_actual').val(),
-            ppm_actual: $('#ppm_actual').val(),
-            acc_eff_actual: $('#acc_eff_actual').val()
+            line_no: $('#line_no').val()
         }, function (response) {
             if (response.trim() == "true") {
                 getValues();
@@ -202,14 +199,13 @@
         var registlinename = $("#registlinename").val();
         var shift_group = $("#shift_group").val();
         var line_no = $("#line_no").val();
-        var work_time_plan = $("#work_time_plan").val();
+        // var work_time_plan = $("#work_time_plan").val();
 
         $.post('process/pcs/setting_p.php', {
             request: 'endTarget',
             registlinename: registlinename,
             shift_group: shift_group,
-            line_no: line_no,
-            work_time_plan: work_time_plan
+            line_no: line_no
         }, function(response) {
             console.log(response);
 
