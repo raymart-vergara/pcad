@@ -153,4 +153,3 @@ $dept_qa = 'QA';
 $section_pd = get_section($line_no, $conn_emp_mgt);
 $section_qa = get_section($line_no, $conn_emp_mgt);
 // $section_qa = 'QA';
-?>

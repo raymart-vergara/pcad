@@ -85,4 +85,3 @@ $section_pd = get_section($line_no, $conn_emp_mgt);
 $section_qa = get_section($line_no, $conn_emp_mgt);
 // $section_qa = 'QA';
 $shift = get_shift($server_time);
-?>

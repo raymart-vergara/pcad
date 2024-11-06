@@ -1515,5 +1515,3 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 
 	return $results;
 }
-
-?>

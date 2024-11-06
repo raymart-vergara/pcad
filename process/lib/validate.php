@@ -137,4 +137,3 @@ function validate_date($data) {
 	    return false;
 	}
 }
-?>

@@ -10,7 +10,6 @@
     });
 
     const andon_detail = () => {
-        // let andon_line = 'DAIHATSU D92-2132';
         let andon_line = localStorage.getItem("andon_line");
         let server_date_only = localStorage.getItem("pcad_exec_server_date_only");
         let shift = localStorage.getItem("shift");
@@ -180,5 +179,13 @@
                 chartAndonHourly.render();
             }
         });
+    }
+
+    const export_andon = () => {
+        let andon_line = localStorage.getItem("andon_line");
+        let server_date_only = localStorage.getItem("pcad_exec_server_date_only");
+        let shift = localStorage.getItem("shift");
+        let opt = parseInt(localStorage.getItem("pcad_exec_opt"));
+        window.open('../../process/andon_graph/andon_export_p.php?andon_line=' + andon_line + "&shift=" + shift + "&server_date_only=" + server_date_only + "&opt=" + opt, '_blank');
     }
 </script>

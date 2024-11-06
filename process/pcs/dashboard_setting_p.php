@@ -312,8 +312,4 @@ if ($method == 'update_analysis') {
     }
 }
 
-
-
-
-
-
+$conn_pcad = NULL;

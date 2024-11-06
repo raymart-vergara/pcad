@@ -121,4 +121,5 @@ if ($method == 'andon_detail') {
         echo '</tr>';
     }
 }
-?>
+
+$conn_andon = NULL;

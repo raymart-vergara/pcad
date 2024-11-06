@@ -140,14 +140,6 @@ if ($method == 'pcs_list') {
 	}
 }
 
-// if ($method == 'get_pcs_data') {
-// 	$line_no = $_POST['line_no'];
-// 	$response_arr = get_pcs_data ($line_no, $conn_pcad);
-
-// 	//header('Content-Type: application/json; charset=utf-8');
-//     echo json_encode($response_arr, JSON_FORCE_OBJECT);
-// }
-
 if ($method == 'add_pcs') {
 	$car_maker = addslashes($_POST['car_maker']);
 	$car_model = addslashes($_POST['car_model']);
@@ -255,4 +247,3 @@ if ($method == 'final_process') {
 // }
 
 $conn_pcad = NULL;
-?>

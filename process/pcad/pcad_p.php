@@ -1,5 +1,4 @@
 <?php
-
 include '../server_date_time.php';
 require '../conn/pcad.php';
 require '../conn/ircs.php';
@@ -16,19 +15,14 @@ $method = $_GET['method'];
 // Accounting Efficiency
 // http://172.25.112.131/pcad/process/pcad/pcad_p.php?method=get_accounting_efficiency
 if ($method == 'get_accounting_efficiency') {
+
     // Working Time X Manpower Declaration
-    // $day = '2024-02-02';
 	$shift = get_shift($server_time);
     $day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
     $day_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($day))));
-	// $line_no = '2132';
-    // $day = $_GET['day'];
-	// $shift = $_GET['shift'];
 	$line_no = $_GET['line_no'];
     
     // Total ST Per Line Declaration
-    // $registlinename = 'DAIHATSU_30';
-    // $shift_group = 'A';
     $registlinename = $_GET['registlinename'];
     $shift_group = $_GET['shift_group'];
 
@@ -250,7 +244,7 @@ if ($method == 'get_hourly_output') {
     $working_time = intval($_GET['working_time']);
 
     $target_hourly_output = compute_target_hourly_output($takt, $working_time);
-    $actual_hourly_output = count_actual_hourly_output($search_arr, $conn_ircs, $conn_pcad);
+    $actual_hourly_output = count_actual_hourly_output($search_arr, $conn_ircs);
     $gap_hourly_output = $actual_hourly_output - $target_hourly_output;
 
     $response_arr = array(
@@ -313,4 +307,3 @@ if ($method == 'get_plan_data') {
 oci_close($conn_ircs);
 $conn_emp_mgt = NULL;
 $conn_pcad = NULL;
-?>

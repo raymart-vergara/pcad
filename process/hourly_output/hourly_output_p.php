@@ -22,12 +22,6 @@ if ($method == 'get_hourly_output') {
 
     $date_column = $final_process;
 
-    // if ($final_process == 'Assurance') {
-    //     $date_column = "INSPECTION4FINISHDATETIME";
-    // } else {
-    //     $date_column = "INSPECTION3FINISHDATETIME";
-    // }
-
     $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
     $hourly_output_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_output_date))));
@@ -147,9 +141,6 @@ if ($method == 'get_hourly_output_per_process') {
 
     $hourly_output_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_output_date))));
 
-    // $registlinename = 'DAIHATSU_30';
-    // $target_output = 13;
-
     $hourly_output_hour_ds_array = array('06'=>"06",'07'=>"07",'08'=>"08",'09'=>"09",'10'=>"10",'11'=>"11",'12'=>"12",'13'=>"13",'14'=>"14",'15'=>"15",'16'=>"16",'17'=>"17");
     $hourly_output_hour_ns_array = array('18'=>"18",'19'=>"19",'20'=>"20",'21'=>"21",'22'=>"22",'23'=>"23",'00'=>"00",'01'=>"01",'02'=>"02",'03'=>"03",'04'=>"04",'05'=>"05");
     $hourly_output_hour_array = $hourly_output_hour_ds_array + $hourly_output_hour_ns_array;
@@ -181,30 +172,13 @@ if ($method == 'get_hourly_output_per_process') {
                 'opt' => $opt
             );
 
-            // switch ($process) {
-            //     case "Dimension":
-            //         $date_column = "INSPECTION1FINISHDATETIME";
-            //         break;
-            //     case "Electric":
-            //         $date_column = "INSPECTION2FINISHDATETIME";
-            //         break;
-            //     case "Visual":
-            //         $date_column = "INSPECTION3FINISHDATETIME";
-            //         break;
-            //     case "Assurance":
-            //         $date_column = "INSPECTION4FINISHDATETIME";
-            //         break;
-            //     default:
-            //         break;
-            // }
-
             $processDetailsGood = array(
                 'date_column' => $date_column,
                 'ipAddressColumn' => $ipaddresscolumn,
                 'ipAddresses' => $ipAddresses
             );
 
-            $p_good = count_actual_hourly_output_process($search_arr, $conn_ircs, $conn_pcad, $processDetailsGood);
+            $p_good = count_actual_hourly_output_process($search_arr, $conn_ircs, $processDetailsGood);
 
             $hourly_output_summary_process_array["process"] = $process;
 
@@ -278,15 +252,11 @@ if ($method == 'get_hourly_output_graph') {
 
     $opt = $_GET['opt'];
 
-    // $registlinename = 'DAIHATSU_30';
-
     $data = [];
 
     $hourly_output_hour_ds_array = array("06","07","08","09","10","11","12","13","14","15","16","17","|");
     $hourly_output_hour_ns_array = array("18","19","20","21","22","23","00","01","02","03","04","05");
     $hourly_output_hour_array = array_merge($hourly_output_hour_ds_array, $hourly_output_hour_ns_array);
-
-    // $hourly_output_hour_array = array();
 
     $hourly_output_summary_array = array();
 
@@ -300,12 +270,6 @@ if ($method == 'get_hourly_output_graph') {
     $ipAddresses = $ircs_line_data_arr['ipAddresses'];
 
     $date_column = $final_process;
-
-    // if ($final_process == 'Assurance') {
-    //     $date_column = "INSPECTION4FINISHDATETIME";
-    // } else {
-    //     $date_column = "INSPECTION3FINISHDATETIME";
-    // }
 
     $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
@@ -365,4 +329,3 @@ if ($method == 'get_hourly_output_graph') {
 
 oci_close($conn_ircs);
 $conn_pcad = NULL;
-?>
