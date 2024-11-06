@@ -291,4 +291,4 @@ if ($method == 'delete_insp_selected') {
 	}
 }
 
-?>
+$conn_pcad = NULL;

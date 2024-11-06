@@ -227,4 +227,3 @@ if ($method == 'delete_st_selected') {
 }
 
 $conn_pcad = NULL;
-?>

@@ -8,195 +8,6 @@ include '../lib/inspection_output.php';
 
 $method = $_GET['method'];
 
-// if ($method == 'get_inspection_details_good') {
-//         $shift = 'DS';
-//         $registlinename = 'DAIHATSU_30';
-//         $shift_group = 'B';
-
-//         $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
-//         $final_process = $ircs_line_data_arr['final_process'];
-//         $ip = $ircs_line_data_arr['ip'];
-
-//         $search_arr = array(
-//                 'shift' => $shift,
-//                 'shift_group' => $shift_group,
-//                 'registlinename' => $registlinename,
-//                 'final_process' => $final_process,
-//                 'ip' => $ip,
-//                 'server_date_only' => $server_date_only,
-//                 'server_date_only_yesterday' => $server_date_only_yesterday,
-//                 'server_date_only_tomorrow' => $server_date_only_tomorrow,
-//                 'server_time' => $server_time
-//         );
-
-//         $list_of_good_viewer = get_overall_g($search_arr, $conn_ircs);
-
-//         $response_array = array(
-//                 'list_of_good_viewer' => $list_of_good_viewer,
-//                 'message' => 'success'
-//         );
-
-//         echo json_encode($response_array, JSON_FORCE_OBJECT);
-// }
-
-// if ($method == 'get_inspection_details_good') {
-//         $shift = 'DS';
-//         $registlinename = 'DAIHATSU_30';
-//         $shift_group = 'B';
-
-//         $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
-//         $final_process = $ircs_line_data_arr['final_process'];
-//         $ip = $ircs_line_data_arr['ip'];
-
-//         // Fetch processes and their corresponding IP addresses
-//         $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
-
-//         if (empty($processesAndIpAddresses)) {
-//                 echo '<tr>';
-//                 echo '<td colspan="10" style="text-align:center; color:red;">No Record Found</td>';
-//                 echo '</tr>';
-//         } else {
-//                 foreach ($processesAndIpAddresses as $processData) {
-//                         $process = $processData['process'];
-//                         $ipaddresscolumn = $processData['ipaddresscolumn'];
-//                         $ipAddresses = $processData['ipAddresses'];
-
-//                         $judgmentColumnGood = "";
-//                         $judgmentColumnNG2 = "";
-//                         $ipJudgementColumn = "";
-
-//                         $search_arr = array(
-//                                 'shift' => $shift,
-//                                 'shift_group' => $shift_group,
-//                                 'registlinename' => $registlinename,
-//                                 'server_date_only' => $server_date_only,
-//                                 'server_date_only_yesterday' => $server_date_only_yesterday,
-//                                 'server_date_only_tomorrow' => $server_date_only_tomorrow,
-//                                 'server_time' => $server_time
-//                         );
-
-//                         switch ($process) {
-//                                 case "Dimension":
-//                                         $ipJudgementColumn = "INSPECTION1FINISHDATETIME";
-//                                         $judgmentColumnGood = "INSPECTION1FINISHDATETIME";
-//                                         $judgmentColumnNG2 = "INSPECTION1JUDGMENT";
-//                                         break;
-//                                 case "Electric":
-//                                         $ipJudgementColumn = "INSPECTION2FINISHDATETIME";
-//                                         $judgmentColumnGood = "INSPECTION2FINISHDATETIME";
-//                                         $judgmentColumnNG2 = "INSPECTION2JUDGMENT";
-//                                         break;
-//                                 case "Visual":
-//                                         $ipJudgementColumn = "INSPECTION3FINISHDATETIME";
-//                                         $judgmentColumnGood = "INSPECTION3FINISHDATETIME";
-//                                         $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
-//                                         break;
-//                                 case "Assurance":
-//                                         $ipJudgementColumn = "INSPECTION4FINISHDATETIME";
-//                                         $judgmentColumnGood = "INSPECTION4FINISHDATETIME";
-//                                         $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
-//                                         break;
-//                                 default:
-//                                         break;
-//                         }
-
-//                         $processDetailsGood = array(
-//                                 'process' => $process,
-//                                 'ipAddressColumn' => $ipaddresscolumn,
-//                                 'judgmentColumn' => $judgmentColumnGood,
-//                                 'ipAddresses' => $ipAddresses
-//                         );
-
-//                         $processDetailsNG = array(
-//                                 'process' => $process,
-//                                 'ipJudgementColumn' => $ipJudgementColumn,
-//                                 'ipAddressColumn' => $ipaddresscolumn,
-//                                 'judgmentColumn' => $judgmentColumnNG2,
-//                                 'ipAddresses' => $ipAddresses
-//                         );
-
-//                         $p_good = countProcessGood($search_arr, $conn_ircs, $processDetailsGood);
-//                         $p_ng = countProcessNG($search_arr, $conn_ircs, $processDetailsNG, $conn_pcad);
-
-//                         echo '<tr style="cursor:pointer;">';
-//                         echo '<td style="text-align:center;">' . $p_good . '</td>';
-//                         echo '<td style="text-align:center; background: #fff">' . $process . '</td>';
-//                         echo '<td style="text-align:center;">' . $p_ng . '</td>';
-//                         echo '</tr>';
-//                 }
-//         }
-// }
-
-
-// if ($method == 'get_inspection_details_no_good') {
-//         $shift = 'DS';
-//         $registlinename = 'DAIHATSU_30';
-//         $shift_group = 'B';
-
-//         $ircs_line_data_arr = get_ircs_line_data($registlinename, $conn_pcad);
-//         $final_process = $ircs_line_data_arr['final_process'];
-//         $ip = $ircs_line_data_arr['ip'];
-
-//         $processesAndIpAddresses = getIpAddressesFromDatabase($registlinename, $conn_pcad);
-
-//         foreach ($processesAndIpAddresses as $processData) {
-//                 $process = $processData['process'];
-//                 $ipaddresscolumn = $processData['ipaddresscolumn'];
-//                 $ipAddresses = $processData['ipAddresses'];
-
-//                 $judgmentColumnNG2 = "";
-//                 $ipJudgementColumn = "";
-
-//                 $search_arr = array(
-//                         'shift' => $shift,
-//                         'shift_group' => $shift_group,
-//                         'registlinename' => $registlinename,
-//                         'server_date_only' => $server_date_only,
-//                         'server_date_only_yesterday' => $server_date_only_yesterday,
-//                         'server_date_only_tomorrow' => $server_date_only_tomorrow,
-//                         'server_time' => $server_time
-//                 );
-
-//                 switch ($process) {
-//                         case "Dimension":
-//                                 $ipJudgementColumn = "INSPECTION1FINISHDATETIME";
-//                                 $judgmentColumnNG2 = "INSPECTION1JUDGMENT";
-//                                 break;
-//                         case "Electric":
-//                                 $ipJudgementColumn = "INSPECTION2FINISHDATETIME";
-//                                 $judgmentColumnNG2 = "INSPECTION2JUDGMENT";
-//                                 break;
-//                         case "Visual":
-//                                 $ipJudgementColumn = "INSPECTION3FINISHDATETIME";
-//                                 $judgmentColumnNG2 = "INSPECTION3JUDGMENT";
-//                                 break;
-//                         case "Assurance":
-//                                 $ipJudgementColumn = "INSPECTION4FINISHDATETIME";
-//                                 $judgmentColumnNG2 = "INSPECTION4JUDGMENT";
-//                                 break;
-//                         default:
-//                                 break;
-//                 }
-
-//                 $detailedNG = array(
-//                         'process' => $process,
-//                         'ipJudgementColumn' => $ipJudgementColumn,
-//                         'ipAddressColumn' => $ipaddresscolumn,
-//                         'judgmentColumn' => $judgmentColumnNG2,
-//                         'ipAddresses' => $ipAddresses
-//                 );
-//         }
-
-//         $list_of_no_good_viewer = get_overall_ng($search_arr, $conn_ircs, $conn_pcad, $processDetailsNG);
-
-//         $response_array = array(
-//                 'list_of_no_good_viewer' => $list_of_no_good_viewer,
-//                 'message' => 'success'
-//         );
-
-//         echo json_encode($response_array, JSON_FORCE_OBJECT);
-// }
-
 if ($method == 'get_inspection_list') {
     $registlinename = $_GET['registlinename'];
     $line_no = $_GET['line_no'];
@@ -373,16 +184,11 @@ if ($method == 'get_inspection_details_no_good') {
     $shift = $_GET['shift'];
     $registlinename = $_GET['registlinename'];
     $line_no = $_GET['line_no'];
-    // $shift_group = $_GET['shift_group'];
 
     $opt = $_GET['opt'];
 
     $hourly_ng_date = $_GET['server_date_only'];
     $hourly_ng_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_ng_date))));
-
-    // $shift = 'DS';
-    // $registlinename = 'DAIHATSU_30';
-    // $shift_group = 'B';
 
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
@@ -986,16 +792,11 @@ if ($method == 'get_inspection_details_good') {
     $shift = $_GET['shift'];
     $registlinename = $_GET['registlinename'];
     $line_no = $_GET['line_no'];
-    // $shift_group = $_GET['shift_group'];
 
     $opt = $_GET['opt'];
 
     $hourly_output_date = $_GET['server_date_only'];
     $hourly_output_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_output_date))));
-
-    // $shift = 'DS';
-    // $registlinename = 'DAIHATSU_30';
-    // $shift_group = 'B';
 
     $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
 
@@ -1298,7 +1099,7 @@ function get_ng_cell_color($process, $actual_output)
 
 if ($method == 'get_ng_hourly_output_per_process') {
     $registlinename = $_GET['registlinename'];
-    // $registlinename = 'DAIHATSU_30';
+
     $line_no = $_GET['line_no'];
 
     $hourly_ng_date = $_GET['server_date_only'];
@@ -1338,29 +1139,6 @@ if ($method == 'get_ng_hourly_output_per_process') {
                 'opt' => $opt
             );
 
-            // switch ($process) {
-            //     case "Dimension":
-            //         $date_column = "INSPECTION1FINISHDATETIME";
-            //         break;
-            //     case "Electric":
-            //         $date_column = "INSPECTION2FINISHDATETIME";
-            //         break;
-            //     case "Visual":
-            //         $date_column = "INSPECTION3FINISHDATETIME";
-            //         break;
-            //     case "Assurance":
-            //         $date_column = "INSPECTION4FINISHDATETIME";
-            //         break;
-            //     case "Components":
-            //         $date_column = "INSPECTION3FINISHDATETIME";
-            //         break;
-            //     case "Fuse Checking":
-            //         $date_column = "INSPECTION4FINISHDATETIME";
-            //         break;
-            //     default:
-            //         break;
-            // }
-
             $processDetailsNG = array(
                 'date_column' => $date_column,
                 'ipAddressColumn' => $ipaddresscolumn,
@@ -1368,7 +1146,7 @@ if ($method == 'get_ng_hourly_output_per_process') {
                 'ipAddresses' => $ipAddresses
             );
 
-            $p_ng = count_actual_ng_hourly_output_process($search_arr, $conn_ircs, $conn_pcad, $processDetailsNG);
+            $p_ng = count_actual_ng_hourly_output_process($search_arr, $conn_ircs, $processDetailsNG);
 
             $hourly_output_summary_process_array["process"] = $process;
 
@@ -1436,7 +1214,7 @@ if ($method == 'get_ng_hourly_output_per_process') {
 
 if ($method == 'ng_graph') {
     $registlinename = $_GET['registlinename'];
-    // $registlinename = 'DAIHATSU_30';
+
     $line_no = $_GET['line_no'];
 
     $hourly_ng_date = $_GET['server_date_only'];
@@ -1503,29 +1281,6 @@ if ($method == 'ng_graph') {
                 'opt' => $opt
             );
 
-            // switch ($process) {
-            //     case "Dimension":
-            //         $date_column = "INSPECTION1FINISHDATETIME";
-            //         break;
-            //     case "Electric":
-            //         $date_column = "INSPECTION2FINISHDATETIME";
-            //         break;
-            //     case "Visual":
-            //         $date_column = "INSPECTION3FINISHDATETIME";
-            //         break;
-            //     case "Assurance":
-            //         $date_column = "INSPECTION4FINISHDATETIME";
-            //         break;
-            //     case "Components":
-            //         $date_column = "INSPECTION3FINISHDATETIME";
-            //         break;
-            //     case "Fuse Checking":
-            //         $date_column = "INSPECTION4FINISHDATETIME";
-            //         break;
-            //     default:
-            //         break;
-            // }
-
             $processDetailsNG = array(
                 'date_column' => $date_column,
                 'ipAddressColumn' => $ipaddresscolumn,
@@ -1533,7 +1288,7 @@ if ($method == 'ng_graph') {
                 'ipAddresses' => $ipAddresses
             );
 
-            $p_ng = count_actual_ng_hourly_output_process($search_arr, $conn_ircs, $conn_pcad, $processDetailsNG);
+            $p_ng = count_actual_ng_hourly_output_process($search_arr, $conn_ircs, $processDetailsNG);
 
             foreach ($hourly_output_hour_array as &$hour_row) {
                 $hourly_output_summary_process_array[$hour_row] = 0;
@@ -1654,4 +1409,3 @@ if ($method == 'ng_graph') {
 
 oci_close($conn_ircs);
 $conn_pcad = NULL;
-?>

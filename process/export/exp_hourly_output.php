@@ -24,15 +24,9 @@ $final_process = $ircs_line_data_arr['final_process'];
 $ipaddresscolumn = $ircs_line_data_arr['ipaddresscolumn'];
 $ipAddresses = $ircs_line_data_arr['ipAddresses'];
 
-$hourly_output_date_tomorrow = date('Y-m-d',(strtotime('+1 day',strtotime($hourly_output_date))));
+$hourly_output_date_tomorrow = date('Y-m-d', (strtotime('+1 day', strtotime($hourly_output_date))));
 
 $date_column = $final_process;
-
-// if ($final_process == 'Assurance') {
-//     $date_column = "INSPECTION4FINISHDATETIME";
-// } else {
-//     $date_column = "INSPECTION3FINISHDATETIME";
-// }
 
 $ipAddressesString = "'" . implode("', '", $ipAddresses) . "'";
 
@@ -81,7 +75,7 @@ $stmt = oci_parse($conn_ircs, $query);
 oci_execute($stmt);
 
 // Output each row of the data, format line as csv and write to file pointer 
-while ($row = oci_fetch_object($stmt, OCI_ASSOC+OCI_RETURN_NULLS)) {
+while ($row = oci_fetch_object($stmt, OCI_ASSOC + OCI_RETURN_NULLS)) {
     $c++;
 
     $actual_output = intval($row->TOTAL);
@@ -110,4 +104,3 @@ fpassthru($f);
 
 oci_close($conn_ircs);
 $conn_pcad = NULL;
-?>

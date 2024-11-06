@@ -14,7 +14,30 @@ if ($method == 'update_all_plan_pending') {
     $req_count = 0;
     $message = 'success';
 
-    $sql = "SELECT * FROM t_plan WHERE Status = 'Pending' AND is_paused = 'NO'";
+    // OLD CODE
+    // $sql = "SELECT * FROM t_plan WHERE Status = 'Pending' AND is_paused = 'NO'";
+    // NEW CODE (Eliminate N+1 Query Problem)
+    $sql = "SELECT 
+                p.IRCS_Line, 
+                p.Line, 
+                MAX(p.[group]) AS shift_group, 
+                MAX(p.datetime_DB) AS datetime_DB, 
+                STRING_AGG(i.final_process, ', ') AS final_processes, 
+                STRING_AGG(insp.ip_address, ', ') AS ip_addresses, 
+                STRING_AGG(insp.ip_address2, ', ') AS ip_addresses2, 
+                STRING_AGG(insp.ipaddresscolumn, ', ') AS ipaddresscolumns
+            FROM 
+                t_plan p
+            LEFT JOIN 
+                m_ircs_line i ON p.IRCS_Line = i.ircs_line
+            LEFT JOIN 
+                m_inspection_ip insp ON i.ircs_line = insp.ircs_line AND i.final_process = insp.finishdatetime
+            WHERE 
+                p.Status = 'Pending' 
+                AND p.is_paused = 'NO'
+            GROUP BY 
+                p.IRCS_Line, 
+                p.Line";
     $stmt = $conn_pcad->prepare($sql);
     $stmt->execute();
 
@@ -26,7 +49,7 @@ if ($method == 'update_all_plan_pending') {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $registlinename = $row['IRCS_Line'];
         $line_no = $row['Line'];
-        $shift_group = $row['group'];
+        $shift_group = $row['shift_group'];
     
         // Logic for date and shift checking
         $start_plan_date = date('Y-m-d', strtotime($row['datetime_DB']));
@@ -35,7 +58,72 @@ if ($method == 'update_all_plan_pending') {
         $start_plan_date_pending = get_day_end_plan($start_plan_date, $start_plan_time, $server_time, $server_date_only, $server_date_only_yesterday);
 
         if ($start_plan_date == $start_plan_date_pending && $shift == $shift_pending) {
-            $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
+            // OLD CODE
+            // $ircs_line_data_arr = get_ircs_line_data($registlinename, $line_no, $conn_pcad);
+
+            // NEW CODE (Eliminate N+1 Query Problem)
+            $final_process = "";
+            $ipaddresscolumn = "";
+            $ipAddresses = [];
+
+            $final_processes = [];
+            $ip_addresses = [];
+            $ip_addresses2 = [];
+            $ipaddresscolumns = [];
+
+            if (!empty($row['final_processes'])) {
+                $final_processes = explode(",", $row['final_processes']);
+                $final_process = $final_processes[0];
+            }
+
+            if (!empty($row['ipaddresscolumns'])) {
+                $ipaddresscolumns = explode(",", $row['ipaddresscolumns']);
+                $ipaddresscolumn = $ipaddresscolumns[0];
+            }
+
+            // Check if the string is not empty and does not contain empty values between commas
+            if (!empty(trim($row['ip_addresses']))) {
+                $ip_addresses = explode(",", $row['ip_addresses']);
+                
+                // Filter out any empty values
+                $ip_addresses = array_filter($ip_addresses, function($value) {
+                    return !empty(trim($value));
+                });
+
+                // Remove duplicates
+                $ip_addresses_unique = array_unique($ip_addresses);
+                
+                // Reindex the array
+                $ip_addresses_unique = array_values($ip_addresses_unique);
+                
+                $ipAddresses = $ip_addresses_unique;
+            }
+
+            // Check if the string is not empty and does not contain empty values between commas
+            if (!empty(trim($row['ip_addresses2']))) {
+                $ip_addresses2 = explode(",", $row['ip_addresses2']);
+                
+                // Filter out any empty values
+                $ip_addresses2 = array_filter($ip_addresses2, function($value) {
+                    return !empty(trim($value));
+                });
+
+                // Remove duplicates
+                $ip_addresses2_unique = array_unique($ip_addresses2);
+                
+                // Reindex the array
+                $ip_addresses2_unique = array_values($ip_addresses2_unique);
+                
+                $ipAddresses = array_merge($ipAddresses, $ip_addresses2_unique);
+            }
+
+            $ircs_line_data_arr = array(
+                'ircs_line_no' => $line_no,
+                'registlinename' => $registlinename,
+                'final_process' => $final_process,
+                'ipaddresscolumn' => $ipaddresscolumn,
+                "ipAddresses" => $ipAddresses
+            );
     
             $search_arr = array(
                 'day' => $day,

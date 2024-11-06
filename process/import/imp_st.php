@@ -222,4 +222,3 @@ if (!empty($_FILES['file']['name']) && in_array($_FILES['file']['type'],$csvMime
 
 // KILL CONNECTION
 $conn_pcad = null;
-?>

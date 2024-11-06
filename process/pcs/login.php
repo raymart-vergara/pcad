@@ -37,4 +37,3 @@ if (isset($_POST['Logout'])) {
     session_destroy();
     header('location:/pcad/pcs_page/admin/');
 }
-?>

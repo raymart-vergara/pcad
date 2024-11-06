@@ -1,5 +1,5 @@
 <?php
-include 'process/conn/pcad.php';
+require 'process/conn/pcad.php';
 
 $method = isset($_POST['method']);
 
@@ -30,6 +30,4 @@ if ($method == 'analysis_list') {
     }
 }
 
-
 $conn_pcad = NULL;
-?>

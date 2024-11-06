@@ -15,7 +15,7 @@ function compute_yield($qa_output, $input_ng)
 {
 	$input_ng_plus_qa_output = $input_ng + $qa_output;
 	if ($input_ng_plus_qa_output != 0) {
-		return round(($qa_output / $input_ng_plus_qa_output) * 100, 2);;
+		return round(($qa_output / $input_ng_plus_qa_output) * 100, 2);
 	} else {
 		return 0;
 	}
@@ -139,42 +139,6 @@ function get_ircs_line_data($registlinename, $line_no, $conn_pcad)
 		'finishdatetime' => $finishdatetime,
 		'judgement' => $judgement
 	);
-	return $response_arr;
-}
-
-// IRCS IP ADDRESS
-function get_ircs_ip_address($registlinename, $conn_pcad)
-{
-	$registlinename = addslashes($registlinename);
-	$process = '';
-	$ipaddresscolumn = '';
-	$response_arr = array();
-
-	if (!empty($registlinename)) {
-		try {
-			$query = "SELECT ircs_line, process, ipaddresscolumn FROM m_inspection_ip WHERE ircs_line = :registlinename";
-			$stmt = $conn_pcad->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-			$stmt->bindParam(':registlinename', $registlinename, PDO::PARAM_STR);
-			$stmt->execute();
-
-			if ($stmt->rowCount() > 0) {
-				$row = $stmt->fetch(PDO::FETCH_ASSOC);
-				$registlinename = $row['ircs_line'];
-				$process = $row['process'];
-				$ipaddresscolumn = $row['ipaddresscolumn'];
-			}
-		} catch (PDOException $e) {
-			// Handle the exception, e.g., log or print the error message.
-			echo "Error: " . $e->getMessage();
-		}
-	}
-
-	$response_arr = array(
-		'registlinename' => $registlinename,
-		'process' => $process,
-		'ipaddresscolumn' => $ipaddresscolumn
-	);
-
 	return $response_arr;
 }
 
