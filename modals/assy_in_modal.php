@@ -26,12 +26,12 @@
           <div class="row mb-2">
             <div class="col-sm-12">
               <input type="text" class="form-control" id="assy_in_nameplate_value" placeholder="Scan Nameplate Here"
-                autocomplete="off" maxlength="255" required disabled>
+                autocomplete="off" maxlength="255" disabled>
             </div>
           </div>
-          <div class="row mb-2">
+          <div class="row mt-4 mb-2">
             <div class="col-sm-12">
-              <span class="text-bold" id="in_assy_result"></span>
+              <h2 class="text-bold text-center" id="in_assy_result"></h2>
             </div>
           </div>
         </div>

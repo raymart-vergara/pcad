@@ -12,7 +12,7 @@ include 'plugins/navbar/assy_navbar.php';
         <div class="row mb-2 ml-1 mr-1">
             <div class="col-sm-6">
                 <h1 class="m-0"> Assembly Process History (Line <?=$line_no?>)</h1>
-                <input type="hidden" id="assy_page_line_no" value="<?=$line_no?>">
+                <input type="hidden" id="assy_history_line_no" value="<?=$line_no?>">
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -43,59 +43,63 @@ include 'plugins/navbar/assy_navbar.php';
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <div class="row mb-4">
-                                <div class="col-sm-3">
-                                    <label>Line No.</label>
-                                    <select id="line_no_search" class="form-control" disabled>
-                                        <option value="">
-                                            - - - -
-                                        </option>
-                                    </select>
+                            <form id="assy_history_form" onsubmit="event.preventDefault();">
+                                <div class="row mb-2">
+                                    <div class="col-sm-3">
+                                        <label>Date Time From</label>
+                                        <input type="datetime-local" class="form-control" id="assy_history_date_from_search" required>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label>Date Time To</label>
+                                        <input type="datetime-local" class="form-control" id="assy_history_date_to_search" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>Scan Nameplate</label>
+                                        <input type="text" class="form-control" id="assy_history_nameplate_value_search" maxlength="255" autocomplete="off">
+                                    </div>
                                 </div>
-                                <div class="col-sm-3">
-                                    <label>Date</label>
-                                    <input type="date" class="form-control" id="hourly_output_date_search" disabled>
+                                <div class="row mb-4">
+                                    <div class="col-sm-6">
+                                        <label>Product Name</label>
+                                        <input type="text" class="form-control" id="assy_history_product_name_search" maxlength="255">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label>Lot No</label>
+                                        <input type="text" class="form-control" id="assy_history_lot_no_search" maxlength="255">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label>Serial No.</label>
+                                        <input type="text" class="form-control" id="assy_history_serial_no_search" maxlength="255">
+                                    </div>
                                 </div>
-                                <div class="col-sm-3">
-                                    <label>Shift</label>
-                                    <select class="form-control" id="shift_search" style="width: 100%;" disabled>
-                                        <option value="DS">DS</option>
-                                        <option value="NS">NS</option>
-                                        <option selected value="">All</option>
-                                    </select>
+                                <div class="row mb-4">
+                                    <div class="col-sm-3 offset-sm-6">
+                                        <button type="button" class="btn bg-secondary btn-block"
+                                            onclick="export_assy_history('assyHistoryTable')"><i class="fas fa-download"></i> Export</button>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button type="submit" class="btn bg-primary btn-block"><i class="fas fa-search"></i> Search</button>
+                                    </div>
                                 </div>
-                                <div class="col-sm-3">
-                                    <label>Target Output</label>
-                                    <input type="number" class="form-control" id="target_output_search" disabled>
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col-sm-3 offset-sm-6">
-                                    <button type="button" class="btn bg-secondary btn-block"
-                                        onclick="export_hourly_output()"><i class="fas fa-download"></i> Hourly
-                                        Output</button>
-                                </div>
-                                <div class="col-sm-3">
-                                    <button type="button" class="btn bg-primary btn-block"
-                                        onclick="get_hourly_output()" disabled><i class="fas fa-search"></i> Search</button>
-                                </div>
-                            </div>
-                            <div id="hourlyOutputTableRes" class="table-responsive"
+                            </form>
+                            <div id="assyHistoryTableRes" class="table-responsive"
                                 style="max-height: 500px; overflow: auto; display:inline-block;">
-                                <table id="hourlyOutputTable"
+                                <table id="assyHistoryTable"
                                     class="table table-sm table-head-fixed table-foot-fixed text-nowrap table-hover">
                                     <thead style="text-align: center;">
                                         <tr>
                                             <th>#</th>
+                                            <th>Car Maker</th>
+                                            <th>Car Model</th>
                                             <th>Line No.</th>
-                                            <th>Date</th>
-                                            <th>Hour</th>
-                                            <th>Target Output</th>
-                                            <th>Actual Output</th>
-                                            <th>Gap</th>
+                                            <th>Product Name</th>
+                                            <th>Lot No.</th>
+                                            <th>Serial No.</th>
+                                            <th>Assy Start Date Time</th>
+                                            <th>Assy End Date Time</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="hourlyOutputData" style="text-align: center;">
+                                    <tbody id="assyHistoryData" style="text-align: center;">
                                     </tbody>
                                 </table>
                             </div>

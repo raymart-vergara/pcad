@@ -20,3 +20,5 @@ if ($row) {
     header('location:/pcad/assy_page/index_viewer.php');
     exit();
 }
+
+$conn_pcad = NULL;

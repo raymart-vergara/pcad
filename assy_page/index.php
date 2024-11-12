@@ -52,41 +52,37 @@ include 'plugins/navbar/assy_navbar.php';
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <div class="row mb-4">
-                                <div class="col-sm-3">
-                                    <label>Line No.</label>
-                                    <select id="line_no_search" class="form-control" disabled>
-                                        <option value="">
-                                            - - - -
-                                        </option>
-                                    </select>
+                            <div class="row mb-2">
+                                <div class="col-sm-6">
+                                    <label>Scan Nameplate</label>
+                                    <input type="text" class="form-control" id="assy_page_nameplate_value_search" maxlength="255" autocomplete="off">
                                 </div>
-                                <div class="col-sm-3">
-                                    <label>Date</label>
-                                    <input type="date" class="form-control" id="hourly_output_date_search" disabled>
-                                </div>
-                                <div class="col-sm-3">
-                                    <label>Shift</label>
-                                    <select class="form-control" id="shift_search" style="width: 100%;" disabled>
-                                        <option value="DS">DS</option>
-                                        <option value="NS">NS</option>
-                                        <option selected value="">All</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-3">
-                                    <label>Target Output</label>
-                                    <input type="number" class="form-control" id="target_output_search" disabled>
+                                <div class="col-sm-6">
+                                    <label>Product Name</label>
+                                    <input list="assy_page_product_name_list" class="form-control" id="assy_page_product_name_search" maxlength="255">
+                                    <datalist id="assy_page_product_name_list"></datalist>
                                 </div>
                             </div>
-                            <div class="row mb-2">
-                                <div class="col-sm-3 offset-sm-6">
-                                    <button type="button" class="btn bg-secondary btn-block"
-                                        onclick="export_hourly_output()"><i class="fas fa-download"></i> Hourly
-                                        Output</button>
+                            <div class="row mb-4">
+                                <div class="col-sm-3">
+                                    <label>Lot No</label>
+                                    <input list="assy_page_lot_no_list" class="form-control" id="assy_page_lot_no_search" maxlength="255">
+                                    <datalist id="assy_page_lot_no_list"></datalist>
                                 </div>
                                 <div class="col-sm-3">
+                                    <label>Serial No.</label>
+                                    <input list="assy_page_serial_no_list" class="form-control" id="assy_page_serial_no_search" maxlength="255">
+                                    <datalist id="assy_page_serial_no_list"></datalist>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>&nbsp;</label>
+                                    <button type="button" class="btn bg-secondary btn-block"
+                                        onclick="export_recent_assy_in('assyInTable')"><i class="fas fa-download"></i> Export</button>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>&nbsp;</label>
                                     <button type="button" class="btn bg-primary btn-block"
-                                        onclick="get_hourly_output()" disabled><i class="fas fa-search"></i> Search</button>
+                                        onclick="get_recent_assy_in()"><i class="fas fa-search"></i> Search</button>
                                 </div>
                             </div>
                             <div id="assyInTableRes" class="table-responsive"
