@@ -44,7 +44,8 @@ include 'plugins/navbar/assy_viewer_navbar.php';
                             <div class="row mb-2">
                                 <div class="col-sm-2">
                                     <label>Line No.</label>
-                                    <input type="text" class="form-control" id="assy_page_line_no_search" maxlength="255" autocomplete="off">
+                                    <input list="assy_page_line_no_list" class="form-control" id="assy_page_line_no_search" maxlength="255">
+                                    <datalist id="assy_page_line_no_list"></datalist>
                                 </div>
                                 <div class="col-sm-4">
                                     <label>Product Name</label>

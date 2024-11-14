@@ -1,23 +1,23 @@
 <script type="text/javascript">
     // DOMContentLoaded function
     document.addEventListener("DOMContentLoaded", () => {
-        get_car_maker();
+        get_line_no_datalist_search();
         get_product_no_datalist_search();
         get_lot_no_datalist_search();
         get_serial_no_datalist_search();
         get_recent_assy_in();
     });
 
-    const get_car_maker = () => {
+    const get_line_no_datalist_search = () => {
         $.ajax({
             url: '../process/assy/assy_g_p.php',
             type: 'GET',
             cache: false,
             data: {
-                method: 'get_car_maker',
+                method: 'get_line_no_datalist_search',
             },
             success: function (response) {
-                document.getElementById("assy_in_car_maker").innerHTML = response;
+                document.getElementById("assy_page_line_no_list").innerHTML = response;
             }
         });
     }
@@ -105,10 +105,22 @@
         document.getElementById("assy_page_nameplate_value_search").value = '';
 	});
 
+    var typingTimerAssyPageLineNoSearch;
     var typingTimerAssyPageProductNameSearch;
 	var typingTimerAssyPageLotNoSearch;
     var typingTimerAssyPageSerialNoSearch;
     var doneTypingInterval = 250; // Time in ms
+
+    // On keyup, start the countdown
+    document.getElementById("assy_page_line_no_search").addEventListener('keyup', e => {
+        clearTimeout(typingTimerAssyPageLineNoSearch);
+        typingTimerAssyPageLineNoSearch = setTimeout(doneTypingGetRecentAssyIn, doneTypingInterval);
+    });
+
+    // On keydown, clear the countdown
+    document.getElementById("assy_page_line_no_search").addEventListener('keydown', e => {
+        clearTimeout(typingTimerAssyPageLineNoSearch);
+    });
 
     // On keyup, start the countdown
     document.getElementById("assy_page_product_name_search").addEventListener('keyup', e => {
