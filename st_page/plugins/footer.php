@@ -1,8 +1,8 @@
  <footer class="main-footer">
-    <strong>Copyright &copy; 2024. Developed by: Vince Dale Alcantara</strong>
+    <strong>Copyright &copy; 2024. Developed By IT System Group (Vince Dale Alcantara)</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 1.0.20
+      <b>Beta Version</b> 1.0.21
     </div>
   </footer>
 <?php
