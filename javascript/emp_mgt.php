@@ -71,4 +71,22 @@
             }
         });
     }
+
+    const get_present_employees = () => {
+        let shift_group = document.getElementById('shift_group').value;
+        let line_no = document.getElementById('line_no').value;
+        $.ajax({
+            url: 'process/emp_mgt/emp_mgt_p.php',
+            type: 'GET',
+            cache: false,
+            data: {
+                method: 'get_present_employees',
+                shift_group: shift_group,
+                line_no: line_no
+            },
+            success: function (response) {
+                document.getElementById('present_employees_data').innerHTML = response;
+            }
+        });
+    }
 </script>

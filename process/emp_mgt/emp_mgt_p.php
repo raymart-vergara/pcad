@@ -103,5 +103,35 @@ if ($method == 'get_process_design') {
 	}
 }
 
+if ($method == 'get_present_employees') {
+	$line_no = $_GET['line_no'];
+	$shift_group = $_GET['shift_group'];
+
+	$day = get_day($server_time, $server_date_only, $server_date_only_yesterday);
+	$shift = get_shift($server_time);
+
+	$search_arr = array(
+		'day' => $day,
+		'shift' => $shift,
+		'shift_group' => $shift_group,
+		'line_no' => $line_no
+	);
+
+	$results = get_present_employees($search_arr, $conn_emp_mgt);
+	// $results = get_present_employees2($search_arr, $conn_emp_mgt);
+	// echo var_dump($results);
+
+	foreach ($results as &$result) {
+		echo '<tr>';
+		echo '<td><img src="'.htmlspecialchars($result['file_url']).'" alt="'.htmlspecialchars($result['emp_no']).'" height="50" width="50"></td>';
+		// echo '<td>'.$result['emp_no'].'</td>';
+		echo '<td>'.$result['full_name'].'</td>';
+		// echo '<td>'.$result['provider'].'</td>';
+		// echo '<td>'.$result['dept'].'</td>';
+		echo '<td>'.$result['process'].'</td>';
+		echo '</tr>';
+	}
+}
+
 $conn_emp_mgt = NULL;
 $conn_pcad = NULL;

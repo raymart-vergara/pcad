@@ -1515,3 +1515,104 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 
 	return $results;
 }
+
+function get_present_employees($search_arr, $conn_emp_mgt) {
+	$results = array();
+
+	$day = $search_arr['day'];
+	$shift = $search_arr['shift'];
+	$shift_group = addslashes($search_arr['shift_group']);
+	$line_no = addslashes($search_arr['line_no']);
+
+	// Get Process by m_employees
+	// MS SQL Server
+	$sql = "SELECT 
+				emp.provider, emp.emp_no, emp.full_name, emp.dept, emp.process, 
+				pic.file_url 
+			FROM m_employees emp
+			RIGHT JOIN t_time_in_out tio ON tio.emp_no = emp.emp_no AND tio.day = '$day'
+			LEFT JOIN m_employee_pictures pic ON pic.emp_no = emp.emp_no
+			WHERE emp.dept != ''";
+	if ($shift == 'DS') {
+		$sql = $sql . " AND emp.shift_group IN ('$shift_group', 'ADS')";
+	} else {
+		$sql = $sql . " AND emp.shift_group = '$shift_group'";
+	}
+	if ($line_no == 'No Line') {
+		$sql = $sql . " AND emp.line_no IS NULL";
+	} else if (!empty($line_no)) {
+		$sql = $sql . " AND emp.line_no LIKE '$line_no%'";
+	} else {
+		$sql = $sql . " AND (emp.line_no = '' OR emp.line_no IS NULL)";
+	}
+	$sql = $sql . " AND (emp.resigned_date IS NULL OR emp.resigned_date >= '$day')";
+	$sql = $sql . " ORDER BY emp.full_name ASC";
+
+	$stmt = $conn_emp_mgt->prepare($sql);
+	$stmt->execute();
+
+	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	if (count($rows) > 0) {
+		foreach ($rows as $row) {
+			$file_url = '';
+			$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+			if (!empty($row['file_url'])) {
+				$file_url = $protocol.$_SERVER['SERVER_ADDR'].":".$_SERVER['SERVER_PORT'].$row['file_url'];
+			} else {
+				$file_url = $protocol.$_SERVER['SERVER_ADDR'].":".$_SERVER['SERVER_PORT'].'/pcad/dist/img/user.png';
+			}
+			// array_push($results, array(
+			// 	'file_url' => $file_url, 
+			// 	'emp_no' => $row['emp_no'], 
+			// 	'full_name' => $row['full_name'], 
+			// 	'provider' => $row['provider'], 
+			// 	'dept' => $row['dept'], 
+			// 	'process' => $row['process'] 
+			// ));
+			array_push($results, array(
+				'file_url' => $file_url, 
+				'emp_no' => $row['emp_no'], 
+				'full_name' => $row['full_name'], 
+				'process' => $row['process']
+			));
+		}
+	}
+
+	return $results;
+}
+
+function get_present_employees2($search_arr, $conn_emp_mgt) {
+	$results = array();
+
+	$line_no = addslashes($search_arr['line_no']);
+
+	// Get Process by m_employees
+	// MS SQL Server
+	$sql = "EXEC [dbo].[PCAD_ATTENDANCE] @LineNo = ?";
+	
+	$stmt = $conn_emp_mgt->prepare($sql);
+	$params = array($line_no);
+	$stmt->execute($params);
+
+	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	if (count($rows) > 0) {
+		foreach ($rows as $row) {
+			$file_url = '';
+			$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+			if (!empty($row['picture'])) {
+				$file_url = $protocol.$_SERVER['SERVER_ADDR'].":".$_SERVER['SERVER_PORT'].$row['picture'];
+			} else {
+				$file_url = $protocol.$_SERVER['SERVER_ADDR'].":".$_SERVER['SERVER_PORT'].'/pcad/dist/img/user.png';
+			}
+			array_push($results, array(
+				'file_url' => $file_url, 
+				'emp_no' => $row['emp_no'], 
+				'full_name' => $row['full_name']
+			));
+		}
+	}
+
+	return $results;
+}

@@ -235,14 +235,14 @@ include 'process/pcs/index.php';
       }
 
       .font-others {
-         font-size: 25px;
-         padding-left: 10px;
+         font-size: 20px;
+         padding-left: 5px;
       }
 
       .font-others-value {
-         font-size: 35px;
+         font-size: 30px;
          font-family: 'Norwester', sans-serif;
-         padding-left: 20px;
+         padding-left: 15px;
       }
 
       .table-bg {
@@ -716,102 +716,120 @@ include 'process/pcs/index.php';
                               </tbody>
                            </table>
 
-                           <table class="table-bg mt-3" style="width: 100%;">
-                              <thead style="border-bottom: 1px solid #E6E6E6;">
-                                 <tr class="text-center">
-                                    <td colspan="2" class="equal-details" style="font-size: 35px;">PD
-                                       MANPOWER</td>
-                                    <td colspan="2" class="equal-details" style="font-size: 35px;">QA
-                                       MANPOWER</th>
-                                    <td colspan="2" class="equal-details" style="font-size: 35px;">OTHER
-                                       DETAILS</td>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                 <tr>
-                                    <th class="th-normal equal-sub-details text-left font-others">
-                                       Plan:
-                                    </th>
-                                    <td id="total_pd_mp" class="equal-sub-details text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal equal-sub-details text-left font-others">
-                                       Plan:
-                                    </th>
-                                    <td id="total_qa_mp" class="equal-sub-details text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal equal-sub-details text-left font-others">
-                                       Starting Balance Delay:</th>
-                                    <td class="equal-sub-details text-left font-others-value"
-                                       style="background: #CFCFCF; color: #000;">
-                                       <?= $start_bal_delay; ?>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <th class="th-normal text-left font-others">Actual:</th>
-                                    <td id="total_present_pd_mp" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal text-left font-others">Actual:</th>
-                                    <td id="total_present_qa_mp" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal text-left font-others">Conveyor
-                                       Speed:</th>
-                                    <td id="taktset" class="text-left font-others-value"
-                                       style="background: #CFCFCF; color: #000;">
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <th class="th-normal text-left font-others">Absent:</th>
-                                    <td id="total_absent_pd_mp" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal text-left font-others">Absent:</th>
-                                    <td id="total_absent_qa_mp" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal takt-label text-left font-others">
-                                       Takt Time:</th>
-                                    <td class="takt-value text-left font-others-value"
-                                       style="background: #CFCFCF; color: #000;"></td>
-                                 </tr>
-                                 <tr>
-                                    <th class="th-normal text-left font-others">Support:
-                                    </th>
-                                    <td id="total_pd_mp_line_support_to" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal text-left font-others">Support:
-                                    </th>
-                                    <td id="total_qa_mp_line_support_to" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal text-left font-others">Working Time
-                                       Plan:</th>
-                                    <td class="text-left font-others-value" style="background: #CFCFCF; color: #000;">
-                                       <?= $work_time_plan; ?>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <th class="th-normal text-left font-others">Absent Rate:
-                                    </th>
-                                    <td id="absent_ratio_pd_mp" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal text-left font-others">Absent Rate:
-                                    </th>
-                                    <td id="absent_ratio_qa_mp" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal text-left font-others">Daily Plan:</th>
-                                    <td class="text-left font-others-value" style="background: #CFCFCF; color: #000;">
-                                       <?= $daily_plan; ?>
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
+                           <div class="row">
+                              <div class="col-8">
+                                 <table class="table-bg mt-3" style="width: 100%;">
+                                    <thead style="border-bottom: 1px solid #E6E6E6;">
+                                       <tr class="text-center">
+                                          <td colspan="2" class="equal-details" style="font-size: 30px;">PD
+                                             MANPOWER</td>
+                                          <td colspan="2" class="equal-details" style="font-size: 30px;">QA
+                                             MANPOWER</th>
+                                          <td colspan="2" class="equal-details" style="font-size: 30px;">OTHER
+                                             DETAILS</td>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr>
+                                          <th class="th-normal equal-sub-details text-left font-others">
+                                             Plan:
+                                          </th>
+                                          <td id="total_pd_mp" class="equal-sub-details text-left font-others-value"
+                                             style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                          </td>
+                                          <th class="th-normal equal-sub-details text-left font-others">
+                                             Plan:
+                                          </th>
+                                          <td id="total_qa_mp" class="equal-sub-details text-left font-others-value"
+                                             style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                          </td>
+                                          <th class="th-normal equal-sub-details text-left font-others">
+                                             Starting Balance Delay:</th>
+                                          <td class="equal-sub-details text-left font-others-value"
+                                             style="background: #CFCFCF; color: #000;">
+                                             <?= $start_bal_delay; ?>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <th class="th-normal text-left font-others">Actual:</th>
+                                          <td id="total_present_pd_mp" class="text-left font-others-value"
+                                             style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                          </td>
+                                          <th class="th-normal text-left font-others">Actual:</th>
+                                          <td id="total_present_qa_mp" class="text-left font-others-value"
+                                             style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                          </td>
+                                          <th class="th-normal text-left font-others">Conveyor
+                                             Speed:</th>
+                                          <td id="taktset" class="text-left font-others-value"
+                                             style="background: #CFCFCF; color: #000;">
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <th class="th-normal text-left font-others">Absent:</th>
+                                          <td id="total_absent_pd_mp" class="text-left font-others-value"
+                                             style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                          </td>
+                                          <th class="th-normal text-left font-others">Absent:</th>
+                                          <td id="total_absent_qa_mp" class="text-left font-others-value"
+                                             style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                          </td>
+                                          <th class="th-normal takt-label text-left font-others">
+                                             Takt Time:</th>
+                                          <td class="takt-value text-left font-others-value"
+                                             style="background: #CFCFCF; color: #000;"></td>
+                                       </tr>
+                                       <tr>
+                                          <th class="th-normal text-left font-others">Support:
+                                          </th>
+                                          <td id="total_pd_mp_line_support_to" class="text-left font-others-value"
+                                             style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                          </td>
+                                          <th class="th-normal text-left font-others">Support:
+                                          </th>
+                                          <td id="total_qa_mp_line_support_to" class="text-left font-others-value"
+                                             style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                          </td>
+                                          <th class="th-normal text-left font-others">Working Time
+                                             Plan:</th>
+                                          <td class="text-left font-others-value" style="background: #CFCFCF; color: #000;">
+                                             <?= $work_time_plan; ?>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <th class="th-normal text-left font-others">Absent Rate:
+                                          </th>
+                                          <td id="absent_ratio_pd_mp" class="text-left font-others-value"
+                                             style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                          </td>
+                                          <th class="th-normal text-left font-others">Absent Rate:
+                                          </th>
+                                          <td id="absent_ratio_qa_mp" class="text-left font-others-value"
+                                             style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                                          </td>
+                                          <th class="th-normal text-left font-others">Daily Plan:</th>
+                                          <td class="text-left font-others-value" style="background: #CFCFCF; color: #000;">
+                                             <?= $daily_plan; ?>
+                                          </td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              </div>
+                              <div class="col-4">
+                                 <div class="table-responsive m-0 mt-3 p-0" style="max-height: 400px; overflow-y: auto;">
+                                    <table class="table-bg m-0 p-0 table-head-fixed text-nowrap" style="width: 100%;">
+                                       <thead style="text-align: center; position: sticky; top: 0; z-index: 1;">
+                                          <tr style="border-bottom: 1px solid #E6E6E6;">
+                                             <td class="equal-insp-info" style="font-size: 30px;"><i class="fas fa-image"></i></td>
+                                             <td class="equal-insp-info" style="font-size: 30px;">Name</td>
+                                             <td class="equal-insp-info" style="font-size: 30px;">Process</td>
+                                          </tr>
+                                       </thead>
+                                       <tbody class="mb-0" id="present_employees_data"></tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                           </div>
                      </div>
                   </div>
                   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -890,6 +908,7 @@ include 'process/pcs/index.php';
    let realtime_get_inspection_list;
    let realtime_get_overall_inspection;
    let realtime_count_emp;
+   let realtime_present_employees;
    let realtime_andon_d_sum;
    let realtime_andon_hourly_graph;
    let realtime_get_hourly_output_chart;
@@ -923,6 +942,10 @@ include 'process/pcs/index.php';
    const recursive_realtime_count_emp = () => {
       count_emp();
       realtime_count_emp = setTimeout(recursive_realtime_count_emp, 30000);
+   }
+   const recursive_realtime_present_employees = () => {
+      get_present_employees();
+      realtime_present_employees = setTimeout(recursive_realtime_present_employees, 30000);
    }
    const recursive_realtime_andon_d_sum = () => {
       andon_d_sum();
@@ -970,6 +993,7 @@ include 'process/pcs/index.php';
       switch (slide_number) {
          case 1:
             clearTimeout(realtime_count_emp);
+            clearTimeout(realtime_present_employees);
             clearTimeout(realtime_get_accounting_efficiency);
             clearTimeout(realtime_get_hourly_output);
             recursive_realtime_get_yield();
@@ -1009,6 +1033,7 @@ include 'process/pcs/index.php';
          case 7:
             clearTimeout(realtime_get_hourly_output_chart);
             clearTimeout(realtime_count_emp);
+            clearTimeout(realtime_present_employees);
             recursive_realtime_ng_graph();
             break;
          case 8:
@@ -1016,6 +1041,7 @@ include 'process/pcs/index.php';
             clearTimeout(realtime_get_yield);
             clearTimeout(realtime_get_ppm);
             recursive_realtime_count_emp();
+            recursive_realtime_present_employees();
             break;
          default:
       }
