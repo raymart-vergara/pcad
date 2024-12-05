@@ -27,7 +27,7 @@
 
     @font-face {
       font-family: 'Montserrat';
-      src: url('../dist/font/montserrat/Montserrat-Medium.ttf') format('truetype');
+      src: url('dist/font/montserrat/Montserrat-Bold.ttf') format('truetype');
     }
 
     body {

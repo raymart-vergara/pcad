@@ -104,4 +104,4 @@ if ($method == 'get_process_design') {
 }
 
 $conn_emp_mgt = NULL;
-?>
+$conn_pcad = NULL;

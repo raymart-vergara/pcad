@@ -49,13 +49,13 @@ include 'plugins/navbar/andon_details_navbar.php';
                                         style="background: #334C69;  color: #FFF;"
                                         onmouseover="this.style.backgroundColor='#22354A'; this.style.color='#fff';"
                                         onmouseout="this.style.backgroundColor='#334C69'; this.style.color='#fff';"
-                                        onclick="location.replace('../../process/andon_graph/andon_export_p.php')">
+                                        onclick="export_andon()">
                                         <i class="fas fa-download"></i> Export Andon Details
                                     </button>
                                 </div>
                             </div>
 
-                            <div id="" class="table-responsive"
+                            <div id="andon_details_table" class="table-responsive"
                                 style="max-height: 500px; overflow: auto; display:inline-block;">
                                 <table class="table table-head-fixed text-nowrap table-bordered table-hover">
                                     <thead class="text-center">

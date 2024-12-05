@@ -453,7 +453,7 @@ include 'process/pcs/index.php';
         </div>
 
         <div class="float-right d-none d-sm-inline-block">
-            <b>Version</b> 1.0.20
+            <b>Beta Version</b> 1.0.21
         </div>
     </footer>
 

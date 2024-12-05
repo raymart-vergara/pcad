@@ -17,7 +17,8 @@ if ($result) {
 <div class="pt-4 container-fluid page">
 	<div class="row justify-content-center">
 		<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-			<div class="card" style="background-color: #FBFBFB; box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.25)">
+			<div class="card"
+				style="background-color: #FBFBFB; box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.25)">
 				<h2 class="card-header" style="color: #334C69;"><b>Production Conveyor Analysis Settings</b></h2>
 				<form method="post" action="../process/pcs/setting_p.php">
 					<input type="hidden" name="request" value="addTarget">
@@ -96,9 +97,8 @@ if ($result) {
 										<div class="col-lg-3">
 											<div class="form-group">
 												<label for="c">TAKT TIME</label>
-												<input type="number" name="takt_time"
-													class="form-control form-control-lg" id="takt_time" placeholder="00"
-													min="1">
+												<input type="number" name="takt_time" class="form-control form-control-lg"
+													id="takt_time" placeholder="00" min="1">
 											</div>
 										</div>
 									</div>
@@ -221,28 +221,13 @@ if ($result) {
 											Plan (Mins)</td>
 
 										<td>
-											<!-- <select name="work_time_plan" id="work_time_plan" class="form-control ml-4"
+											<select name="work_time_plan" id="work_time_plan" class="form-control ml-4"
 												style="width: 250px;" required>
 												<option value="450">450</option>
 												<option value="510">510</option>
 												<option value="570">570</option>
 												<option value="630">630</option>
-											</select> -->
-
-											<div id="work_time_plan" class="ml-4" required>
-												<label>
-													<input type="radio" name="work_time_plan" value="450"> 450
-												</label><br>
-												<label>
-													<input type="radio" name="work_time_plan" value="510"> 510
-												</label><br>
-												<label>
-													<input type="radio" name="work_time_plan" value="570"> 570
-												</label><br>
-												<label>
-													<input type="radio" name="work_time_plan" value="630"> 630
-												</label>
-											</div>
+											</select>
 										</td>
 										</td>
 									</tr>
