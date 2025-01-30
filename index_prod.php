@@ -254,8 +254,92 @@ include 'process/pcs/index.php';
       .apexcharts-tooltip {
          color: rgba(0, 0, 0, 1);
       }
+
       .apexcharts-menu-item {
          color: rgba(0, 0, 0, 1);
+      }
+
+      .carousel-item {
+         height: 650px;
+         margin-top: 10px;
+      }
+
+      .grid-container {
+         display: grid;
+         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+         gap: 8px;
+         height: 100%;
+         padding: 8px;
+         overflow: hidden;
+         box-sizing: border-box;
+      }
+
+      .grid-item {
+         background-color: rgba(0, 0, 0, 0.50);
+         border-radius: 8px;
+         padding: 8px;
+         text-align: center;
+         color: #FFF;
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         height: auto;
+      }
+
+      .grid-item img {
+         width: 50px;
+         height: 50px;
+         border-radius: 50%;
+         object-fit: cover;
+         margin-bottom: 10px;
+      }
+
+      .grid-item .name {
+         font-size: 13px;
+         font-weight: bold;
+         margin-top: 4px;
+      }
+
+      .grid-item .process {
+         font-size: 12px;
+         font-weight: normal;
+         color: #EED965;
+      }
+
+      #present_employees_grid {
+         display: flex;
+         flex-direction: column;
+         gap: 10px;
+
+         will-change: transform;
+      }
+
+      .process-name {
+         font-size: 1.2em;
+         color: #FFF;
+      }
+
+      .employee-card {
+         color: black;
+         border-radius: 8px;
+         padding: 10px;
+         text-align: center;
+         box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .employee-card img {
+         width: 80px;
+         height: 80px;
+         border-radius: 10%;
+         object-fit: cover;
+         margin-bottom: 10px;
+      }
+
+      #present_employees_grid {
+         margin-top: 10px;
+         overflow-y: auto;
+         height: 570px;
       }
    </style>
 </head>
@@ -343,6 +427,8 @@ include 'process/pcs/index.php';
             <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
             <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
             <li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="8"></li>
+            <!-- <li data-target="#carouselExampleIndicators" data-slide-to="9"></li> -->
          </ol>
          <div class="carousel-inner">
             <div class="carousel-item active" style="height: 650px; margin-top: 10px;">
@@ -679,177 +765,205 @@ include 'process/pcs/index.php';
                         <!-- <canvas id="ng_summary_chart" height="55""></canvas> -->
                         <!-- <canvas id="ng_summary_chart" height="90""></canvas> -->
                         <div id="ng_summary_chart"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class=" carousel-item" style="height: 650px; margin-top: 10px;">
-                           <table class="table-bg" style="width: 100%;">
-                              <tbody class="text-center">
-                                 <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
-                                    <td scope="col"></td>
-                                    <td scope="col" class="equal-plan-acct-hr font-plan-sub">Target
-                                    </td>
-                                    <td scope="col" class="equal-plan-acct-hr font-plan-sub">Actual
-                                    </td>
-                                    <td scope="col" class="equal-plan-acct-hr font-plan-sub">Gap
-                                    </td>
-                                 </tr>
-                              </tbody>
-                              <tbody class="text-center">
-                                 <tr style="border-bottom: 1px solid #E6E6E6">
-                                    <input type="hidden" id="processing" value="1">
-                                    <td scope="col" class="font-plan equal-plan-acct-hr">
-                                       Plan</td>
-                                    <td scope="col" id="plan_target"
-                                       class="plan_target_value value-size2 equal-plan-acct-hr"
-                                       style="background: #569BE2; color: #000;">
-                                    </td>
-                                    <td scope="col" id="plan_actual"
-                                       class="plan_actual_value value-size2 equal-plan-acct-hr"
-                                       style="background: #569BE2; color: #000;">
-                                    </td>
-                                    <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr">
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
-
-                           <table class="table-bg mt-3" style="width: 100%;">
-                              <thead style="border-bottom: 1px solid #E6E6E6;">
-                                 <tr class="text-center">
-                                    <td colspan="2" class="equal-details" style="font-size: 35px;">PD
-                                       MANPOWER</td>
-                                    <td colspan="2" class="equal-details" style="font-size: 35px;">QA
-                                       MANPOWER</th>
-                                    <td colspan="2" class="equal-details" style="font-size: 35px;">OTHER
-                                       DETAILS</td>
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                 <tr>
-                                    <th class="th-normal equal-sub-details text-left font-others">
-                                       Plan:
-                                    </th>
-                                    <td id="total_pd_mp" class="equal-sub-details text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal equal-sub-details text-left font-others">
-                                       Plan:
-                                    </th>
-                                    <td id="total_qa_mp" class="equal-sub-details text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal equal-sub-details text-left font-others">
-                                       Starting Balance Delay:</th>
-                                    <td class="equal-sub-details text-left font-others-value"
-                                       style="background: #CFCFCF; color: #000;">
-                                       <?= $start_bal_delay; ?>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <th class="th-normal text-left font-others">Actual:</th>
-                                    <td id="total_present_pd_mp" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal text-left font-others">Actual:</th>
-                                    <td id="total_present_qa_mp" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal text-left font-others">Conveyor
-                                       Speed:</th>
-                                    <td id="taktset" class="text-left font-others-value"
-                                       style="background: #CFCFCF; color: #000;">
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <th class="th-normal text-left font-others">Absent:</th>
-                                    <td id="total_absent_pd_mp" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal text-left font-others">Absent:</th>
-                                    <td id="total_absent_qa_mp" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal takt-label text-left font-others">
-                                       Takt Time:</th>
-                                    <td class="takt-value text-left font-others-value"
-                                       style="background: #CFCFCF; color: #000;"></td>
-                                 </tr>
-                                 <tr>
-                                    <th class="th-normal text-left font-others">Support:
-                                    </th>
-                                    <td id="total_pd_mp_line_support_to" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal text-left font-others">Support:
-                                    </th>
-                                    <td id="total_qa_mp_line_support_to" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal text-left font-others">Working Time
-                                       Plan:</th>
-                                    <td class="text-left font-others-value" style="background: #CFCFCF; color: #000;">
-                                       <?= $work_time_plan; ?>
-                                    </td>
-                                 </tr>
-                                 <tr>
-                                    <th class="th-normal text-left font-others">Absent Rate:
-                                    </th>
-                                    <td id="absent_ratio_pd_mp" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal text-left font-others">Absent Rate:
-                                    </th>
-                                    <td id="absent_ratio_qa_mp" class="text-left font-others-value"
-                                       style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
-                                    </td>
-                                    <th class="th-normal text-left font-others">Daily Plan:</th>
-                                    <td class="text-left font-others-value" style="background: #CFCFCF; color: #000;">
-                                       <?= $daily_plan; ?>
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
                      </div>
                   </div>
-                  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                     <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                     <span class="sr-only">Next</span>
-                  </a>
-               </div>
-
-               <!-- buttons for tv -->
-               <div class="row ml-2 mr-2 mt-3">
-                  <div class="col-4">
-                     <div>
-                        <button type="button" class="btn btn-danger btn-block btn-pause">PAUSE <b>[ 1
-                              ]</b></button>
-                     </div>
-                     <div>
-                        <button type="button" class="btn btn-info btn-block btn-resume d-none">RESUME<b>[ 3
-                              ]</b></button>
-                     </div>
-                  </div>
-                  <div class="col-4">
-                     <button type="button" class="btn btn-success btn-block btn-target ">END PROCESS <b>[ 2
-                           ]</b></button>
-                  </div>
-                  <div class="col-4">
-                     <a type="button" class="btn btn-secondary btn-block btn-menu" href="pcs_page/index.php">MAIN
-                        MENU <b>[ 0 ]</b></a>
-                  </div>
-               </div>
-               <div class="col-3">
-                  <a href="pcs_page/setting.php" class="btn  btn-primary btn-set d-none" id="setnewTargetBtn">SET
-                     NEW TARGET<b>[ 5 ]</b></a>
                </div>
             </div>
+
+            <div class="carousel-item" style="height: 650px; margin-top: 10px;">
+               <table class="table-bg" style="width: 100%;">
+                  <tbody class="text-center">
+                     <tr style="height: 60px; border-bottom: 1px solid #E6E6E6">
+                        <td scope="col"></td>
+                        <td scope="col" class="equal-plan-acct-hr font-plan-sub">Target
+                        </td>
+                        <td scope="col" class="equal-plan-acct-hr font-plan-sub">Actual
+                        </td>
+                        <td scope="col" class="equal-plan-acct-hr font-plan-sub">Gap
+                        </td>
+                     </tr>
+                  </tbody>
+                  <tbody class="text-center">
+                     <tr style="border-bottom: 1px solid #E6E6E6">
+                        <input type="hidden" id="processing" value="1">
+                        <td scope="col" class="font-plan equal-plan-acct-hr">
+                           Plan</td>
+                        <td scope="col" id="plan_target" class="plan_target_value value-size2 equal-plan-acct-hr"
+                           style="background: #569BE2; color: #000;">
+                        </td>
+                        <td scope="col" id="plan_actual" class="plan_actual_value value-size2 equal-plan-acct-hr"
+                           style="background: #569BE2; color: #000;">
+                        </td>
+                        <td scope="col" id="plan_gap" class="plan_gap_value value-size2 equal-plan-acct-hr">
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+
+               <div class="row">
+                  <div class="col-12">
+                     <table class="table-bg mt-3" style="width: 100%;">
+                        <thead style="border-bottom: 1px solid #E6E6E6;">
+                           <tr class="text-center">
+                              <td colspan="2" class="equal-details" style="font-size: 30px;">PD
+                                 MANPOWER</td>
+                              <td colspan="2" class="equal-details" style="font-size: 30px;">QA
+                                 MANPOWER</th>
+                              <td colspan="2" class="equal-details" style="font-size: 30px;">OTHER
+                                 DETAILS</td>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr>
+                              <th class="th-normal equal-sub-details text-left font-others">
+                                 Plan:
+                              </th>
+                              <td id="total_pd_mp" class="equal-sub-details text-left font-others-value"
+                                 style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                              </td>
+                              <th class="th-normal equal-sub-details text-left font-others">
+                                 Plan:
+                              </th>
+                              <td id="total_qa_mp" class="equal-sub-details text-left font-others-value"
+                                 style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                              </td>
+                              <th class="th-normal equal-sub-details text-left font-others">
+                                 Starting Balance Delay:</th>
+                              <td class="equal-sub-details text-left font-others-value"
+                                 style="background: #CFCFCF; color: #000;">
+                                 <?= $start_bal_delay; ?>
+                              </td>
+                           </tr>
+                           <tr>
+                              <th class="th-normal text-left font-others">Actual:</th>
+                              <td id="total_present_pd_mp" class="text-left font-others-value"
+                                 style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                              </td>
+                              <th class="th-normal text-left font-others">Actual:</th>
+                              <td id="total_present_qa_mp" class="text-left font-others-value"
+                                 style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                              </td>
+                              <th class="th-normal text-left font-others">Conveyor
+                                 Speed:</th>
+                              <td id="taktset" class="text-left font-others-value"
+                                 style="background: #CFCFCF; color: #000;">
+                              </td>
+                           </tr>
+                           <tr>
+                              <th class="th-normal text-left font-others">Absent:</th>
+                              <td id="total_absent_pd_mp" class="text-left font-others-value"
+                                 style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                              </td>
+                              <th class="th-normal text-left font-others">Absent:</th>
+                              <td id="total_absent_qa_mp" class="text-left font-others-value"
+                                 style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                              </td>
+                              <th class="th-normal takt-label text-left font-others">
+                                 Takt Time:</th>
+                              <td class="takt-value text-left font-others-value"
+                                 style="background: #CFCFCF; color: #000;"></td>
+                           </tr>
+                           <tr>
+                              <th class="th-normal text-left font-others">Support:
+                              </th>
+                              <td id="total_pd_mp_line_support_to" class="text-left font-others-value"
+                                 style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                              </td>
+                              <th class="th-normal text-left font-others">Support:
+                              </th>
+                              <td id="total_qa_mp_line_support_to" class="text-left font-others-value"
+                                 style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                              </td>
+                              <th class="th-normal text-left font-others">Working Time
+                                 Plan:</th>
+                              <td class="text-left font-others-value" style="background: #CFCFCF; color: #000;">
+                                 <?= $work_time_plan; ?>
+                              </td>
+                           </tr>
+                           <tr>
+                              <th class="th-normal text-left font-others">Absent Rate:
+                              </th>
+                              <td id="absent_ratio_pd_mp" class="text-left font-others-value"
+                                 style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                              </td>
+                              <th class="th-normal text-left font-others">Absent Rate:
+                              </th>
+                              <td id="absent_ratio_qa_mp" class="text-left font-others-value"
+                                 style="background: #ABD2FA; border-right: 1px solid #E6E6E6; color: #000;">
+                              </td>
+                              <th class="th-normal text-left font-others">Daily Plan:</th>
+                              <td class="text-left font-others-value" style="background: #CFCFCF; color: #000;">
+                                 <?= $daily_plan; ?>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+
+            <div class="carousel-item" style="height: 650px; margin-top: 10px;">
+               <div class="row" style="background: rgb(0, 0, 0, 0.5)">
+                  <div class="col-12 text-center">
+                     <p style="font-size: 45px; margin: 10px 20px 10px 20px;">LINE <?= $line_no ?> MANPOWER</p>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-12">
+                     <div class="d-grid grid-container" id="present_employees_grid"
+                        style="height: 570px; margin-top: 10px; overflow-y: auto;">
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <!-- <div class="carousel-item" style="height: 650px; margin-top: 10px;">
+               <h1>ABSENT MANPOWER</h1>
+               <div class="row">
+                  <div class="col-12">
+                     <div class="d-grid grid-container" id="absent_employees_grid"
+                        style="height: 570px; margin-top: 10px; overflow-y: auto;">
+                     </div>
+                  </div>
+               </div>
+            </div> -->
+         </div>
+         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+         </a>
+         <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+         </a>
+      </div>
+
+      <!-- buttons for tv -->
+      <div class="row ml-2 mr-2 mt-3">
+         <div class="col-4">
+            <div>
+               <button type="button" class="btn btn-danger btn-block btn-pause">PAUSE <b>[ 1
+                     ]</b></button>
+            </div>
+            <div>
+               <button type="button" class="btn btn-info btn-block btn-resume d-none">RESUME<b>[ 3
+                     ]</b></button>
+            </div>
+         </div>
+         <div class="col-4">
+            <button type="button" class="btn btn-success btn-block btn-target ">END PROCESS <b>[ 2
+                  ]</b></button>
+         </div>
+         <div class="col-4">
+            <a type="button" class="btn btn-secondary btn-block btn-menu" href="pcs_page/index.php">MAIN
+               MENU <b>[ 0 ]</b></a>
+         </div>
+      </div>
+      <div class="col-3">
+         <a href="pcs_page/setting.php" class="btn  btn-primary btn-set d-none" id="setnewTargetBtn">SET
+            NEW TARGET<b>[ 5 ]</b></a>
+      </div>
+   </div>
 </body>
 
 <!-- jQuery -->
@@ -890,6 +1004,8 @@ include 'process/pcs/index.php';
    let realtime_get_inspection_list;
    let realtime_get_overall_inspection;
    let realtime_count_emp;
+   let realtime_present_employees;
+   // let realtime_absent_employees;
    let realtime_andon_d_sum;
    let realtime_andon_hourly_graph;
    let realtime_get_hourly_output_chart;
@@ -924,6 +1040,14 @@ include 'process/pcs/index.php';
       count_emp();
       realtime_count_emp = setTimeout(recursive_realtime_count_emp, 30000);
    }
+   const recursive_realtime_present_employees = () => {
+      get_present_employees();
+      // realtime_present_employees = setTimeout(recursive_realtime_present_employees, 30000);
+   }
+   // const recursive_realtime_absent_employees = () => {
+   //    get_absent_employees();
+   //    realtime_absent_employees = setTimeout(recursive_realtime_absent_employees, 30000);
+   // };
    const recursive_realtime_andon_d_sum = () => {
       andon_d_sum();
       realtime_andon_d_sum = setTimeout(recursive_realtime_andon_d_sum, 30000);
@@ -943,38 +1067,44 @@ include 'process/pcs/index.php';
 
    // Carousel Variables
    let slide_number = 1;
+   let scrollInterval;
+   let isScrolling = false; // Flag to track if the scroll is already in progress
 
    $('.carousel').carousel({
-      interval: 60000
+      interval: 90000
    });
 
    // Fire Event on Carousel
-   $('.carousel').bind('slide.bs.carousel', e => {
-      console.log(`slide number:${slide_number}`);
+   $('.carousel').on('slide.bs.carousel', e => {
+      console.log(`slide number: ${slide_number}`);
 
-      if (e.direction == 'left') {
-         if (slide_number == 8) {
-            slide_number = 0;
+      if (e.direction === 'left') {
+         if (slide_number === 9) {
+            slide_number = 1;
+         } else {
+            slide_number++;
          }
-         slide_number++;
-      } else if (e.direction == 'right') {
-         if (slide_number == 1) {
+      } else if (e.direction === 'right') {
+         if (slide_number === 1) {
             slide_number = 9;
+         } else {
+            slide_number--;
          }
-         slide_number--;
       }
 
-      console.log(`slide number:${slide_number}`);
+      console.log(`slide number: ${slide_number}`);
       console.log(e.direction);
 
+      // Handle actions for each slide
       switch (slide_number) {
          case 1:
-            clearTimeout(realtime_count_emp);
             clearTimeout(realtime_get_accounting_efficiency);
             clearTimeout(realtime_get_hourly_output);
             recursive_realtime_get_yield();
             recursive_realtime_get_ppm();
+            recursive_realtime_present_employees();
             break;
+
          case 2:
             clearTimeout(realtime_get_yield);
             clearTimeout(realtime_get_ppm);
@@ -983,6 +1113,7 @@ include 'process/pcs/index.php';
             recursive_realtime_get_accounting_efficiency();
             recursive_realtime_get_hourly_output();
             break;
+
          case 3:
             clearTimeout(realtime_get_accounting_efficiency);
             clearTimeout(realtime_get_hourly_output);
@@ -990,36 +1121,119 @@ include 'process/pcs/index.php';
             recursive_realtime_get_inspection_list();
             recursive_realtime_get_overall_inspection();
             break;
+
          case 4:
             clearTimeout(realtime_get_inspection_list);
             clearTimeout(realtime_get_overall_inspection);
             clearTimeout(realtime_andon_hourly_graph);
             recursive_realtime_andon_d_sum();
             break;
+
          case 5:
             clearTimeout(realtime_andon_d_sum);
             clearTimeout(realtime_get_hourly_output_chart);
             recursive_realtime_andon_hourly_graph();
             break;
+
          case 6:
             clearTimeout(realtime_andon_hourly_graph);
             clearTimeout(realtime_ng_graph);
             recursive_realtime_get_hourly_output_chart();
             break;
+
          case 7:
             clearTimeout(realtime_get_hourly_output_chart);
             clearTimeout(realtime_count_emp);
             recursive_realtime_ng_graph();
             break;
+
          case 8:
             clearTimeout(realtime_ng_graph);
+            recursive_realtime_count_emp();
+            recursive_realtime_present_employees();
+            break;
+
+         case 9:
+            clearTimeout(realtime_count_emp);
             clearTimeout(realtime_get_yield);
             clearTimeout(realtime_get_ppm);
-            recursive_realtime_count_emp();
+            recursive_realtime_present_employees();
             break;
+            
+         // case 10:
+         //    clearTimeout(realtime_count_emp);
+         //    clearTimeout(realtime_absent_employees);
+         //    recursive_realtime_absent_employees();
+         //    break;
          default:
       }
+
+      // Stop auto-scroll for all other slides
+      if (slide_number !== 8) {
+         clearInterval(scrollInterval);
+         isScrolling = false; // Stop scrolling flag
+      }
    });
+
+   // Function to start auto-scroll for Present/Absent Manpower
+   const startAutoScrollGrid = () => {
+      const gridContainer = document.getElementById('present_employees_grid');
+      const scrollHeight = gridContainer.scrollHeight;
+      const clientHeight = gridContainer.clientHeight;
+
+      if (scrollHeight <= clientHeight) {
+         return; // No scrolling needed if content fits within the container
+      }
+
+      let scrollPosition = 0;
+      let atBottom = false;
+      let stepSize = window.innerWidth > 1080 ? 5 : 4; // Use smaller steps for smoother motion
+
+      const scrollStep = () => {
+         if (isScrolling) {
+            if (!atBottom && scrollPosition + clientHeight < scrollHeight) {
+               // Scroll by a step size
+               scrollPosition += stepSize;
+               gridContainer.scrollTo(0, scrollPosition);
+
+               // Check if images are loaded while scrolling
+               const images = gridContainer.querySelectorAll('img');
+               images.forEach(img => {
+                  if (img.loading === 'lazy' && img.getBoundingClientRect().top <= window.innerHeight) {
+                     // Preload image if it's in the viewport
+                     const image = new Image();
+                     image.src = img.src; // Set the source to trigger loading
+                  }
+               });
+
+               // Increase delay slightly for smoother scrolling
+               setTimeout(() => requestAnimationFrame(scrollStep), 20);
+            } else if (!atBottom) {
+               atBottom = true;
+               // Delay at bottom before starting the reverse scroll
+               setTimeout(() => requestAnimationFrame(scrollStep), 1500); // 1.5s delay at bottom
+            } else {
+               // Reset scroll position to top
+               scrollPosition = 0;
+               gridContainer.scrollTo(0, scrollPosition);
+               atBottom = false;
+
+               // Delay at top before scrolling again
+               setTimeout(() => requestAnimationFrame(scrollStep), 1500); // 1.5s delay at top
+            }
+         }
+      };
+
+      if (!isScrolling) {
+         isScrolling = true;
+         setTimeout(() => requestAnimationFrame(scrollStep), 1500); // Initial delay
+      }
+   };
+
+   // Function to stop the scrolling when needed
+   const stopAutoScrollGrid = () => {
+      isScrolling = false; // Set flag to false to stop scrolling
+   };
 
    // Initialization for Charts (Included due to Recursive SetInterval Functions)
    const init_charts = () => {
@@ -1061,6 +1275,7 @@ include 'process/pcs/index.php';
       recursive_realtime_get_ppm();
       get_accounting_efficiency(); // added due to updateTakt functionality
       get_hourly_output(); // added to set target_hourly_output
+      recursive_realtime_present_employees();
 
       // init_charts();
       // init_charts2();
