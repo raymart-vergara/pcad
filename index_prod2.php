@@ -320,7 +320,7 @@ include 'process/pcs/index.php';
       }
       ?>
 
-      <div id="carouselExampleIndicators" class="carousel slide mx-3" data-ride="carousel">
+      <div id="carouselExampleIndicators" class="carousel slide mx-3" data-ride="carousel" data-pause="false">
          <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active">
             </li>

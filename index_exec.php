@@ -692,6 +692,15 @@ include 'process/pcad/dashboard_p.php';
                   onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">
                   <i class="fas fa-file-alt"></i>&ensp;Analysis</button>
             </div>
+            <div class="float-right mb-3 mr-2">
+               <form method="GET" action="http://172.25.114.171:3000/pcad_sot/std_filesys/fsys_pages/line_sot.php" target="_blank">
+                  <input type="hidden" name="pcad_line_no" value="<?=$line_no?>" readonly>
+                  <button class="btn btn-secondary no-print" style="background: #f4f4f4; border: none; color: #000;"
+                     onmouseover="this.style.backgroundColor='#383B46'; this.style.color='#FFF';"
+                     onmouseout="this.style.backgroundColor='#f4f4f4'; this.style.color='#000';">
+                     <i class="fas fa-file-alt"></i>&ensp;SOT</button>
+               </form>
+            </div>
          </div>
       </div>
 

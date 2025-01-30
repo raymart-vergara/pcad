@@ -3,7 +3,8 @@
 // Employee Management System Functions (EmpMgtSys)
 // Must Require Database Config "../conn/emp_mgt.php" before using this functions
 
-function get_shift($server_time) {
+function get_shift($server_time)
+{
 	if ($server_time >= '06:00:00' && $server_time < '18:00:00') {
 		return 'DS';
 	} else if ($server_time >= '18:00:00' && $server_time <= '23:59:59') {
@@ -13,7 +14,8 @@ function get_shift($server_time) {
 	}
 }
 
-function get_day($server_time, $server_date_only, $server_date_only_yesterday) {
+function get_day($server_time, $server_date_only, $server_date_only_yesterday)
+{
 	if ($server_time >= '06:00:00' && $server_time <= '23:59:59') {
 		return $server_date_only;
 	} else if ($server_time >= '00:00:00' && $server_time < '06:00:00') {
@@ -21,7 +23,8 @@ function get_day($server_time, $server_date_only, $server_date_only_yesterday) {
 	}
 }
 
-function get_section($line_no, $conn_emp_mgt) {
+function get_section($line_no, $conn_emp_mgt)
+{
 	$line_no = addslashes($line_no);
 	$section = "";
 	// MySQL
@@ -31,7 +34,7 @@ function get_section($line_no, $conn_emp_mgt) {
 	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
-		foreach($stmt->fetchALL() as $row){
+		foreach ($stmt->fetchALL() as $row) {
 			$section = $row['section'];
 		}
 	}
@@ -39,7 +42,8 @@ function get_section($line_no, $conn_emp_mgt) {
 }
 
 // Total Employee Count (Resigned Not Included, Unregistered Employee Included)
-function count_emp($search_arr, $conn_emp_mgt) {
+function count_emp($search_arr, $conn_emp_mgt)
+{
 	$dept = addslashes($search_arr['dept']);
 	$section = addslashes($search_arr['section']);
 	$line_no = addslashes($search_arr['line_no']);
@@ -62,17 +66,18 @@ function count_emp($search_arr, $conn_emp_mgt) {
 	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
-		foreach($stmt->fetchALL() as $row){
+		foreach ($stmt->fetchALL() as $row) {
 			$total = intval($row['total']);
 		}
-	}else{
+	} else {
 		$total = 0;
 	}
 	return $total;
 }
 
 // Total Present Employee Count (Resigned Not Included, Unregistered Employee Included)
-function count_emp_tio($search_arr, $conn_emp_mgt) {
+function count_emp_tio($search_arr, $conn_emp_mgt)
+{
 	$day = addslashes($search_arr['day']);
 	$shift_group = addslashes($search_arr['shift_group']);
 	$dept = addslashes($search_arr['dept']);
@@ -97,17 +102,18 @@ function count_emp_tio($search_arr, $conn_emp_mgt) {
 	$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
-		foreach($stmt->fetchALL() as $row){
+		foreach ($stmt->fetchALL() as $row) {
 			$total = intval($row['total']);
 		}
-	}else{
+	} else {
 		$total = 0;
 	}
 	return $total;
 }
 
 // Total Employee Line Support Count (Resigned Not Included, Unregistered Employee Included)
-function count_emp_line_support_to($search_arr, $conn_emp_mgt) {
+function count_emp_line_support_to($search_arr, $conn_emp_mgt)
+{
 	$dept = addslashes($search_arr['dept']);
 	$day = addslashes($search_arr['day']);
 	$shift = addslashes($search_arr['shift']);
@@ -145,17 +151,18 @@ function count_emp_line_support_to($search_arr, $conn_emp_mgt) {
 	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
-		foreach($stmt->fetchALL() as $row){
+		foreach ($stmt->fetchALL() as $row) {
 			$total = intval($row['total']);
 		}
-	}else{
+	} else {
 		$total = 0;
 	}
 	return $total;
 }
 
 // Total Employee Line Support Count (Resigned Not Included, Unregistered Employee Included)
-function count_emp_line_support_from($search_arr, $conn_emp_mgt) {
+function count_emp_line_support_from($search_arr, $conn_emp_mgt)
+{
 	$dept = addslashes($search_arr['dept']);
 	$day = addslashes($search_arr['day']);
 	$shift = addslashes($search_arr['shift']);
@@ -167,7 +174,7 @@ function count_emp_line_support_from($search_arr, $conn_emp_mgt) {
 		WHERE lsh.day = '$day' AND lsh.shift = '$shift' AND lsh.line_no_from LIKE '$line_no%' AND lsh.status = 'accepted'";
 
 	if (!empty($search_arr['dept'])) {
-		$query = $query . " AND emp.dept = '".$dept."'";
+		$query = $query . " AND emp.dept = '" . $dept . "'";
 	} else {
 		$query = $query . " AND emp.dept != ''";
 	}
@@ -193,17 +200,18 @@ function count_emp_line_support_from($search_arr, $conn_emp_mgt) {
 	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
-		foreach($stmt->fetchALL() as $row){
+		foreach ($stmt->fetchALL() as $row) {
 			$total = intval($row['total']);
 		}
-	}else{
+	} else {
 		$total = 0;
 	}
 	return $total;
 }
 
 // Total Employee Line Support Count (Resigned Not Included, Unregistered Employee Included)
-function count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt) {
+function count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt)
+{
 	$dept = addslashes($search_arr['dept']);
 	$day = addslashes($search_arr['day']);
 	$shift = addslashes($search_arr['shift']);
@@ -215,7 +223,7 @@ function count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt) {
 		WHERE lsh.day = '$day' AND lsh.shift = '$shift' AND lsh.line_no_from LIKE '$line_no%' AND lsh.status = 'rejected'";
 
 	if (!empty($search_arr['dept'])) {
-		$query = $query . " AND emp.dept = '".$dept."'";
+		$query = $query . " AND emp.dept = '" . $dept . "'";
 	} else {
 		$query = $query . " AND emp.dept != ''";
 	}
@@ -241,17 +249,18 @@ function count_emp_line_support_from_rejected($search_arr, $conn_emp_mgt) {
 	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
-		foreach($stmt->fetchALL() as $row){
+		foreach ($stmt->fetchALL() as $row) {
 			$total = intval($row['total']);
 		}
-	}else{
+	} else {
 		$total = 0;
 	}
 	return $total;
 }
 
 // Total Employee Time Out Line Support Count (Resigned Not Included, Unregistered Employee Included)
-function count_emp_out_line_support_to($search_arr, $time_out_range, $is_null, $conn_emp_mgt) {
+function count_emp_out_line_support_to($search_arr, $time_out_range, $is_null, $conn_emp_mgt)
+{
 	$day = addslashes($search_arr['day']);
 	$day_tomorrow = addslashes($search_arr['day_tomorrow']);
 	$shift = addslashes($search_arr['shift']);
@@ -264,7 +273,7 @@ function count_emp_out_line_support_to($search_arr, $time_out_range, $is_null, $
 	} else if ($shift == 'NS') {
 		$time_out_day = $day_tomorrow;
 	}
-	
+
 	$query = "SELECT count(tio.emp_no) AS total 
 		FROM t_time_in_out tio
 		LEFT JOIN t_line_support_history lsh ON lsh.emp_no = tio.emp_no AND lsh.day = '$day' 
@@ -284,17 +293,18 @@ function count_emp_out_line_support_to($search_arr, $time_out_range, $is_null, $
 	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
-		foreach($stmt->fetchALL() as $row){
+		foreach ($stmt->fetchALL() as $row) {
 			$total = intval($row['total']);
 		}
-	}else{
+	} else {
 		$total = 0;
 	}
 	return $total;
 }
 
 // Total Employee Time Out Line Support Count (Resigned Not Included, Unregistered Employee Included)
-function count_emp_out_line_support_from($search_arr, $time_out_range, $is_null, $conn_emp_mgt) {
+function count_emp_out_line_support_from($search_arr, $time_out_range, $is_null, $conn_emp_mgt)
+{
 	$day = addslashes($search_arr['day']);
 	$day_tomorrow = addslashes($search_arr['day_tomorrow']);
 	$shift = addslashes($search_arr['shift']);
@@ -307,7 +317,7 @@ function count_emp_out_line_support_from($search_arr, $time_out_range, $is_null,
 	} else if ($shift == 'NS') {
 		$time_out_day = $day_tomorrow;
 	}
-	
+
 	$query = "SELECT count(tio.emp_no) AS total 
 		FROM t_time_in_out tio
 		LEFT JOIN t_line_support_history lsh ON lsh.emp_no = tio.emp_no AND lsh.day = '$day' 
@@ -327,17 +337,18 @@ function count_emp_out_line_support_from($search_arr, $time_out_range, $is_null,
 	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
-		foreach($stmt->fetchALL() as $row){
+		foreach ($stmt->fetchALL() as $row) {
 			$total = intval($row['total']);
 		}
-	}else{
+	} else {
 		$total = 0;
 	}
 	return $total;
 }
 
 // Total Employee Time Out Line Support Count (Resigned Not Included, Unregistered Employee Included)
-function count_emp_out_line_support_from_rejected($search_arr, $time_out_range, $is_null, $conn_emp_mgt) {
+function count_emp_out_line_support_from_rejected($search_arr, $time_out_range, $is_null, $conn_emp_mgt)
+{
 	$day = addslashes($search_arr['day']);
 	$day_tomorrow = addslashes($search_arr['day_tomorrow']);
 	$shift = addslashes($search_arr['shift']);
@@ -350,12 +361,12 @@ function count_emp_out_line_support_from_rejected($search_arr, $time_out_range, 
 	} else if ($shift == 'NS') {
 		$time_out_day = $day_tomorrow;
 	}
-	
+
 	$query = "SELECT count(tio.emp_no) AS total 
 		FROM t_time_in_out tio
 		LEFT JOIN t_line_support_history lsh ON lsh.emp_no = tio.emp_no AND lsh.day = '$day' 
 		WHERE tio.day = '$day'";
-	
+
 	if ($is_null == false) {
 		$time_out_from = addslashes($time_out_range['time_out_from']);
 		$time_out_to = addslashes($time_out_range['time_out_to']);
@@ -370,17 +381,18 @@ function count_emp_out_line_support_from_rejected($search_arr, $time_out_range, 
 	$stmt = $conn_emp_mgt->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
-		foreach($stmt->fetchALL() as $row){
+		foreach ($stmt->fetchALL() as $row) {
 			$total = intval($row['total']);
 		}
-	}else{
+	} else {
 		$total = 0;
 	}
 	return $total;
 }
 
 // Working Time X Manpower (Needed for Accounting Efficiency)
-function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
+function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt)
+{
 	$day = addslashes($search_arr['day']);
 	$day_tomorrow = addslashes($search_arr['day_tomorrow']);
 	$shift = addslashes($search_arr['shift']);
@@ -407,7 +419,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 	$wt_x_mp_6 = 0;
 
 	$wt_x_mp = 0;
-	
+
 	// If based on time out
 
 	if ($server_time >= '03:30:00' && $server_time < '07:30:00') {
@@ -424,7 +436,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_3 = intval($row['total']);
 			}
 		}
@@ -450,7 +462,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_4 = intval($row['total']);
 			}
 		}
@@ -476,7 +488,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_5 = intval($row['total']);
 			}
 		}
@@ -502,7 +514,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_6 = intval($row['total']);
 			}
 		}
@@ -530,7 +542,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_3 = intval($row['total']);
 			}
 		}
@@ -556,7 +568,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_4 = intval($row['total']);
 			}
 		}
@@ -582,7 +594,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_5 = intval($row['total']);
 			}
 		}
@@ -608,7 +620,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_6 = intval($row['total']);
 			}
 		}
@@ -628,20 +640,20 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 
 	if (($server_time >= '03:30:00' && $server_time < '07:30:00') || ($server_time >= '15:30:00' && $server_time < '19:30:00')) {
 		/*$sql = "SELECT sum(out_5) as total_out_5, sum(out_6) as total_out_6, sum(out_7) as total_out_7, sum(out_8) as total_out_8 FROM t_shuttle_allocation WHERE day = '$day' AND shift = '$shift'";
-		if (!empty($line_no)) {
-			$sql = $sql . " AND line_no = '$line_no'";
-		}
+						  if (!empty($line_no)) {
+							  $sql = $sql . " AND line_no = '$line_no'";
+						  }
 
-		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-		$stmt->execute();
-		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
-				$total_mp_3 = intval($row['total_out_5']);
-				$total_mp_4 = intval($row['total_out_6']);
-				$total_mp_5 = intval($row['total_out_7']);
-				$total_mp_6 = intval($row['total_out_8']);
-			}
-		}*/
+						  $stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+						  $stmt->execute();
+						  if ($stmt->rowCount() > 0) {
+							  foreach($stmt->fetchALL() as $row){
+								  $total_mp_3 = intval($row['total_out_5']);
+								  $total_mp_4 = intval($row['total_out_6']);
+								  $total_mp_5 = intval($row['total_out_7']);
+								  $total_mp_6 = intval($row['total_out_8']);
+							  }
+						  }*/
 	}
 
 	if (empty($total_mp_3) && empty($total_mp_4) && empty($total_mp_5) && empty($total_mp_6)) {
@@ -670,7 +682,7 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 
 		// Working Time based on minutes of work
 		$working_time_initial_pcad = 0;
-		
+
 		if ($shift == 'DS') {
 			if ($server_time >= '07:00:00') {
 				$working_time_initial_pcad += 60;
@@ -791,13 +803,13 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 			$wt_x_mp += $wt_x_mp_4;
 			$total_present_mp -= $total_mp_4;
 		}
-		
+
 		if (!empty($total_mp_5)) {
 			$wt_x_mp_5 = $working_time_5 * $total_mp_5;
 			$wt_x_mp += $wt_x_mp_5;
 			$total_present_mp -= $total_mp_5;
 		}
-		
+
 		if (!empty($total_mp_6)) {
 			$wt_x_mp_6 = $working_time_6 * $total_mp_6;
 			$wt_x_mp += $wt_x_mp_6;
@@ -838,10 +850,10 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 		}
 
 		/*$wt_x_mp_3 = $working_time_3 * $total_mp_3;
-		$wt_x_mp_4 = $working_time_4 * $total_mp_4;
-		$wt_x_mp_5 = $working_time_5 * $total_mp_5;
-		$wt_x_mp_6 = $working_time_6 * $total_mp_6;
-		$wt_x_mp = $wt_x_mp_3 + $wt_x_mp_4 + $wt_x_mp_5 + $wt_x_mp_6 + $wt_x_mp_left;*/
+						  $wt_x_mp_4 = $working_time_4 * $total_mp_4;
+						  $wt_x_mp_5 = $working_time_5 * $total_mp_5;
+						  $wt_x_mp_6 = $working_time_6 * $total_mp_6;
+						  $wt_x_mp = $wt_x_mp_3 + $wt_x_mp_4 + $wt_x_mp_5 + $wt_x_mp_6 + $wt_x_mp_left;*/
 	}
 
 	$response_arr = array(
@@ -857,7 +869,8 @@ function get_wt_x_mp_arr($search_arr, $server_time, $conn_emp_mgt) {
 }
 
 // Working Time X Manpower (Needed for Accounting Efficiency)
-function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $conn_emp_mgt) {
+function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $conn_emp_mgt)
+{
 	$day = addslashes($search_arr['day']);
 	$day_tomorrow = addslashes($search_arr['day_tomorrow']);
 	$shift = addslashes($search_arr['shift']);
@@ -903,7 +916,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_3 = intval($row['total']);
 			}
 		}
@@ -933,7 +946,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_4 = intval($row['total']);
 			}
 		}
@@ -963,7 +976,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_5 = intval($row['total']);
 			}
 		}
@@ -993,7 +1006,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_6 = intval($row['total']);
 			}
 		}
@@ -1025,7 +1038,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_3 = intval($row['total']);
 			}
 		}
@@ -1055,7 +1068,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_4 = intval($row['total']);
 			}
 		}
@@ -1085,7 +1098,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_5 = intval($row['total']);
 			}
 		}
@@ -1115,7 +1128,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 		$stmt->execute();
 		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
+			foreach ($stmt->fetchALL() as $row) {
 				$total_mp_6 = intval($row['total']);
 			}
 		}
@@ -1133,23 +1146,23 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 	// If based on shuttle allocation
 	if (($server_time >= '03:30:00' && $server_time < '07:30:00') || ($server_time >= '15:30:00' && $server_time < '19:30:00')) {
 		/*$sql = "SELECT sum(out_5) as total_out_5, sum(out_6) as total_out_6, sum(out_7) as total_out_7, sum(out_8) as total_out_8 FROM t_shuttle_allocation WHERE day = '$day' AND shift = '$shift' AND dept = '$dept'";
-		if (!empty($section)) {
-			$sql = $sql . " AND section = '$section'";
-		}
-		if (!empty($line_no)) {
-			$sql = $sql . " AND line_no = '$line_no'";
-		}
+						  if (!empty($section)) {
+							  $sql = $sql . " AND section = '$section'";
+						  }
+						  if (!empty($line_no)) {
+							  $sql = $sql . " AND line_no = '$line_no'";
+						  }
 
-		$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
-		$stmt->execute();
-		if ($stmt->rowCount() > 0) {
-			foreach($stmt->fetchALL() as $row){
-				$total_mp_3 = intval($row['total_out_5']);
-				$total_mp_4 = intval($row['total_out_6']);
-				$total_mp_5 = intval($row['total_out_7']);
-				$total_mp_6 = intval($row['total_out_8']);
-			}
-		}*/
+						  $stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+						  $stmt->execute();
+						  if ($stmt->rowCount() > 0) {
+							  foreach($stmt->fetchALL() as $row){
+								  $total_mp_3 = intval($row['total_out_5']);
+								  $total_mp_4 = intval($row['total_out_6']);
+								  $total_mp_5 = intval($row['total_out_7']);
+								  $total_mp_6 = intval($row['total_out_8']);
+							  }
+						  }*/
 	}
 
 	if (empty($total_mp_3) && empty($total_mp_4) && empty($total_mp_5) && empty($total_mp_6)) {
@@ -1223,13 +1236,13 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 			$wt_x_mp += $wt_x_mp_4;
 			$total_present_mp -= $total_mp_4;
 		}
-		
+
 		if (!empty($total_mp_5)) {
 			$wt_x_mp_5 = $working_time_5 * $total_mp_5;
 			$wt_x_mp += $wt_x_mp_5;
 			$total_present_mp -= $total_mp_5;
 		}
-		
+
 		if (!empty($total_mp_6)) {
 			$wt_x_mp_6 = $working_time_6 * $total_mp_6;
 			$wt_x_mp += $wt_x_mp_6;
@@ -1252,7 +1265,7 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 				$wt_x_mp += $wt_x_mp_left;
 			}
 		}
-		
+
 		//$wt_x_mp = $wt_x_mp_3 + $wt_x_mp_4 + $wt_x_mp_5 + $wt_x_mp_6 + $wt_x_mp_left;
 	}
 
@@ -1268,7 +1281,8 @@ function get_wtpcad_x_mp_arr($search_arr, $server_time, $working_time_pcad, $con
 }
 
 // Get Overall Manpower Count (PD2 & QA) (Plan, Actual, Absent, Support, Absent Rate)
-function get_manpower_count_per_line($search_arr, $conn_emp_mgt) {
+function get_manpower_count_per_line($search_arr, $conn_emp_mgt)
+{
 	$search_mp_arr = array(
 		'day' => $search_arr['day'],
 		'shift' => $search_arr['shift'],
@@ -1297,7 +1311,7 @@ function get_manpower_count_per_line($search_arr, $conn_emp_mgt) {
 		$total_pd_mp += $total_pd_ads_mp;
 		$total_present_pd_mp += $total_present_pd_ads_mp;
 	}
-	
+
 	$total_pd_mp_line_support_to = count_emp_line_support_to($search_mp_arr, $conn_emp_mgt);
 	// $total_pd_mp += $total_pd_mp_line_support_to;
 	// $total_present_pd_mp += $total_pd_mp_line_support_to;
@@ -1332,7 +1346,7 @@ function get_manpower_count_per_line($search_arr, $conn_emp_mgt) {
 			'section' => $search_arr['section_qa'],
 			'line_no' => $search_arr['line_no']
 		);
-	
+
 		$total_qa_ads_mp = count_emp($search_qa_ads_arr, $conn_emp_mgt);
 		$total_present_qa_ads_mp = count_emp_tio($search_qa_ads_arr, $conn_emp_mgt);
 		$total_qa_mp += $total_qa_ads_mp;
@@ -1368,7 +1382,8 @@ function get_manpower_count_per_line($search_arr, $conn_emp_mgt) {
 	return $response_arr;
 }
 
-function sum_process_design_plan($search_arr, $conn_pcad) {
+function sum_process_design_plan($search_arr, $conn_pcad)
+{
 	$registlinename = $search_arr['registlinename'];
 	$shift_group = addslashes($search_arr['shift_group']);
 
@@ -1388,16 +1403,17 @@ function sum_process_design_plan($search_arr, $conn_pcad) {
 	$stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
-		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$total = intval($row['total']);
 		}
-	}else{
+	} else {
 		$total = 0;
 	}
 	return $total;
 }
 
-function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
+function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad)
+{
 	$results = array();
 
 	$registlinename = $search_arr['registlinename'];
@@ -1434,7 +1450,7 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 	$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
-		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			if ($row['process1'] == '') {
 				array_push($results, array('process' => 'No Process', 'total_present' => 0, 'total' => $row['total']));
 			} else {
@@ -1475,7 +1491,7 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 	$stmt = $conn_emp_mgt->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
-		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			foreach ($results as &$result) {
 				if ($result['process'] == $row['process1']) {
 					$result['total_present'] = $row['total_present'];
@@ -1502,7 +1518,7 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 	$stmt = $conn_pcad->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
 	$stmt->execute();
 	if ($stmt->rowCount() > 0) {
-		while($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
+		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			foreach ($results as &$result) {
 				if ($result['process'] == $row['process_design']) {
 					$result['total'] = $row['mp_count'];
@@ -1510,6 +1526,294 @@ function get_process_design($search_arr, $conn_emp_mgt, $conn_pcad) {
 				}
 			}
 			unset($result); // unset reference to last element
+		}
+	}
+	return $results;
+}
+
+// PRESENT EMPLOYEES
+// function get_present_employees($search_arr, $conn_emp_mgt)
+// {
+// 	$results = array();
+
+// 	$day = $search_arr['day'];
+// 	$shift = $search_arr['shift'];
+// 	$shift_group = addslashes($search_arr['shift_group']);
+// 	$line_no = addslashes($search_arr['line_no']);
+
+// 	// Get Process by m_employees
+// 	// MS SQL Server
+// 	$sql = "SELECT 
+//             emp.provider, emp.emp_no, emp.full_name, emp.dept, 
+//             (
+//                 CASE
+//                     WHEN CAST(emp.process AS NVARCHAR(15)) LIKE emp.process
+//                     THEN emp.process
+//                     ELSE CONCAT(CAST(emp.process AS NVARCHAR(15)), '..')
+//                 END
+//             ) AS process,
+//             pic.file_url,
+//             CASE 
+//                 WHEN tio.id IS NOT NULL THEN 'present'
+//                 ELSE 'absent'
+//             END AS status
+//         FROM m_employees emp
+//         LEFT JOIN t_time_in_out tio ON tio.emp_no = emp.emp_no AND tio.day = '$day'
+//         LEFT JOIN m_employee_pictures pic ON pic.emp_no = emp.emp_no
+//         WHERE emp.dept != ''";
+
+// 	if ($shift == 'DS') {
+// 		$sql .= " AND emp.shift_group IN ('$shift_group', 'ADS')";
+// 	} else {
+// 		$sql .= " AND emp.shift_group = '$shift_group'";
+// 	}
+
+// 	if ($line_no == 'No Line') {
+// 		$sql .= " AND emp.line_no IS NULL";
+// 	} else if (!empty($line_no)) {
+// 		$sql .= " AND emp.line_no LIKE '$line_no%'";
+// 	} else {
+// 		$sql .= " AND (emp.line_no = '' OR emp.line_no IS NULL)";
+// 	}
+
+// 	$sql .= " AND (emp.resigned_date IS NULL OR emp.resigned_date >= '$day')";
+// 	$sql .= " ORDER BY process ASC, emp.full_name ASC";
+
+
+// 	// $sql = "SELECT 
+// 	// 			emp.provider, emp.emp_no, emp.full_name, emp.dept, 
+// 	// 			(
+// 	// 				CASE
+// 	// 					WHEN CAST(emp.process AS NVARCHAR(15)) LIKE emp.process
+// 	// 					THEN emp.process
+// 	// 					ELSE CONCAT(CAST(emp.process AS NVARCHAR(15)), '..')
+// 	// 				END
+// 	// 			) AS process,
+// 	// 			pic.file_url 
+// 	// 		FROM m_employees emp
+// 	// 		RIGHT JOIN t_time_in_out tio ON tio.emp_no = emp.emp_no AND tio.day = '$day'
+// 	// 		LEFT JOIN m_employee_pictures pic ON pic.emp_no = emp.emp_no
+// 	// 		WHERE emp.dept != ''";
+// 	// if ($shift == 'DS') {
+// 	// 	$sql = $sql . " AND emp.shift_group IN ('$shift_group', 'ADS')";
+// 	// } else {
+// 	// 	$sql = $sql . " AND emp.shift_group = '$shift_group'";
+// 	// }
+// 	// if ($line_no == 'No Line') {
+// 	// 	$sql = $sql . " AND emp.line_no IS NULL";
+// 	// } else if (!empty($line_no)) {
+// 	// 	$sql = $sql . " AND emp.line_no LIKE '$line_no%'";
+// 	// } else {
+// 	// 	$sql = $sql . " AND (emp.line_no = '' OR emp.line_no IS NULL)";
+// 	// }
+// 	// $sql = $sql . " AND (emp.resigned_date IS NULL OR emp.resigned_date >= '$day')";
+// 	// $sql = $sql . " ORDER BY process ASC, emp.full_name ASC";
+
+// 	$stmt = $conn_emp_mgt->prepare($sql);
+// 	$stmt->execute();
+
+// 	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// 	if (count($rows) > 0) {
+// 		foreach ($rows as $row) {
+// 			$file_url = '';
+// 			$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+// 			if (!empty($row['file_url'])) {
+// 				// $file_url = $protocol.$_SERVER['SERVER_ADDR'].":".$_SERVER['SERVER_PORT'].$row['file_url'];
+// 				$file_url = 'http://172.25.116.188:3000/uploads/emp_mgt/employee_picture/' . basename($row['file_url']);
+// 			} else {
+// 				$file_url = $protocol . $_SERVER['SERVER_ADDR'] . ":" . $_SERVER['SERVER_PORT'] . '/pcad/dist/img/user.png';
+// 			}
+// 			// array_push($results, array(
+// 			// 	'file_url' => $file_url, 
+// 			// 	'emp_no' => $row['emp_no'], 
+// 			// 	'full_name' => $row['full_name'], 
+// 			// 	'provider' => $row['provider'], 
+// 			// 	'dept' => $row['dept'], 
+// 			// 	'process' => $row['process'] 
+// 			// ));
+// 			array_push($results, array(
+// 				'file_url' => $file_url,
+// 				'emp_no' => $row['emp_no'],
+// 				'full_name' => $row['full_name'],
+// 				'process' => $row['process']
+// 			));
+// 		}
+// 	}
+// 	return $results;
+// }
+
+function get_present_and_absent_employees($search_arr, $conn)
+{
+	$day = $search_arr['day'];
+	$shift = $search_arr['shift'];
+	$shift_group = $search_arr['shift_group'];
+	$line_no = $search_arr['line_no'];
+
+	$sql = "SELECT 
+                emp.provider, emp.emp_no, emp.full_name, emp.dept, emp.process,
+                pic.file_url,
+                CASE 
+                    WHEN tio.id IS NOT NULL THEN 'present'
+                    ELSE 'absent'
+                END AS status
+            FROM m_employees emp
+            LEFT JOIN t_time_in_out tio ON tio.emp_no = emp.emp_no AND tio.day = '$day'
+            LEFT JOIN m_employee_pictures pic ON pic.emp_no = emp.emp_no
+            WHERE emp.dept != ''";
+
+	if ($shift == 'DS') {
+		$sql .= " AND emp.shift_group IN ('$shift_group', 'ADS')";
+	} else {
+		$sql .= " AND emp.shift_group = '$shift_group'";
+	}
+
+	if ($line_no == 'No Line') {
+		$sql .= " AND emp.line_no IS NULL";
+	} else if (!empty($line_no)) {
+		$sql .= " AND emp.line_no LIKE '$line_no%'";
+	} else {
+		$sql .= " AND (emp.line_no = '' OR emp.line_no IS NULL)";
+	}
+
+	$sql .= " AND (emp.resigned_date IS NULL OR emp.resigned_date >= '$day')";
+	$sql .= " ORDER BY emp.process ASC, emp.full_name ASC";
+
+	$stmt = $conn->prepare($sql);
+	$stmt->execute();
+	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	$base_url = 'http://172.25.116.188:3000/uploads/emp_mgt/employee_picture/';
+	$results = [];
+
+	foreach ($rows as $row) {
+		$file_url = '';
+		// If the file URL exists, construct the full URL
+		if (!empty($row['file_url'])) {
+			$file_url = $base_url . basename($row['file_url']);
+		} else {
+			// Default image URL if no image is found
+			$file_url = 'http://172.25.116.188:3000/pcad/dist/img/user.png';
+		}
+
+		// Push the data to results with the proper file_url
+		array_push($results, array(
+			'file_url' => $file_url,
+			'emp_no' => $row['emp_no'],
+			'full_name' => $row['full_name'],
+			'process' => $row['process'],
+			'status' => $row['status']
+		));
+	}
+
+	return $results;
+}
+
+// ABSENT EMPLOYEES
+function get_absent_employees($search_arr, $conn_emp_mgt)
+{
+	$results = array();
+
+	$day = $search_arr['day'];
+	$shift = $search_arr['shift'];
+	$shift_group = addslashes($search_arr['shift_group']);
+	$line_no = addslashes($search_arr['line_no']);
+
+	// Get Process by m_employees
+	// MS SQL Server
+	$sql = "SELECT 
+				emp.provider, emp.emp_no, emp.full_name, emp.dept, 
+				(
+					CASE
+						WHEN CAST(emp.process AS NVARCHAR(15)) LIKE emp.process
+						THEN emp.process
+						ELSE CONCAT(CAST(emp.process AS NVARCHAR(15)), '..')
+					END
+				) AS process,
+				pic.file_url 
+			FROM m_employees emp
+			LEFT JOIN t_time_in_out tio ON tio.emp_no = emp.emp_no AND tio.day = '$day'
+			LEFT JOIN m_employee_pictures pic ON pic.emp_no = emp.emp_no
+			WHERE tio.id IS NULL AND emp.dept != ''";
+	if ($shift == 'DS') {
+		$sql = $sql . " AND emp.shift_group IN ('$shift_group', 'ADS')";
+	} else {
+		$sql = $sql . " AND emp.shift_group = '$shift_group'";
+	}
+	if ($line_no == 'No Line') {
+		$sql = $sql . " AND emp.line_no IS NULL";
+	} else if (!empty($line_no)) {
+		$sql = $sql . " AND emp.line_no LIKE '$line_no%'";
+	} else {
+		$sql = $sql . " AND (emp.line_no = '' OR emp.line_no IS NULL)";
+	}
+	$sql = $sql . " AND (emp.resigned_date IS NULL OR emp.resigned_date >= '$day')";
+	$sql = $sql . " ORDER BY process ASC, emp.full_name ASC";
+
+	$stmt = $conn_emp_mgt->prepare($sql);
+	$stmt->execute();
+
+	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	if (count($rows) > 0) {
+		foreach ($rows as $row) {
+			$file_url = '';
+			$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+			if (!empty($row['file_url'])) {
+				// $file_url = $protocol.$_SERVER['SERVER_ADDR'].":".$_SERVER['SERVER_PORT'].$row['file_url'];
+				$file_url = 'http://172.25.116.188:3000/uploads/emp_mgt/employee_picture/' . basename($row['file_url']);
+			} else {
+				$file_url = $protocol . $_SERVER['SERVER_ADDR'] . ":" . $_SERVER['SERVER_PORT'] . '/pcad/dist/img/user.png';
+			}
+			// array_push($results, array(
+			// 	'file_url' => $file_url, 
+			// 	'emp_no' => $row['emp_no'], 
+			// 	'full_name' => $row['full_name'], 
+			// 	'provider' => $row['provider'], 
+			// 	'dept' => $row['dept'], 
+			// 	'process' => $row['process'] 
+			// ));
+			array_push($results, array(
+				'file_url' => $file_url,
+				'emp_no' => $row['emp_no'],
+				'full_name' => $row['full_name'],
+				'process' => $row['process']
+			));
+		}
+	}
+	return $results;
+}
+
+function get_present_employees2($search_arr, $conn_emp_mgt)
+{
+	$results = array();
+
+	$line_no = addslashes($search_arr['line_no']);
+
+	// Get Process by m_employees
+	// MS SQL Server
+	$sql = "EXEC [dbo].[PCAD_ATTENDANCE] @LineNo = ?";
+
+	$stmt = $conn_emp_mgt->prepare($sql);
+	$params = array($line_no);
+	$stmt->execute($params);
+
+	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	if (count($rows) > 0) {
+		foreach ($rows as $row) {
+			$file_url = '';
+			$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+			if (!empty($row['picture'])) {
+				$file_url = $protocol . $_SERVER['SERVER_ADDR'] . ":" . $_SERVER['SERVER_PORT'] . $row['picture'];
+			} else {
+				$file_url = $protocol . $_SERVER['SERVER_ADDR'] . ":" . $_SERVER['SERVER_PORT'] . '/pcad/dist/img/user.png';
+			}
+			array_push($results, array(
+				'file_url' => $file_url,
+				'emp_no' => $row['emp_no'],
+				'full_name' => $row['full_name']
+			));
 		}
 	}
 
