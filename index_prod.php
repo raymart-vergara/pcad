@@ -1282,7 +1282,7 @@ include 'process/pcs/index.php';
 
       setInterval(() => {
          window.location.reload();
-      }, 1000 * 60 * 8);
+      }, 1000 * 90 * 9); // 90 seconds per slide of 9 slides
    });
 </script>
 
